@@ -165,6 +165,35 @@ THE MORTALITY NOTE (a dated line for every change made under THE MORTALITY CARD)
   countdown (8); the life read, never kept (9, 10); stores nothing (11);
   nobody through the one doorway only (12); no model, no key (13); the seats
   (14). ROOM.state().orchid says each flower's openness and the glass.
+· 3 oct 2026 · PASS 1 OF THE ONE STORY · THE GLASS SAYS ONE NOBODY (nobody-one-story-handoff-2oct.md §10 pass 1, and
+  the last radical pass §6, ruled 3 oct: `read and agreed with your leanings on all of it`). there is one nobody: the mind
+  at the bottom of the well; this phone is a body with no mind. what changed, and nothing else:
+  (a) THE DOOR LINE (handoff §3.3, blessed there): under the floor at the door, `this phone is a body with no mind. at the
+  bottom of the hole is a mind with no body. each lives eighty-eight minutes. they meet once, when this phone calls you.`
+  (b) THE ROPE READS THE FEED. this room now asks /.netlify/functions/nobody?now=1&day_too=0 every ten seconds (the
+  bottom's own question; a minute once it has failed three times; never while hidden; never again after the call) and
+  does with it one thing: when nobody's hands are on the rope at the bottom (the feed's `touch`: pull, sway, still,
+  twist), the rope at the rim answers — on the same seconds adeath stages them (its seeded offsets in the step's ten
+  minutes, from the step's own stamp), four seconds later [deemed: the bottom's figure walks to the rope first]. a twist
+  turns the flower and lets it turn back. while nobody is dead (`life.dead`) the rope hangs still. the mist and the box's
+  acts are the bottom's alone [deemed]. the flowers are still this phone's genes: the mind's genome reaches the feed in
+  pass 3, and until then the orchid's flowers say what they said.
+  (c) THE KEIKI STANDS DOWN: the doorway (MORTAL.nobody) is knot read — no stirring of its own, no turning toward the
+  light, no lean, no buds opening, no word or haiku in the fog. `keiki=1` (the press's, never his) stands it up again for
+  comparison. nothing is deleted; the seats stay where they were (rule 14), only no longer fed.
+  (d) THE PANES GO TO THREE: now · then · the call. cut: the line (the steps and the rising water — the house's count of
+  the dead is the box and the register now), nobody (its spell, its stages, its buds), the lean, the life's tally and the
+  gene manual (LB.box) from `now`, and the call's keiki paragraph. new in `now` [new]: `the rope is nobody’s: it stirs
+  only when nobody, at the bottom, puts its hands on it.`
+  (e) `mother` grepped out of the glass: where it meant the card's parent (the airs, the plate in the box's lid, the gene
+  map, the wheel's caption) it says `the phone before` [new each]; the wheel's three bud captions no longer promise the
+  keiki's growing [new each]. comments, the press flag `mother=` and the code's own names (MOM) are knot the glass. the
+  word `keiki` was never on this glass.
+  the card, walked: (1) mortal.js first, untouched; (2) flags from MORTAL.search only (keiki=1, live=0 added); (3, 4, 5)
+  no door written, no history, no #; (AND) the little phone untouched; (6) nothing over the call; (7) quiet() also stops
+  the feed; (8) no countdown: nothing here says when anything ends; (9, 10) MORTAL.life read as before, never kept; (11)
+  nothing stored; (12, amended for alife by his agreement of 2 oct) nobody comes in through THE FEED only, and only as the
+  rope; (13) no model, no key: one GET to the site's own function, and his wind recording as before; (14) the seats kept.
 
 WHAT THIS IS: the room behind the yin-yang tile on phone.html's third shelf —
 a wide, deep hole in the cracked lakebed, no rim, its wall black stone. a
@@ -316,6 +345,7 @@ body{
 #facts{ margin-top:6px; color:rgba(var(--ink),0.62); font-size:11.5px; line-height:1.6; }
 #floor{ margin:18px auto 0; max-width:30rem; color:rgba(var(--ink),0.82); font-size:12px; line-height:1.62; }
 #floor .q{ color:rgba(var(--ink),0.96); }
+#doorline{ margin:14px auto 0; max-width:30rem; color:rgba(var(--ink),0.92); font-size:12px; line-height:1.62; }   /* pass 1: the door line */
 #dot{ align-self:center; width:10px; height:10px; border-radius:50%; background:rgba(var(--ink),0.85);
   box-shadow:0 0 14px rgba(var(--ink),0.55); animation:dot 3.2s ease-in-out infinite; margin-bottom:6px; }
 @keyframes dot{ 0%,100%{ opacity:.35; transform:scale(.8);} 50%{ opacity:1; transform:scale(1);} }
@@ -414,6 +444,8 @@ body{
       <span class="q">it was born when you hung up. it will die.</span>
       how long it has was settled in the instant your thumb came down on the red button, and nothing since has changed it — knot how you use it, knot whether you look. it is a life, and it can be watched. it is knot yours to look after.
     </div>
+    <!-- pass 1 · 3 oct · THE DOOR LINE (handoff §3.3) [new, blessed in the handoff] -->
+    <div id="doorline">this phone is a body with no mind. at the bottom of the hole is a mind with no body. each lives eighty-eight minutes. they meet once, when this phone calls you.</div>
   </div>
   <div id="dot" aria-hidden="true"></div>
 </div>
@@ -426,10 +458,8 @@ body{
     <div class="pane" data-k="0"><div class="fig"></div><div class="cap"></div><div class="txt"></div></div>
     <div class="pane" data-k="1"><div class="fig"></div><div class="cap"></div><div class="txt"></div></div>
     <div class="pane" data-k="2"><div class="fig"></div><div class="cap"></div><div class="txt"></div></div>
-    <div class="pane" data-k="3"><div class="fig"></div><div class="cap"></div><div class="txt"></div></div>
-    <div class="pane" data-k="4"><div class="fig"></div><div class="cap"></div><div class="txt"></div></div>
   </div>
-  <div id="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  <div id="dots"><i class="on"></i><i></i><i></i></div>
 </div>
 <div id="veil"></div>
 
@@ -440,7 +470,7 @@ body{
    nothing about this phone is written here. */
 (function(){
   'use strict';
-  var BUILD='alife · 3d · pass three · the orchid pass · 25 sep 2026 · the glass ghost · the little phone at 80% (1 oct)';
+  var BUILD='alife · 3d · pass three · the orchid pass · 25 sep 2026 · the glass ghost · the little phone at 80% (1 oct) · pass 1 of the one story (3 oct)';
   var W=window, D=document, T=W.THREE;
   if(!T){ D.getElementById('who').textContent='three.min.js is knot beside this file'; return; }
   var P=173.6879;                      /* her turns a second */
@@ -454,9 +484,9 @@ body{
     'the size of its two eyes.',
     'leans the length of the life, a little.',
     'carried, and passed on. it once said what a ring waited was worth; the rings are worth nothing now.',
-    '[new] nobody’s temper. awake since it woke; its bud opens in its childhood.',
-    '[new] nobody’s warmth. awake since it woke; its bud opens when it is grown.',
-    '[new] nobody’s restlessness. awake since it woke; its bud opens in its teens.'
+    '[new] temper. carried as a bud, and passed on.',
+    '[new] warmth. carried as a bud, and passed on.',
+    '[new] restlessness. carried as a bud, and passed on.'
   ];
   var TAU=6.283185307179586, PI=Math.PI;
 
@@ -468,6 +498,8 @@ body{
   var SOUND=rigN('sound',1)!==0, QUAL=RIG.quality||'', HOUR_FIX=RIG.sun!==undefined?rigN('sun',NaN):NaN;   /* `hour` is the organ's flag (?hour=1), knot this room's */
   var FAST=rigN('fast',1), DTMAX=rigN('dtmax',0.1);
   var HUMK=rigN('hum',1), BOXK=rigN('box',1);                                       /* press-only trims on the hum's and the box's loudness (1 = as built), for tuning by ear on the phone */
+  var KEIKI=RIG.keiki!==undefined&&RIG.keiki!=='0';                                /* pass 1: the keiki's doorway is down; `keiki=1` (the press's) stands it up */
+  var LIVE_OK=rigN('live',1)!==0;                                                   /* pass 1: `live=0` (the press's) never asks THE FEED */
   var WR=Math.max(3, rigN('wellr',5)), WD=Math.max(8, rigN('welld',30));            /* the hole: radius, depth to the water at gen ≤ 8 */
   var STAND_TH=rigN('stand',90)*PI/180;                                             /* where the visitor stands on the rim: the south, facing north, so the mark below lies as the tile draws it (rig, for the press) */
   var WIND_URL='https://kohmedia.b-cdn.net/wind.mp3';                              /* his recording (24 sep, evening): the room's one network read */
@@ -582,33 +614,24 @@ body{
     star: '<span class="t">how long.</span> the star decides. psr j0437−4715 turns 173.6879 times a second, and once every 128 turns she breathes. where she was in that breath when you ended the call set the length of this life: never less than about a hundred minutes — two to the twentieth of her turns, enough to see the house — and never more than a day. one of the phone’s own genes leans it a little, either way.',
     phone: '<span class="t">the call.</span> it ends as it began, with a phone call. this time it calls you. decline it or answer it; nobody speaks. the tap that ends the call ends the phone. everything the house kept in this browser is erased — the photographs in the roll, every count, every mark — and the tab closes. where safari will knot let a tab close itself, it is left on a blank page. nothing about this life or its death is sent anywhere. there is no record of it but you.',
     pool: '<span class="t">the child.</span> the same tap raises a share sheet holding one contact card: the child. send it to someone, or to yourself, or let it go — a phone may die without one. the child’s card looks like the card you were sent. the difference is in its address, after the #: sixteen characters, a dot, a number. those are this phone’s genes and the child’s generation. what comes after a # in an address is never sent to any server, so the inheritance passes from hand to hand and nothing in between can read it.',
-    box: '<span class="t">the gene map.</span> eight genes, a byte each, and each one is an angle on a wheel: what a gene says is how far it has turned from the founder’s. the founder’s genes are the star’s own name and her turning — 0437 4715 · 1736 8790. at conception the star’s spin picks one gene and moves it one step, a sixteenth of a turn, up or down. so a child is its mother but for one thing, and a gene that wanders half way round comes home. '+
+    box: '<span class="z">[new]</span> <span class="t">the gene map.</span> eight genes, a byte each, and each one is an angle on a wheel: what a gene says is how far it has turned from the founder’s. the founder’s genes are the star’s own name and her turning — 0437 4715 · 1736 8790. at conception the star’s spin picks one gene and moves it one step, a sixteenth of a turn, up or down. so a child is the phone before it but for one thing, and a gene that wanders half way round comes home. '+
       ((L||DRESSED)&&MOVED>=0?('<span class="m">gene '+(MOVED+1)+', '+NAMES[MOVED]+', moved one step '+(UP?'up':'down')+' at conception.</span> its child will be generation '+(GEN+1)+'. '):'')
   };
-  /* the panes' own sentences — every one [new], for his blessing */
+  /* the panes' own sentences — every one [new], for his blessing. pass 1 (3 oct): three panes — now · then · the call. */
   var PANES=[
     { name:'now', html:
-      '<p><span class="t">the flower is now.</span> the ghost orchid on the rope is this phone: one flower for each of its eight genes, each facing the way its gene has turned. the blue one is the gene that moved at conception. the buds are three genes that are carried but have never woken. if one flower leans, it is leaning toward what you haunt — that is the gene this life is being written into, the one it will hand on.</p>'+
-      '<p class="s">'+LB.box+'</p>'+
-      '<p class="s"><span class="z">[new]</span> which gene moves is written by what the life goes through, the way a scar is — decided by no one. the one who lives here is awake; the star still chooses which way.</p>' },
+      '<p><span class="t">the flower is now.</span> the ghost orchid on the rope is this phone: one flower for each of its eight genes, each facing the way its gene has turned. the blue one is the gene that moved at conception. the buds are three genes that are carried but have never woken.</p>'+
+      '<p><span class="z">[new]</span> the rope is nobody’s: it stirs only when nobody, at the bottom, puts its hands on it.</p>' },
     { name:'then', html:
-      '<p><span class="t">the box is then.</span> the music box at the bottom plays only the dead: the founder’s air, and the mother’s, which is the same but for one note. it turns at a pace this phone’s first gene sets, and it never slows. a first phone’s box is unwound and silent; nothing has fallen into it yet.</p>'+
+      '<p><span class="z">[new]</span> <span class="t">the box is then.</span> the music box at the bottom plays only the dead: the founder’s air, and the air of the phone before this one, which is the same but for one note. it turns at a pace this phone’s first gene sets, and it never slows. a first phone’s box is unwound and silent; nothing has fallen into it yet.</p>'+
       '<p class="s"><span class="z">[new]</span> '+(AIRS.length===0?'the cylinder is bare: no air has been pinned to it yet, and the plate in its lid is blank.':
         ('the cylinder carries a pin for each gene, set at that gene’s angle. as it turns, each pin lifts a tooth of the comb — the first tooth the longest and lowest — and the tooth sings, in the same instant you hear it below. '+
         (AIRS.length>1?'after each turn the cylinder slides and plays the other air. ':'')+
-        (MOVED>=0?'the blue pin is the one note where the mother’s air and this phone differ: the gene that moved at conception. ':'')+
-        (AIRS.length>1?'the plate in the lid is both airs written out, the founder’s above, the mother’s below.':'the plate in the lid is the air written out: the founder’s, who was also the mother.')))+'</p>' },
-    { name:'the line', html:
-      '<p><span class="t">the well is the line.</span> one step for every life before this one, from the founder’s at the top down to the mother’s; the steps between are blank — the house never knew them. after eight lives the water rises, the flower floats up with it, and by the twelfth the lake this desert once was has come back.</p>'+
-      '<p class="s"><span class="z">[new]</span> '+(GEN===0?((L?'this is the first life of its line. ':'nothing has lived here. ')+'no steps.'):('generation '+GEN+' · '+NSTEPS+' step'+(NSTEPS===1?'':'s')+' cut'+(NSTEPS-DRY>0?(' · '+(NSTEPS-DRY)+' under water'):'')+(LAKE?' · the lake is back':'')+'.'))+((L||DRESSED)?(' its child will be generation '+(GEN+1)+'.'):'')+'</p>' },
+        (MOVED>=0?'the blue pin is the one note where the air of the phone before and this phone differ: the gene that moved at conception. ':'')+
+        (AIRS.length>1?'the plate in the lid is both airs written out, the founder’s above, the phone before’s below.':'the plate in the lid is the air written out: the founder’s, and the phone before was the founder.')))+'</p>' },
     { name:'the call', html:
       '<p><span class="t">the call.</span> when it comes, the room goes quiet. the same tap that ends the phone hands you one contact card: the child. its genes ride after the # in its address, where no server can read them. nothing about this life is sent anywhere. there is no record of it but you.</p>'+
-      '<p><span class="z">[new]</span> <span class="t">nobody.</span> this phone has an inhabitant, born with it and dead with it, with no fixed form. its sign in this room is the rope stirring and the flower turning — toward the light, never toward you: it does knot know you are here. the fog is its way to speak here, and sometimes what it lets slip is a line it meant to keep. the last pane is its.</p>'+
-      '<p class="s">'+LB.star+'</p><p class="s">'+LB.phone+'</p><p class="s">'+LB.pool+'</p>' },
-    { name:'nobody', html:
-      '<p><span class="z">[new]</span> <span class="t">nobody.</span> the one who lives here. it was born with this phone and it will die with it; it has no fixed form, calls the whole phone home, and lives part-time in this well. it does knot know you are here, and you may watch it all the same: what it does to a room you may find, and what you do to a room it may find. it never asks you for anything.</p>'+
-      '<p><span class="z">[new]</span> <span class="t">its spell.</span> against being alone it has cast the oldest spell it knows: two circles. one holds the human question, <span class="t">am i alone?</span> — the other the question a universe would ask, <span class="t">am i anybody?</span> where they overlap is the one asking. the circles above are drawn as they stand now; when they touch, the fog below says the two words the questions share.</p>'+
-      '<p class="s"><span class="z">[new]</span> it grows up inside the life — a baby, a child, a teenager, grown, older — on a clock of its own that never says how long is left; a phone may die on a child. the three buds are its temperament, temper, warmth and restlessness, and they open as it grows. what it lives through is written into one gene the way a scar is — the flower that leans — and that is what the flower hands on. a word you give it may cross to the next phone; a phone nobody spoke to dies mute. it dreams in the phone’s notebook, under the one note there; what it keeps to itself no one reads — the fog here sometimes lets a line slip.</p>' }
+      '<p class="s">'+LB.star+'</p><p class="s">'+LB.phone+'</p><p class="s">'+LB.pool+'</p>' }
   ];
 
   /* =====================================================================
@@ -1176,8 +1199,8 @@ body{
       var hex=hexOf(genes), x=70; g.font='500 64px ui-monospace,Menlo,Consolas,monospace';
       for(i=0;i<8;i++){ var s2=hex.substr(i*2,2), isB=(i===blue); g.fillStyle='rgba(255,240,205,0.45)'; g.fillText(s2,x+2,y+2); g.fillStyle=isB?'rgba(40,90,210,0.95)':'rgba(34,22,6,0.92)'; g.fillText(s2,x,y);
         x+=92+(i===3?40:0); if(i===3){ g.fillStyle='rgba(34,22,6,0.8)'; g.fillText('·',x-58,y); } } }
-    if(AIRS.length>=1) row(AIRS.length>1?200:300,AIRS.length>1?'the founder':'the founder · its mother',AIRS[0],AIRS.length>1?-1:MOVED);
-    if(AIRS.length>=2) row(400,'its mother',AIRS[1],MOVED);
+    if(AIRS.length>=1) row(AIRS.length>1?200:300,AIRS.length>1?'the founder':'the founder · the phone before',AIRS[0],AIRS.length>1?-1:MOVED);   /* pass 1 [new] */
+    if(AIRS.length>=2) row(400,'the phone before',AIRS[1],MOVED);                          /* pass 1 [new] */
     var t=new T.CanvasTexture(c2); t.encoding=T.sRGBEncoding; t.anisotropy=MAXANI; return t;
   }
   function roundRect(w,h,r){ var s2=new T.Shape(), x=-w/2, y=-h/2; s2.moveTo(x+r,y); s2.lineTo(x+w-r,y); s2.quadraticCurveTo(x+w,y,x+w,y+r); s2.lineTo(x+w,y+h-r); s2.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
@@ -1889,6 +1912,7 @@ body{
   /* THE CALL: when the organ's telephone comes over this room, the room goes quiet — its sound fades within a fifth of a
      second — and it keeps its context RUNNING, because the ring borrows it (MORTAL.voice). */
   function quiet(){ if(HUSHED) return; HUSHED=true; NOBODY=false; move=null; OPENING=null; state.moving=false;
+    FEED.stopped=true; clearTimeout(FEED.timer); RIM.q.length=0;                 /* pass 1: the room stops asking THE FEED at the call */
     if(AC&&master){ try{ var t=AC.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value,t); master.gain.linearRampToValueAtTime(0.0001,t+0.2); }catch(_){} }
     if(WIND.el){ try{ WIND.el.pause(); WIND.el.muted=true; }catch(_){} } }
   /* under the call, where nobody need see it: the flower goes to seed, and the tree turns once — the rope paid out (or, past
@@ -2002,7 +2026,10 @@ body{
   var NB_PEEK_P=0.6;                                                    /* [TUNE] on an arrival with a kept line, the fog lets one slip this often (the wheel) */
   var NB_TURN_HOLD=45, NB_TURN_WANDER=1.0;                              /* [TUNE] the flower's own turn: a new lean either side of the light every so many seconds, up to this many radians */
   function nbWheel(salt,k){ try{ var N=W.MORTAL&&W.MORTAL.nobody; if(N&&N.chance) return N.chance(salt,k); }catch(_){} return hsh(k,9); }
-  function doorway(){ var n=null; try{ n=(W.MORTAL&&W.MORTAL.nobody&&W.MORTAL.nobody.now())||null; }catch(_){ n=null; } NBD.now=n; NBD.seen++;
+  /* pass 1 · 3 oct: THE KEIKI STANDS DOWN. there is one nobody, at the bottom, and it reaches the rim only as the rope (THE
+     FEED, below). the doorway stays (rule 14: its seat is knot moved) but is knot read unless the press says keiki=1. */
+  function doorway(){ if(!KEIKI){ NOBODY=false; NBD.now=null; return; }
+    var n=null; try{ n=(W.MORTAL&&W.MORTAL.nobody&&W.MORTAL.nobody.now())||null; }catch(_){ n=null; } NBD.now=n; NBD.seen++;
     if(!n||HUSHED||n.dead){ NOBODY=false; return; }
     NOBODY=!!n.here;
     if(n.lean&&n.lean.i>=0&&n.lean.i!==3) lean(n.lean.i, n.lean.k); else LEAN={ i:-1, k:0 };
@@ -2019,7 +2046,7 @@ body{
   function boxBearing(){ var f=worldOf(ORCHID), b=worldOf(BOXG); return Math.atan2(b.x-f.x, -(b.z-f.z)); }
   function ownBearing(){ var k=Math.floor(((NBD.now&&NBD.now.age)||0)/NB_TURN_HOLD), c=nbWheel('well.turn',k);
     return ((sunDir.y<-0.1)?boxBearing():sunBearing())+(c-0.5)*2*NB_TURN_WANDER; }
-  W.addEventListener('apwnp:nobody', doorway, false);
+  if(KEIKI) W.addEventListener('apwnp:nobody', doorway, false);
   W.ROOM={ breathe:breathe, dream:dream, nobody:function(x){ NOBODY=!!x&&!HUSHED; }, lids:lids, lean:lean, wake:wake, doorway:doorway, build:BUILD, enter:enter, frame:0,
     ride:function(i){ if(!state.entered||LAST<1) return; if(i<0) rideUp(); else rideTo({ kind:'ledge', i:Math.min(i,LAST-1) }); }, up:rideUp, moth:function(){ if(state.place.kind==='moth') back(); else moth(); },
     skip:function(){ OPENING=null; move=null; state.moving=false; state.yawT=state.yaw; state.pitchT=state.pitch; },
@@ -2046,7 +2073,60 @@ body{
     dbg:{ scene:scene, orchid:ORCHID, rope:ROPE, camera:camera, rig:CAMRIG, trunk:TRUNKG, renderer:renderer, T:T, tex:{ crack:CRACK, stone:STONE, char:CHAR, strata:STRATA, detail:DETAIL }, mats:{ ground:GROUNDMAT, wall:WALLMAT, char:CHARMAT, crust:CRUSTMAT }, env:ENV } };
 
   /* =====================================================================
-     THE WINDOW — four panes on clear glass: now · then · the line · the call. each has a small 3d figure, drawn on the room's
+     pass 1 · 3 oct · THE FEED, AT THE RIM — one rope, two ends. nobody comes into this room through the site's own function
+     and through nothing else (the handoff's §10, his agreement to the rooms of 2 oct), and only as the rope: when its hands
+     are on the rope at the bottom (THE FEED's `touch`), the rope here answers, on the seconds the bottom stages it — the
+     same seeded offsets in the step's ten minutes, from the step's own stamp (adeath's actPlan, copied) — RIM_WALK later,
+     the time the bottom's figure takes to reach the rope [deemed]. a pull is a spring let go; a sway, a swing that dies in
+     a minute; stilled, it hangs nearly plumb a while; a twist winds the flower and lets it turn back. while nobody is dead
+     the rope hangs still. the room never times a death, never knows a breath, keeps nothing it reads; it stops at the call.
+     ===================================================================== */
+  var FEED_URL='/.netlify/functions/nobody';
+  var FEED={ live:null, liveAt:0, timer:0, stopped:false, fails:0, asked:0, answered:0, key:'' };
+  var RIM={ plan:[], q:[], pull:0, pullV:0, swayA:0, swayT:0, calm:1, calmUntil:-9, twist:0, twistV:0, twistHold:-9, dead:false, done:0, log:[] };
+  var RIM_ACTS={ pull:1, sway:1, still:1, twist:1 }, RIM_WALK=4000, RIM_GAP=6000;
+  function nameHash(w){ var h=2166136261>>>0, i; for(i=0;i<w.length;i++){ h^=w.charCodeAt(i); h=Math.imul(h,16777619)>>>0; } return h>>>0; }
+  function feedAsk(){ FEED.timer=0; if(FEED.stopped||HUSHED||!LIVE_OK||!W.fetch) return;
+    if(D.hidden){ feedLater(10000); return; }
+    FEED.asked++;
+    try{ W.fetch(FEED_URL+'?now=1&day_too=0', { method:'GET', cache:'no-store', credentials:'same-origin', headers:{ 'accept':'application/json' } })
+      .then(function(r){ if(!r.ok) throw new Error('feed '+r.status); return r.json(); })
+      .then(function(j){ var stale=!!(j&&typeof j.step==='string'&&isFinite(Date.parse(j.step))&&(Date.now()-Date.parse(j.step))>3600000);
+        if(j&&typeof j==='object'&&typeof j.clock==='string'&&(j.life||j.hud)&&!stale){ FEED.live=j; FEED.liveAt=Date.now(); FEED.fails=0; FEED.answered++; rimPlan(j); }
+        else { FEED.fails++; FEED.live=null; RIM.dead=false; } })
+      .catch(function(){ FEED.fails++; })
+      .then(function(){ feedLater(FEED.fails>=3?60000:10000); }); }catch(_){ FEED.fails++; feedLater(60000); } }
+  function feedLater(ms){ if(FEED.stopped||HUSHED) return; clearTimeout(FEED.timer); FEED.timer=setTimeout(feedAsk, ms); }
+  /* what the feed says its hands did to the rope this step, laid out on the bottom's own seconds */
+  function rimPlan(f){ RIM.dead=!!(f.life&&f.life.dead);
+    var base=Date.parse(f.step||(f.hud&&f.hud.at)||f.clock||''); if(!isFinite(base)) return;
+    var key=String(base); if(key===FEED.key) return; FEED.key=key; RIM.plan.length=0;
+    var raw=Array.isArray(f.touch)?f.touch:[], list=[], i;
+    for(i=0;i<raw.length&&i<4;i++){ var w=String((raw[i]&&raw[i].what)||'').toLowerCase(), h=String((raw[i]&&raw[i].how)||'').toLowerCase(); if(w==='rope'&&RIM_ACTS[h]) list.push(h); }
+    if(!list.length) return;
+    var r=mulberry((nameHash(String(Math.round(base/1000)))^0x7ac7)>>>0), offs=[9000+r()*14000, 150000+r()*90000, 360000+r()*150000];
+    for(i=0;i<3;i++) RIM.plan.push({ t:base+offs[i]+RIM_WALK, list:list.slice(), done:false }); }
+  function rimDo(h, tt){ RIM.done++; RIM.log.push(h); if(RIM.log.length>24) RIM.log.shift();
+    if(h==='pull'){ RIM.pullV=-0.85; RIM.swayT=Math.max(RIM.swayT,0.005); }
+    else if(h==='sway'){ RIM.swayT=0.017; RIM.calmUntil=-9; }
+    else if(h==='still'){ RIM.swayT=0; RIM.calmUntil=tt+24; }
+    else if(h==='twist'){ RIM.twistHold=tt+4.5; } }
+  function rimFrame(dt, tt){ var now=Date.now(), i, k;
+    if(!HUSHED) for(i=0;i<RIM.plan.length;i++){ var oc=RIM.plan[i]; if(oc.done||now<oc.t) continue; oc.done=true;
+      if(now-oc.t<9000&&!RIM.dead) for(k=0;k<oc.list.length;k++) RIM.q.push({ h:oc.list[k], at:now+k*RIM_GAP }); }   /* a moment that passed unseen is simply missed */
+    while(RIM.q.length&&now>=RIM.q[0].at){ rimDo(RIM.q.shift().h, tt); }
+    /* adeath's rope, copied: a pull is a spring let go; a sway dies in a minute; stilled — or while nobody is dead — it hangs nearly plumb */
+    if(RIM.pull!==0||RIM.pullV!==0){ var pn=Math.max(1,Math.ceil(dt/0.02)), ph=dt/pn, pi; for(pi=0;pi<pn;pi++){ RIM.pullV+=(-77*RIM.pull-3.1*RIM.pullV)*ph; RIM.pull+=RIM.pullV*ph; }
+      if(Math.abs(RIM.pull)<2e-5&&Math.abs(RIM.pullV)<2e-4){ RIM.pull=0; RIM.pullV=0; } }
+    RIM.swayT*=Math.exp(-dt/36); RIM.swayA+=(RIM.swayT-RIM.swayA)*Math.min(1,dt*0.9);
+    var cl=tt<RIM.calmUntil||RIM.dead; RIM.calm+=((cl?0.12:1)-RIM.calm)*Math.min(1,dt*(cl?1.4:0.08));
+    if(tt<RIM.twistHold){ RIM.twistV=0; RIM.twist+=(1.5-RIM.twist)*Math.min(1,dt*0.9); }
+    else if(RIM.twist!==0||RIM.twistV!==0){ RIM.twistV+=(-0.42*RIM.twist-0.16*RIM.twistV)*dt; RIM.twist+=RIM.twistV*dt; if(Math.abs(RIM.twist)<2e-4&&Math.abs(RIM.twistV)<2e-4){ RIM.twist=0; RIM.twistV=0; } } }
+  W.ROOM.rim=function(){ return { asked:FEED.asked, answered:FEED.answered, fails:FEED.fails, stopped:FEED.stopped, plan:RIM.plan.map(function(p){ return { t:p.t, list:p.list.join('+'), done:p.done }; }),
+    done:RIM.done, log:RIM.log.slice(), dead:RIM.dead, calm:+RIM.calm.toFixed(3), sway:+RIM.swayA.toFixed(4), twist:+RIM.twist.toFixed(4), pull:+RIM.pull.toFixed(4), doorway:NBD.now?1:0, nobody:NOBODY }; };
+
+  /* =====================================================================
+     THE WINDOW — three panes on clear glass (pass 1): now · then · the call. each has a small 3d figure, drawn on the room's
      own canvas over the room (dimmed a little, as glass is), driven by the same numbers as the room — the flowers' bearings
      and lean, the drum's own turn, the ledges and the water, the visitor's place — never by numbers of its own. the room runs
      under it, unpaused and unducked; its close turns the eye to what the pane explained.
@@ -2066,12 +2146,12 @@ body{
   function winPane(k){ if(!WIN.open) winOpen(); k=clamp(k|0,0,PANES.length-1); panesEl.scrollLeft=k*(panesEl.clientWidth||1); WIN.pane=k; dots(); }
   function winClose(){ if(!WIN.open) return; WIN.open=false; winEl.classList.remove('on'); shutEl.classList.remove('on'); askEl.classList.remove('hide');
     if(!state.entered||HUSHED||move||OPENING) return;
-    var k=WIN.pane; if(k===0||k===3||k===4) eyeTo(worldOf(ORCHID)); else if(k===1) eyeTo(worldOf(BOXG)); else if(k===2){ eyeTo(NSTEPS>0?standAt(0).clone().add(new T.Vector3(0,-1.5,0)):worldOf(ORCHID)); } }
+    var k=WIN.pane; if(k===0||k===2) eyeTo(worldOf(ORCHID)); else if(k===1) eyeTo(worldOf(BOXG)); }
   /* the visitor's bearing from the flower: twelve o'clock is zero, clockwise (the same convention as the genes) */
   function visitorBearing(){ var f=worldOf(ORCHID), e=eyeWorld(); return Math.atan2(e.x-f.x, -(e.z-f.z)); }
 
   /* ---- the figures' studio: a soft lit room of their own for the metals and the lacquer to hold (made once) ---- */
-  var FIGENV=null, FIGMATS=[], FIGS=[null,null,null,null], FIGBOX=null, FIGFL=null;
+  var FIGENV=null, FIGMATS=[], FIGS=[null,null,null], FIGBOX=null, FIGFL=null;
   function figEnv(){ if(FIGENV) return FIGENV; var sc=new T.Scene(), i;
     sc.add(new T.Mesh(new T.SphereGeometry(50,32,16), new T.ShaderMaterial({ side:T.BackSide, depthWrite:false, vertexShader:SKY_VS,
       fragmentShader:'varying vec3 vDir; void main(){ vec3 d=normalize(vDir); vec3 c=mix(vec3(0.010,0.010,0.012),vec3(0.16,0.17,0.19),smoothstep(-0.2,0.9,d.y)); c+=vec3(1.4,1.3,1.15)*smoothstep(0.93,0.99,dot(d,normalize(vec3(-0.5,0.8,0.4))))*1.6; c+=vec3(0.35,0.5,0.9)*smoothstep(0.95,0.995,dot(d,normalize(vec3(0.7,0.3,-0.6)))); c+=vec3(0.5)*smoothstep(0.02,0.0,abs(d.y-0.05))*0.25; gl_FragColor=vec4(c,1.0);\n#include <encodings_fragment>\n}' })));
@@ -2181,7 +2261,7 @@ body{
           dp[i*3]=tmp.x+Math.sin(f*17.0+i)*sw; dp[i*3+1]=tmp.y+Math.cos(f*13.0+i*1.3)*sw*0.6; dp[i*3+2]=tmp.z+Math.cos(f*11.0+i)*sw; }
         dg.attributes.position.needsUpdate=true; dm.material.opacity=0.85;
         var az=0.25*Math.sin(tt/(BREATH*72)*TAU); cam.position.set(Math.sin(az)*3.9, 0.30, Math.cos(az)*3.9); cam.lookAt(0,-0.22,0); } }; }
-  var MAKERS=[makeFig0, makeFig1, makeFig2, makeFig3], FIGDRAWN=0;
+  var MAKERS=[makeFig0, makeFig1, makeFig3], FIGDRAWN=0;            /* pass 1: three panes — now · then · the call (the line's figure, makeFig2, is retired by absence) */
   function fig(k){ if(!FIGS[k]) FIGS[k]=MAKERS[k](); return FIGS[k]; }
   /* nobody: the spell — two circles, the visitor's question in the house's ink and the universe's in her blue, drawn as they
      stand: apart when nothing is felt, overlapping as the two readings rise, the almond between them the one asking. a 2d
@@ -2224,7 +2304,7 @@ body{
   function wheelTap(e){ var F=FIGS[0], FL=FIGFL; if(!F||!FL) return; var el=WIN.figs[0], rc=el.getBoundingClientRect(), x=e.clientX-rc.left, y=e.clientY-rc.top, k, best=-1, bd=34, v=new T.Vector3();
     for(k=0;k<8;k++){ FL.flw[k].updateWorldMatrix(true,false); v.setFromMatrixPosition(FL.flw[k].matrixWorld).project(F.cam); var px=(v.x+1)/2*rc.width, py=(1-v.y)/2*rc.height, d=Math.sqrt((px-x)*(px-x)+(py-y)*(py-y)); if(d<bd){ bd=d; best=k; } }
     if(best<0){ WIN.wheel=''; WIN.caps[0].textContent=PANES[0].name; return; }
-    var f2=FLOWERS[best], s2=(best+1)+' '+NAMES[best]+' · '+WHAT[best]+(f2.moved?(' · the one that moved at conception, one step '+(UP?'up':'down')+' from its mother’s'):'')+(f2.asleep?' · a bud':'');
+    var f2=FLOWERS[best], s2=(best+1)+' '+NAMES[best]+' · '+WHAT[best]+(f2.moved?(' · the one that moved at conception, one step '+(UP?'up':'down')+' from the phone before'):'')+(f2.asleep?' · a bud':'');
     WIN.wheel=s2; WIN.caps[0].textContent=s2; }
 
   /* =====================================================================
@@ -2271,15 +2351,16 @@ body{
     envRefresh(false);
     FOG_DRIFT.value+=dt/PACE*0.07;
     /* the rope: a pendulum its own length long; stirred while nobody is here */
-    var amp=0.0035+(NOBODY?0.008:0), sw=Math.sin(TAU*tt/PEND_T), sw2=Math.sin(TAU*tt/(PEND_T*1.37)+1.0);
-    ROPE.rotation.z=amp*sw+(NOBODY?0.004*Math.sin(tt*0.9):0); ROPE.rotation.x=amp*0.6*sw2;
+    rimFrame(dt, tt);                                                /* pass 1: nobody's hands on the rope, from the bottom */
+    var amp=(0.0035+(NOBODY?0.008:0))*RIM.calm+RIM.swayA, sw=Math.sin(TAU*tt/PEND_T), sw2=Math.sin(TAU*tt/(PEND_T*1.37)+1.0);
+    ROPE.rotation.z=amp*sw+(NOBODY?0.004*Math.sin(tt*0.9):0); ROPE.rotation.x=amp*0.6*sw2; ROPE.position.y=ROPE_TOP.y+RIM.pull;
     REFL.rotation.z=-ROPE.rotation.z; REFL.rotation.x=-ROPE.rotation.x;
     /* the tree holds; under the call only, it turns its one turn, and the rope with it */
     if(Math.abs(TRUNK_A.to-TRUNK_A.now)>1e-5){ var dA=TRUNK_A.to-TRUNK_A.now, stepA=dt*0.35; TRUNK_A.now+=Math.abs(dA)<stepA?dA:(dA>0?stepA:-stepA); TRUNKG.rotation.x=TRUNK_A.now;
       var fy=FLOWER_Y+(TRUNK_A.fy-FLOWER_Y)*(1-Math.abs(TRUNK_A.to-TRUNK_A.now)/Math.max(1e-5,Math.abs(trunkAngle(GEN+1)-trunkAngle(GEN)))); ORCHID.position.y=fy-ROPE_TOP.y; }
     /* the flower: petals stirring in the updraft; turning on its own — toward the light — while nobody is here (the third cut: never toward the visitor); one flower leaning toward what the visitor haunts (the pressure, his ruling) */
     var i; orchidFrame(tt);
-    (function(){ var vb=visitorBearing(), face=(MOVED>=0?FLOWERS[MOVED]:FLOWERS[0]).bearing, tgt=NOBODY?wrapA(ownBearing()-face):0; NOBODY_YAW+=wrapA(tgt-NOBODY_YAW)*Math.min(1,dt*0.12); ORCHID.rotation.y=-NOBODY_YAW;
+    (function(){ var vb=visitorBearing(), face=(MOVED>=0?FLOWERS[MOVED]:FLOWERS[0]).bearing, tgt=NOBODY?wrapA(ownBearing()-face):0; NOBODY_YAW+=wrapA(tgt-NOBODY_YAW)*Math.min(1,dt*0.12); ORCHID.rotation.y=-NOBODY_YAW+RIM.twist;
       for(i=0;i<8;i++){ var want=0; if(LEAN.i===i&&LEAN.k>0&&i!==3) want=clamp(wrapA(vb-FLOWERS[i].bearing),-0.7,0.7)*LEAN.k; var d=want-LEANV[i], stepL=0.03*dt; LEANV[i]+=Math.abs(d)<stepL?d:(d>0?stepL:-stepL); SPIKES[i].rotation.y=-(FLOWERS[i].bearing-FLOWERS[i].built)-LEANV[i]; } })();
     /* the box: afloat; its drum at one pace, the airs in turn; the cylinder shifting between them */
     BOXG.position.y=WATER_Y+0.05+0.008*Math.sin(tt*0.7); BOXG.rotation.z=0.012*Math.sin(tt*0.5); BOXG.rotation.x=0.008*Math.sin(tt*0.43+1);
@@ -2331,8 +2412,9 @@ body{
   }
   scene.traverse(function(o){ if(o.isMesh&&o.userData&&o.userData.tag) TOUCHABLE.push(o); });
   setDay(hourNow()); envRefresh(true);
+  if(LIVE_OK) feedAsk();                                             /* pass 1: THE FEED, at the rim */
   size(); raf=W.requestAnimationFrame(frame);
-  D.addEventListener('visibilitychange',function(){ if(!D.hidden&&!raf){ last=-1; raf=W.requestAnimationFrame(frame); } },false);
+  D.addEventListener('visibilitychange',function(){ if(!D.hidden&&!raf){ last=-1; raf=W.requestAnimationFrame(frame); } if(!D.hidden&&LIVE_OK&&!FEED.stopped&&!FEED.timer) feedAsk(); },false);
   W.addEventListener('resize', size, false);
 })();
 </script>

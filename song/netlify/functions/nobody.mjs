@@ -1,4 +1,14 @@
 // nobody.mjs · the feed the room reads · 29 sep 2026 · the artist project
+// SIXTH CUT · 3 oct 2026 · pass 1 of the one story (the last radical pass §4.1, ruled 3 oct). one thing, and nothing else:
+//   · THE EDGE CACHE. `cache-control: max-age=10` is a browser's header; netlify's cdn never kept a function's answer, so
+//     every poll from every phone ran this function. now every GET of `?now=` and `?day=` also says
+//     `Netlify-CDN-Cache-Control: public, s-maxage=<the same seconds>, durable` — the edges share one copy, and the
+//     function runs about once in ten seconds whatever the crowd (a bound day: once an hour). `?health=1`, the POST
+//     (the moved thing) and OPTIONS never carry it: health is always fresh, and a write is never cached.
+//   · `Netlify-Vary: query=now|day|day_too|health` on every answer, so the cache key is the feed's own question and
+//     nothing else (a stray `?fbclid=` makes no copy of its own), and `?health=1` can never be handed a cached `?now=`.
+//     [deemed] the form read off netlify's own caching notes on 3 oct: `durable` is for serverless functions, only GET
+//     and only a 2xx with `public` and s-maxage ≥ 1 is kept, and a redeploy empties the cache.
 // FIFTH CUT · 1 oct 2026, 22:00 utc — before the first fire. one thing: `?day=` for a day the fire has knot yet bound (from
 // midnight until the fire is out at 00:40 utc, or if a binding ever fails) was answered `empty`, and the calendar showed
 // the day that had just ended with nothing in it. such a day is read from the tables themselves now, as today's is.
@@ -48,7 +58,7 @@
 // comes through the feed). it never sends the death time or the breath — a life is `dying` or it is knot; nothing
 // here says how long is left. the page keeps nothing it reads.
 
-const BUILD = "nobody.mjs · the feed · fifth cut · 1 oct 2026 (22:00 utc)";
+const BUILD = "nobody.mjs · the feed · sixth cut · 3 oct 2026 (the edge cache)";
 const MOVABLE = ["cup", "pencil", "paper"];
 const WINDOWS = [
   { n: 1, from: "00:00", to: "04:00" }, { n: 2, from: "04:00", to: "08:00" }, { n: 3, from: "08:00", to: "12:00" },
@@ -409,8 +419,26 @@ async function answer(req, env, fetchFn) {
   return json(out, 200, 10);
 }
 
+// sixth cut · THE EDGE CACHE. a GET of ?now= or ?day= (and the bare address, which is ?now=) is kept at netlify's edge
+// for as long as its own cache-control says; ?health=, POST and OPTIONS never are. the vary is the same on every answer.
+const VARY = "query=now|day|day_too|health";
+export function edge(req, res) {
+  try {
+    res.headers.set("Netlify-Vary", VARY);
+    let q = null; try { q = new URL(req.url).searchParams; } catch (_) {}
+    if (req.method !== "GET" || !q || q.get("health") != null) return res;
+    const m = /max-age=(\d+)/.exec(res.headers.get("cache-control") || "");
+    const secs = m ? +m[1] : 0;
+    if (secs >= 1 && res.status >= 200 && res.status < 300) res.headers.set("Netlify-CDN-Cache-Control", `public, s-maxage=${secs}, durable`);
+  } catch (_) {}
+  return res;
+}
+
 // netlify's door. whatever happens inside, the answer is words — never a 502.
 export async function handle(req, env, fetchFn) {
+  return edge(req, await handle0(req, env, fetchFn));
+}
+async function handle0(req, env, fetchFn) {
   try { return await answer(req, env, fetchFn); }
   catch (e) {
     const why = (e && e.plain) || ("the feed tripped: " + String((e && e.message) || e).slice(0, 160));
