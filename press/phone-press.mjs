@@ -75,8 +75,8 @@ try {
   ok(!/plays it whenever the well is silent/.test(said2), "the hand-written day's stale note is gone");
 
   console.log("5 · the thread opened: the badge clears");
-  await R.page.evaluate(() => window.__phoneOpen("messages")); await sleep(800);
-  await R.page.evaluate(() => window.__phoneTap(180, 140)); await sleep(1200);
+  await R.page.evaluate(() => window.__phoneOpen("messages")); await sleep(2500);
+  for (let k = 0; k < 3; k++) { if ((await R.page.evaluate(() => window.__phoneApp())) === "thread") break; await R.page.evaluate(() => window.__phoneTap(180, 140)); await sleep(2000); }
   const app = await R.page.evaluate(() => window.__phoneApp()); const s2 = await th(R.page);
   ok(app === "thread" && s2.badge === 0, "app " + app + ", badge " + s2.badge);
 

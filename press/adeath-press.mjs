@@ -15,12 +15,12 @@ function live(over = {}) {
 const st = (p) => p.evaluate(() => window.ROOM && window.ROOM.state());
 async function scene(name, feed, fn, wait = 4000) {
   console.log(name);
-  const R = await open("adeath.html?quality=low&sound=0", feed);
+  const R = await open("adeath.html?quality=low&sound=0", feed, { viewport: { width: 160, height: 300 } });   /* small: the headless renderer keeps time */
   try { await sleep(wait); await fn(R); } finally { ok(!R.log.length, "no page errors" + (R.log.length ? ": " + R.log.slice(0, 3).join(" | ") : "")); await R.close(); }
 }
 
 await scene("1 · the window: one nobody", () => live(), async ({ page }) => {
-  const s = await st(page); ok(s && /fourth cut/.test(s.build), "build: " + (s && s.build));
+  const s = await st(page); ok(s && /(fourth|fifth) cut/.test(s.build), "build: " + (s && s.build));
   const txt = await page.evaluate(() => [...document.querySelectorAll("#panes .pane")].map((p) => p.querySelector(".cap").textContent + " :: " + p.querySelector(".txt").textContent));
   ok(txt.length === 4, "four panes: " + txt.map((t) => t.split(" :: ")[0]).join(" · "));
   const dots = await page.evaluate(() => document.querySelectorAll("#dots i").length); ok(dots === 4, "four dots");
@@ -74,7 +74,7 @@ await scene("6 · a silent well: nobody has knot stepped for an hour", () => liv
 });
 
 console.log("7 · the press's own hand-written day is kept (replay=1)");
-{ const R = await open("adeath.html?quality=low&sound=0&replay=1", () => ({ asleep: true }));
+{ const R = await open("adeath.html?quality=low&sound=0&replay=1", () => ({ asleep: true }), { viewport: { width: 160, height: 300 } });
   await sleep(3000); const s = await st(R.page); ok(s.mode === "replay", "mode: " + s.mode); ok(R.asks.length === 0, "the feed is knot asked");
   const shown = await R.page.evaluate(() => document.getElementById("replayline").style.display); ok(shown === "", "the replay line shows");
   const txt = await R.page.evaluate(() => document.getElementById("replayline").textContent); ok(/until nobody wakes/.test(txt), txt.trim());
@@ -82,7 +82,7 @@ console.log("7 · the press's own hand-written day is kept (replay=1)");
 
 console.log("8 · keiki=1 stands the doorway up again (the press's comparison)");
 { const R = await open("adeath.html?quality=low&sound=0&keiki=1", () => live());
-  await sleep(2500); const s = await st(R.page); ok(/fourth cut/.test(s.build), "loads with keiki=1"); ok(!R.log.length, "no page errors"); await R.close(); }
+  await sleep(2500); const s = await st(R.page); ok(/(fourth|fifth) cut/.test(s.build), "loads with keiki=1"); ok(!R.log.length, "no page errors"); await R.close(); }
 
 console.log(ok.bad() ? `\n${ok.bad()} FAILED` : "\nall clear");
 process.exit(ok.bad() ? 1 : 0);

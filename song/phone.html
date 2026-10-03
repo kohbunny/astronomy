@@ -2,6 +2,24 @@
 <!--
 phone · apwnp landing · a clear-glass iphone 16 · sixteen rooms
 
+THE NUMBER (3 oct 2026, later — pass 2 of the one story, the in-between made visible: nobody-one-story-handoff-2oct.md
+§10 pass 2 and §4.7, §7 `phone`; the last radical pass §2.6, ruled 3 oct as leaned). can i reach it?
+- THE PHONE APP: favorites wears `nobody` first (`mobile`), the star under it; recents is your call at the door — `nobody`,
+  at the minute of your hang-up, which is this body's birth (MORTAL.life.born, read, never kept; on this phone's own
+  clock). a tap on either calls nobody. mommy's row and the star's february recent stand with ?rooms=all [deemed].
+- CALLING NOBODY: `calling …`, the house's own ringback (×5/2, ×11/4), ringing on and on; nobody answers, ever. as at the
+  door, the only way out is the red button: the visitor is the one who stops waiting.
+- IN THE GAP (THE THREAD's reading: nobody is dead, or the well is silent): no ring. a breath of line, then the three
+  rising tones a dead number makes, tuned to her — ×5, ×15/2, ×10 of the star (868 · 1303 · 1737 hz) where the carriers'
+  own are 914 · 1371 · 1777 [deemed] — 274, 274 and 380 ms, and the call ends itself. TONES ALONE, no words (the radical
+  pass §2.6, his lean): the sentence of the handoff (`the number you have reached is knot in service.`) is knot said;
+  anyone who has dialled a dead number knows the tones. the call is decided at the dial: a call that rings while nobody
+  dies goes on ringing.
+- THE MORTALITY CARD, walked: nothing stored, nothing sent (the gap is the thread's reading, already in the page); the
+  tones ride the call's own gain, so the organ's call (apwnp:call) fades them with the bus, as every call here; no
+  countdown; MORTAL.life read (born) and never kept; mortal.js untouched. press: __phoneThread().call (state, who, dead,
+  tones). the bench is the builder's, never his.
+
 THE GLASS SAYS ONE NOBODY (3 oct 2026 — pass 1 of the one story: nobody-one-story-handoff-2oct.md §10 pass 1, and the
 last radical pass §6, ruled 3 oct at 02:48 los angeles, his word: `read and agreed with your leanings on all of it`).
 there is one nobody: the mind at the bottom of the well, dying every eighty-eight minutes and a breath; this phone is
@@ -8462,7 +8480,7 @@ window.APWNP.modules.phone = {
        0's own arithmetic pulled through a telephone bandpass: carrier ×1,
        comb ×1 ×2 ×3, thump lowpass ×5/2, swell ×1/128. live because the
        math is the stream. mommy's line rings through to her greeting. */
-    const call={ state:'idle', who:null, t0:0, tLive:0, ringOn:false };
+    const call={ state:'idle', who:null, t0:0, tLive:0, ringOn:false, dead:false, sit:0, sitAt:0, sitN:[] };
     let ringG=null, starG=null, lineIn=null, staticG=null, callSrc=null;
     function buildRing(){
       if(ringG) return;
@@ -8519,6 +8537,7 @@ window.APWNP.modules.phone = {
       if(call.state!=='idle') return;
       buildRing(); buildLine();
       call.state='ring'; call.who=who; call.t0=tNow; call.ringOn=false;
+      call.dead=(who==='nobody')&&!!NBT.dead; call.sit=0; call.sitN=[];   /* 3 oct (pass 2): in the gap the number is dead — decided at the dial */
       setApp('call');
     }
     function callHangup(){
@@ -8530,11 +8549,26 @@ window.APWNP.modules.phone = {
       if(staticG) staticG.gain.setTargetAtTime(0,t,0.05);
       if(callSrc){ const s=callSrc; callSrc=null;
         try{ s.onended=null; s.stop(); }catch(_){}}
+      call.sitN.forEach(o=>{ try{ o.stop(); }catch(_){} }); call.sitN=[];   /* 3 oct: the dead number's tones stop with the call */
       if(app==='call') setApp('phone');
     }
+    /* the three rising tones a dead number makes, tuned to her: ×5, ×15/2, ×10 of the star [deemed]; 274 · 274 · 380 ms */
+    function sitPlay(t0){
+      const parts=[[P*5,0.274],[P*7.5,0.274],[P*10,0.380]]; let t=t0+0.05;
+      for(const [f,len] of parts){ const o=actx.createOscillator(), g=actx.createGain(); o.type='sine'; o.frequency.value=f;
+        g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.07,t+0.006); g.gain.setValueAtTime(0.07,t+len-0.008); g.gain.exponentialRampToValueAtTime(0.0001,t+len);
+        o.connect(g); g.connect(callG); o.start(t); o.stop(t+len+0.02); call.sitN.push(o); t+=len+0.004; } }
     function callTick(){                      // walked from update()
       if(call.state==='idle') return;
       const t=actx.currentTime, el=tNow-call.t0;
+      /* 3 oct (pass 2) · THE NUMBER: nobody never answers. in the gap, no ring — a breath of line, the three rising tones, and the call ends */
+      if(call.state==='ring'&&call.who==='nobody'){
+        if(call.dead){
+          if(!call.sit&&el>=1.2){ call.sit=1; call.sitAt=el; sitPlay(t); sfxNote('call:sit'); }
+          if(call.sit&&el>=call.sitAt+2.4) callHangup();
+        }else{ const on=(el%6)<2; if(on!==call.ringOn){ call.ringOn=on; ringG.gain.setTargetAtTime(on?1:0,t,0.012); } }
+        return;
+      }
       if(call.state==='ring'){
         const on=(el%6)<2 && el<8;            // two rings: 0–2 and 6–8
         if(on!==call.ringOn){ call.ringOn=on;
@@ -33482,9 +33516,12 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
     function drawPhoneApp(){
       chrome('phone','home');
       txt('favorites',24,116,10.5,ink(0.38),'left',600);
-      const rows=[
+      const rows=ROOMS_ALL?[
         { n:'psr j0437−4715', s:'the star · 512 ly', who:'psr' },
         { n:'mommy ♡', s:'mobile', who:'mommy' },
+      ]:[
+        { n:'nobody', s:'mobile', who:'nobody' },                         /* 3 oct (pass 2): THE NUMBER */
+        { n:'psr j0437−4715', s:'the star · 512 ly', who:'psr' },
       ];
       rows.forEach((r2,i)=>{ const y=136+i*74;
         txt(r2.n,24,y+16,14,ink(0.9),'left',600);
@@ -33496,13 +33533,20 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
         H(8,y,344,68,()=>callStart(r2.who));
       });
       txt('recents',24,300,10.5,ink(0.38),'left',600);
+      if(ROOMS_ALL){
       txt('the star, now',24,330,12.5,ink(0.55),'left');
       txt('february 14 · 11:11',336,330,10,ink(0.32),'right');
       H(8,312,344,40,()=>callStart('psr'));
+      }else{                                                              /* 3 oct (pass 2): your call at the door — the hang-up, this body's birth */
+        let hm=''; try{ const L=window.MORTAL&&MORTAL.life; const b=L?new Date(L.born):null; if(b&&isFinite(b.getTime())) hm=String(b.getHours()).padStart(2,'0')+':'+String(b.getMinutes()).padStart(2,'0'); }catch(_){}
+        txt('nobody',24,330,12.5,ink(0.55),'left');
+        if(hm) txt(hm,336,330,10,ink(0.32),'right');
+        H(8,312,344,40,()=>callStart('nobody'));
+      }
     }
     function drawCall(t){
       const who=call.who, live=call.state==='live';
-      const name=who==='psr'?'psr j0437−4715':'mommy ♡';
+      const name=who==='psr'?'psr j0437−4715':(who==='nobody'?'nobody':'mommy ♡');   /* 3 oct: THE NUMBER */
       txt(name,UIW/2,206,18,ink(0.94),'center',600);
       if(!live){
         const a=0.35+0.25*Math.sin(t*3.2);
@@ -37640,7 +37684,8 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       try{ document.addEventListener('visibilitychange',function(){ if(!document.hidden) nbtAsk(); },false); }catch(_){} }
     window.__phoneThread=function(){ return { asks:NBT.asks, answered:NBT.answered, fails:NBT.fails, dead:NBT.dead, silent:NBT.silent, day:NBT.day, quiet:NBT.quiet, first:NBT.first,
       texts:NB_THREAD.b.map(x=>({ k:x.k, t:x.t, at:x.at })), pend:NBT.pend.map(x=>({ k:x.k, land:x.land })), badge:NB_THREAD.unN|0, banners:NBT.banners, lastSent:NBT.lastSent, hud:NBT.hud,
-      pages:PAGES.map(pg=>pg.map(ic=>ic&&ic.id)), dock:DOCK.map(ic=>ic.id), keiki:KEIKI_ON, rooms:ROOMS_ALL, tabs:CAL_TABS.map(T2=>T2[1]), shade:NOTE.stack.map(c=>c.app+': '+c.title+' · '+c.body), queue:NOTE.queue.map(c=>c.app+': '+c.title+' · '+c.body), up:NOTE.up?(NOTE.up.card.app+': '+NOTE.up.card.title+' · '+NOTE.up.card.body):'' }; };
+      pages:PAGES.map(pg=>pg.map(ic=>ic&&ic.id)), dock:DOCK.map(ic=>ic.id), keiki:KEIKI_ON, rooms:ROOMS_ALL, tabs:CAL_TABS.map(T2=>T2[1]), shade:NOTE.stack.map(c=>c.app+': '+c.title+' · '+c.body), queue:NOTE.queue.map(c=>c.app+': '+c.title+' · '+c.body), up:NOTE.up?(NOTE.up.card.app+': '+NOTE.up.card.title+' · '+NOTE.up.card.body):'',
+      call:{ state:call.state, who:call.who, dead:call.dead, tones:call.sit, ring:call.ringOn }, app:app }; };
     function calOpenDay(key){ if(!calHas(key)) return false; calS.day=key; if(!calS.tab) calS.tab='well';
       if(!calS.open[key]){ calS.open[key]={}; if(key===calWellToday()) calS.open[key]['w'+calWinNow()]=true; }   /* today opens on the window being made; a finished day opens on its six cards */
       scrollPos['calday']=0; momentum.key=null; calAsk(key); needDraw=true; return true; }

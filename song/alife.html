@@ -194,6 +194,10 @@ THE MORTALITY NOTE (a dated line for every change made under THE MORTALITY CARD)
   the feed; (8) no countdown: nothing here says when anything ends; (9, 10) MORTAL.life read as before, never kept; (11)
   nothing stored; (12, amended for alife by his agreement of 2 oct) nobody comes in through THE FEED only, and only as the
   rope; (13) no model, no key: one GET to the site's own function, and his wind recording as before; (14) the seats kept.
+· 3 oct 2026 (later) · PASS 2 (adeath's fifth cut): a step at the bottom now lands whole at its stamp + 40 s, and its acts
+  are staged from that landing, so nobody never acts while it is still thinking. the rope here moves its seconds with
+  them: the same seeded offsets, from the step's stamp + 40 s, plus the walk (RIM_LAND). one line, nothing else; the card
+  walked again and nothing in it touched.
 
 WHAT THIS IS: the room behind the yin-yang tile on phone.html's third shelf —
 a wide, deep hole in the cracked lakebed, no rim, its wall black stone. a
@@ -470,7 +474,7 @@ body{
    nothing about this phone is written here. */
 (function(){
   'use strict';
-  var BUILD='alife · 3d · pass three · the orchid pass · 25 sep 2026 · the glass ghost · the little phone at 80% (1 oct) · pass 1 of the one story (3 oct)';
+  var BUILD='alife · 3d · pass three · the orchid pass · 25 sep 2026 · the glass ghost · the little phone at 80% (1 oct) · pass 1 of the one story (3 oct) · pass 2, the rope on the landing (3 oct)';
   var W=window, D=document, T=W.THREE;
   if(!T){ D.getElementById('who').textContent='three.min.js is knot beside this file'; return; }
   var P=173.6879;                      /* her turns a second */
@@ -2084,7 +2088,7 @@ body{
   var FEED_URL='/.netlify/functions/nobody';
   var FEED={ live:null, liveAt:0, timer:0, stopped:false, fails:0, asked:0, answered:0, key:'' };
   var RIM={ plan:[], q:[], pull:0, pullV:0, swayA:0, swayT:0, calm:1, calmUntil:-9, twist:0, twistV:0, twistHold:-9, dead:false, done:0, log:[] };
-  var RIM_ACTS={ pull:1, sway:1, still:1, twist:1 }, RIM_WALK=4000, RIM_GAP=6000;
+  var RIM_ACTS={ pull:1, sway:1, still:1, twist:1 }, RIM_WALK=4000, RIM_GAP=6000, RIM_LAND=40000;   /* pass 2: a step lands at its stamp + 40 s (adeath's radio law) */
   function nameHash(w){ var h=2166136261>>>0, i; for(i=0;i<w.length;i++){ h^=w.charCodeAt(i); h=Math.imul(h,16777619)>>>0; } return h>>>0; }
   function feedAsk(){ FEED.timer=0; if(FEED.stopped||HUSHED||!LIVE_OK||!W.fetch) return;
     if(D.hidden){ feedLater(10000); return; }
@@ -2105,7 +2109,7 @@ body{
     for(i=0;i<raw.length&&i<4;i++){ var w=String((raw[i]&&raw[i].what)||'').toLowerCase(), h=String((raw[i]&&raw[i].how)||'').toLowerCase(); if(w==='rope'&&RIM_ACTS[h]) list.push(h); }
     if(!list.length) return;
     var r=mulberry((nameHash(String(Math.round(base/1000)))^0x7ac7)>>>0), offs=[9000+r()*14000, 150000+r()*90000, 360000+r()*150000];
-    for(i=0;i<3;i++) RIM.plan.push({ t:base+offs[i]+RIM_WALK, list:list.slice(), done:false }); }
+    for(i=0;i<3;i++) RIM.plan.push({ t:base+RIM_LAND+offs[i]+RIM_WALK, list:list.slice(), done:false }); }   /* pass 2: from the step's landing, as the bottom stages it */
   function rimDo(h, tt){ RIM.done++; RIM.log.push(h); if(RIM.log.length>24) RIM.log.shift();
     if(h==='pull'){ RIM.pullV=-0.85; RIM.swayT=Math.max(RIM.swayT,0.005); }
     else if(h==='sway'){ RIM.swayT=0.017; RIM.calmUntil=-9; }

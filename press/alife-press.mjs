@@ -38,8 +38,8 @@ console.log("2 · nobody's hands on the rope at the bottom: the rim answers on t
   await sleep(2500); let r = await rim(R.page);
   ok(r.plan.length === 3 && r.plan.every((p) => p.list === "sway+twist"), "three moments planned, rope only: " + r.plan.map((p) => Math.round((p.t - base) / 1000) + "s " + p.list).join(", "));
   const first = r.plan[0].t; const wait = first - Date.now();
-  ok(first - base >= 13000 && first - base <= 27000, "the first moment is 9–23 s after the step, plus the walk: " + Math.round((first - base) / 1000) + " s");
-  if (wait > 0 && wait < 40000) { await sleep(wait + 7500); r = await rim(R.page);
+  ok(first - base >= 53000 && first - base <= 67000, "the first moment is 9–23 s after the landing (stamp + 40 s), plus the walk: " + Math.round((first - base) / 1000) + " s");
+  if (wait > 0 && wait < 90000) { await sleep(wait + 7500); r = await rim(R.page);
     ok(r.log.join(",") === "sway,twist", "the rim did: " + r.log.join(","));
     ok(r.sway > 0.002, "the rope swings: " + r.sway); ok(Math.abs(r.twist) > 0.05, "the flower turned with the twist: " + r.twist); }
   else ok(false, "the first moment was already past when the press looked (" + wait + " ms)");
@@ -49,7 +49,7 @@ console.log("3 · while nobody is dead the rope hangs still, and nothing is play
 { let base = 0;
   const R = await open("alife.html?quality=low&sound=0", () => { if (!base) base = Date.now() - 12000; return live({ step: iso(base), life: { n: 7, dead: true }, touch: [{ what: "rope", how: "sway" }] }); });
   await sleep(3000); let r = await rim(R.page); ok(r.dead === true, "dead read"); const wait = r.plan.length ? r.plan[0].t - Date.now() : 0;
-  if (wait > 0 && wait < 40000) await sleep(wait + 3000);
+  if (wait > 0 && wait < 90000) await sleep(wait + 3000);
   await sleep(2000); r = await rim(R.page); ok(r.done === 0, "no act at the rim while nobody is dead"); ok(r.calm < 0.5, "the rope hangs still: calm " + r.calm);
   await R.close(); }
 
