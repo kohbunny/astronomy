@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:,">
+<title>hum</title>
+<!--
+  hum — the wall label for the song (the bone rite), narrated by the song itself:
+  "i" is the tone, "you" is the one who comes to meet it. chalk on true black,
+  lowercase, eb garamond. NO exit of its own — the house keeps the only ✕.
+
+  it carries the house candle (faint, dimmed for reading) and one sounding thing:
+  a BLIND tuning field. the bead is fixed at centre and never moves; you press,
+  hold, and drift sideways. the start pitch is hidden and randomised, motion is
+  relative — so there is no point to aim at. nothing about accuracy shows while
+  you tune. only once the beat has truly stayed under ~0.6 hz for a second does
+  the single merged wave bloom and a faint "one sound" appear — and it dissolves
+  the moment you drift off. then a quiet "hum it back" plays the pitch, falls
+  silent, listens to your hum, and tells you softly how close you landed.
+
+  this room MAKES SOUND and USES THE MIC → it wants data-hold="silence", and the
+  house iframe that holds it must carry  allow="microphone; autoplay"  (the field
+  still works without mic permission — only hum-back needs it). the two voices in
+  the wave are coloured (yours white, the star's gold; the meeting, flame). audio
+  is opt-in, sounds in air on the phone speaker, octave-up; the real rite is felt
+  through bone, in the next room.
+
+  the bone opens silent — first touch raises the tone — so the label still says
+  "touch me once; i will rise." (if the bone is ever wired to open already-
+  singing, swap that line for "a low tone is already sounding.")
+
+  the three diagrams are terence's drawings (white line on true black, gold at
+  the contact), served from kohmedia — external like the fonts; inline them as
+  data: uris for a fully offline file.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --serif:'EB Garamond', Georgia, serif;
+    --mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --chalk:#cbc6ba;
+    --quiet:#9a958a;
+    --gold:#d4af37;
+    --flame:#ffe27a;
+  }
+  *{ box-sizing:border-box; }
+  html{ margin:0; padding:0; background:#000; -webkit-text-size-adjust:100%; }   /* black lives on html — */
+  body{
+    margin:0; padding:0;
+    background:transparent;            /* — not body, so the candle (z-index:-1) shows through */
+    min-height:100%;
+    color:var(--chalk);
+    font-family:var(--serif);
+    -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-user-select:none; user-select:none;
+    overscroll-behavior-y:none;
+  }
+
+  /* ╔══ DROP-IN 1 of 3 · the candle's box + canvas (dimmed for a reading page) ══╗ */
+  #candlebox{
+    position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
+    width:min(64vw,300px); height:min(48vh,400px);   /* matches the house flame exactly — the seam lines up */
+    z-index:-1;                                       /* behind the words, above the black */
+    pointer-events:none;
+  }
+  #candle{ width:100%; height:100%; display:block; }
+  /* ╚════════════════════════════════════════════════════════════════════════════╝ */
+
+  /* the reading column — never touches the house ✕; sits above the candle (z:-1) */
+  #page{
+    max-width:560px; margin:0 auto;
+    padding:15vh 9vw calc(24vh + env(safe-area-inset-bottom));
+    opacity:0; transition:opacity 1.6s ease;
+  }
+  #page.in{ opacity:1; }
+
+  /* the opening — the song's first words, falling like distant credits */
+  .opening{
+    text-align:center; margin:0 0 1.7em;
+    font-family:var(--serif); color:var(--chalk); letter-spacing:.04em; line-height:1.46;
+  }
+  .opening span{ display:block; }
+  .opening span:nth-child(1){ font-size:clamp(19px,5.2vw,24px); opacity:.74; }
+  .opening span:nth-child(2){ font-size:clamp(22px,6.2vw,28px); opacity:.84; }
+  .opening span:nth-child(3){ font-size:clamp(26px,7.4vw,33px); opacity:.92; }
+  .opening span:nth-child(4){ font-size:clamp(30px,8.8vw,40px); }
+
+  p{ margin:0 0 1.5em; }
+  .read{ font-size:clamp(17px,4.7vw,21px); line-height:1.62; letter-spacing:.012em; font-weight:400; }
+  .coda{ color:var(--quiet); font-size:clamp(15px,4.1vw,18px); line-height:1.6; }
+  /* each word can drift a hair as it passes the flame — transform only, no reflow */
+  .w{ display:inline-block; will-change:transform; }
+
+  /* black space between passages */
+  .gap{ height:8vh; }
+  .gap.big{ height:11vh; }
+
+  /* the two ways — quiet soft headings */
+  .way{
+    font-family:var(--serif); font-style:italic; color:var(--chalk);
+    font-size:clamp(16px,4.2vw,19px); letter-spacing:.01em; margin:0 0 .7em;
+  }
+
+  /* the drawings (terence's; black background merges into the page) */
+  .figwrap{ width:100%; max-width:360px; margin:0 auto; }
+  img.dwg{ display:block; width:100%; height:auto; -webkit-user-select:none; user-select:none; }
+  .figcap{
+    font-family:var(--serif); font-style:italic; color:var(--quiet);
+    font-size:clamp(13px,3.5vw,15px); line-height:1.5;
+    text-align:center; margin:.6em auto 0; max-width:320px;
+  }
+
+  /* the wobble → one sound diagram (the passive teaching wave) */
+  .wavebox{ width:100%; max-width:320px; margin:0 auto; }
+  canvas.wave{ display:block; width:100%; height:104px; }
+  .capwrap{ position:relative; min-height:2.7em; margin:.5em auto 0; max-width:320px; }
+  .capwrap .cap{ position:absolute; left:0; right:0; }
+  .cap{
+    font-family:var(--serif); font-style:italic; color:var(--quiet);
+    font-size:clamp(13px,3.5vw,15px); line-height:1.5; text-align:center;
+  }
+  .capwrap.stacked{ min-height:0; }
+  .capwrap.stacked .cap{ position:static; display:block; opacity:1 !important; margin:.25em 0; }
+
+  /* the practice — a blind tuning field. no track, no target, no chrome. */
+  .toy{ width:100%; max-width:320px; margin:0 auto; }
+  .cue{
+    font-family:var(--serif); font-style:italic; color:var(--chalk);
+    font-size:clamp(14px,3.8vw,16px); line-height:1.5; text-align:center; margin:0 0 1em;
+  }
+  .field{
+    position:relative; width:min(72vw,250px); height:min(72vw,250px);
+    margin:.2em auto .2em; touch-action:none; cursor:pointer; outline:none;
+  }
+  .fieldbg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; }   /* ticks + the revealed wave */
+  canvas.knob{ position:absolute; top:50%; left:50%; width:88px; height:88px; transform:translate(-50%,-50%); pointer-events:none; }
+  .oneword{
+    position:absolute; left:0; right:0; bottom:5%; text-align:center;
+    font-family:var(--serif); font-style:italic; color:var(--flame);
+    font-size:clamp(14px,3.8vw,16px); opacity:0; transition:opacity .9s ease;
+    text-shadow:0 0 10px rgba(255,226,122,.25); pointer-events:none;
+  }
+  .oneword.show{ opacity:.92; }
+  .humrow{ text-align:center; min-height:1.5em; margin:.5em 0 0; }
+  .humback{
+    font-family:var(--serif); font-style:italic; color:var(--quiet);
+    font-size:clamp(13px,3.6vw,15px); letter-spacing:.01em;
+    background:transparent; border:0; padding:.15em .1em; margin:0; cursor:pointer;
+    border-bottom:1px solid rgba(154,149,138,.32); -webkit-appearance:none; appearance:none;
+  }
+  .humback:active{ color:var(--chalk); }
+  .humback[hidden]{ display:none; }
+  .verdict{
+    display:block; text-align:center; font-family:var(--serif); font-style:italic;
+    color:var(--quiet); font-size:clamp(13px,3.5vw,15px); margin:.45em 0 0; min-height:1.2em;
+  }
+  .note{
+    font-family:var(--serif); font-style:italic; color:var(--quiet);
+    font-size:clamp(13px,3.4vw,15px); line-height:1.5; text-align:center; margin:1em 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #page{ transition-duration:.5s; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ╔══ DROP-IN 2 of 3 · the candle ══╗ -->
+  <div id="candlebox"><canvas id="candle" aria-hidden="true"></canvas></div>
+  <!-- ╚════════════════════════════════╝ -->
+
+  <main id="page" aria-label="how to listen">
+
+    <!-- the opening, falling -->
+    <div class="opening" aria-label="a long way from here">
+      <span>a</span><span>long</span><span>way</span><span>from here</span>
+    </div>
+
+    <!-- intro — the song speaks -->
+    <p class="read">about 512 light years away, a dead star is spinning. it turns roughly 173 times every second, steady as a clock, and it has kept that time since long before anything on earth could listen. i was made from its turning — the low tone you are about to meet.</p>
+    <p class="read">you will hum, and slide your voice until your hum and i become a single sound — not in the air, but inside the bone of your skull. when we meet, the small wobble between us goes still. it is real: your head is truly ringing at the star's rate. and it is yours only — no one beside you can feel me, and you cannot hand me to them. for a little while, you are the only one inside a sound from the far edge of the sky. that is the whole of it. it is worth trying once.</p>
+
+    <div class="gap"></div>
+
+    <!-- diagram a: the wobble becoming one sound (illustration) -->
+    <figure class="wavebox">
+      <canvas class="wave" id="wavea" aria-label="two close tones, yours and the star's, drifting in and out of step, then settling into one steady sound"></canvas>
+      <div class="capwrap" id="capwrap">
+        <span class="cap" id="capwob">your voice and mine, not yet one — you hear a slow wobble.</span>
+        <span class="cap" id="capone">tune until the wobble stops. one sound.</span>
+      </div>
+    </figure>
+
+    <div class="gap"></div>
+
+    <!-- the practice: a blind tuning field -->
+    <section class="toy" aria-label="practice tuning">
+      <p class="cue">practice — the target is hidden. press, hold, and drift until the wobble stops.</p>
+      <div class="field" id="field" aria-label="a blind tuning field — press, hold, and drift sideways to find one sound">
+        <canvas class="fieldbg" id="fieldbg" aria-hidden="true"></canvas>
+        <canvas class="knob" id="toyknob" aria-hidden="true"></canvas>
+        <span class="oneword" id="oneword">one sound</span>
+      </div>
+      <p class="humrow"><button class="humback" id="humback" type="button" hidden>hum it back</button></p>
+      <p class="verdict" id="verdict" aria-live="polite"></p>
+      <p class="note">the real thing happens against your skull, in the next room. this is only practice.</p>
+    </section>
+
+    <div class="gap"></div>
+
+    <!-- bridge -->
+    <p class="read">there are two ways to meet me. the first takes a minute, in your hand. the second is the whole thing, lying down. for both, close your eyes.</p>
+
+    <div class="gap big"></div>
+
+    <!-- way 1 -->
+    <p class="way">in the hand</p>
+    <p class="read">hold me in your hand like a shell you are listening to. turn my screen to face away from you. press my speaker end gently into your ear — at the little flap of cartilage in front of the ear-hole, where it meets your jaw.</p>
+
+    <figure class="figwrap">
+      <img class="dwg" src="https://kohmedia.b-cdn.net/earshell.jpg" alt="a head in profile, eyes closed, holding the phone to the ear like a shell — its screen facing out, the speaker resting at the flap in front of the ear, a single gold point where the tone enters" loading="lazy" decoding="async" draggable="false">
+      <figcaption class="figcap">screen out. speaker at the flap, where ear meets jaw.</figcaption>
+    </figure>
+
+    <p class="read">touch me once; i will rise. now hum, and move your voice up or down by tiny amounts. listen for the moment i stop sounding like a note and turn into a dry buzz, like static held against your head. that buzz is me crossing into bone. you may feel me in your skull first, then lower, in your chest. stay there. eyes closed.</p>
+
+    <figure class="figwrap">
+      <img class="dwg" src="https://kohmedia.b-cdn.net/eardoor.jpg" alt="a close detail of the phone's speaker pressed to the flap in front of the ear, the tone entering at a single gold point" loading="lazy" decoding="async" draggable="false">
+      <figcaption class="figcap">the speaker at the flap — where i cross into bone.</figcaption>
+    </figure>
+
+    <div class="gap big"></div>
+
+    <!-- way 2 -->
+    <p class="way">lying down</p>
+    <p class="read">this one you set up before it begins, so that once it starts you do nothing but listen.</p>
+    <p class="read">lie on the floor. rest me on the ground with my speaker end by your ear, and prop my far end against something — a wall, a book, a cup, a pillow — so i lean back at a low angle, propped, not flat, and cannot slip. settle your head so my speaker end meets the same spot as before, the flap in front of the ear. get comfortable.</p>
+
+    <figure class="figwrap">
+      <img class="dwg" src="https://kohmedia.b-cdn.net/earsong.jpg" alt="a person lying back on the floor, eyes closed, the phone resting at the ear" loading="lazy" decoding="async" draggable="false">
+      <figcaption class="figcap">lie back, my speaker at your ear. tap to start once you're still.</figcaption>
+    </figure>
+
+    <p class="read">then — and only then — reach up and tap me to start, and let your hand fall. hum, and find the one sound exactly as before: your voice sliding until i become a buzz and the wobble stills. eyes closed. lie still.</p>
+
+    <div class="gap big"></div>
+
+    <!-- coda — how to leave -->
+    <p class="coda">there is no clock here, and no right way. when your voice and i become one sound, you have arrived — there is nothing after it to reach, nothing to find or finish. stay as long as you like. to leave, simply take me from your ear. i hold for exactly as long as you do.</p>
+
+  </main>
+
+  <!-- ══ the page's machinery: fade-in, the teaching wave, the heat, the blind field + hum-back, the glass bead ══ -->
+  <script>
+  (function(){
+    'use strict';
+    function byId(id){ return document.getElementById(id); }
+    function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+    function smooth(u){ u = u<0?0:(u>1?1:u); return u*u*(3-2*u); }
+    function nowMs(){ return (window.performance && performance.now) ? performance.now() : Date.now(); }
+
+    var REDUCE = false;
+    try{ REDUCE = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }catch(e){}
+
+    /* the star's tone, one octave up (173.68 → 347.36) so a phone speaker can voice
+       it in air — the real rite stays at 173.68, felt through bone, in the bone room */
+    var TARGET = 347.36;
+    function centsToFreq(c){ return TARGET * Math.pow(2, c/1200); }
+    function beatHz(c){ return Math.abs(centsToFreq(c) - TARGET); }
+    var TAU = 6.283185307;
+
+    /* the two voices, made visible: yours white, the star's gold; the sum, flame */
+    var GOLD='212,175,55', WHITE='244,245,240', FLAME='255,226,122';
+
+    /* ---- the heat: reading words drift and warm a touch as they pass the flame.
+           a hair of motion, a faint glow, no sparks, no sound; breathing with the
+           candle's live brightness. ---- */
+    var HEAT = 0.9, GLOWA = 0.12;
+    var heatWords = [], flameY = 0, flameH = 360;
+    function splitWords(el){
+      var parts = el.textContent.split(/(\s+)/), i, tok, s;
+      el.textContent = '';
+      for (i=0;i<parts.length;i++){
+        tok = parts[i]; if (tok===''){ continue; }
+        if (/^\s+$/.test(tok)){ el.appendChild(document.createTextNode(tok)); }
+        else { s=document.createElement('span'); s.className='w'; s.textContent=tok; el.appendChild(s); }
+      }
+    }
+    (function(){ var e=document.querySelectorAll('.read, .coda, .way'), i; for(i=0;i<e.length;i++){ splitWords(e[i]); } })();
+    function measureHeat(){
+      heatWords.length = 0;
+      var sx=window.pageXOffset||0, sy=window.pageYOffset||0, ws=document.querySelectorAll('span.w'), i, r;
+      for (i=0;i<ws.length;i++){ r=ws[i].getBoundingClientRect(); heatWords.push({ el:ws[i], cx:r.left+sx, cyDoc:r.top+sy+r.height/2, active:false }); }
+      var b=byId('candlebox');
+      if (b){ var br=b.getBoundingClientRect(); flameY=br.top+br.height*0.58; flameH=Math.max(1,br.height); }
+      else { flameY=(window.innerHeight||600)*0.42; flameH=360; }
+    }
+    function updateHeat(now){
+      if (REDUCE || !heatWords.length){ return; }
+      var sy=window.pageYOffset||0, Tt=now*0.001;
+      var g=(typeof window.__candleGlow==='number')?window.__candleGlow:0.33;
+      var gf=clamp(0.55 + g*1.35, 0.5, 1.18);
+      var rIn=flameH*0.09, rOut=flameH*0.52, i;
+      for (i=0;i<heatWords.length;i++){
+        var wd=heatWords[i], wy=wd.cyDoc-sy, dist=Math.abs(wy-flameY);
+        var f=(rOut-dist)/(rOut-rIn); f=f<0?0:(f>1?1:f); f=f*f*(3-2*f); f*=gf;
+        if (f>0.02){
+          var amp=HEAT*f, ph=wd.cx*0.02 + Tt*1.8;
+          var dx=Math.sin(ph)*amp, dy=Math.cos(ph*1.2)*amp*0.5;
+          wd.el.style.transform='translate('+dx.toFixed(2)+'px,'+dy.toFixed(2)+'px)';
+          wd.el.style.textShadow='0 0 '+(2+4*f).toFixed(1)+'px rgba(255,210,140,'+(GLOWA*f).toFixed(3)+')';
+          wd.active=true;
+        } else if (wd.active){ wd.el.style.transform=''; wd.el.style.textShadow=''; wd.active=false; }
+      }
+    }
+
+    /* ---- fade the chalk in once it has loaded ---- */
+    var page = byId('page');
+    function reveal(){ if(page){ page.classList.add('in'); } sizeAll(); }
+    if (document.fonts && document.fonts.ready){
+      var shown=false;
+      document.fonts.ready.then(function(){ if(!shown){ shown=true; reveal(); } });
+      setTimeout(function(){ if(!shown){ shown=true; reveal(); } }, 1400);
+    } else { setTimeout(reveal, 200); }
+
+    /* ---- the teaching wave: two voices (above), their sum (below) ---- */
+    function drawSine(cx, W, midY, amp, cyc, phase, color, lw){
+      cx.beginPath();
+      var N = Math.max(48, Math.floor(W*0.7)), i, x, y;
+      for(i=0;i<=N;i++){
+        x = i/N*W; y = midY - amp*Math.sin(TAU*cyc*(i/N) + phase);
+        if(i===0){ cx.moveTo(x,y); } else { cx.lineTo(x,y); }
+      }
+      cx.strokeStyle=color; cx.lineWidth=lw; cx.lineJoin='round'; cx.lineCap='round'; cx.stroke();
+    }
+    function drawWave(cx, W, H, phi, alive){
+      cx.clearRect(0,0,W,H);
+      var a = clamp(alive,0,1), cyc = 3.0;
+      var uy = H*0.34, uamp = H*0.15, ly = H*0.74, lamp = H*0.24;
+      var voice = (0.22 + 0.16*a).toFixed(3);
+      drawSine(cx, W, uy, uamp, cyc, 0,   'rgba('+GOLD+','+voice+')',  1.4);
+      drawSine(cx, W, uy, uamp, cyc, phi, 'rgba('+WHITE+','+voice+')', 1.4);
+      var env = Math.abs(Math.cos(phi*0.5));
+      var sumA = (0.50 + 0.40*a).toFixed(3);
+      cx.save();
+      cx.shadowColor = 'rgba('+FLAME+','+(0.45*a).toFixed(3)+')'; cx.shadowBlur = 5*a;
+      drawSine(cx, W, ly, lamp*env, cyc, phi*0.5, 'rgba('+FLAME+','+sumA+')', 1.9);
+      cx.restore();
+    }
+    function drawStill(cx, top, W, h, phi){
+      var cyc=3.0, uy=top+h*0.34, uamp=h*0.14, ly=top+h*0.74, lamp=h*0.22;
+      drawSine(cx, W, uy, uamp, cyc, 0,   'rgba('+GOLD+',0.32)',  1.4);
+      drawSine(cx, W, uy, uamp, cyc, phi, 'rgba('+WHITE+',0.32)', 1.4);
+      var env=Math.abs(Math.cos(phi*0.5));
+      drawSine(cx, W, ly, lamp*env, cyc, phi*0.5, 'rgba('+FLAME+',0.78)', 1.8);
+    }
+
+    function sizeCanvas(o){
+      if(!o.cv){ return; }
+      var r = o.cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio||1);
+      o.W = Math.max(1, r.width); o.H = Math.max(1, r.height);
+      o.cv.width = Math.round(o.W*dpr); o.cv.height = Math.round(o.H*dpr);
+      o.cx.setTransform(dpr,0,0,dpr,0,0);
+    }
+
+    /* ---- diagram a: the auto-looping teaching wave ---- */
+    var A = { cv:byId('wavea'), cx:null, W:1, H:1, t:0, phi:0, on:true };
+    if (A.cv){ A.cx = A.cv.getContext('2d'); }
+    var capWrap = byId('capwrap'), capWob = byId('capwob'), capOne = byId('capone');
+    function scheduleCents(t){
+      var T=9.0, x=t%T, C=26;
+      if(x<3.4){ return C; }
+      if(x<6.0){ return C*(1-smooth((x-3.4)/2.6)); }
+      if(x<7.8){ return 0; }
+      return C*smooth((x-7.8)/1.2);
+    }
+    function updateCaps(c){
+      var m=Math.abs(c), still=1-smooth((m-2)/8);
+      if(capOne){ capOne.style.opacity = still.toFixed(2); }
+      if(capWob){ capWob.style.opacity = (1-still).toFixed(2); }
+    }
+    function staticA(){
+      if(!A.cx){ return; } sizeCanvas(A);
+      A.cx.clearRect(0,0,A.W,A.H);
+      drawStill(A.cx, 0, A.W, A.H*0.5, 1.9);
+      drawStill(A.cx, A.H*0.5, A.W, A.H*0.5, 0.0);
+      if(capWrap){ capWrap.classList.add('stacked'); }
+    }
+
+    /* ---- the glass bead — a clear 3d knob, no outline; webgl, with a 2d fallback ---- */
+    var knobEl = byId('toyknob');
+    function initGlassKnob(canvas){
+      var gl=null;
+      try{
+        gl = canvas.getContext('webgl', {alpha:true, antialias:true, depth:false, stencil:false, premultipliedAlpha:true})
+          || canvas.getContext('experimental-webgl', {alpha:true, antialias:true, premultipliedAlpha:true});
+      }catch(e){ gl=null; }
+      if(gl){
+        var vsrc = 'attribute vec2 p; varying vec2 uv; void main(){ uv = p; gl_Position = vec4(p,0.0,1.0); }';
+        var fsrc = [
+          'precision mediump float;',
+          'varying vec2 uv;',
+          'uniform float uLit;',
+          'uniform float uTime;',
+          'void main(){',
+          '  float R0 = 0.80;',
+          '  float r = length(uv);',
+          '  vec3 warm = vec3(1.0, 0.886, 0.478);',
+          '  if (r > 1.0) { discard; }',
+          '  if (r > R0){',
+          '    float halo = smoothstep(1.0, R0, r);',
+          '    float a = uLit * halo * halo * 0.22;',
+          '    gl_FragColor = vec4(warm * a, a);',
+          '    return;',
+          '  }',
+          '  vec2 c = uv / R0;',
+          '  float rr = length(c);',
+          '  float edge = smoothstep(1.0, 0.93, rr);',
+          '  float z = sqrt(max(0.0, 1.0 - rr*rr));',
+          '  vec3 n = vec3(c, z);',
+          '  vec3 V = vec3(0.0, 0.0, 1.0);',
+          '  vec3 L = normalize(vec3(-0.45, 0.55, 0.72));',
+          '  vec3 H = normalize(L + V);',
+          '  float fres = pow(1.0 - z, 2.6);',
+          '  float spec = pow(max(dot(n, H), 0.0), 60.0);',
+          '  float sheen = pow(max(dot(n, H), 0.0), 12.0) * 0.42;',
+          '  vec3 L2 = normalize(vec3(0.5, -0.5, 0.6));',
+          '  vec3 H2 = normalize(L2 + V);',
+          '  float glint = pow(max(dot(n, H2), 0.0), 100.0) * 0.6;',
+          '  vec3 glass = vec3(0.86, 0.92, 1.0);',
+          '  float breath = 0.85 + 0.15 * sin(uTime * 2.2);',
+          '  float heart = (1.0 - smoothstep(0.0, 0.72, rr));',
+          '  vec3 col = glass * (fres*0.9 + spec + sheen + glint) + warm * uLit * heart * 0.95 * breath;',
+          '  float a = 0.05 + fres*0.55 + spec + glint + uLit * heart * 0.55 * breath;',
+          '  a = clamp(a, 0.0, 1.0) * edge;',
+          '  gl_FragColor = vec4(col * a, a);',
+          '}'
+        ].join('\n');
+        function sh(type, src){ var s=gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+        var prog = gl.createProgram();
+        gl.attachShader(prog, sh(gl.VERTEX_SHADER, vsrc));
+        gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fsrc));
+        gl.linkProgram(prog);
+        if(gl.getProgramParameter(prog, gl.LINK_STATUS)){
+          gl.useProgram(prog);
+          var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+          var loc = gl.getAttribLocation(prog, 'p');
+          gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+          var uLit = gl.getUniformLocation(prog, 'uLit'), uTime = gl.getUniformLocation(prog, 'uTime');
+          gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+          function gsize(){
+            var r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio||1);
+            var w = Math.max(8, Math.round((r.width||88)*dpr)), h = Math.max(8, Math.round((r.height||88)*dpr));
+            if(canvas.width!==w || canvas.height!==h){ canvas.width=w; canvas.height=h; }
+            gl.viewport(0,0,canvas.width,canvas.height);
+          }
+          gsize();
+          return { resize: gsize, render: function(lit, t){
+            gsize(); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.uniform1f(uLit, lit); gl.uniform1f(uTime, t); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+          } };
+        }
+      }
+      /* fallback: a 2d glass bead */
+      var cx2=null; try{ cx2 = canvas.getContext('2d'); }catch(e){ cx2=null; }
+      return {
+        resize: function(){
+          var r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio||1);
+          canvas.width = Math.max(8, Math.round((r.width||88)*dpr));
+          canvas.height = Math.max(8, Math.round((r.height||88)*dpr));
+          if(cx2){ cx2.setTransform(dpr,0,0,dpr,0,0); }
+        },
+        render: function(lit, t){
+          if(!cx2){ return; }
+          var r = canvas.getBoundingClientRect(), W=r.width||88, Hh=r.height||88, cxp=W/2, cyp=Hh/2, R=Math.min(W,Hh)*0.40;
+          cx2.clearRect(0,0,W,Hh);
+          var g = cx2.createRadialGradient(cxp-R*0.3, cyp-R*0.35, R*0.1, cxp, cyp, R);
+          g.addColorStop(0,'rgba(255,255,255,0.50)'); g.addColorStop(0.28,'rgba(222,234,255,0.15)');
+          g.addColorStop(0.7,'rgba(200,215,240,0.05)'); g.addColorStop(1,'rgba(200,215,240,0.0)');
+          cx2.fillStyle=g; cx2.beginPath(); cx2.arc(cxp,cyp,R,0,TAU); cx2.fill();
+          var rg = cx2.createRadialGradient(cxp,cyp,R*0.82, cxp,cyp,R);
+          rg.addColorStop(0,'rgba(232,240,255,0)'); rg.addColorStop(1,'rgba(236,243,255,0.35)');
+          cx2.fillStyle=rg; cx2.beginPath(); cx2.arc(cxp,cyp,R,0,TAU); cx2.fill();
+          cx2.fillStyle='rgba(255,255,255,0.9)'; cx2.beginPath(); cx2.arc(cxp-R*0.32, cyp-R*0.36, R*0.12, 0, TAU); cx2.fill();
+          if(lit>0.01){
+            var br=0.85+0.15*Math.sin(t*2.2);
+            var wg=cx2.createRadialGradient(cxp,cyp,0, cxp,cyp,R*0.85);
+            wg.addColorStop(0,'rgba(255,226,122,'+(0.7*lit*br).toFixed(3)+')'); wg.addColorStop(1,'rgba(255,226,122,0)');
+            cx2.fillStyle=wg; cx2.beginPath(); cx2.arc(cxp,cyp,R*0.85,0,TAU); cx2.fill();
+          }
+        }
+      };
+    }
+    var glass = knobEl ? initGlassKnob(knobEl) : null;
+    var litCur = 0;
+
+    /* ---- the blind tuning field ----
+       the bead is fixed at centre; you press, hold and drift sideways. the start
+       pitch is hidden and randomised, motion is relative — no destination shows.
+       accuracy never leaks while tuning. only once the beat truly holds under the
+       gate for the lock time does the single wave bloom + a faint "one sound". */
+    var oneword = byId('oneword'), humback = byId('humback'), verdict = byId('verdict');
+    var F = {
+      cv:byId('fieldbg'), cx:null, W:1, H:1, on:true,
+      ac:null, o1:null, o2:null, g1:null, g2:null, master:null,
+      hidden:0, cents:0, originX:0, sounding:false,
+      range:58, sens:0.28, lockC:3, lockMs:1000, gate:0.62,
+      inWin:0, arrived:false, resolved:false, waveAlive:0,
+      micStream:null, testing:false, listenIv:0
+    };
+    if (F.cv){ F.cx = F.cv.getContext('2d'); }
+    var field = byId('field');
+
+    function setVerdict(s){ if(verdict){ verdict.textContent = s || ''; } }
+    function newDrift(){
+      var mag = 18 + Math.random()*16;                 /* 18..34 cents, privately */
+      F.hidden = (Math.random()<0.5?-1:1)*mag;
+      F.cents = F.hidden; F.inWin=0; F.arrived=false; F.resolved=false;
+      if(oneword){ oneword.classList.remove('show'); }
+      if(humback){ humback.hidden = true; }
+    }
+    function fieldAudioInit(){
+      if(F.ac){ return true; }
+      try{
+        var AC = window.AudioContext || window.webkitAudioContext; if(!AC){ return false; }
+        F.ac = new AC();
+        F.master = F.ac.createGain(); F.master.gain.value=0; F.master.connect(F.ac.destination);
+        F.o1 = F.ac.createOscillator(); F.o1.type='sine'; F.o1.frequency.value=TARGET;
+        F.g1 = F.ac.createGain(); F.g1.gain.value=0.16; F.o1.connect(F.g1); F.g1.connect(F.master);
+        F.o2 = F.ac.createOscillator(); F.o2.type='sine'; F.o2.frequency.value=centsToFreq(F.cents);
+        F.g2 = F.ac.createGain(); F.g2.gain.value=0.16; F.o2.connect(F.g2); F.g2.connect(F.master);
+        F.o1.start(0); F.o2.start(0);
+        return true;
+      }catch(e){ F.ac=null; return false; }
+    }
+    function rampMaster(to, secs){
+      if(!F.ac || !F.master){ return; }
+      var t=F.ac.currentTime;
+      try{
+        F.master.gain.cancelScheduledValues(t);
+        F.master.gain.setValueAtTime(Math.max(0.0001, F.master.gain.value), t);
+        if(to<=0.0002){ F.master.gain.exponentialRampToValueAtTime(0.0001, t+secs); }
+        else { F.master.gain.linearRampToValueAtTime(to, t+secs); }
+      }catch(e){}
+    }
+    function setO2(c){
+      if(F.ac && F.o2){ var t=F.ac.currentTime;
+        try{ F.o2.frequency.cancelScheduledValues(t); F.o2.frequency.setValueAtTime(F.o2.frequency.value,t); F.o2.frequency.linearRampToValueAtTime(centsToFreq(c), t+0.03); }catch(e){} }
+    }
+    function fieldStart(x){
+      if(F.testing){ return; }
+      if(!fieldAudioInit()){ return; }
+      if(F.ac.state==='suspended'){ try{ F.ac.resume(); }catch(e){} }
+      setVerdict(''); if(humback){ humback.hidden=true; }
+      F.originX = x; F.cents = F.hidden; setO2(F.cents);
+      rampMaster(0.9, 0.06);
+      F.sounding=true; F.arrived=false; F.inWin=0;
+    }
+    function fieldMove(x){
+      if(!F.sounding){ return; }
+      F.cents = clamp(F.hidden + (x - F.originX)*F.sens, -F.range, F.range);
+      setO2(F.cents);
+    }
+    function fieldRelease(){
+      if(!F.sounding){ return; }
+      F.sounding=false; rampMaster(0, 0.18);
+      if(F.arrived){ F.resolved=true; if(humback){ humback.hidden=false; } }
+      else { newDrift(); }
+    }
+    function fieldSilence(){
+      F.sounding=false;
+      if(F.ac){ try{ F.master.gain.cancelScheduledValues(F.ac.currentTime); F.master.gain.value=0; }catch(e){} try{ F.ac.suspend(); }catch(e){} }
+      stopMic();
+      if(F.listenIv){ clearInterval(F.listenIv); F.listenIv=0; }
+      F.testing=false;
+    }
+
+    /* the field's picture: a faint tick ring always; the merged wave only on arrival */
+    function drawTicks(cx,W,H){
+      var cxp=W/2, cyp=H/2, R=Math.min(W,H)*0.42, n=48, i, ang, r1, r2, L=Math.min(W,H);
+      cx.lineWidth=1; cx.strokeStyle='rgba(203,198,186,0.15)';
+      for(i=0;i<n;i++){
+        ang=(i/n)*TAU - Math.PI/2;
+        r1=R; r2=R - ((i%4===0)? L*0.034 : L*0.018);
+        cx.beginPath();
+        cx.moveTo(cxp+Math.cos(ang)*r1, cyp+Math.sin(ang)*r1);
+        cx.lineTo(cxp+Math.cos(ang)*r2, cyp+Math.sin(ang)*r2);
+        cx.stroke();
+      }
+    }
+    function drawMerged(cx,W,H,a){
+      var mid=H*0.5, amp=H*0.12, cyc=2.4, i, x, y, N=Math.max(48,Math.floor(W*0.7));
+      cx.save();
+      cx.shadowColor='rgba('+FLAME+','+(0.5*a).toFixed(3)+')'; cx.shadowBlur=8*a;
+      cx.beginPath();
+      for(i=0;i<=N;i++){ x=i/N*W; y=mid-amp*Math.sin(TAU*cyc*(i/N)); if(i===0){cx.moveTo(x,y);}else{cx.lineTo(x,y);} }
+      cx.strokeStyle='rgba('+FLAME+','+(0.85*a).toFixed(3)+')'; cx.lineWidth=2; cx.lineCap='round'; cx.lineJoin='round'; cx.stroke();
+      cx.restore();
+    }
+    function drawField(){
+      if(!F.cx){ return; }
+      F.cx.clearRect(0,0,F.W,F.H);
+      drawTicks(F.cx, F.W, F.H);
+      if(F.waveAlive>0.01){ drawMerged(F.cx, F.W, F.H, clamp(F.waveAlive,0,1)); }
+    }
+
+    /* ---- the optional hum-back: play the pitch, fall silent, listen, judge softly ---- */
+    function autoCorrelate(buf, sr){
+      var SIZE=buf.length, rms=0, i;
+      for(i=0;i<SIZE;i++){ rms+=buf[i]*buf[i]; }
+      rms=Math.sqrt(rms/SIZE); if(rms<0.012){ return -1; }
+      var r1=0, r2=SIZE-1, thres=0.2;
+      for(i=0;i<SIZE/2;i++){ if(Math.abs(buf[i])<thres){ r1=i; break; } }
+      for(i=1;i<SIZE/2;i++){ if(Math.abs(buf[SIZE-i])<thres){ r2=SIZE-i; break; } }
+      if(r2<=r1){ return -1; }
+      var b=buf.subarray(r1,r2), L=b.length, c=new Float32Array(L), j;
+      for(i=0;i<L;i++){ var sum=0; for(j=0;j<L-i;j++){ sum+=b[j]*b[j+i]; } c[i]=sum; }
+      var d=0; while(d<L-1 && c[d]>c[d+1]){ d++; }
+      var maxval=-1, maxpos=-1;
+      for(i=d;i<L;i++){ if(c[i]>maxval){ maxval=c[i]; maxpos=i; } }
+      if(maxpos<=0){ return -1; }
+      var x1=c[maxpos-1]||0, x2=c[maxpos], x3=c[maxpos+1]||0, aa=(x1+x3-2*x2)/2, bb=(x3-x1)/2, T0=maxpos;
+      if(aa){ T0 = maxpos - bb/(2*aa); }
+      if(!(T0>0)){ return -1; }
+      return sr/T0;
+    }
+    function stopMic(){
+      if(F.micStream){ try{ var ts=F.micStream.getTracks(); for(var i=0;i<ts.length;i++){ ts[i].stop(); } }catch(e){} F.micStream=null; }
+    }
+    function startEcho(){
+      if(F.testing){ return; }
+      if(!fieldAudioInit()){ return; }
+      F.testing=true; if(humback){ humback.hidden=true; }
+      try{ if(F.ac.state==='suspended'){ F.ac.resume(); } }catch(e){}
+      var t=F.ac.currentTime;
+      try{
+        F.o2.frequency.cancelScheduledValues(t); F.o2.frequency.setValueAtTime(TARGET, t);
+        F.master.gain.cancelScheduledValues(t);
+        F.master.gain.setValueAtTime(0.0001, t);
+        F.master.gain.exponentialRampToValueAtTime(0.7, t+0.08);
+        F.master.gain.setValueAtTime(0.7, t+1.0);
+        F.master.gain.exponentialRampToValueAtTime(0.0001, t+1.3);
+      }catch(e){}
+      setVerdict('listen...');
+      setTimeout(beginListen, 1500);
+    }
+    function beginListen(){
+      var md = navigator.mediaDevices;
+      if(!md || !md.getUserMedia){ setVerdict('the mic is unavailable here'); F.testing=false; if(humback){ humback.hidden=false; } return; }
+      setVerdict('now hum...');
+      md.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}}).then(function(stream){
+        F.micStream=stream;
+        var an=F.ac.createAnalyser(); an.fftSize=2048;
+        var srcN=F.ac.createMediaStreamSource(stream); srcN.connect(an);   /* analyser only — no path to the speaker */
+        var buf=new Float32Array(an.fftSize), freqs=[], started=nowMs();
+        F.listenIv = setInterval(function(){
+          try{ an.getFloatTimeDomainData(buf); }catch(e){}
+          var f=autoCorrelate(buf, F.ac.sampleRate);
+          if(f>70 && f<700){ freqs.push(f); }
+          if(nowMs()-started > 2600){ clearInterval(F.listenIv); F.listenIv=0; stopMic(); finishListen(freqs); }
+        }, 120);
+      }).catch(function(){
+        setVerdict('the mic is off — allow it to try'); F.testing=false; if(humback){ humback.hidden=false; }
+      });
+    }
+    function finishListen(freqs){
+      F.testing=false; if(humback){ humback.hidden=false; }
+      if(!freqs.length){ setVerdict("i didn't hear a steady hum"); return; }
+      freqs.sort(function(a,b){ return a-b; });
+      var med=freqs[Math.floor(freqs.length/2)];
+      var cents = 1200*Math.log(med/TARGET)/Math.LN2;
+      while(cents>600){ cents-=1200; } while(cents<-600){ cents+=1200; }
+      var ac=Math.abs(cents);
+      if(ac<=40){ setVerdict('one sound.'); }
+      else if(ac<=120){ setVerdict('almost — a touch ' + (cents>0?'sharp':'flat')); }
+      else { setVerdict('not yet — listen again'); }
+    }
+
+    /* ---- pointer on the field ---- */
+    function px(e){ return e.clientX; }
+    function fDown(e){
+      if(field && field.setPointerCapture && e.pointerId!=null){ try{ field.setPointerCapture(e.pointerId); }catch(_){} }
+      fieldStart(px(e));
+      if(REDUCE){ drawField(); if(glass){ glass.render(1,0); } }
+      if(e.cancelable){ e.preventDefault(); }
+    }
+    function fMove(e){ if(!F.sounding){ return; } fieldMove(px(e)); if(e.cancelable){ e.preventDefault(); } }
+    function fUp(){ fieldRelease(); if(REDUCE){ drawField(); if(glass){ glass.render(0,0); } } }
+    if(field){
+      field.addEventListener('pointerdown', fDown, false);
+      field.addEventListener('pointermove', fMove, false);
+      field.addEventListener('pointerup', fUp, false);
+      field.addEventListener('pointercancel', fUp, false);
+    }
+    if(humback){ humback.addEventListener('click', function(){ startEcho(); }, false); }
+
+    /* ---- the loop ---- */
+    var last=0, raf=0;
+    function frame(now){
+      raf = requestAnimationFrame(frame);
+      if(document.hidden){ last=now; return; }
+      var dt = (now-last)/1000; if(dt<0){ dt=0; } if(dt>0.05){ dt=0.05; } last=now;
+
+      if(A.cx && A.on){
+        A.t += dt;
+        var c = scheduleCents(A.t), fb = beatHz(c);
+        A.phi += TAU*fb*dt;
+        if(Math.abs(c)<3){ var k=Math.round(A.phi/TAU)*TAU; A.phi += (k-A.phi)*0.06; }
+        drawWave(A.cx, A.W, A.H, A.phi, 1);
+        updateCaps(c);
+      }
+
+      /* the field: arrival is earned by ear, never shown early */
+      if(F.sounding){
+        var fbF = beatHz(F.cents);
+        if(Math.abs(F.cents) <= F.lockC && fbF < F.gate){ F.inWin += dt*1000; }
+        else { F.inWin = 0; if(F.arrived){ F.arrived=false; } }
+        if(!F.arrived && F.inWin >= F.lockMs){ F.arrived=true; }
+      }
+      var wantWave = (F.arrived && F.sounding) ? 1 : 0;
+      F.waveAlive += (wantWave - F.waveAlive) * 0.08;
+      if(oneword){ if(F.arrived && F.sounding){ oneword.classList.add('show'); } else { oneword.classList.remove('show'); } }
+      if(F.cx && F.on){ drawField(); }
+
+      litCur += (((F.sounding)?1:0) - litCur)*0.12;
+      if(glass && F.on){ glass.render(litCur, now/1000); }
+
+      updateHeat(now);
+    }
+
+    /* ---- sizing, sleeping off-screen, silence on the way out ---- */
+    function sizeAll(){
+      sizeCanvas(A); sizeCanvas(F);
+      if(glass){ glass.resize(); }
+      measureHeat();
+      if(REDUCE){ staticA(); drawField(); if(glass){ glass.render(0,0); } }
+    }
+    window.addEventListener('resize', sizeAll, false);
+    window.addEventListener('orientationchange', function(){ setTimeout(sizeAll, 250); }, false);
+
+    function observe(o){
+      if(!o.cv || !window.IntersectionObserver){ return; }
+      try{
+        var io = new IntersectionObserver(function(ents){ var i; for(i=0;i<ents.length;i++){ o.on = ents[i].isIntersecting; } }, {threshold:0.05});
+        io.observe(o.cv);
+      }catch(e){}
+    }
+    observe(A); observe(F);
+
+    document.addEventListener('visibilitychange', function(){ if(document.hidden){ fieldSilence(); } }, false);
+    window.addEventListener('pagehide', fieldSilence, false);
+
+    /* drawings: hide a broken one, and re-measure heat since loading shifts the text below */
+    var imgs = document.querySelectorAll('img.dwg'), j;
+    for(j=0;j<imgs.length;j++){
+      (function(im){
+        im.addEventListener('load', measureHeat, false);
+        im.addEventListener('error', function(){ var f=im.closest?im.closest('figure'):null; if(f){ f.style.display='none'; } measureHeat(); }, false);
+      })(imgs[j]);
+    }
+
+    newDrift();
+    sizeAll();
+    setTimeout(measureHeat, 1700);
+    if(REDUCE){ staticA(); drawField(); if(glass){ glass.render(0,0); } }
+    else { last=nowMs(); raf=requestAnimationFrame(frame); }
+  })();
+  </script>
+
+<!-- ╔══ DROP-IN 3 of 3 · the flame (dimmed for reading; box + canvas above) ══╗ -->
+<script>
+(function(){
+'use strict';
+var box = document.getElementById('candlebox');
+var cv  = document.getElementById('candle');
+if (!cv) return;
+var fctx = null, fdpr = 1;
+try{ fctx = cv.getContext('2d'); }catch(e){ fctx = null; }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+/* the candle's shape — identical to the house's front-door flame */
+var FL  = { cx:0.5, baseY:0.80, height:0.62, width:0.085, belly:0.28, tipw:0.27, layers:7, core:0.05 };
+var DIM = 0.32;     /* TUNE — turned down so the flame sits quietly behind the reading */
+var wellF = 0;
+
+function sizeFlame(){
+  if (!fctx || !cv || !box) return;
+  try{
+    var r = box.getBoundingClientRect();
+    fdpr = Math.min(2, window.devicePixelRatio || 1);
+    var w = Math.max(80, r.width || 0), h = Math.max(120, r.height || 0);
+    cv.width = Math.round(w * fdpr); cv.height = Math.round(h * fdpr);
+  }catch(e){}
+}
+window.addEventListener('resize', sizeFlame);
+
+/* a calm, self-contained breath — no audio, no words; gently alive */
+function flameState(now){
+  wellF += ((Math.random()-0.5)*0.12 - wellF) * 0.07;     /* the well — never repeats */
+  var b = 0.40 + 0.13*Math.sin(now*0.00040) + 0.05*Math.sin(now*0.00091 + 1.3);
+  return {
+    brightness: clamp((0.30 + 0.92*b) * DIM, 0, 1.4),
+    lean:       0.18 + 1.2*b,
+    sway:       Math.sin(now*0.0011)*0.38 + Math.sin(now*0.0027+2)*0.14,
+    flicker:    (0.32 + 0.42*(1-b)) + wellF,
+    austerity:  clamp(0.34 - 0.42*b, 0.07, 0.40)
+  };
+}
+
+function drawFlame(now){
+  if (!fctx) return;
+  try{
+    var W = cv.width, H = cv.height;
+    if (W < 2 || H < 2){ sizeFlame(); return; }
+    fctx.clearRect(0, 0, W, H);
+    var o = flameState(now), bright = clamp(o.brightness, 0, 1.6);
+    window.__candleGlow = bright;     /* published so the reading text can warm with the live flame */
+    if (bright <= 0.004) return;
+    var aust = clamp(o.austerity, 0, 1), sway = clamp(o.sway, -1, 1);
+    var flk = o.flicker * (Math.sin(now*0.006)*0.5 + Math.sin(now*0.013+1)*0.3);
+    var fb = Math.max(bright, 0.14);
+    var cx = W*FL.cx, baseY = H*FL.baseY;
+    var leanV = 0.35 + 0.19 * clamp((clamp(o.lean,0.05,1.7)-0.16)/1.45, 0, 1);
+    var h = H*FL.height*leanV*(1-0.18*aust);
+    h = Math.min(h, (FL.baseY-0.06)*H);
+    var w = W*FL.width*(1-0.22*aust)*(0.94+0.12*Math.sin(now*0.009));
+    var TW = FL.tipw;
+    var tip = sway*0.45 + flk*TW*0.7 + Math.sin(now*0.0032)*0.16*TW*3 + Math.sin(now*0.0069+1.7)*0.09*TW*3;
+    fctx.save(); fctx.globalCompositeOperation = 'lighter';
+
+    /* the aura */
+    var gy = baseY-h*0.5, gr = Math.max(w*3.0, h*0.7);
+    var rg = fctx.createRadialGradient(cx,gy,1, cx,gy,gr);
+    rg.addColorStop(0,  'rgba(244,222,150,'+(0.16*bright).toFixed(3)+')');
+    rg.addColorStop(0.5,'rgba(232,196,102,'+(0.07*bright).toFixed(3)+')');
+    rg.addColorStop(1,  'rgba(232,196,102,0)');
+    fctx.fillStyle = rg; fctx.beginPath(); fctx.arc(cx,gy,gr,0,6.2832); fctx.fill();
+
+    /* nested teardrop bodies — seven layers, each breathing and wandering alone */
+    var nL = FL.layers, belly = FL.belly, L;
+    var defs = [{c1:'150,108,46', c2:'207,160,72'}, {c1:'181,142,60', c2:'232,196,102'},
+                {c1:'214,176,86', c2:'240,212,150'},{c1:'232,196,102',c2:'246,228,166'},
+                {c1:'242,222,160',c2:'252,240,196'},{c1:'246,228,166',c2:'255,247,220'}];
+    for (L = 0; L < nL; L++){
+      var frac = L/((nL-1)||1), sc = 1.0-0.56*frac, aa = 0.26+0.34*frac;
+      var ly = defs[Math.min(L, defs.length-1)];
+      var lw = w*sc, lh = h*(0.82+0.18*sc);
+      lh *= (1 + 0.028*Math.sin(now*0.011 + L*1.9));
+      var tipL = tip*(1 + 0.16*Math.sin(now*0.0043 + L*0.9));
+      var tipX = cx+tipL*lw*1.15, tipY = baseY-lh,
+          bul = lw, by = baseY-lh*belly, a = aa*fb;
+      var g = fctx.createLinearGradient(cx,baseY, tipX,tipY);
+      g.addColorStop(0,    'rgba('+ly.c1+',0)');
+      g.addColorStop(0.16, 'rgba('+ly.c1+','+(a*0.72).toFixed(3)+')');
+      g.addColorStop(0.62, 'rgba('+ly.c2+','+a.toFixed(3)+')');
+      g.addColorStop(1,    'rgba('+ly.c2+','+(a*0.85).toFixed(3)+')');
+      fctx.fillStyle = g;
+      fctx.beginPath(); fctx.moveTo(tipX,tipY);
+      fctx.bezierCurveTo(tipX+lw*0.16, tipY+lh*0.24, cx+bul, by, cx+bul*0.5, baseY-lh*0.08);
+      fctx.quadraticCurveTo(cx+bul*0.26, baseY, cx, baseY);
+      fctx.quadraticCurveTo(cx-bul*0.26, baseY, cx-bul*0.5, baseY-lh*0.08);
+      fctx.bezierCurveTo(cx-bul, by, tipX-lw*0.16, tipY+lh*0.24, tipX, tipY);
+      fctx.closePath(); fctx.fill();
+    }
+
+    /* the blue heart — a small haze tucked just inside the base */
+    fctx.save();
+    fctx.translate(cx, baseY - h*0.04);
+    var bw = w*0.55, bhh = h*0.05;
+    fctx.scale(1, Math.max(0.06, (bhh*2)/bw));
+    var bg = fctx.createRadialGradient(0,0,0.5, 0,0,bw);
+    bg.addColorStop(0,  'rgba(140,175,255,'+(0.13*fb).toFixed(3)+')');
+    bg.addColorStop(0.6,'rgba(120,150,235,'+(0.05*fb).toFixed(3)+')');
+    bg.addColorStop(1,  'rgba(120,150,235,0)');
+    fctx.fillStyle = bg;
+    fctx.beginPath(); fctx.arc(0,0,bw,0,6.2832); fctx.fill();
+    fctx.restore();
+
+    /* the hot core */
+    if (FL.core > 0.001){
+      var coreW = Math.max(w*FL.core,1), coreH = Math.max(h*FL.core,1), ccy = baseY-coreH*0.7;
+      var cg = fctx.createRadialGradient(cx,ccy,0.5, cx,ccy, Math.max(coreW,coreH));
+      cg.addColorStop(0,  'rgba(255,251,235,'+(0.50*fb).toFixed(3)+')');
+      cg.addColorStop(0.6,'rgba(255,240,190,'+(0.20*fb).toFixed(3)+')');
+      cg.addColorStop(1,  'rgba(255,240,190,0)');
+      fctx.fillStyle = cg; fctx.beginPath(); fctx.ellipse(cx,ccy,coreW,coreH,0,0,6.2832); fctx.fill();
+    }
+
+    /* the cold sharp edge — the instrument sharpened by silence */
+    if (aust > 0.30){
+      var tx = cx+tip*w*0.7, sw = 1.2*fdpr;
+      fctx.fillStyle = 'rgba(214,232,255,'+(0.09*aust*bright).toFixed(3)+')';
+      fctx.beginPath(); fctx.moveTo(tx-sw, baseY-h*0.62);
+      fctx.quadraticCurveTo(tx, baseY-h*1.0, tx+sw, baseY-h*0.62);
+      fctx.closePath(); fctx.fill();
+    }
+    fctx.restore();
+  }catch(e){}
+}
+
+var hidden = false;
+document.addEventListener('visibilitychange', function(){ hidden = document.hidden; });
+function loop(now){
+  requestAnimationFrame(loop);
+  if (hidden) return;                  /* rest while the tab is away */
+  drawFlame(now);
+}
+sizeFlame();
+requestAnimationFrame(loop);
+})();
+</script>
+<!-- ╚══ END DROP-IN 3 of 3 ══╝ -->
+
+</body>
+</html>

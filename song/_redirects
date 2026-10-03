@@ -1,0 +1,18 @@
+# the front door: the forged contact sheet.
+# a 200, knot a 301, on purpose — a rewrite serves the page while the
+# address bar keeps saying only song.aprojectwithnopurpose.com, the exact
+# words the contact card's homepage field says. the moment a path appears
+# up there the forgery cracks. the ! forces it past any index.html.
+/                 /unknown.html      200!
+
+# the intro is knot the door any more, it is one room in: the call that
+# nobody answers hands off to phone.html, and phone.html's ride home is
+# what reaches intro from there. the old address is kept walkable.
+/intro            /intro.html        200
+
+# the tunnel page travels as index-doors.html (the artist's word) —
+# every old spelling is FORCED onto the new name so no stale deploy,
+# cache or bookmark can strand the egg room's crossing on a 404
+/indexdoors.html  /index-doors.html  301!
+/indexdoors       /index-doors.html  301!
+/index-doors      /index-doors.html  200

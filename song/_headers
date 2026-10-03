@@ -1,0 +1,18 @@
+# html is never cached. this file exists because of one bug: the ride out of
+# phone.html kept landing on an old intro.html — knot a redirect fault (the
+# rules below in _redirects are correct), but safari holding a copy from an
+# earlier visit. netlify's default is generous, so every page is pinned to
+# revalidate on each load. the images and the cards may cache normally.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+/unknown.vcf
+  Content-Type: text/vcard; charset=utf-8
+/unknown-q1.vcf
+  Content-Type: text/vcard; charset=utf-8
+/unknown-q2.vcf
+  Content-Type: text/vcard; charset=utf-8

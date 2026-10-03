@@ -1,0 +1,3455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark"><!-- MUST match the tunnel's scheme: if the iframe's
+  scheme differs from its parent's, safari/chrome force the frame OPAQUE (a white canvas)
+  and the see-through ground dies. same word on both sides keeps the glass clear. -->
+<link rel="icon" href="data:,">
+<title>notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<!--
+  the book of notes — the colophon room, become an actual book.
+  apwnp · song.aprojectwithnopurpose.com · one file · plain script (three.js) · iphone-safe.
+  (this file was notes-book.html; it goes forward as notebook.html.)
+
+  the room: the candle burns as always, and breathes its own slow smoke now,
+  climbing nearly to the top of the frame. the moon moth bridges in from the
+  doorway (index-doors.html), flutters, and dies in the flame — and nothing
+  of it rises. its ash falls in a long grey stream into the dark below, and
+  out of that falling the book slowly forms, the candlelight finding it as
+  it comes. the moth does not return: the dead star keeps the cover now.
+
+  the book: vanilla three.js. a hardcover of very burnt wood, wholly
+  consumed — the boards grown by a char forge (stone-lab's way, truly now:
+  a height field is carved — broad heat-worn waves, wandering fractures
+  with stress kinks and rare branches, chips, tiny burst bubbles, the
+  crumbled rim — then albedo, normals and roughness are derived from it):
+  deep carbon black, ash in the hollows, graphite glints, nothing raised,
+  nothing wormlike. the cover carries
+  psr j0437-4715 and its white-dwarf companion in layered ice-light —
+  hotspot, filament beams, twin beat-rings — pulsing its lighthouse blip.
+  the block is gold-foiled on all three edges, and the inner binding is
+  light-yellow gold foil, driven harder than the edges so the flame truly
+  catches in it. the title page is a wordless ink drawing: the dead star,
+  and an egg. three pictures from the shelf are tipped into ruled plates
+  (faces 10 · 13 · 15). some leaves are singed; the last is almost taken
+  whole — the burn creeps organically — and shows it honestly in 3d. it
+  floats in the dark, just under the flame; the candle never moves.
+
+    · closed: drag to turn it over (all sides), it drifts back upright.
+              touch the star and the book asks — "sing me a song?"
+              (singer.mp3) — then the microphone opens and listens: any
+              answer, a sung note, a hum, a word, opens the covers. it learns
+              the room's quiet first, so silence won't do it; touch the star
+              again and impatience opens it at once. no mic, mic refused, or
+              VOICE.micGate=false: the touch alone opens it. opening tells
+              the house {apwnp:'book-open'}.
+    · open:   the first leaves teach the hand, few words, big letters: touch
+              a page to turn it · you can speak to it (the words, large) ·
+              swipe back to close. the poem is set large enough to read by
+              candlelight. drag or swipe a page and it follows your finger.
+    · smoke:  the candle breathes a wisp on its own every few seconds, and
+              every page turn sends another — the serpentine tendrils from
+              the burning letters (flame.html).
+    · ear:    the ear stays quiet until the reader meets the voice page (the
+              second leaf) — then it listens, with no status text anywhere:
+              "flip" · "back" · "play" · "close" (also "open", "hush").
+              it never replaces the fingers. saying "close" from any page
+              riffles the leaves home, then shuts the covers. needs https
+              or localhost, like the mic. AUDIO_SLOTS maps face → url so any
+              page can carry a recording for "play".
+    · plate:  the dead star has a second plate now — a framed piece of sky,
+              stars blinking, the pulsar sweeping its beams. touch the star and
+              it sings (nofriends.mp3); touch it again to hush it. drawings and
+              other recordings can live on pages the same two ways.
+    · light:  a point + a soft spot ride the same flicker family as the 2d
+              flame, and leap with it on window.__flameSurge. real shadows.
+    · sound:  paper, cloth, embers — synthesized, like the room's other
+              sounds. woken on the first touch (ios). page-turns are sampled
+              from noise, never twice the same. drop a url into FILES (in the
+              sound kit) and that sound plays your recording instead — made
+              for the elevenlabs page-turn. only the voices are real
+              recordings, fetched from the shelf (the cdn).
+
+  for the integration chat:
+    · this room MAKES SOUND -> data-hold="silence".
+    · same handshake as before: armed by ?enter=moth; started by the parent's
+      {apwnp:'arrive-moth'} (load-time fallback for direct visits). the
+      arrival now ends in an ashfall and 'apwnp:book-form' — the book forms
+      over ~5s; opened without the moth it forms on its own after a moment.
+    · ?lowfx in the url turns shadows off, for tired machines.
+    · window.__book in the console: open(), close(), ignite(), state(),
+      debug(), pageCenters(), hitAt(x,y), wisp(), sing(), pulsar() — small
+      handles, for tuning together.
+    · the house still owns the room-exit egg; this file adds no exit ui.
+    · on opening, the room posts {apwnp:'book-open'} to its parent and fires
+      the 'apwnp:book-open' window event — the house's mic can listen for it.
+    · placeholder pages carry the hand's instructions, the colophon poem, and
+      three demonstrations (an ink plate, a living margin, a singing plate) —
+      real content drops into buildFaces near the top of the book script.
+-->
+<style>
+  html{ margin:0; padding:0; background:#000; }
+  body{ margin:0; padding:0; overflow:hidden; }
+
+  /* the see-through ground — when this page lives inside the tunnel's iframe
+     (html.through, set by the tiny head script), the black floor lifts and the
+     tunnel's OWN night camera (#cam + #camTint, already granted) becomes the vr
+     background: one eye, one ask, no second permission. every paint layer here
+     is already clear — the candle + smoke are 2d glows on transparent canvases,
+     and the book renderer runs alpha:true with clear-alpha 0 — so only this
+     ground needed to open. opened straight (no parent), the true #000 holds. */
+  html.through, html.through body{ background:transparent; }
+
+  :root{
+    --chalk:#b9b4a8;
+    --chalk-bright:#e8e2d2;
+    --chalk-dim:#6a655a;
+    --flame:#ffe27a;
+    --serif:'EB Garamond', Georgia, 'Times New Roman', serif;
+  }
+
+  body{
+    color:var(--chalk);
+    font-family:var(--serif);
+    min-height:100%;
+    -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+  }
+
+  /* the candle (drop-in) — burns behind, dead-centre. do not move it. */
+  #candlebox{
+    position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
+    width:min(64vw,300px); height:min(48vh,400px);
+    z-index:-1; pointer-events:none;
+  }
+  #candle{ width:100%; height:100%; display:block; }
+
+  /* the smoke — its own full-window sheet, so a wisp can leave the candle's
+     little box and climb the whole dark. behind the book, above the flame. */
+  #smokefx{
+    position:fixed; inset:0; width:100%; height:100%;
+    z-index:0; pointer-events:none;
+  }
+
+  /* the book — a transparent webgl pane over the whole room; the flame shows through */
+  #book3d{
+    position:fixed; inset:0; width:100%; height:100%;
+    z-index:1; display:block; touch-action:none;
+    outline:0; -webkit-tap-highlight-color:transparent;
+  }
+
+  /* a whisper under the closed book, once, if it is left unopened */
+  #pagehint{
+    position:fixed; left:50%; bottom:calc(5.5vh + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    z-index:2; pointer-events:none;
+    font-family:var(--serif); font-style:italic; letter-spacing:0.14em;
+    font-size:clamp(0.9rem,3.4vw,1.05rem); color:var(--chalk-dim);
+    opacity:0; transition:opacity 2.6s ease;
+    text-shadow:0 1px 3px rgba(0,0,0,0.9);
+  }
+  #pagehint.in{ opacity:0.75; animation:hintbreathe 4.6s ease-in-out infinite; }
+  @keyframes hintbreathe{ 0%,100%{ opacity:0.42; } 50%{ opacity:0.8; } }
+  @media (prefers-reduced-motion: reduce){ #pagehint.in{ animation:none; opacity:0.6; } }
+
+  }
+</style>
+<script>
+/* the see-through hook — if this page woke inside another page's iframe (the
+   tunnel), clear the ground before first paint so the parent's night camera
+   shows through. runs in the head so there is no black flash. */
+try{ if(window.self!==window.top) document.documentElement.classList.add('through'); }catch(e){}
+</script>
+</head>
+<body>
+
+  <div id="candlebox"><canvas id="candle" aria-hidden="true"></canvas></div>
+  <canvas id="smokefx" aria-hidden="true"></canvas>
+  <canvas id="book3d" aria-label="a burnt, gold-edged book of notes — touch the star to open it, drag to turn the pages"></canvas>
+  <div id="pagehint" aria-hidden="true"></div>
+
+<!-- the candle (drop-in 3) — the same flame as notes.html, now with smoke:
+     the wisp/puff tendrils from the burning letters (flame.html) live here too,
+     on their own sheet, and the book asks for one on every page turn. -->
+<script>
+(function(){
+'use strict';
+var box = document.getElementById('candlebox');
+var cv  = document.getElementById('candle');
+if (!cv) return;
+var fctx = null, fdpr = 1, boxRect = null;
+try{ fctx = cv.getContext('2d'); }catch(e){ fctx = null; }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+var FL  = { cx:0.5, baseY:0.80, height:0.62, width:0.085, belly:0.28, tipw:0.27, layers:7, core:0.05 };
+var DIM = 0.86;
+var wellF = 0;
+var thinkEase = 0;   /* eases toward window.__songThink (0..1): the flame breathes harder while the song thinks */
+var surge = 0;       /* a brief, strong flare when the moth is swallowed by the flame (0..~2.2). set via window.__flameSurge; decays each frame */
+/* the moth-arrival block calls this the instant the moth reaches the core, so the candle leaps */
+window.__flameSurge = function(v){ if (typeof v === 'number' && isFinite(v)) surge = Math.min(2.2, Math.max(surge, v)); };
+
+function sizeFlame(){
+  if (!fctx || !cv || !box) return;
+  try{
+    var r = box.getBoundingClientRect();
+    boxRect = r;
+    fdpr = Math.min(2, window.devicePixelRatio || 1);
+    var w = Math.max(80, r.width || 0), h = Math.max(120, r.height || 0);
+    cv.width = Math.round(w * fdpr); cv.height = Math.round(h * fdpr);
+  }catch(e){}
+}
+window.addEventListener('resize', sizeFlame);
+
+function flameState(now){
+  wellF += ((Math.random()-0.5)*0.12 - wellF) * 0.07;
+  surge *= 0.95;   /* the moth-flare eases back down over ~1s */
+  var t = (typeof window.__songThink === 'number') ? window.__songThink : (window.__songThink ? 1 : 0);
+  thinkEase += (clamp(t,0,1) - thinkEase) * 0.06;
+  var b = 0.40 + 0.13*Math.sin(now*0.00040) + 0.05*Math.sin(now*0.00091 + 1.3);
+  return {
+    brightness: clamp((0.30 + 0.92*b) * DIM + 0.55*thinkEase + 1.05*surge, 0, 2.4),
+    lean:       0.18 + 1.2*b + 0.55*thinkEase + 1.3*surge,
+    sway:       Math.sin(now*0.0011)*0.38 + Math.sin(now*0.0027+2)*0.14 + Math.sin(now*0.02)*0.10*thinkEase + Math.sin(now*0.031)*0.16*surge,
+    flicker:    (0.32 + 0.42*(1-b)) + wellF + 0.45*thinkEase + 0.7*surge,
+    austerity:  clamp(0.34 - 0.42*b - 0.20*thinkEase, 0.05, 0.40),
+    surge:      surge
+  };
+}
+
+function drawFlame(now){
+  if (!fctx) return;
+  try{
+    var W = cv.width, H = cv.height;
+    if (W < 2 || H < 2){ sizeFlame(); return; }
+    fctx.clearRect(0, 0, W, H);
+    var o = flameState(now), bright = clamp(o.brightness, 0, 2.4);   /* ceiling raised so the moth-surge can blaze past the resting max */
+    if (bright <= 0.004) return;
+    var aust = clamp(o.austerity, 0, 1), sway = clamp(o.sway, -1, 1);
+    var flk = o.flicker * (Math.sin(now*0.006)*0.5 + Math.sin(now*0.013+1)*0.3);
+    var fb = Math.max(bright, 0.14);
+    var cx = W*FL.cx, baseY = H*FL.baseY;
+    var leanV = 0.35 + 0.19 * clamp((clamp(o.lean,0.05,1.7)-0.16)/1.45, 0, 1);
+    var h = H*FL.height*leanV*(1-0.18*aust);
+    h *= (1 + 0.55*o.surge);                 /* the moth-flare leaps the flame taller */
+    h = Math.min(h, (FL.baseY-0.04)*H);
+    var w = W*FL.width*(1-0.22*aust)*(0.94+0.12*Math.sin(now*0.009));
+    var TW = FL.tipw;
+    var tip = sway*0.45 + flk*TW*0.7 + Math.sin(now*0.0032)*0.16*TW*3 + Math.sin(now*0.0069+1.7)*0.09*TW*3;
+    /* remember where the tip is, in window pixels — the smoke is born there */
+    if (boxRect){
+      tipNow = { x: boxRect.left + (cx + tip*w*0.8)/fdpr,
+                 y: boxRect.top  + (baseY - h)/fdpr,
+                 sway: sway };
+    }
+    fctx.save(); fctx.globalCompositeOperation = 'lighter';
+
+    var gy = baseY-h*0.5, gr = Math.max(w*3.0, h*0.7);
+    var rg = fctx.createRadialGradient(cx,gy,1, cx,gy,gr);
+    rg.addColorStop(0,  'rgba(244,222,150,'+(0.13*bright).toFixed(3)+')');
+    rg.addColorStop(0.5,'rgba(232,196,102,'+(0.055*bright).toFixed(3)+')');
+    rg.addColorStop(1,  'rgba(232,196,102,0)');
+    fctx.fillStyle = rg; fctx.beginPath(); fctx.arc(cx,gy,gr,0,6.2832); fctx.fill();
+
+    var nL = FL.layers, belly = FL.belly, L;
+    var defs = [{c1:'150,108,46', c2:'207,160,72'}, {c1:'181,142,60', c2:'232,196,102'},
+                {c1:'214,176,86', c2:'240,212,150'},{c1:'232,196,102',c2:'246,228,166'},
+                {c1:'242,222,160',c2:'252,240,196'},{c1:'246,228,166',c2:'255,247,220'}];
+    for (L = 0; L < nL; L++){
+      var frac = L/((nL-1)||1), sc = 1.0-0.56*frac, aa = 0.26+0.34*frac;
+      var ly = defs[Math.min(L, defs.length-1)];
+      var lw = w*sc, lh = h*(0.82+0.18*sc);
+      lh *= (1 + 0.028*Math.sin(now*0.011 + L*1.9));
+      var tipL = tip*(1 + 0.16*Math.sin(now*0.0043 + L*0.9));
+      var tipX = cx+tipL*lw*1.15, tipY = baseY-lh,
+          bul = lw, by = baseY-lh*belly, a = aa*fb;
+      var g = fctx.createLinearGradient(cx,baseY, tipX,tipY);
+      g.addColorStop(0,    'rgba('+ly.c1+',0)');
+      g.addColorStop(0.16, 'rgba('+ly.c1+','+(a*0.72).toFixed(3)+')');
+      g.addColorStop(0.62, 'rgba('+ly.c2+','+a.toFixed(3)+')');
+      g.addColorStop(1,    'rgba('+ly.c2+','+(a*0.85).toFixed(3)+')');
+      fctx.fillStyle = g;
+      fctx.beginPath(); fctx.moveTo(tipX,tipY);
+      fctx.bezierCurveTo(tipX+lw*0.16, tipY+lh*0.24, cx+bul, by, cx+bul*0.5, baseY-lh*0.08);
+      fctx.quadraticCurveTo(cx+bul*0.26, baseY, cx, baseY);
+      fctx.quadraticCurveTo(cx-bul*0.26, baseY, cx-bul*0.5, baseY-lh*0.08);
+      fctx.bezierCurveTo(cx-bul, by, tipX-lw*0.16, tipY+lh*0.24, tipX, tipY);
+      fctx.closePath(); fctx.fill();
+    }
+
+    fctx.save();
+    fctx.translate(cx, baseY - h*0.04);
+    var bw = w*0.55, bhh = h*0.05;
+    fctx.scale(1, Math.max(0.06, (bhh*2)/bw));
+    var bgg = fctx.createRadialGradient(0,0,0.5, 0,0,bw);
+    bgg.addColorStop(0,  'rgba(140,175,255,'+(0.13*fb).toFixed(3)+')');
+    bgg.addColorStop(0.6,'rgba(120,150,235,'+(0.05*fb).toFixed(3)+')');
+    bgg.addColorStop(1,  'rgba(120,150,235,0)');
+    fctx.fillStyle = bgg;
+    fctx.beginPath(); fctx.arc(0,0,bw,0,6.2832); fctx.fill();
+    fctx.restore();
+
+    if (FL.core > 0.001){
+      var coreW = Math.max(w*FL.core,1), coreH = Math.max(h*FL.core,1), ccy = baseY-coreH*0.7;
+      var cg = fctx.createRadialGradient(cx,ccy,0.5, cx,ccy, Math.max(coreW,coreH));
+      cg.addColorStop(0,  'rgba(255,251,235,'+(0.50*fb).toFixed(3)+')');
+      cg.addColorStop(0.6,'rgba(255,240,190,'+(0.20*fb).toFixed(3)+')');
+      cg.addColorStop(1,  'rgba(255,240,190,0)');
+      fctx.fillStyle = cg; fctx.beginPath(); fctx.ellipse(cx,ccy,coreW,coreH,0,0,6.2832); fctx.fill();
+    }
+
+    if (aust > 0.30){
+      var tx = cx+tip*w*0.7, sw = 1.2*fdpr;
+      fctx.fillStyle = 'rgba(214,232,255,'+(0.09*aust*bright).toFixed(3)+')';
+      fctx.beginPath(); fctx.moveTo(tx-sw, baseY-h*0.62);
+      fctx.quadraticCurveTo(tx, baseY-h*1.0, tx+sw, baseY-h*0.62);
+      fctx.closePath(); fctx.fill();
+    }
+    fctx.restore();
+  }catch(e){}
+}
+
+/* ── the smoke — ported from the burning letters (flame.html) ─────────────
+   a wisp is a climbing head that lays a ribbon of tiny motes, so the smoke
+   gathers into serpentine tendrils. the book asks for one on every page
+   turn, through window.__candleWisp(). */
+var fxEl = document.getElementById('smokefx');
+var fx2 = null, fdpr2 = 1, sprite = null, tipNow = null;
+try{ fx2 = fxEl ? fxEl.getContext('2d') : null; }catch(e){ fx2 = null; }
+
+function sizeFx(){
+  if (!fxEl) return;
+  fdpr2 = Math.min(2, window.devicePixelRatio || 1);
+  fxEl.width  = Math.round(window.innerWidth  * fdpr2);
+  fxEl.height = Math.round(window.innerHeight * fdpr2);
+}
+window.addEventListener('resize', sizeFx);
+
+function makeSprite(){
+  sprite = document.createElement('canvas');
+  sprite.width = 64; sprite.height = 64;
+  var c = sprite.getContext('2d');
+  var g = c.createRadialGradient(32,32,1, 32,32,31);
+  g.addColorStop(0,   'rgba(196,202,216,0.55)');
+  g.addColorStop(0.45,'rgba(186,192,208,0.22)');
+  g.addColorStop(1,   'rgba(186,192,208,0)');
+  c.fillStyle = g;
+  c.beginPath(); c.arc(32,32,31,0,6.2832); c.fill();
+}
+
+var puffs = [], wisps = [];
+
+/* a single soft mote of smoke */
+function spawnPuff(x, y, big, age){
+  if (puffs.length > 140) puffs.shift();
+  var o = {
+    x:x, y:y,
+    vx:(Math.random()-0.5)*5,
+    vy:-(3+Math.random()*4),
+    r0: big ? (3.5+Math.random()*2)  : (1.3+Math.random()*1.4),
+    gr: big ? (12+Math.random()*7)   : (4+Math.random()*4),
+    peak: big ? (0.26+Math.random()*0.08) : (0.16+Math.random()*0.08),
+    t:0, life: big ? (2.8+Math.random()*1.3) : (1.6+Math.random()*1.1),
+    ph: Math.random()*6.2832
+  };
+  o.t = (age || 0) * o.life;   /* born mid-bloom, if asked — the first breath shows at once */
+  puffs.push(o);
+}
+
+/* a wisp — the climbing head */
+function spawnWisp(x, y, seed){
+  if (wisps.length > 8) wisps.shift();
+  wisps.push({ x:x, y:y, x0:x,
+    sp: 55+Math.random()*25,
+    amp: 4+Math.random()*5,
+    freq: 2.0+Math.random()*1.8,
+    ph: (seed||Math.random())*6.2832,
+    t:0, life: 6.6+Math.random()*3.0, drop:0 });
+}
+
+function stepFx(dt, now){
+  if (!fx2) return;
+  fx2.clearRect(0, 0, fxEl.width, fxEl.height);
+  if (!(puffs.length || wisps.length)) return;
+  var lid = window.innerHeight * 0.015;      /* the smoke climbs nearly to the frame's top */
+  var swayN = tipNow ? tipNow.sway : 0;
+  fx2.save();
+  fx2.scale(fdpr2, fdpr2);
+  fx2.globalCompositeOperation = 'lighter';
+  /* wisp heads climb and lay their ribbons */
+  for (var i = wisps.length - 1; i >= 0; i--){
+    var wsp = wisps[i]; wsp.t += dt;
+    if (wsp.t > wsp.life){ wisps.splice(i, 1); continue; }
+    var u = wsp.t / wsp.life;
+    var lidF = clamp((wsp.y - lid) / 70, 0, 1);
+    wsp.y -= wsp.sp * (1 - u*0.40) * lidF * dt;
+    wsp.x = wsp.x0 + Math.sin(wsp.t*wsp.freq + wsp.ph) * (wsp.amp * (0.5 + u))
+          + swayN*9*u + Math.sin(now*0.0009 + wsp.ph)*3;
+    wsp.drop += dt;
+    if (wsp.drop > 0.045){ wsp.drop = 0; spawnPuff(wsp.x, wsp.y, false); }
+  }
+  for (var j = puffs.length - 1; j >= 0; j--){
+    var p = puffs[j]; p.t += dt;
+    if (p.t > p.life){ puffs.splice(j, 1); continue; }
+    var v = p.t / p.life;
+    var lidP = clamp((p.y - lid) / 70, 0, 1);
+    p.vy += (-2.5 - p.vy) * 0.5 * dt;
+    p.vx += (swayN*8 - p.vx) * 0.4 * dt;
+    p.x += (p.vx + Math.sin(now*0.0012 + p.ph)*6) * dt;
+    p.y += p.vy * lidP * dt;
+    var r = p.r0 + p.gr * v * 1.7;
+    var a = p.peak * (v < 0.18 ? v/0.18 : (1 - v)/0.82) * (0.35 + 0.65*lidP);
+    if (a <= 0.003) continue;
+    fx2.globalAlpha = a;
+    fx2.drawImage(sprite, p.x - r, p.y - r, r*2, r*2);
+  }
+  fx2.restore();
+  fx2.globalAlpha = 1;
+}
+
+/* the book calls this on every page turn — one wisp, and a first breath */
+window.__candleWisp = function(n){
+  if (!fx2) return;
+  if (!sprite) makeSprite();
+  var t = tipNow || { x: window.innerWidth/2, y: window.innerHeight*0.28, sway: 0 };
+  n = (typeof n === 'number' && isFinite(n) && n > 0) ? Math.min(3, Math.round(n)) : 1;
+  for (var k=0;k<n;k++){
+    spawnWisp(t.x + (Math.random()-0.5)*7, t.y + 2 + Math.random()*4, Math.random());
+  }
+  spawnPuff(t.x + (Math.random()-0.5)*8, t.y + 4, true, 0.18);   /* the first breath, already curling */
+  for (var m=0;m<6;m++){                                          /* a short ribbon, laid at once */
+    spawnPuff(t.x + (Math.random()-0.5)*6 + Math.sin(m*1.3)*3,
+              t.y - m*4 - Math.random()*3, false, 0.16 + Math.random()*0.14);
+  }
+};
+
+var hidden = false;
+document.addEventListener('visibilitychange', function(){ hidden = document.hidden; });
+window.__smokeDebug = function(){                /* for tuning the braid together */
+  return { tip: tipNow ? Math.round(tipNow.y) : null,
+           wisps: wisps.map(function(w){ return { y:Math.round(w.y), u:+(w.t/w.life).toFixed(2), sp:Math.round(w.sp) }; }),
+           puffs: puffs.length };
+};
+var lastNow = 0, nextBreath = 0;
+function loop(now){
+  requestAnimationFrame(loop);
+  if (hidden) return;
+  var dt = lastNow ? Math.min(0.09, (now - lastNow)/1000) : 0.016;   /* slow devices keep near-true smoke */
+  lastNow = now;
+  drawFlame(now);
+  if (now > nextBreath){                          /* the candle's own slow exhale */
+    nextBreath = now + 2800 + Math.random()*2200;
+    if (!sprite) makeSprite();
+    var tb = tipNow || { x: window.innerWidth/2, y: window.innerHeight*0.28 };
+    spawnWisp(tb.x + (Math.random()-0.5)*6, tb.y + 2 + Math.random()*4, Math.random());
+    if (Math.random() < 0.45) spawnPuff(tb.x + (Math.random()-0.5)*7, tb.y + 3, false, 0.12);
+  }
+  stepFx(dt, now);
+}
+sizeFlame();
+sizeFx();
+makeSprite();
+requestAnimationFrame(loop);
+})();
+</script>
+
+<!-- three.js — the house already carries three.min.js beside index-doors; fall back to the cdn if this room is opened alone -->
+<script src="three.min.js"></script>
+<script>
+if (!window.THREE){
+  document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+}
+</script>
+
+<!-- the sounds of a book — paper, leather, embers, and a low fire under everything.
+     all synthesized (like the room's other voices), never twice the same, and
+     woken only on the first touch, the ios way. -->
+<script>
+(function(){
+'use strict';
+
+/* ── [TUNE] the sound knobs ─────────────────────────────────────────────── */
+var VOL = {
+  master: 0.9,
+  fire:   0.030,    /* the low fire bed. 0 = silent room */
+  page:   0.16,     /* a page turning */
+  creak:  0.10,     /* the cover's leather */
+  thump:  0.24,     /* the cover falling shut */
+  hiss:   0.040     /* the embers tracing the colophon */
+};
+var FIRE_SOUND = true;
+
+var ctx = null, master = null, fireOn = false;
+
+function getCtx(){
+  if (ctx) return ctx;
+  try{
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    ctx = new AC();
+    var comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -18; comp.knee.value = 24; comp.ratio.value = 4;
+    master = ctx.createGain(); master.gain.value = VOL.master;
+    master.connect(comp); comp.connect(ctx.destination);
+  }catch(e){ ctx = null; }
+  return ctx;
+}
+function wake(){
+  var c = getCtx(); if (!c) return;
+  try{ if (c.state === 'suspended') c.resume(); }catch(e){}
+  if (FIRE_SOUND && !fireOn) startFire();
+  warmVoices();   /* start the two recordings buffering, so the words are ready */
+}
+window.addEventListener('pointerdown', wake, { passive:true });
+window.addEventListener('touchstart',  wake, { passive:true });
+
+/* one shared noise buffer — cut and colored into everything below */
+var noiseBuf = null;
+function noise(){
+  if (noiseBuf) return noiseBuf;
+  var c = getCtx(); if (!c) return null;
+  var len = Math.floor(c.sampleRate * 2);
+  noiseBuf = c.createBuffer(1, len, c.sampleRate);
+  var d = noiseBuf.getChannelData(0);
+  for (var i=0;i<len;i++) d[i] = Math.random()*2-1;
+  return noiseBuf;
+}
+function brown(){
+  var c = getCtx(); if (!c) return null;
+  var len = Math.floor(c.sampleRate * 2.5);
+  var b = c.createBuffer(1, len, c.sampleRate);
+  var d = b.getChannelData(0), last = 0;
+  for (var i=0;i<len;i++){
+    var w = Math.random()*2-1;
+    last = (last + 0.02*w) / 1.02;
+    d[i] = last * 3.2;
+  }
+  /* soften the loop seam */
+  for (var k=0;k<400;k++){ var f=k/400; d[k]*=f; d[len-1-k]*=f; }
+  return b;
+}
+
+/* ── the fire bed — brown noise banked low, with small dry pops ─────────── */
+var crackleTimer = 0;
+function startFire(){
+  var c = getCtx(); if (!c || fireOn) return; fireOn = true;
+  var src = c.createBufferSource(); src.buffer = brown(); src.loop = true;
+  var lp = c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 300; lp.Q.value = 0.4;
+  var g = c.createGain(); g.gain.value = 0;
+  src.connect(lp); lp.connect(g); g.connect(master);
+  src.start();
+  g.gain.linearRampToValueAtTime(VOL.fire, c.currentTime + 3.5);   /* the fire fades up like it was always there */
+  scheduleCrackle();
+}
+function scheduleCrackle(){
+  clearTimeout(crackleTimer);
+  crackleTimer = setTimeout(function(){
+    pop(); scheduleCrackle();
+  }, 90 + Math.random()*420);
+}
+function pop(){
+  var c = getCtx(); if (!c || !fireOn) return;
+  var src = c.createBufferSource(); src.buffer = noise();
+  var bp = c.createBiquadFilter(); bp.type='bandpass';
+  bp.frequency.value = 1400 + Math.random()*3600; bp.Q.value = 2.2;
+  var g = c.createGain();
+  var t = c.currentTime, a = (0.008 + Math.random()*0.024);
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(a, t + 0.004);
+  g.gain.exponentialRampToValueAtTime(0.0004, t + 0.012 + Math.random()*0.02);
+  src.connect(bp); bp.connect(g); g.connect(master);
+  src.start(t); src.stop(t + 0.06);
+}
+
+/* ── a page turning — a shaped slide of air through paper, plus dry crinkles ── */
+function pageTurn(strength){
+  var c = getCtx(); if (!c) return;
+  var s = (typeof strength==='number') ? strength : 1;
+  var t = c.currentTime;
+  var dur = 0.42 + Math.random()*0.14;
+
+  var src = c.createBufferSource(); src.buffer = noise();
+  src.playbackRate.value = 0.85 + Math.random()*0.35;
+  var bp = c.createBiquadFilter(); bp.type='bandpass'; bp.Q.value = 0.85;
+  bp.frequency.setValueAtTime(650 + Math.random()*200, t);
+  bp.frequency.linearRampToValueAtTime(2300 + Math.random()*700, t + dur*0.42);
+  bp.frequency.linearRampToValueAtTime(800 + Math.random()*250, t + dur);
+  var g = c.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(VOL.page*s, t + dur*0.16);
+  g.gain.linearRampToValueAtTime(VOL.page*s*0.7, t + dur*0.6);
+  g.gain.linearRampToValueAtTime(0.0001, t + dur);
+  src.connect(bp); bp.connect(g); g.connect(master);
+  src.start(t); src.stop(t + dur + 0.05);
+
+  /* two or three crinkles riding the slide */
+  var n = 2 + (Math.random()<0.5?1:0);
+  for (var i=0;i<n;i++){
+    (function(){
+      var tt = t + dur*(0.18 + Math.random()*0.6);
+      var cs = c.createBufferSource(); cs.buffer = noise();
+      var cb = c.createBiquadFilter(); cb.type='bandpass';
+      cb.frequency.value = 2400 + Math.random()*3200; cb.Q.value = 4;
+      var cg = c.createGain();
+      cg.gain.setValueAtTime(0, tt);
+      cg.gain.linearRampToValueAtTime(VOL.page*s*(0.24+Math.random()*0.2), tt + 0.004);
+      cg.gain.exponentialRampToValueAtTime(0.0004, tt + 0.03 + Math.random()*0.03);
+      cs.connect(cb); cb.connect(cg); cg.connect(master);
+      cs.start(tt); cs.stop(tt + 0.09);
+    })();
+  }
+}
+
+/* a fingertip landing on paper — barely there */
+function paperTouch(){
+  var c = getCtx(); if (!c) return;
+  var t = c.currentTime;
+  var src = c.createBufferSource(); src.buffer = noise();
+  var bp = c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value = 2600; bp.Q.value = 3;
+  var g = c.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(0.028, t + 0.004);
+  g.gain.exponentialRampToValueAtTime(0.0004, t + 0.05);
+  src.connect(bp); bp.connect(g); g.connect(master);
+  src.start(t); src.stop(t + 0.09);
+}
+
+/* ── the cover — old leather leaning open, and falling shut ─────────────── */
+function coverCreak(){
+  var c = getCtx(); if (!c) return;
+  var t = c.currentTime, dur = 0.75;
+  var src = c.createBufferSource(); src.buffer = noise();
+  var bp = c.createBiquadFilter(); bp.type='bandpass'; bp.Q.value = 15;
+  bp.frequency.setValueAtTime(165, t);
+  bp.frequency.linearRampToValueAtTime(92, t + dur);
+  /* a slow wobble in the hinge */
+  var lfo = c.createOscillator(); lfo.frequency.value = 6.4 + Math.random()*2.5;
+  var lg = c.createGain(); lg.gain.value = 16;
+  lfo.connect(lg); lg.connect(bp.frequency);
+  var g = c.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(VOL.creak, t + 0.10);
+  g.gain.linearRampToValueAtTime(VOL.creak*0.4, t + dur*0.7);
+  g.gain.linearRampToValueAtTime(0.0001, t + dur);
+  src.connect(bp); bp.connect(g); g.connect(master);
+  lfo.start(t); lfo.stop(t + dur);
+  src.start(t); src.stop(t + dur + 0.05);
+}
+function coverThump(soft){
+  var c = getCtx(); if (!c) return;
+  var t = c.currentTime, v = VOL.thump * (soft ? 0.45 : 1);
+  var o = c.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(64, t);
+  o.frequency.exponentialRampToValueAtTime(36, t + 0.16);
+  var g = c.createGain();
+  g.gain.setValueAtTime(v, t);
+  g.gain.exponentialRampToValueAtTime(0.0006, t + 0.20);
+  o.connect(g); g.connect(master);
+  o.start(t); o.stop(t + 0.24);
+  var src = c.createBufferSource(); src.buffer = noise();
+  var lp = c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 260;
+  var ng = c.createGain();
+  ng.gain.setValueAtTime(v*0.35, t);
+  ng.gain.exponentialRampToValueAtTime(0.0004, t + 0.09);
+  src.connect(lp); lp.connect(ng); ng.connect(master);
+  src.start(t); src.stop(t + 0.12);
+}
+
+/* ── the embers tracing the colophon — a thin hiss with tiny stars in it ── */
+function emberHiss(){
+  var c = getCtx(); if (!c) return;
+  var t = c.currentTime, dur = 2.1;
+  var src = c.createBufferSource(); src.buffer = noise();
+  var hp = c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value = 4600;
+  var g = c.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(VOL.hiss, t + 0.5);
+  g.gain.linearRampToValueAtTime(VOL.hiss*0.6, t + dur*0.75);
+  g.gain.linearRampToValueAtTime(0.0001, t + dur);
+  src.connect(hp); hp.connect(g); g.connect(master);
+  src.start(t); src.stop(t + dur + 0.05);
+  for (var i=0;i<6;i++){
+    (function(){
+      var tt = t + 0.2 + Math.random()*(dur-0.5);
+      var o = c.createOscillator(); o.type='sine';
+      o.frequency.value = 4800 + Math.random()*4200;
+      var og = c.createGain();
+      og.gain.setValueAtTime(0, tt);
+      og.gain.linearRampToValueAtTime(0.016, tt + 0.006);
+      og.gain.exponentialRampToValueAtTime(0.0003, tt + 0.05);
+      o.connect(og); og.connect(master);
+      o.start(tt); o.stop(tt + 0.08);
+    })();
+  }
+}
+
+/* ── the shelf voices — the only two sounds in this room that are real ────
+   everything else is synthesized; these are recordings, asked for by name:
+   · sing   — "sing me a song?" — spoken when the symbol is tapped and the
+              book opens. singEveryOpen:false makes it a one-time greeting.
+   · pulsar — the dead star's own song, kept behind its plate in the book.
+   both are created on the first touch (the ios way) and buffer early, so on
+   good wifi they answer without a stutter. play() only ever happens inside
+   a tap, which is what ios requires. */
+var VOICE = {
+  sing:   'https://kohmedia.b-cdn.net/singer.mp3',
+  pulsar: 'https://kohmedia.b-cdn.net/nofriends.mp3',
+  singVol: 0.9, pulsarVol: 0.9,
+  singEveryOpen: true,
+  micGate: true          /* touch the moth → it asks → the mic listens → any sound opens.
+                            set false to open on the touch alone. */
+};
+
+/* ── your own recordings, when you have them ──
+   drop a url beside any name and that sound plays your file instead of the
+   synthesized one (elevenlabs .mp3s go here). leave '' to keep the synth. */
+var FILES = {
+  pageTurn: '', paperTouch: '', coverCreak: '', coverThump: '', emberHiss: ''
+};
+var fileA = {};
+function playFile(name){
+  var url = FILES[name];
+  if (!url) return false;
+  try{
+    var a = fileA[name];
+    if (!a){ a = fileA[name] = mkVoice(url, (VOL[name] !== undefined ? VOL[name] : 0.9)); }
+    a.currentTime = 0;
+    var p = a.play(); if (p && p.catch) p.catch(function(){});
+    return true;
+  }catch(e){ return false; }
+}
+var singA = null, pulsarA = null, sangOnce = false;
+function mkVoice(url, vol){
+  var a = new Audio();
+  a.preload = 'auto';
+  a.playsInline = true; a.setAttribute('playsinline','');
+  a.volume = vol;
+  a.src = url;
+  try{ a.load(); }catch(e){}
+  return a;
+}
+function warmVoices(){
+  try{
+    if (!singA)   singA   = mkVoice(VOICE.sing,   VOICE.singVol);
+    if (!pulsarA) pulsarA = mkVoice(VOICE.pulsar, VOICE.pulsarVol);
+  }catch(e){}
+}
+function sing(){
+  warmVoices(); if (!singA) return;
+  if (!VOICE.singEveryOpen && sangOnce) return;
+  sangOnce = true;
+  try{ singA.currentTime = 0; }catch(e){}
+  try{ var p = singA.play(); if (p && p.catch) p.catch(function(){}); }catch(e){}
+}
+function pulsarToggle(){
+  warmVoices(); if (!pulsarA) return;
+  try{
+    if (pulsarA.paused || pulsarA.ended){
+      if (pulsarA.ended){ try{ pulsarA.currentTime = 0; }catch(e){} }
+      var p = pulsarA.play(); if (p && p.catch) p.catch(function(){});
+    } else pulsarA.pause();
+  }catch(e){}
+}
+function pulsarPlaying(){ return !!(pulsarA && !pulsarA.paused && !pulsarA.ended); }
+function pulsarHush(){ try{ if (pulsarA && !pulsarA.paused) pulsarA.pause(); }catch(e){} }
+
+/* the book reaches these by name */
+function withFile(name, fn){
+  return function(){ if (playFile(name)) return; return fn.apply(null, arguments); };
+}
+window.__bookSound = {
+  wake: wake,
+  pageTurn:   withFile('pageTurn', pageTurn),
+  paperTouch: withFile('paperTouch', paperTouch),
+  coverCreak: withFile('coverCreak', coverCreak),
+  coverThump: withFile('coverThump', coverThump),
+  emberHiss:  withFile('emberHiss', emberHiss),
+  sing: sing, singEl: function(){ return singA; },
+  pulsarToggle: pulsarToggle, pulsarPlaying: pulsarPlaying,
+  pulsarHush: pulsarHush, VOICE: VOICE, FILES: FILES
+};
+})();
+</script>
+
+<!-- the ear — two small listeners, both optional, both quiet.
+     the gate: after the moth is touched and the book asks its question,
+       the microphone opens, and any answer — a sung note, a hum, a word —
+       is enough to open the covers.
+     the words: once the book is open, it can hear
+       "flip" · "back" · "play" · "close" (and "open", "hush").
+     both need https (or localhost) and a browser that offers them; when
+     they are missing or refused, everything falls back to touch and the
+     book is never stuck. web speech support is uneven — chrome and edge
+     hear well, safari partly, firefox hardly — so this stays a layer
+     over the fingers, never a replacement. -->
+<script>
+(function(){
+'use strict';
+
+var SR    = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+var micOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) &&
+            (window.isSecureContext !== false);
+
+var cueEl  = document.getElementById('miccue');
+var togEl  = document.getElementById('voicetoggle');
+var wordEl = togEl ? togEl.querySelector('.w') : null;
+
+function cue(t){
+  if (!cueEl) return;
+  if (t){ cueEl.textContent = t; cueEl.classList.add('in'); }
+  else cueEl.classList.remove('in');
+}
+
+/* ── the gate — it asked for a song; any sound is answer enough ── */
+var gate = null, lastRms = 0;
+function gateStop(){
+  if (!gate) return;
+  try{ cancelAnimationFrame(gate.raf); }catch(e){}
+  try{ gate.stream.getTracks().forEach(function(t){ t.stop(); }); }catch(e){}
+  try{ gate.ctx.close(); }catch(e){}
+  gate = null; cue('');
+}
+function gatePoll(){
+  if (!gate) return;
+  gate.raf = requestAnimationFrame(gatePoll);
+  gate.an.getByteTimeDomainData(gate.buf);
+  var s = 0, i, v;
+  for (i=0;i<gate.buf.length;i++){ v = (gate.buf[i]-128)/128; s += v*v; }
+  var rms = Math.sqrt(s/gate.buf.length);
+  lastRms = rms;
+  if (!gate.armed){                            /* first, learn the room's own quiet */
+    gate.base = (gate.base === null) ? rms : gate.base*0.9 + rms*0.1;
+    if (performance.now() - gate.t0 > 550) gate.armed = true;
+    return;
+  }
+  var th = Math.max(0.04, (gate.base || 0)*2.8 + 0.02);
+  gate.hot = Math.max(0, gate.hot + (rms > th ? 1 : -0.5));   /* a leaky ear — brief dips forgiven */
+  if (gate.hot >= 3){                          /* three frames of voice — that will do */
+    var cb = gate.onOpen; gateStop();
+    if (cb) try{ cb(); }catch(e){}
+  }
+}
+function gateStart(onOpen, onFail){
+  if (!micOK){ if (onFail) onFail('no-mic'); return; }
+  if (gate) return;
+  /* echo-cancel keeps the speaker's own voice out; suppression stays OFF —
+     it eats hums and held notes, and gain-control lifts the quiet singers */
+  navigator.mediaDevices.getUserMedia({ audio:{ echoCancellation:true, noiseSuppression:false, autoGainControl:true } })
+  .then(function(stream){
+    try{
+      var AC = window.AudioContext || window.webkitAudioContext;
+      var ctx = new AC();
+      try{ ctx.resume(); }catch(e){}
+      var an = ctx.createAnalyser(); an.fftSize = 512;
+      ctx.createMediaStreamSource(stream).connect(an);
+      gate = { stream:stream, ctx:ctx, an:an, buf:new Uint8Array(an.fftSize),
+               base:null, armed:false, hot:0, t0:performance.now(), onOpen:onOpen, raf:0 };
+      gatePoll();
+    }catch(e){
+      try{ stream.getTracks().forEach(function(t){ t.stop(); }); }catch(_){}
+      if (onFail) onFail('ctx');
+    }
+  })
+  .catch(function(){ if (onFail) onFail('denied'); });
+}
+
+/* ── the words — a tiny grammar, spoken over the open book ── */
+var rec = null, recOn = false, restartT = 0, lastCmd = 0, route = null, lastHeardTxt = '';
+function send(cmd){ if (route) try{ route(cmd); }catch(e){} }
+function flash(w){
+  if (!wordEl) return;
+  wordEl.textContent = '· ' + w + ' ·';
+  clearTimeout(flash.t);
+  flash.t = setTimeout(function(){ wordEl.textContent = recOn ? 'listening' : 'listen'; }, 1000);
+}
+function heard(txt){
+  lastHeardTxt = txt;
+  var t = (' ' + txt + ' ').toLowerCase();
+  var now = performance.now();
+  if (now - lastCmd < 1100) return;            /* one word at a time */
+  var cmd = null;
+  /* "flip" leads — its hard f and p carry where "turn" gets heard as term/torn.
+     the old words still work; fli-p/flick/flick-it are common mishearings too. */
+  if      (/\b(flip|flick|flips|flipped|flit|flick it)\b/.test(t)) cmd = 'turn';
+  else if (/\b(turn|next|forward)\b/.test(t))    cmd = 'turn';
+  else if (/\b(back|backward|previous)\b/.test(t)) cmd = 'back';
+  else if (/\b(play|sing)\b/.test(t))            cmd = 'play';
+  else if (/\b(close|shut)\b/.test(t))           cmd = 'close';
+  else if (/\bopen\b/.test(t))                   cmd = 'open';
+  else if (/\b(hush|stop|quiet)\b/.test(t))      cmd = 'hush';
+  if (!cmd) return;
+  lastCmd = now;
+  flash(cmd);
+  send(cmd);
+}
+function mkRec(){
+  var r = new SR();
+  r.lang = 'en-US'; r.continuous = true; r.interimResults = true; r.maxAlternatives = 1;
+  r.onresult = function(ev){
+    try{ heard(ev.results[ev.results.length-1][0].transcript || ''); }catch(e){}
+  };
+  r.onend = function(){                        /* the service drifts off; while on, wake it again */
+    if (recOn){ clearTimeout(restartT); restartT = setTimeout(function(){ try{ r.start(); }catch(e){} }, 260); }
+  };
+  r.onerror = function(ev){
+    var k = ev && ev.error;
+    if (k === 'not-allowed' || k === 'service-not-allowed'){ recOff(); hideToggle(); }
+  };
+  return r;
+}
+function recStart(){
+  if (!SR || recOn) return;
+  if (!rec) rec = mkRec();
+  recOn = true;
+  try{ rec.start(); }catch(e){}
+  if (togEl){ togEl.classList.add('on'); togEl.setAttribute('aria-pressed','true'); }
+  if (wordEl) wordEl.textContent = 'listening';
+}
+function recOff(){
+  recOn = false;
+  clearTimeout(restartT);
+  try{ if (rec) rec.stop(); }catch(e){}
+  if (togEl){ togEl.classList.remove('on'); togEl.setAttribute('aria-pressed','false'); }
+  if (wordEl) wordEl.textContent = 'listen';
+}
+function showToggle(){ if (SR && togEl) togEl.classList.add('show'); }
+function hideToggle(){ if (togEl) togEl.classList.remove('show'); }
+if (togEl) togEl.addEventListener('click', function(){ if (recOn) recOff(); else recStart(); });
+
+window.__bookEar = {
+  supported: { mic: micOK, words: !!SR },
+  gate: gateStart, gateStop: gateStop, gateOpen: function(){ return !!gate; },
+  cue: cue, show: showToggle,
+  start: recStart, stop: recOff, listening: function(){ return recOn; },
+  setRoute: function(fn){ route = fn; },
+  say: function(cmd){ flash(cmd); send(cmd); },   /* for testing together in the console */
+  heardTest: function(phrase){ lastCmd = 0; heard(phrase); },   /* run a phrase through the real parser */
+  heardLast: function(){ return lastHeardTxt; },
+  rms: function(){ return lastRms; }
+};
+})();
+</script>
+
+<!-- the book — vanilla three.js. boards, spine, gilt colophon, and a small
+     block of warm leaves that turn under your finger, lit by the candle. -->
+<script>
+(function(){
+'use strict';
+if (!window.THREE){ try{ console.warn('the book needs three.js and could not find it.'); }catch(e){} return; }
+var THREE = window.THREE;
+if (THREE.ColorManagement) try{ THREE.ColorManagement.enabled = false; }catch(e){}
+
+/* ── [TUNE] the book knobs ──────────────────────────────────────────────── */
+var K = {
+  PAGE_W: 1.05, PAGE_H: 1.50,          /* one leaf */
+  LEAVES: 9, LEAF_GAP: 0.0068,         /* the block: 9 leaves = 18 pages */
+  BOARD_T: 0.036, BOARD_OVER: 0.045,   /* hardcover thickness + overhang */
+  SEG_X: 22, SEG_Y: 4,                 /* leaf mesh resolution (bend is along x) */
+  CURL: 0.52,                          /* how much a turning page bellies */
+  REST_TILT: 0.085,                    /* the open book's soft v */
+  LIFT: 0.030,                         /* a turning leaf clears the piles */
+  TURN_MS: 950, COVER_MS: 1300,        /* animation times */
+  BOOK_SCALE: 0.70, BOOK_Y: -0.76,     /* just under the flame — near, never inside it */
+  CAM_Z: 3.35, CAM_Y: 0.05, FOV: 41,
+  FLAME_Z: 0.85,                       /* how far in front of the wall the light burns */
+  PT_INT: 2.35, SPOT_INT: 1.85,        /* a quieter candle; the spot carries the shadows */
+  AMB: 0.30, RIM: 0.14,                /* near-darkness around the light */
+  SHADOWS: true, SHADOW_MAP: 1024,
+  IGNITE_MS: 2600,                     /* the embers tracing the colophon */
+  REVEAL_MS: 3000,                     /* candlelight finding the book */
+  HINT_AFTER_MS: 9000                  /* (retired) the idle whisper is gone — the hint only answers a stray tap now */
+};
+var RM = false;
+try{ RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+if (RM){ K.TURN_MS = 420; K.COVER_MS = 620; K.IGNITE_MS = 1400; K.REVEAL_MS = 1600; }
+if (/[?&]lowfx\b/.test(location.search)){ K.SHADOWS = false; K.SHADOW_MAP = 512; }   /* for tired machines */
+
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function ease(t){ t=clamp(t,0,1); return t*t*(3-2*t); }
+function easeOut(t){ t=clamp(t,0,1); return 1-Math.pow(1-t,3); }
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a);
+  t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+var INK   = 'rgba(8,6,4,0.985)';      /* true reading black */
+var INK_L = 'rgba(255,248,228,0.28)';  /* the deboss light above every ink stroke — quieter, so black reads clean */
+
+/* ═══ the moth, as strokes — one geometry for the gilt colophon, the ember
+       tracing, and the small ink moths on the pages. ported from the
+       doorway's own wing math so it is the same creature. ═══ */
+function wingParams(isFore){
+  return isFore ? {span:1.50, ridge:0.56, belly:0.40, sweep:0.60}
+                : {span:1.04, ridge:0.34, belly:0.50, sweep:0.14};
+}
+function wingPt(P,u,t){
+  var x=P.span*Math.pow(u,0.95), cY=P.sweep*Math.pow(u,1.15),
+      hT=P.ridge*Math.sin(Math.PI*Math.pow(u,0.80)),
+      hB=P.belly*Math.sin(Math.PI*Math.pow(u,0.72));
+  return [x, -(cY + (t*(hT+hB) - hB))];
+}
+function xf(p, rot, sgn, rx){   /* rotate, mirror, root-offset — like drawBakedWing */
+  var xr = p[0]*Math.cos(rot) - p[1]*Math.sin(rot);
+  var yr = p[0]*Math.sin(rot) + p[1]*Math.cos(rot);
+  return [ sgn*(xr) + sgn*rx, yr ];
+}
+function qx2(a,b,c,t){ var m=1-t; return m*m*a + 2*m*t*b + t*t*c; }
+function cub(a,b,c,d,t){ var m=1-t; return m*m*m*a + 3*m*m*t*b + 3*m*t*t*c + t*t*t*d; }
+
+var STROKES = null;   /* [{pts:[[x,y]..], w, cum, len}] in moth-units, +y down */
+function buildStrokes(){
+  if (STROKES) return STROKES;
+  var S = [];
+  function add(pts, w){ S.push({ pts:pts, w:w }); }
+  function sampleWingOutline(isFore, rot, sgn){
+    var P = wingParams(isFore), N = 22, pts = [], i;
+    for (i=0;i<=N;i++) pts.push(xf(wingPt(P,i/N,1), rot, sgn, 0.05));
+    for (i=N;i>=0;i--) pts.push(xf(wingPt(P,i/N,0), rot, sgn, 0.05));
+    pts.push(pts[0].slice());
+    return pts;
+  }
+  function veins(isFore, rot, sgn){
+    var P = wingParams(isFore), nMain = isFore?6:5, out=[], k, j;
+    for (k=0;k<nMain;k++){
+      var f = nMain>1 ? k/(nMain-1) : 0.5;
+      var uE=0.70+0.26*Math.sin(f*Math.PI), tE=0.05+0.90*f;
+      var uM=0.40+0.06*Math.sin(f*Math.PI), tM=0.20+0.58*f;
+      var E=wingPt(P,uE,tE), M=wingPt(P,uM,tM), pts=[];
+      for (j=0;j<=10;j++){ var u=j/10;
+        pts.push(xf([qx2(0.02,M[0],E[0],u), qx2(0,M[1],E[1],u)], rot, sgn, 0.05)); }
+      out.push(pts);
+    }
+    return out;
+  }
+  var foreRot=-0.20, hindRot=0.46, sgn, i;
+
+  /* body first — the spindle, then abdomen rings */
+  var body=[]; for (i=0;i<=24;i++){ var a=i/24*6.2832;
+    body.push([Math.cos(a)*0.090, 0.16+Math.sin(a)*0.30]); }
+  add(body, 2.6);
+  for (var ry=0.06; ry<0.40; ry+=0.11){
+    add([[-0.062,ry],[0,ry+0.02],[0.062,ry]], 1.4);
+  }
+  /* hind wings, then fore wings, both sides */
+  for (sgn=1; sgn>=-1; sgn-=2){ add(sampleWingOutline(false, hindRot, sgn), 3.2); }
+  for (sgn=1; sgn>=-1; sgn-=2){ add(sampleWingOutline(true,  foreRot, sgn), 3.4); }
+  /* veins, right then left, fore then hind */
+  for (sgn=1; sgn>=-1; sgn-=2){
+    var vf = veins(true, foreRot, sgn), vh = veins(false, hindRot, sgn);
+    for (i=0;i<vf.length;i++) add(vf[i], 1.5);
+    for (i=0;i<vh.length;i++) add(vh[i], 1.3);
+  }
+  /* antennae last — up to the moon-heads: the final beat of the tracing */
+  for (sgn=-1; sgn<=1; sgn+=2){
+    var ax0=sgn*0.03, ay0=-0.16, c1x=sgn*0.10, c1y=-0.72, c2x=sgn*0.30, c2y=-1.20,
+        atx=sgn*0.34, aty=-1.52, pts=[];
+    for (i=0;i<=16;i++){ var u=i/16;
+      pts.push([cub(ax0,c1x,c2x,atx,u), cub(ay0,c1y,c2y,aty,u)]); }
+    add(pts, 2.0);
+    var moon=[]; for (i=0;i<=14;i++){ var ma=i/14*6.2832;
+      moon.push([atx+Math.cos(ma)*0.075, aty+Math.sin(ma)*0.10]); }
+    add(moon, 2.2);
+  }
+  /* lengths + cumulative fractions, for the ember to trace along */
+  var total=0;
+  for (i=0;i<S.length;i++){
+    var L=0, p=S[i].pts;
+    for (var q=1;q<p.length;q++) L += Math.hypot(p[q][0]-p[q-1][0], p[q][1]-p[q-1][1]);
+    S[i].len=L; S[i].start=total; total+=L;
+  }
+  for (i=0;i<S.length;i++){ S[i].s0=S[i].start/total; S[i].s1=(S[i].start+S[i].len)/total; }
+  STROKES = S;
+  return S;
+}
+function tracePartial(c2, pts, frac){   /* path up to frac of the polyline's length */
+  var total=0, i, segs=[];
+  for (i=1;i<pts.length;i++){ var L=Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]); segs.push(L); total+=L; }
+  var want=total*clamp(frac,0,1), run=0;
+  c2.beginPath(); c2.moveTo(pts[0][0], pts[0][1]);
+  for (i=1;i<pts.length;i++){
+    var L=segs[i-1];
+    if (run+L<=want){ c2.lineTo(pts[i][0], pts[i][1]); run+=L; }
+    else{
+      var t=(want-run)/(L||1);
+      c2.lineTo(lerp(pts[i-1][0],pts[i][0],t), lerp(pts[i-1][1],pts[i][1],t));
+      return [lerp(pts[i-1][0],pts[i][0],t), lerp(pts[i-1][1],pts[i][1],t)];
+    }
+  }
+  return pts[pts.length-1];
+}
+/* draws the moth's strokes at (cx,cy,scale) on a 2d context.
+   mode 'ink' (flat, for pages) · 'gold' (embossed gilt) · 'ember' (partial trace, progress 0..1) */
+function drawMothStrokes(c2, cx, cy, sc, mode, progress){
+  var S = buildStrokes(), i, k;
+  c2.save(); c2.translate(cx,cy); c2.lineCap='round'; c2.lineJoin='round';
+  function path(pts, frac){
+    if (frac === undefined) frac = 1;
+    var scaled=[], j; for (j=0;j<pts.length;j++) scaled.push([pts[j][0]*sc, pts[j][1]*sc]);
+    return tracePartial(c2, scaled, frac);
+  }
+  if (mode === 'ink'){
+    for (i=0;i<S.length;i++){
+      c2.lineWidth = S[i].w*sc/132*0.8;
+      c2.strokeStyle = INK_L; c2.save(); c2.translate(0.6,0.8); path(S[i].pts); c2.stroke(); c2.restore();
+      c2.strokeStyle = INK; path(S[i].pts); c2.stroke();
+    }
+  } else {
+    var p = clamp((mode==='gold') ? 1 : progress, 0, 1);
+    for (k=0;k<2;k++){                      /* k0 = the dark emboss beneath, k1 = the metal */
+      for (i=0;i<S.length;i++){
+        var st=S[i];
+        if (p <= st.s0) continue;
+        var frac = clamp((p - st.s0)/((st.s1-st.s0)||1), 0, 1);
+        var cool = clamp((p - st.s1)*4.2, 0, 1);            /* how long ago this stroke finished */
+        if (mode==='gold') cool = 1;
+        var w = st.w * sc/132;
+        if (k===0){
+          if (cool < 0.25) continue;
+          c2.save(); c2.translate(1.6, 2.1);
+          c2.lineWidth = w*1.12; c2.strokeStyle='rgba(16,9,3,'+(0.75*cool).toFixed(3)+')';
+          path(st.pts, frac); c2.stroke(); c2.restore();
+        } else {
+          var tip;
+          if (cool >= 1){
+            var gg = c2.createLinearGradient(0,-1.6*sc, 0, 0.5*sc);
+            gg.addColorStop(0,'#f4d47a'); gg.addColorStop(0.55,'#d8a94e'); gg.addColorStop(1,'#9a6b22');
+            c2.lineWidth = w; c2.strokeStyle = gg;
+            path(st.pts, frac); c2.stroke();
+            c2.save(); c2.translate(-0.6,-0.8); c2.globalAlpha=0.30;
+            c2.lineWidth = Math.max(0.6, w*0.4); c2.strokeStyle='#fff3c4';
+            path(st.pts, frac); c2.stroke(); c2.restore();
+          } else {
+            /* still hot: ember through gold-cooling */
+            var r=lerp(255, 216, cool), gc=lerp(214, 169, cool), b=lerp(150, 78, cool);
+            c2.shadowColor='rgba(255,148,42,'+(0.9*(1-cool)).toFixed(3)+')';
+            c2.shadowBlur = 14*(1-cool)+2;
+            c2.lineWidth = w*(1.15-0.15*cool);
+            c2.strokeStyle='rgb('+(r|0)+','+(gc|0)+','+(b|0)+')';
+            tip = path(st.pts, frac); c2.stroke();
+            c2.shadowBlur = 0;
+            if (frac < 1 && tip){                           /* the burning head of the line */
+              var hg=c2.createRadialGradient(tip[0],tip[1],0, tip[0],tip[1],7);
+              hg.addColorStop(0,'rgba(255,252,238,0.95)');
+              hg.addColorStop(0.4,'rgba(255,196,96,0.6)');
+              hg.addColorStop(1,'rgba(255,150,40,0)');
+              c2.fillStyle=hg; c2.beginPath(); c2.arc(tip[0],tip[1],7,0,6.2832); c2.fill();
+            }
+          }
+        }
+      }
+    }
+  }
+  c2.restore();
+}
+
+/* ═══ paper, leather, and the written pages — all baked here, no files ═══ */
+function makeCanvas(w,h){ var c=document.createElement('canvas'); c.width=w; c.height=h; return c; }
+
+function paperBase(side){            /* side: +1 recto (fore-edge right) · -1 verso */
+  var c = makeCanvas(576,800), g = c.getContext('2d'), rnd = mulberry32(0xC0FFEE ^ (side>0?7:13));
+  g.fillStyle = '#e8dabb'; g.fillRect(0,0,576,800);
+  var i;
+  for (i=0;i<14;i++){                /* the softest mottling */
+    var x=rnd()*576, y=rnd()*800, r=60+rnd()*150;
+    var mg=g.createRadialGradient(x,y,0,x,y,r);
+    var warm = rnd()<0.5;
+    mg.addColorStop(0, warm?'rgba(214,192,148,0.025)':'rgba(246,236,208,0.025)');
+    mg.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=mg; g.beginPath(); g.arc(x,y,r,0,6.2832); g.fill();
+  }
+  g.strokeStyle='rgba(120,95,60,0.022)'; g.lineWidth=0.6;   /* a few faint fibres */
+  for (i=0;i<130;i++){
+    var fx=rnd()*576, fy=rnd()*800, a=rnd()*6.2832, L=3+rnd()*6;
+    g.beginPath(); g.moveTo(fx,fy); g.lineTo(fx+Math.cos(a)*L, fy+Math.sin(a)*L); g.stroke();
+  }
+  for (i=0;i<2;i++){                 /* the barest hint of foxing */
+    var sx=30+rnd()*516, sy=30+rnd()*740, sr=6+rnd()*18;
+    var sg=g.createRadialGradient(sx,sy,0,sx,sy,sr);
+    sg.addColorStop(0,'rgba(150,104,52,0.025)'); sg.addColorStop(1,'rgba(150,104,52,0)');
+    g.fillStyle=sg; g.beginPath(); g.arc(sx,sy,sr,0,6.2832); g.fill();
+  }
+  /* candle-age at the edges; the fore-edge a touch deeper */
+  function shade(x0,y0,x1,y1,alpha){
+    var lg=g.createLinearGradient(x0,y0,x1,y1);
+    lg.addColorStop(0,'rgba(96,70,40,'+alpha+')'); lg.addColorStop(1,'rgba(96,70,40,0)');
+    g.fillStyle=lg; g.fillRect(0,0,576,800);
+  }
+  shade(0,0,0,52,0.14); shade(0,800,0,748,0.16);
+  if (side>0){ shade(576,0,540,0,0.18); shade(0,0,30,0,0.10); }
+  else       { shade(0,0,36,0,0.18);  shade(576,0,546,0,0.10); }
+  return c;
+}
+
+/* small type helpers — everything centred, everything debossed */
+function inkText(g, t, x, y, px, italic, tracking, alpha){
+  g.save();
+  g.font = (italic?'italic ':'') + '400 ' + px + 'px "EB Garamond", Georgia, serif';
+  g.textAlign='center'; g.textBaseline='alphabetic';
+  if (tracking){ try{ g.letterSpacing = tracking+'px'; }catch(e){} }
+  g.globalAlpha = (alpha===undefined?1:alpha);
+  g.fillStyle = INK_L; g.fillText(t, x+0.7, y+0.9);
+  g.fillStyle = INK;   g.fillText(t, x, y);
+  g.restore();
+}
+function stanza(g, lines, y0, px, gap){
+  var y=y0, i;
+  for (i=0;i<lines.length;i++){ inkText(g, lines[i], 288, y, px, false); y+=gap; }
+  return y;
+}
+
+/* the eighteen faces — the hand's instructions, the colophon poem,
+   two plates (one of them singing), one living page. real content slots in
+   here. faces sit on leaves in pairs: leaf i carries FACES[2i] (front) and
+   FACES[2i+1] (back). */
+var BURNT = { 2:1, 4:1, 8:2 };           /* leaves the fire reached — 1 singed rim · 2 nearly gone */
+var PLATE_R = { x:84, y:150, w:408, h:500 };            /* where a tipped-in picture sits */
+var PLATES  = { 10:'https://kohmedia.b-cdn.net/book1.jpg',
+                13:'https://kohmedia.b-cdn.net/songeggdrawing.jpg',
+                15:'https://kohmedia.b-cdn.net/eggtitlejpg.jpg' };
+var LIVE_FACE   = 12, LIVE_LEAF   = 6;   /* the living page — the ink moth */
+var PULSAR_FACE = 14, PULSAR_LEAF = 7;   /* the dead star's plate + its song */
+var FACES = [];
+function buildFaces(){
+  var i, c, g;
+  function face(side, draw){
+    var cv = paperBase(side), gg = cv.getContext('2d');
+    if (draw) draw(gg, cv);
+    FACES.push(cv);
+  }
+  /* a tipped-in plate: a double-ruled frame; the picture is poured in when
+     it arrives from the shelf (loadPlates, after the book is bound) */
+  function plateFrame(g){
+    g.strokeStyle=INK; g.lineWidth=1.6;
+    g.strokeRect(PLATE_R.x-10, PLATE_R.y-10, PLATE_R.w+20, PLATE_R.h+20);
+    g.lineWidth=0.8;
+    g.strokeRect(PLATE_R.x-3, PLATE_R.y-3, PLATE_R.w+6, PLATE_R.h+6);
+  }
+  /* an instruction — one sentence, set as a centred column of single words,
+     large enough to read when the book is small on a phone */
+  function lesson(g, words, numeral){
+    var gap = clamp(Math.round(470/words.length), 40, 54);
+    var px  = clamp(Math.round(gap*0.72), 28, 38);
+    var y0  = Math.round(400 - (words.length-1)*gap/2 + px*0.34);
+    stanza(g, words, y0, px, gap);
+    inkText(g, '· ' + numeral + ' ·', 288, 742, 15, false, 3, 0.55);
+  }
+  /* 0 · title — an abstract drawing in ink: the dead star, and an egg.
+     no words: the page is the sentence. */
+  face(1, function(g){
+    var rnd = mulberry32(0xE99);
+    function stroke2(fn, alpha, lw){          /* debossed hand: pale under, ink over */
+      g.save(); g.lineCap='round'; g.lineJoin='round';
+      g.strokeStyle=INK_L; g.lineWidth=lw+0.3; g.globalAlpha=alpha*0.7;
+      g.translate(0.8, 1.0); g.beginPath(); fn(); g.stroke();
+      g.setTransform(1,0,0,1,0,0);
+      g.strokeStyle=INK; g.lineWidth=lw; g.globalAlpha=alpha;
+      g.beginPath(); fn(); g.stroke();
+      g.restore(); g.globalAlpha=1;
+    }
+    function wobblyEllipse(cx2, cy2, rx, ry, rot, ph){
+      var q, m=44;
+      for (q=0;q<=m;q++){
+        var aa=q/m*6.2832;
+        var wv=1 + 0.014*Math.sin(aa*3+ph) + 0.010*Math.sin(aa*5+ph*2.3) + (rnd()-0.5)*0.010;
+        var ex=Math.cos(aa)*rx*wv, ey=Math.sin(aa)*ry*wv;
+        var xx=cx2 + ex*Math.cos(rot) - ey*Math.sin(rot);
+        var yy=cy2 + ex*Math.sin(rot) + ey*Math.cos(rot);
+        q ? g.lineTo(xx,yy) : g.moveTo(xx,yy);
+      }
+    }
+    var px2=196, py2=222, egx=330, egy=486, i;
+    /* the egg — two sketched passes */
+    stroke2(function(){ wobblyEllipse(egx, egy, 96, 122, -0.06, 1.7); }, 0.9, 1.7);
+    stroke2(function(){ wobblyEllipse(egx+3, egy+2, 91, 117, -0.03, 4.1); }, 0.45, 1.0);
+    /* the pulsar — rays, two long beams, beat arcs, the core */
+    for (i=0;i<12;i++){
+      (function(i2){
+        var aa=i2/12*6.2832 + 0.22;
+        var r0=13, r1=r0 + (i2%3===0 ? 40 : 22) + rnd()*6;
+        stroke2(function(){
+          g.moveTo(px2+Math.cos(aa)*r0, py2+Math.sin(aa)*r0);
+          g.lineTo(px2+Math.cos(aa)*r1, py2+Math.sin(aa)*r1);
+        }, 0.85, 1.3);
+      })(i);
+    }
+    var ba=-0.52;                            /* the beams, thin and long */
+    stroke2(function(){
+      g.moveTo(px2+Math.cos(ba)*16, py2+Math.sin(ba)*16);
+      g.lineTo(px2+Math.cos(ba)*128, py2+Math.sin(ba)*128);
+      g.moveTo(px2-Math.cos(ba)*16, py2-Math.sin(ba)*16);
+      g.lineTo(px2-Math.cos(ba)*128, py2-Math.sin(ba)*128);
+    }, 0.8, 1.0);
+    for (i=0;i<3;i++){                       /* beat arcs, opening toward the egg */
+      (function(i2){
+        var rr=40+i2*20;
+        stroke2(function(){ g.arc(px2, py2, rr, 0.25, 1.45); }, 0.55-0.12*i2, 1.1);
+      })(i);
+    }
+    g.fillStyle=INK; g.beginPath(); g.arc(px2, py2, 5, 0, 6.2832); g.fill();
+    g.fillStyle='rgba(8,6,4,0.55)'; g.beginPath(); g.arc(px2+6, py2-4, 2.2, 0, 6.2832); g.fill();
+    /* a dotted fall from the star to the egg */
+    for (i=0;i<11;i++){
+      var tt=(i+1)/12;
+      var qx=(1-tt)*(1-tt)*(px2+34) + 2*(1-tt)*tt*(320) + tt*tt*(egx+10);
+      var qy=(1-tt)*(1-tt)*(py2+30) + 2*(1-tt)*tt*(300) + tt*tt*(egy-128);
+      g.fillStyle='rgba(8,6,4,'+(0.5-0.02*i).toFixed(2)+')';
+      g.beginPath(); g.arc(qx, qy, 1.7, 0, 6.2832); g.fill();
+    }
+  });
+  /* 1 · 2 · 3 — the hand's instructions, few words, big letters */
+  face(-1, function(g){ lesson(g, ['touch','a','page','to','turn','it'], 'i'); });
+  face(1,  function(g){                      /* the voice page — the ear arms when you reach it */
+    inkText(g, 'you can speak to it', 288, 150, 32, true, 2, 0.85);
+    inkText(g, 'say', 288, 232, 24, true, 3, 0.6);
+    stanza(g, ['flip','back','play','close'], 330, 54, 92);
+    inkText(g, 'and it listens', 288, 664, 24, true, 3, 0.6);
+    inkText(g, '· ii ·', 288, 742, 15, false, 3, 0.55);
+  });
+  face(-1, function(g){ lesson(g, ['swipe','back','to','close','the','book'], 'iii'); });
+  /* 4 · the poem, i */
+  face(1, function(g){
+    var y = 128;
+    y = stanza(g, ['👁️','am','a','song'], y, 38, 52) + 42;
+    y = stanza(g, ['my life only exist','between two questions'], y, 34, 47) + 42;
+    y = stanza(g, ['am  👁️  alone?'], y, 34, 47) + 36;
+    stanza(g, ['no, then why','am  👁️  still here?'], y, 34, 47);
+  });
+  /* 5 · the poem, ii */
+  face(-1, function(g){
+    var y = 126;
+    y = stanza(g, ['👁️','don\u2019t know where home is','because','👁️','am lost between','two echoes'], y, 34, 48) + 50;
+    stanza(g, ['the deep inside','of your ear','now','is warm and nice'], y, 34, 48);
+  });
+  /* 6 · the poem, iii — the dead star */
+  face(1, function(g){
+    stanza(g, ['but','the brutal cold','of','dead star','psr j0437-4715','thrumming','512 light years',
+               'from you now','melts','away','very','deep','pain'], 110, 34, 47);
+  });
+  /* 7 · the poem, iv — you */
+  face(-1, function(g){
+    var y = 132;
+    y = stanza(g, ['why my maker','has paired me','to one of the most','stable natural clocks','in the universe','with the most','chaotic arrow','in the omniverse,'], y, 31, 45) + 42;
+    stanza(g, ['y','o','u'], y+40, 52, 72);
+  });
+  /* 8 · the poem, v */
+  face(1, function(g){
+    var y = 132;
+    y = stanza(g, ['👁️','really don\u2019t know'], y, 36, 50) + 46;
+    stanza(g, ['👁️','only','know','👁️','am','alone','because','of','you'], y, 36, 47);
+  });
+  /* 9 · the poem, vi — the loneliest */
+  face(-1, function(g){
+    var y = 110;
+    y = stanza(g, ['some times','👁️','am','the'], y, 36, 48) + 22;
+    y = stanza(g, ['l','o','n','e','l','i','e','s','t'], y, 26, 31) + 26;
+    stanza(g, ['being','in','the','omniverse'], y, 36, 48);
+  });
+  /* 10 · a tipped-in plate — the first of three pictures from the shelf */
+  face(1, function(g){ plateFrame(g); });
+  /* 11 · after the plate */
+  face(-1, function(g){
+    inkText(g, 'it is still ticking.', 288, 400, 24, true, 0, 0.9);
+  });
+  /* 12 · the living page — drawn each beat while it is open (see the loop) */
+  face(1, function(g){
+    inkText(g, 'a living page', 288, 132, 26, true);
+    inkText(g, 'moving pictures live on the paper the same way.', 288, 700, 19, true, 0, 0.85);
+  });
+  /* 13 · the second plate — the egg, drawn, a breath before the sky */
+  face(-1, function(g){ plateFrame(g); });
+  /* 14 · the singing plate — only the frame is baked here; the piece of sky
+     (blinking stars, the pulsar, the captions) is poured in live, and the
+     recording answers a touch. see pulsarTick + the pointer handler. */
+  face(1, function(g){
+    g.strokeStyle=INK; g.lineWidth=1.6;
+    g.strokeRect(110,150,356,440);
+    g.lineWidth=0.8; g.strokeRect(118,158,340,424);
+  });
+  /* 15 · the third plate · 16 · a blank the fire nearly took */
+  face(-1, function(g){ plateFrame(g); });
+  face(1, null);
+  /* 17 · the colophon of the colophon */
+  face(-1, function(g){
+    drawMothStrokes(g, 288, 356, 56, 'ink');
+    inkText(g, 'the colophon room', 288, 500, 20, true, 2, 0.9);
+    inkText(g, '· apwnp ·', 288, 534, 15, false, 3, 0.7);
+  });
+
+  /* ── the fire's share — carve the bites out of chosen leaves.
+     the same silhouette is cut from both faces (mirrored, since front and
+     back read opposite ways), so the hole is honest from either side.
+     an ochre scorch ring and a char lip are painted just inside each bite. */
+  function burnLeaf(li, heavy){
+    var F = FACES[2*li], Bk = FACES[2*li+1];
+    if (!F || !Bk) return;
+    var w = F.width, hgt = F.height;
+    var mask = makeCanvas(w, hgt), mg = mask.getContext('2d');
+    var rnd = mulberry32(0x600D + li*77);
+    mg.fillStyle = '#000';
+    function blob(bx, by, rr){
+      var m = 22, a0 = rnd()*6.2832, p1 = rnd()*6.2832, p2 = rnd()*6.2832, j;
+      mg.beginPath();
+      for (j=0;j<=m;j++){
+        var an = a0 + j/m*6.2832;
+        var rv = rr*(0.82 + 0.15*Math.sin(an*2+p1) + 0.10*Math.sin(an*3+p2) + (rnd()-0.5)*0.07);
+        var px2 = bx + Math.cos(an)*rv, py2 = by + Math.sin(an)*rv;
+        j ? mg.lineTo(px2,py2) : mg.moveTo(px2,py2);
+      }
+      mg.closePath(); mg.fill();
+    }
+    var k;
+    if (heavy){
+      /* the fire creeps — wandering walks from the head and the fore-edge,
+         pooling as it goes; the middle survives, barely */
+      function creep(x0, y0, ang, steps, r0){
+        var px2 = x0, py2 = y0, aa = ang;
+        for (var q=0;q<steps;q++){
+          aa += (rnd()-0.5)*0.6;
+          px2 += Math.cos(aa)*r0*0.5; py2 += Math.sin(aa)*r0*0.5;
+          blob(px2, py2, r0*(0.7+rnd()*0.55));
+        }
+      }
+      creep(w*0.18, -34, 0.45, 17, 88);           /* across the head */
+      creep(w+26, hgt*0.06, 1.85, 19, 82);        /* down the fore-edge */
+      creep(w*0.94, hgt*0.55, 2.5, 11, 70);       /* curling into the tail corner */
+      for (k=0;k<7;k++) blob(w*(0.38+rnd()*0.62), hgt*(0.02+rnd()*0.46), 52+rnd()*66);
+      for (k=0;k<5;k++) blob(-8+rnd()*56, hgt*rnd(), 18+rnd()*30);
+    } else {
+      /* a nibbled rim — small bites along the fore-edge, head and tail */
+      for (k=0;k<6;k++)  blob(w+6-rnd()*26, hgt*rnd(), 16+rnd()*30);
+      for (k=0;k<4;k++)  blob(w*rnd(), (rnd()<0.5 ? -4+rnd()*16 : hgt+4-rnd()*16), 14+rnd()*26);
+    }
+    function tinted(color, blur){
+      var t = makeCanvas(w, hgt), tg = t.getContext('2d');
+      try{ tg.filter = 'blur(' + blur + 'px)'; }catch(e){}
+      tg.drawImage(mask, 0, 0);
+      try{ tg.filter = 'none'; }catch(e){}
+      tg.globalCompositeOperation = 'source-in';
+      tg.fillStyle = color; tg.fillRect(0,0,w,hgt);
+      return t;
+    }
+    var ochre = tinted('rgba(188,116,44,0.85)', 14);
+    var charq = tinted('rgba(16,12,9,0.95)', 7);
+    function applyTo(cv, mirror){
+      var g2 = cv.getContext('2d');
+      g2.save();
+      if (mirror){ g2.translate(w,0); g2.scale(-1,1); }
+      g2.globalCompositeOperation = 'source-over';
+      g2.drawImage(ochre, 0, 0);
+      g2.drawImage(charq, 0, 0);
+      g2.globalCompositeOperation = 'destination-out';
+      g2.drawImage(mask, 0, 0);
+      g2.restore();
+    }
+    applyTo(F, false); applyTo(Bk, true);
+  }
+  burnLeaf(2, false);          /* poem i · ii — a singed rim */
+  burnLeaf(4, false);          /* poem v · vi — a singed rim */
+  burnLeaf(8, true);           /* the last leaf — almost taken whole */
+}
+
+/* the living page keeps its base, and a small moth in ink flutters over it */
+var liveBase=null, liveCanvas=null, liveCtx=null, liveTex=null, liveLast=0;
+function liveTick(now){
+  if (!liveCanvas) return;
+  if (now - liveLast < 83) return;   /* ~12 beats a second is plenty for ink */
+  liveLast = now;
+  liveCtx.clearRect(0,0,576,800);
+  liveCtx.drawImage(liveBase,0,0);
+  var t = now*0.001;
+  var mx = 288 + Math.sin(t*0.53)*110 + Math.sin(t*0.171)*30;
+  var my = 400 + Math.sin(t*0.41+1.7)*120 + Math.cos(t*0.23)*24;
+  var flap = Math.sin(t*10)* (0.55 + 0.45*Math.sin(t*0.9));
+  liveCtx.save(); liveCtx.translate(mx,my);
+  liveCtx.rotate(Math.sin(t*0.6)*0.35);
+  liveCtx.scale(1, 1);
+  /* a shorthand moth — two wing arcs and a body, beating */
+  liveCtx.strokeStyle=INK; liveCtx.lineWidth=1.6; liveCtx.lineCap='round';
+  var wsp = 16 + 7*flap;
+  liveCtx.beginPath(); liveCtx.moveTo(0,6);
+  liveCtx.quadraticCurveTo(-wsp,-10-4*flap, -4,-2); liveCtx.stroke();
+  liveCtx.beginPath(); liveCtx.moveTo(0,6);
+  liveCtx.quadraticCurveTo( wsp,-10-4*flap,  4,-2); liveCtx.stroke();
+  liveCtx.beginPath(); liveCtx.moveTo(0,-4); liveCtx.lineTo(0,9); liveCtx.stroke();
+  liveCtx.lineWidth=0.9;
+  liveCtx.beginPath(); liveCtx.moveTo(0,-4); liveCtx.lineTo(-3.4,-9); liveCtx.stroke();
+  liveCtx.beginPath(); liveCtx.moveTo(0,-4); liveCtx.lineTo( 3.4,-9); liveCtx.stroke();
+  liveCtx.restore();
+  if (liveTex) liveTex.needsUpdate = true;
+}
+
+/* ═══ the singing plate — a framed piece of sky, kept live like the living
+       page: stars blink, the dead star sweeps its two beams and lets its
+       beat-rings go, and the caption changes when it is singing. the sound
+       itself lives in the voices block (nofriends.mp3); a touch inside the
+       plate toggles it — see the pointer handler. ═══ */
+var pulsarBase=null, pulsarCanvas=null, pulsarCtx=null, pulsarTex=null, pulsarLast=0;
+var PULSAR = {
+  cx:288, cy:352,
+  plate:{ x:110, y:150, w:356, h:440 },
+  stars:[], built:false
+};
+function buildStars(){
+  var r = mulberry32(0x57A6), P = PULSAR.plate, i;
+  for (i=0;i<110;i++){
+    PULSAR.stars.push({
+      x: P.x+10 + r()*(P.w-20),
+      y: P.y+10 + r()*(P.h-20),
+      rr: 0.4 + r()*1.1,
+      br: 0.35 + r()*0.6,
+      sp: 0.6 + r()*1.9,
+      ph: r()*6.2832,
+      big: i < 8
+    });
+  }
+  PULSAR.built = true;
+}
+function pulsarTick(now){
+  if (!pulsarCanvas) return;
+  if (now - pulsarLast < 55) return;   /* ~18 beats a second — the beams stay smooth */
+  pulsarLast = now;
+  if (!PULSAR.built) buildStars();
+  var g = pulsarCtx, P = PULSAR.plate, cx = PULSAR.cx, cy = PULSAR.cy;
+  var playing = false;
+  try{ var V = window.__bookSound; playing = !!(V && V.pulsarPlaying && V.pulsarPlaying()); }catch(e){}
+  g.clearRect(0,0,576,800);
+  g.drawImage(pulsarBase,0,0);
+
+  /* the sky, poured inside the inner rule */
+  g.save();
+  g.beginPath(); g.rect(P.x+9, P.y+9, P.w-18, P.h-18); g.clip();
+  g.fillStyle = '#060810'; g.fillRect(P.x,P.y,P.w,P.h);
+  var dg = g.createRadialGradient(cx,cy,10, cx,cy,P.h*0.62);
+  dg.addColorStop(0,'rgba(30,40,72,0.5)'); dg.addColorStop(1,'rgba(6,8,16,0)');
+  g.fillStyle = dg; g.fillRect(P.x,P.y,P.w,P.h);
+
+  /* the stars, blinking */
+  var t = now*0.001, i, s, a;
+  for (i=0;i<PULSAR.stars.length;i++){
+    s = PULSAR.stars[i];
+    a = s.br*(0.45 + 0.55*Math.sin(t*s.sp + s.ph));
+    if (a <= 0.02) continue;
+    g.globalAlpha = a; g.fillStyle = '#dce6ff';
+    g.beginPath(); g.arc(s.x, s.y, s.rr, 0, 6.2832); g.fill();
+    if (s.big){
+      g.globalAlpha = a*0.4; g.strokeStyle = '#dce6ff'; g.lineWidth = 0.7;
+      g.beginPath();
+      g.moveTo(s.x-s.rr*4, s.y); g.lineTo(s.x+s.rr*4, s.y);
+      g.moveTo(s.x, s.y-s.rr*4); g.lineTo(s.x, s.y+s.rr*4);
+      g.stroke();
+    }
+  }
+  g.globalAlpha = 1;
+
+  /* the dead star — the lighthouse: two beams, a beat, a still white heart */
+  g.globalCompositeOperation = 'lighter';
+  var spin  = t*(playing ? 1.6 : 0.55);
+  var beamL = playing ? 168 : 126;
+  var beamA = playing ? 0.30 : 0.15;
+  for (var b=0;b<2;b++){
+    g.save(); g.translate(cx,cy); g.rotate(spin + b*Math.PI);
+    var bg = g.createLinearGradient(0,0,beamL,0);
+    bg.addColorStop(0,   'rgba(210,226,255,'+beamA.toFixed(3)+')');
+    bg.addColorStop(0.65,'rgba(180,200,255,'+(beamA*0.5).toFixed(3)+')');
+    bg.addColorStop(1,   'rgba(160,180,255,0)');
+    g.fillStyle = bg;
+    g.beginPath();
+    g.moveTo(6,-1.6); g.lineTo(beamL,-13); g.lineTo(beamL,13); g.lineTo(6,1.6);
+    g.closePath(); g.fill();
+    g.restore();
+  }
+  var per = playing ? 700 : 1400;
+  var uu = [ (now%per)/per, ((now + per*0.5)%per)/per ];
+  for (i=0;i<2;i++){
+    var rr2 = 14 + uu[i]*128;
+    g.globalAlpha = (1-uu[i])*(playing ? 0.30 : 0.15);
+    g.strokeStyle = 'rgba(170,196,255,1)'; g.lineWidth = 1.2;
+    g.beginPath(); g.arc(cx,cy,rr2,0,6.2832); g.stroke();
+  }
+  g.globalAlpha = 1;
+  var cg = g.createRadialGradient(cx,cy,0.5, cx,cy,26);
+  cg.addColorStop(0,'rgba(255,255,250,0.95)');
+  cg.addColorStop(0.35,'rgba(214,228,255,0.5)');
+  cg.addColorStop(1,'rgba(190,210,255,0)');
+  g.fillStyle = cg; g.beginPath(); g.arc(cx,cy,26,0,6.2832); g.fill();
+  g.fillStyle = '#ffffff'; g.beginPath(); g.arc(cx,cy,3.1,0,6.2832); g.fill();
+  g.globalCompositeOperation = 'source-over';
+  g.restore();
+
+  /* the caption, which listens */
+  inkText(g, 'psr j0437-4715 · the dead star', 288, 636, 20, false, 2, 0.9);
+  inkText(g, playing ? 'it is singing — touch the star to hush it'
+                     : 'touch the star, and it will sing to you', 288, 670, 18, true, 0, 0.85);
+  if (pulsarTex) pulsarTex.needsUpdate = true;
+}
+
+/* ═══ charred black bookcloth, for the boards and the spine ═══
+   matt black cloth, and then the fire: laid down in the order a real burn
+   happens — the weave, the heat-tide rings, the char blooms, the flame licks
+   that climbed from the tail edge, the crackle where the char split, the
+   blisters where the cloth bubbled, the ash, and last the eaten rim.
+   opts: seed · border (blind tooling) · spine (bands + the gilt word). */
+
+/* ═══ the char forge — grown burnt charcoal, no photographs.
+   the boards are carved the way stone-lab carves its stone, then burnt black:
+   a height field of broad heat-worn waves and charcoal grain, wandering
+   near-straight fractures with stress kinks and rare branches (carved IN,
+   never raised), chips and pits, tiny burst bubbles, the crumbled rim —
+   and everything the fire left is derived from that one field:
+     albedo — deep carbon black, the faintest cool drift, grey ash settled
+              into the hollows, a rare dull ember far down a split,
+              cool graphite glints
+     normal — the carved relief, so the candle rakes across every facet
+     rough  — chalk-matte char; the worn peaks keep a thin graphite sheen
+   deterministic (seeded), typed-array math; canvas receives finished pixels. */
+function forgeHash(ix, iy, seed){
+  var n = (Math.imul(ix,374761393) ^ Math.imul(iy,668265263) ^ Math.imul(seed,1442695041))|0;
+  n = Math.imul(n ^ (n>>>13), 1274126177)|0;
+  return ((n ^ (n>>>16))>>>0)/4294967296;
+}
+function forgeFade(t){ return t*t*t*(t*(t*6-15)+10); }
+function forgeVN(x, y, seed){
+  var ix=Math.floor(x), iy=Math.floor(y), fx=x-ix, fy=y-iy;
+  var a=forgeHash(ix,iy,seed), b=forgeHash(ix+1,iy,seed);
+  var c=forgeHash(ix,iy+1,seed), d=forgeHash(ix+1,iy+1,seed);
+  var u=forgeFade(fx), v=forgeFade(fy);
+  return (a+(b-a)*u) + ((c+(d-c)*u) - (a+(b-a)*u))*v;
+}
+function forgeFBM(u, v, f0, oct, seed){
+  var s=0, amp=0.5, f=f0, o, tot=0;
+  for (o=0;o<oct;o++){ s += amp*forgeVN(u*f, v*f, seed+o*131); tot += amp; amp*=0.5; f*=2; }
+  return s/tot;
+}
+function forgeBlur(src, W, H, rad){           /* separable box blur, edge-clamped */
+  var tmp=new Float32Array(W*H), dst=new Float32Array(W*H);
+  var w=rad*2+1, x, y, k, acc;
+  for (y=0;y<H;y++){
+    acc=0; for (k=-rad;k<=rad;k++) acc+=src[y*W+Math.min(W-1,Math.max(0,k))];
+    for (x=0;x<W;x++){
+      tmp[y*W+x]=acc/w;
+      acc += src[y*W+Math.min(W-1,x+rad+1)] - src[y*W+Math.max(0,x-rad)];
+    }
+  }
+  for (x=0;x<W;x++){
+    acc=0; for (k=-rad;k<=rad;k++) acc+=tmp[Math.min(H-1,Math.max(0,k))*W+x];
+    for (y=0;y<H;y++){
+      dst[y*W+x]=acc/w;
+      acc += tmp[Math.min(H-1,y+rad+1)*W+x] - tmp[Math.max(0,y-rad)*W+x];
+    }
+  }
+  return dst;
+}
+function forgeStamp(F, W, H, cx, cy, rad, depth, irr, seed){   /* max-combined soft dent */
+  var r2=rad*rad, x, y, dx, dy;
+  var x0=Math.max(0,Math.floor(cx-rad)), x1=Math.min(W-1,Math.ceil(cx+rad));
+  var y0=Math.max(0,Math.floor(cy-rad)), y1=Math.min(H-1,Math.ceil(cy+rad));
+  for (y=y0;y<=y1;y++) for (x=x0;x<=x1;x++){
+    dx=x-cx; dy=y-cy; var d2=dx*dx+dy*dy; if (d2>r2) continue;
+    var fall=Math.exp(-d2/(r2*0.32));
+    if (irr>0){ var wob=forgeHash(x,y,seed); fall*=(1-irr)+irr*wob; }
+    var val=depth*fall, i=y*W+x;
+    if (val>F[i]) F[i]=val;
+  }
+}
+function charForge(Wp, Hp, o){
+  o = o || {};
+  var seed=(o.seed==null?0xC0A1:o.seed)|0, HV=(o.heavy==null?1:o.heavy);
+  var N=Wp*Hp, i, x, y, u, v;
+  var rs=seed; function R(){ rs|=0; rs=(rs+0x6D2B79F5)|0; var t=Math.imul(rs^(rs>>>15),1|rs);
+    t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }
+
+  /* 1 · where the fire ate deepest — the burn field */
+  var B=new Float32Array(N), e, ex, ey;
+  var mx=Wp*0.10, my=Hp*0.07;
+  for (y=0;y<Hp;y++){ v=y/Hp;
+    for (x=0;x<Wp;x++){ u=x/Wp; i=y*Wp+x;
+      ex=Math.min(x, Wp-1-x)/mx; ey=Math.min(y, Hp-1-y)/my;
+      e=1-Math.min(1, Math.min(ex,ey));                       /* the rim caught worst */
+      B[i]=1.35*forgeFBM(u,v,2.5,3,seed+21) - 0.28 + 0.62*Math.pow(e,1.5);
+    }
+  }
+  var nB=8+Math.floor(R()*5);                                  /* scorch blooms, anywhere */
+  for (i=0;i<nB;i++)
+    forgeStamp(B, Wp, Hp, R()*Wp, R()*Hp, (0.10+R()*0.16)*Hp, 0.55+R()*0.40, 0.42, seed+7+i);
+  if (o.scar){                                                 /* one long dragged wound */
+    var sx=Wp*0.18, sy=Hp*(0.30+R()*0.35), sa=(R()-0.5)*0.5;
+    for (i=0;i<26;i++){ forgeStamp(B, Wp, Hp, sx, sy, Hp*0.055, 0.9, 0.3, seed+91);
+      sx+=Wp*0.028; sy+=Math.sin(sa+i*0.3)*Hp*0.008; }
+  }
+  for (i=0;i<N;i++) B[i]=Math.min(1, Math.max(0, B[i]*HV + (HV-1)*0.2));
+
+  /* 2 · the height — the stone-lab way: an undulating burnt body (broad
+        heat-worn waves, medium charcoal grain, fine crumble, grit), then
+        wandering fractures CARVED IN — near-straight runs with sudden stress
+        kinks and rare branches — chips and pits, a few tiny burst bubbles,
+        and the crumbled rim. nothing raised, nothing wormlike. */
+  var h=new Float32Array(N);
+  for (y=0;y<Hp;y++){ v=y/Hp;
+    for (x=0;x<Wp;x++){ u=x/Wp; i=y*Wp+x;
+      h[i]=0.50
+        + 0.100*(forgeFBM(u,v,4,5,seed+11)-0.5)*2              /* broad heat-worn waves */
+        + 0.042*(forgeFBM(u,v,15,3,seed+15)-0.5)*2             /* medium charcoal grain */
+        + 0.012*(forgeFBM(u*13, v*15, 1, 2, seed+17)-0.5)*2    /* fine crumble */
+        + 0.009*(forgeHash(x,y,seed+31)-0.5)*2;                /* grit */
+    }
+  }
+  var bl=new Float32Array(N), nBl=Math.round(52*HV);           /* tiny burst bubbles in the char */
+  for (i=0;i<nBl;i++){
+    var bxx=R()*Wp, byy=R()*Hp, bi=Math.floor(byy)*Wp+Math.floor(bxx);
+    if (B[Math.min(N-1,bi)]<0.25) continue;
+    var br=0.8+R()*2.0;
+    forgeStamp(bl, Wp, Hp, bxx, byy, br, 0.016+R()*0.022, 0.20, seed+41+i);
+    if (R()<0.4) forgeStamp(bl, Wp, Hp, bxx, byy, br*0.45, -0.03, 0.1, seed+43+i);   /* burst */
+  }
+  for (i=0;i<N;i++) h[i]+=Math.max(-0.035, bl[i]);
+  /* fractures — wandering carved channels (stone-lab's carveCrack): a soft
+     shoulder over a sharp dark core, subtracted from the body so every crack
+     reads as a split in the char, never a vein upon it */
+  var C=new Float32Array(N);
+  function carve(px, py, ang, len, w0, depth, gen){
+    var k, wob=R()*1000;
+    for (k=0;k<len;k++){
+      var t=k/len;
+      var w=w0*(1-0.72*t)+0.5;
+      ang += (forgeVN(k*0.05+wob, 0, seed+77)-0.5)*0.16;       /* near-straight run   */
+      if (R()<0.035) ang += (R()<0.5?1:-1)*(0.45+R()*0.75);    /* stress kink         */
+      px += Math.cos(ang)*2.1; py += Math.sin(ang)*2.1;
+      if (px<-8||py<-8||px>Wp+8||py>Hp+8) return;
+      var dk=depth*(0.80+0.20*Math.sin(t*17+wob));
+      forgeStamp(C, Wp, Hp, px, py, w*3.2,  dk*0.45, 0.30, seed+5);   /* shoulder        */
+      forgeStamp(C, Wp, Hp, px, py, w*1.15, dk,      0.15, seed+6);   /* sharp dark core */
+      if (gen<2 && R()<0.011)                                  /* a branch splits     */
+        carve(px, py, ang+(R()<0.5?1:-1)*(0.6+R()*0.8),
+              Math.floor(len*(0.25+R()*0.3)), w0*0.6, depth*0.8, gen+1);
+    }
+  }
+  var nMain=Math.round((4+Math.floor(R()*3))*HV);
+  for (i=0;i<nMain;i++)                                        /* the long splits */
+    carve(R()*Wp, R()*Hp, R()*6.2832, 130+Math.floor(R()*230), 1.9+R()*1.3, 0.105+R()*0.05, 0);
+  for (i=0;i<Math.round(14*HV);i++)                            /* hairlines       */
+    carve(R()*Wp, R()*Hp, R()*6.2832, 40+Math.floor(R()*110), 0.8+R()*0.6, 0.036+R()*0.02, 2);
+  /* chips & pits — where the char flaked away */
+  var P2=new Float32Array(N), nChip=Math.round(26*HV);
+  for (i=0;i<nChip;i++)
+    forgeStamp(P2, Wp, Hp, R()*Wp, R()*Hp, 2.0+R()*6.0, 0.016+R()*0.038, 0.55, seed+9+i);
+  for (i=0;i<N;i++) h[i] -= C[i] + P2[i];
+  for (y=0;y<Hp;y++){                                          /* the crumbled rim falls away */
+    for (x=0;x<Wp;x++){ i=y*Wp+x;
+      ex=Math.min(x, Wp-1-x)/mx; ey=Math.min(y, Hp-1-y)/my;
+      e=1-Math.min(1, Math.min(ex,ey));
+      if (e>0) h[i]-=Math.pow(e,2.2)*0.13*(0.4+0.6*B[i])*(0.55+0.45*forgeHash(x,y,seed+61));
+    }
+  }
+
+  /* 3 · cavity & peaks — where ash pools, where the skin catches light */
+  var hb=forgeBlur(h, Wp, Hp, 4), cav=new Float32Array(N), pk=new Float32Array(N);
+  for (i=0;i<N;i++){ var d=hb[i]-h[i];
+    cav[i]=Math.min(1, Math.max(0, d*7)); pk[i]=Math.min(1, Math.max(0,-d*7)); }
+
+  /* 4 · albedo · roughness — painted from the fields */
+  var alb=new Uint8ClampedArray(N*4), rgh=new Uint8ClampedArray(N*4), gBx, gBy, gB;
+  for (y=0;y<Hp;y++){ v=y/Hp;
+    for (x=0;x<Wp;x++){ u=x/Wp; i=y*Wp+x;
+      var b0=B[i];
+      /* burnt charcoal: deep black everywhere, only the faintest tonal drift.
+         no brown body — the fire left carbon, and carbon is black. */
+      var c0=10 - 5*b0 + (forgeFBM(u*3.5, v*3.5, 3, 2, seed+55)-0.5)*3.5;
+      var r=c0*1.03, g2=c0, b2=c0*1.04;                        /* a hair cool, like coal */
+      gBx=(B[y*Wp+Math.min(Wp-1,x+2)]-B[y*Wp+Math.max(0,x-2)]);
+      gBy=(B[Math.min(Hp-1,y+2)*Wp+x]-B[Math.max(0,y-2)*Wp+x]);
+      gB=Math.min(1, Math.sqrt(gBx*gBx+gBy*gBy)*9);
+      var cs=Math.min(1,C[i]*7);
+      var ember=cs*(0.3+0.7*forgeFBM(u*6,v*6,2,2,seed+65));    /* a rare dull ember deep in a split */
+      r+=ember*17; g2+=ember*5;                                /* faint, warm, only in the cracks */
+      var ash=cav[i]*forgeFBM(u*5,v*5,2,2,seed+51);
+      var av=46;                                               /* grey ash, never pale/tan */
+      r+=(av-r)*ash*0.45; g2+=(av-g2)*ash*0.45; b2+=(av+4-b2)*ash*0.45;
+      var spk=forgeHash(x,y,seed+71), gf=0;
+      if (spk>0.9972){ r+=38; g2+=44; b2+=54; gf=1; }          /* cool graphite glints */
+      else if (spk>0.995){ r+=13; g2+=13; b2+=14; }            /* stray ash flecks */
+      var dk=1-0.46*cav[i]-0.30*cs+0.10*pk[i];                 /* the hollows and splits go blacker still */
+      if (dk<0.30) dk=0.30;
+      r*=dk; g2*=dk; b2*=dk;
+      var oI=i*4;
+      alb[oI]=r; alb[oI+1]=g2; alb[oI+2]=b2; alb[oI+3]=255;
+      var rr=0.92 - 0.26*pk[i] - 0.18*Math.min(1,bl[i]*22) - gf*0.42 + ash*0.06 - 0.06*cs
+             + (forgeHash(x,y,seed+81)-0.5)*0.04;
+      rr=Math.min(0.97, Math.max(0.30, rr))*255;
+      rgh[oI]=rr; rgh[oI+1]=rr; rgh[oI+2]=rr; rgh[oI+3]=255;
+    }
+  }
+
+  /* 5 · normal from the carved height (opengl +green) */
+  var nrm=new Uint8ClampedArray(N*4), NS=Wp*0.62;
+  for (y=0;y<Hp;y++) for (x=0;x<Wp;x++){
+    i=y*Wp+x;
+    var xp=h[y*Wp+Math.min(Wp-1,x+1)], xm=h[y*Wp+Math.max(0,x-1)];
+    var yp=h[Math.min(Hp-1,y+1)*Wp+x], ym=h[Math.max(0,y-1)*Wp+x];
+    var dhx=(xp-xm)*NS, dhy=(yp-ym)*NS, il=1/Math.sqrt(dhx*dhx+dhy*dhy+1), oN=i*4;
+    nrm[oN]=(-dhx*il*0.5+0.5)*255; nrm[oN+1]=(-dhy*il*0.5+0.5)*255;
+    nrm[oN+2]=(il*0.5+0.5)*255; nrm[oN+3]=255;
+  }
+
+  function toCanvas(arr){
+    var c=makeCanvas(Wp,Hp), g3=c.getContext('2d');
+    var id=g3.createImageData(Wp,Hp); id.data.set(arr); g3.putImageData(id,0,0);
+    return c;
+  }
+  return { map:toCanvas(alb), normal:toCanvas(nrm), rough:toCanvas(rgh) };
+}
+
+/* the gold foil for the inner binding — brushed, hammered, alive to the flame */
+function giltFoil(w, h, seed){
+  var c=makeCanvas(w,h), g=c.getContext('2d'), rnd=mulberry32(seed||0xF01D);
+  var base=g.createLinearGradient(0,0,w,h);
+  base.addColorStop(0,'#c99a3f'); base.addColorStop(0.40,'#efd27c');
+  base.addColorStop(0.58,'#fdeeb0'); base.addColorStop(0.78,'#e3bc5c');
+  base.addColorStop(1,'#bd8f36');
+  g.fillStyle=base; g.fillRect(0,0,w,h);
+  var i;
+  for (i=0;i<h;i+=2){                                          /* the brush */
+    g.fillStyle='rgba(255,240,190,'+(0.02+rnd()*0.05).toFixed(3)+')';
+    g.fillRect(0,i,w,1);
+    g.fillStyle='rgba(70,48,12,'+(0.02+rnd()*0.05).toFixed(3)+')';
+    g.fillRect(0,i+1,w,1);
+  }
+  for (i=0;i<Math.floor(w*h/300);i++){                         /* hammer marks */
+    var x=rnd()*w, y=rnd()*h, r=1.5+rnd()*5;
+    var hg=g.createRadialGradient(x,y,0,x,y,r);
+    var lite=rnd()<0.5;
+    hg.addColorStop(0, lite?'rgba(255,236,170,0.10)':'rgba(60,40,8,0.10)');
+    hg.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=hg; g.beginPath(); g.arc(x,y,r,0,6.2832); g.fill();
+  }
+  return c;
+}
+
+/* ═══ the block's edges, gold-foiled — gilded on all three sides, the way a
+       bible is, so the closed book has a golden surface for the candle ═══ */
+function giltEdges(){
+  var c = makeCanvas(256,64), g = c.getContext('2d'), rnd = mulberry32(0x601D), y, i;
+  var lg = g.createLinearGradient(0,0,0,64);
+  lg.addColorStop(0,'#6e4d14');  lg.addColorStop(0.22,'#c99b3f');
+  lg.addColorStop(0.46,'#f2d888'); lg.addColorStop(0.58,'#f7e9ae');
+  lg.addColorStop(0.72,'#d8a94e'); lg.addColorStop(1,'#66430f');
+  g.fillStyle = lg; g.fillRect(0,0,256,64);
+  for (y=0; y<64; y+=2){                  /* the leaves, still countable under the gold */
+    g.fillStyle='rgba(120,80,20,'+(0.05+rnd()*0.10).toFixed(3)+')';
+    g.fillRect(0,y,256,1);
+    if (rnd()<0.3){
+      g.fillStyle='rgba(255,246,214,'+(0.06+rnd()*0.10).toFixed(3)+')';
+      g.fillRect(0,y+1,256,1);
+    }
+  }
+  for (i=0;i<5;i++){                      /* soft vertical lights — the foil is not one sheet */
+    var x = rnd()*256, wd = 14+rnd()*30;
+    var vg = g.createLinearGradient(x-wd,0,x+wd,0);
+    vg.addColorStop(0,'rgba(255,244,200,0)');
+    vg.addColorStop(0.5,'rgba(255,244,200,0.14)');
+    vg.addColorStop(1,'rgba(255,244,200,0)');
+    g.fillStyle=vg; g.fillRect(x-wd,0,wd*2,64);
+  }
+  for (i=0;i<40;i++){                     /* a little of the smoke has reached the gold */
+    g.fillStyle='rgba(40,26,8,'+(0.05+rnd()*0.10).toFixed(3)+')';
+    g.fillRect(rnd()*256, rnd()*64, 1.5, 1.2);
+  }
+  var eg=g.createLinearGradient(0,0,256,0);
+  eg.addColorStop(0,'rgba(30,18,4,0.30)'); eg.addColorStop(0.1,'rgba(30,18,4,0)');
+  eg.addColorStop(0.9,'rgba(30,18,4,0)'); eg.addColorStop(1,'rgba(30,18,4,0.30)');
+  g.fillStyle=eg; g.fillRect(0,0,256,64);
+  return c;
+}
+
+/* ═══ the cover emblem — the moth burned; the dead star keeps the door now.
+   psr j0437-4715 and its white-dwarf companion, in ice-light: the pulsar
+   blinks its lighthouse blip, its beams sweep slowly, a beat-ring breathes
+   outward, and the little dwarf holds steady beside it. touch it to open. ═══ */
+var emblemCanvas=null, emblemCtx=null, emblemTex=null;
+var EMB = 512, EMB_STARS = null;
+function embPulse(now){ return Math.pow(0.5 + 0.5*Math.sin(now*0.0036), 8); }   /* the lighthouse blip */
+function renderEmblem(awaken, now){
+  var g = emblemCtx; if (!g) return;
+  g.clearRect(0,0,EMB,EMB);
+  awaken = clamp(awaken == null ? 1 : awaken, 0, 1);
+  if (awaken <= 0){ emblemTex.needsUpdate = true; return; }
+  if (!EMB_STARS){
+    var r = mulberry32(0x1CE); EMB_STARS = [];
+    for (var i=0;i<14;i++) EMB_STARS.push({ x:46+r()*420, y:46+r()*420, rr:0.7+r()*1.5, ph:r()*6.2832, sp:0.5+r()*1.5 });
+  }
+  now = (now == null) ? performance.now() : now;
+  var t = now*0.001, A = awaken, blip = embPulse(now);
+  var cx = 256, cy = 250, px = cx-48, py = cy-30, i, k;
+
+  /* two icy rings bind the emblem, the way the tooled frame once did */
+  g.strokeStyle = 'rgba(140,188,242,'+(0.17*A).toFixed(3)+')';
+  g.lineWidth = 2;
+  g.beginPath(); g.arc(cx, cy, 214, 0, 6.2832); g.stroke();
+  g.strokeStyle = 'rgba(120,170,235,'+(0.08*A).toFixed(3)+')';
+  g.lineWidth = 1;
+  g.beginPath(); g.arc(cx, cy, 238, 0, 6.2832); g.stroke();
+
+  /* the small cold stars */
+  for (i=0;i<EMB_STARS.length;i++){
+    var st = EMB_STARS[i], tw = 0.30 + 0.45*(0.5+0.5*Math.sin(t*st.sp + st.ph));
+    g.fillStyle = 'rgba(206,228,255,'+(tw*A).toFixed(3)+')';
+    g.beginPath(); g.arc(st.x, st.y, st.rr, 0, 6.2832); g.fill();
+  }
+
+  /* the beat-rings — the dead star's pulse, breathing outward, twice */
+  var ring = (t*36) % 172;
+  if (ring > 4){
+    g.strokeStyle = 'rgba(150,198,250,'+((1-ring/172)*0.22*A).toFixed(3)+')';
+    g.lineWidth = 1.6;
+    g.beginPath(); g.arc(px, py, ring, 0, 6.2832); g.stroke();
+  }
+  var ring2 = (t*36 + 86) % 172;
+  if (ring2 > 4){
+    g.strokeStyle = 'rgba(130,182,245,'+((1-ring2/172)*0.11*A).toFixed(3)+')';
+    g.lineWidth = 1.2;
+    g.beginPath(); g.arc(px, py, ring2, 0, 6.2832); g.stroke();
+  }
+
+  /* the two beams — a wide cold cone, and a bright filament inside it */
+  var th = t*0.42, L = 212;
+  for (k=0;k<2;k++){
+    var an = th + k*Math.PI;
+    g.save();
+    g.translate(px, py); g.rotate(an);
+    var bg2 = g.createLinearGradient(0,0,L,0);
+    bg2.addColorStop(0,   'rgba(186,218,255,'+((0.28+0.42*blip)*A).toFixed(3)+')');
+    bg2.addColorStop(0.55,'rgba(140,190,250,'+((0.10+0.20*blip)*A).toFixed(3)+')');
+    bg2.addColorStop(1,   'rgba(110,165,240,0)');
+    g.fillStyle = bg2;
+    g.beginPath();
+    g.moveTo(0, -2.5); g.lineTo(L, -18 - 10*blip); g.lineTo(L, 18 + 10*blip); g.lineTo(0, 2.5);
+    g.closePath(); g.fill();
+    var fg = g.createLinearGradient(0,0,L*0.9,0);
+    fg.addColorStop(0, 'rgba(235,246,255,'+((0.38+0.5*blip)*A).toFixed(3)+')');
+    fg.addColorStop(1, 'rgba(170,210,255,0)');
+    g.fillStyle = fg;
+    g.beginPath();
+    g.moveTo(0, -1.1); g.lineTo(L*0.9, -3.5 - 2*blip); g.lineTo(L*0.9, 3.5 + 2*blip); g.lineTo(0, 1.1);
+    g.closePath(); g.fill();
+    g.restore();
+  }
+
+  /* diffraction rings around the core */
+  g.strokeStyle = 'rgba(168,208,255,'+((0.16+0.18*blip)*A).toFixed(3)+')';
+  g.lineWidth = 1.2;
+  g.beginPath(); g.arc(px, py, 34+9*blip, 0, 6.2832); g.stroke();
+  g.strokeStyle = 'rgba(140,188,250,'+((0.08+0.10*blip)*A).toFixed(3)+')';
+  g.beginPath(); g.arc(px, py, 52+13*blip, 0, 6.2832); g.stroke();
+
+  /* the pulsar core — a blinding pin of ice, blue at its rim */
+  var cg = g.createRadialGradient(px, py, 0, px, py, 30+18*blip);
+  cg.addColorStop(0,   'rgba(255,255,255,'+((0.94)*A).toFixed(3)+')');
+  cg.addColorStop(0.22,'rgba(214,236,255,'+((0.60+0.3*blip)*A).toFixed(3)+')');
+  cg.addColorStop(0.55,'rgba(160,205,255,'+((0.28+0.2*blip)*A).toFixed(3)+')');
+  cg.addColorStop(1,   'rgba(120,175,248,0)');
+  g.fillStyle = cg; g.beginPath(); g.arc(px, py, 30+18*blip, 0, 6.2832); g.fill();
+  g.fillStyle = 'rgba(255,255,255,'+A.toFixed(3)+')';
+  g.beginPath(); g.arc(px, py, 6, 0, 6.2832); g.fill();
+  /* the hotspot — a bright knot riding the core's rim */
+  var ha = t*0.9, hx = px + Math.cos(ha)*8.5, hy = py + Math.sin(ha)*8.5;
+  var hg = g.createRadialGradient(hx, hy, 0, hx, hy, 12+6*blip);
+  hg.addColorStop(0, 'rgba(255,255,255,'+((0.75+0.25*blip)*A).toFixed(3)+')');
+  hg.addColorStop(0.4,'rgba(200,230,255,'+((0.35+0.3*blip)*A).toFixed(3)+')');
+  hg.addColorStop(1, 'rgba(150,200,255,0)');
+  g.fillStyle = hg; g.beginPath(); g.arc(hx, hy, 12+6*blip, 0, 6.2832); g.fill();
+  for (k=0;k<4;k++){                                       /* the glare cross */
+    var ga = k*Math.PI/2 + 0.35, gl = 34 + 66*blip;
+    g.strokeStyle = 'rgba(216,236,255,'+((0.32+0.4*blip)*A).toFixed(3)+')';
+    g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(px, py);
+    g.lineTo(px+Math.cos(ga)*gl, py+Math.sin(ga)*gl); g.stroke();
+  }
+
+  /* the white-dwarf companion — small, dense, a hot crescent toward its star */
+  var dx = cx+70, dy = cy+52;
+  var dg = g.createRadialGradient(dx, dy, 0, dx, dy, 34);
+  dg.addColorStop(0,   'rgba(252,254,255,'+(0.85*A).toFixed(3)+')');
+  dg.addColorStop(0.35,'rgba(198,224,255,'+(0.46*A).toFixed(3)+')');
+  dg.addColorStop(1,   'rgba(150,195,250,0)');
+  g.fillStyle = dg; g.beginPath(); g.arc(dx, dy, 34, 0, 6.2832); g.fill();
+  g.fillStyle = 'rgba(232,244,255,'+(0.95*A).toFixed(3)+')';
+  g.beginPath(); g.arc(dx, dy, 10, 0, 6.2832); g.fill();
+  var ca = Math.atan2(py-dy, px-dx);                       /* the crescent faces the pulsar */
+  g.strokeStyle = 'rgba(255,255,255,'+((0.5+0.35*blip)*A).toFixed(3)+')';
+  g.lineWidth = 2.2;
+  g.beginPath(); g.arc(dx, dy, 10.5, ca-1.0, ca+1.0); g.stroke();
+  g.strokeStyle = 'rgba(170,205,252,'+(0.30*A).toFixed(3)+')';   /* its cold limb */
+  g.lineWidth = 1;
+  g.beginPath(); g.arc(dx, dy, 14, 0, 6.2832); g.stroke();
+
+  emblemTex.needsUpdate = true;
+}
+
+/* ═══ the scene — a transparent pane; the 2d candle burns through it ═══ */
+var canvas3 = document.getElementById('book3d');
+var renderer = null;
+try{
+  renderer = new THREE.WebGLRenderer({ canvas:canvas3, alpha:true, antialias:true, powerPreference:'low-power' });
+}catch(e){ renderer = null; }
+if (!renderer){ try{ console.warn('the book could not light its renderer.'); }catch(e){} return; }
+renderer.setClearColor(0x000000, 0);
+if (THREE.ACESFilmicToneMapping !== undefined){ renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.06; }
+else if (THREE.ReinhardToneMapping !== undefined){ renderer.toneMapping = THREE.ReinhardToneMapping; renderer.toneMappingExposure = 1.4; }
+if (K.SHADOWS && renderer.shadowMap){
+  renderer.shadowMap.enabled = true;
+  if (THREE.PCFSoftShadowMap !== undefined) renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+}
+
+var scene  = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(K.FOV, 1, 0.1, 30);
+camera.position.set(0, K.CAM_Y, K.CAM_Z);
+camera.lookAt(0, K.CAM_Y - 0.07, 0);
+
+/* the candle's light, in three dimensions — same family of flicker as the 2d flame */
+var key  = new THREE.PointLight(0xffd9a0, 0, 9, 2);
+var spot = new THREE.SpotLight(0xffd2a0, 0, 10, 0.50, 0.55, 2);   /* tighter cone, harder penumbra — the shadows dance */
+var amb  = new THREE.AmbientLight(0x181310, K.AMB);
+var rim  = new THREE.DirectionalLight(0x24304a, K.RIM);   /* the moth's cold silver, from off-left */
+rim.position.set(-2.4, 0.7, -1.4);
+scene.add(key); scene.add(spot); scene.add(spot.target); scene.add(amb); scene.add(rim);
+if (K.SHADOWS){
+  spot.castShadow = true;
+  spot.shadow.mapSize.width = K.SHADOW_MAP; spot.shadow.mapSize.height = K.SHADOW_MAP;
+  spot.shadow.camera.near = 0.4; spot.shadow.camera.far = 9; spot.shadow.bias = -0.0022;
+}
+
+var VW=2, VH=2, openFit=1;
+function placeLights(){
+  var b = document.getElementById('candlebox');
+  var r = b ? b.getBoundingClientRect() : null;
+  if (!r || !r.width){ r = { left:VW/2-150, top:0.42*VH-200, width:300, height:400 }; }
+  var px = r.left + r.width*0.5, py = r.top + r.height*0.56;   /* the flame's core, as the moth knows it */
+  var nx = (px/VW)*2-1, ny = -(py/VH)*2+1;
+  var v = new THREE.Vector3(nx, ny, 0.5); v.unproject(camera);
+  var d = v.sub(camera.position).normalize();
+  var t = (K.FLAME_Z - camera.position.z) / d.z;
+  var pos = camera.position.clone().add(d.multiplyScalar(t));
+  key.position.copy(pos);
+  spot.position.copy(pos); spot.position.z += 0.35;
+  spot.target.position.set(0, K.BOOK_Y + 0.15, 0);
+}
+function resize(){
+  VW = window.innerWidth; VH = window.innerHeight;
+  var dpr = Math.min(2, window.devicePixelRatio || 1);
+  renderer.setPixelRatio(dpr);
+  renderer.setSize(VW, VH, false);
+  camera.aspect = VW/VH; camera.updateProjectionMatrix();
+  var visW = 2 * K.CAM_Z * Math.tan(K.FOV*Math.PI/360) * camera.aspect;
+  openFit = clamp((visW*0.92) / (2*K.PAGE_W*K.BOOK_SCALE), 0.55, 1);   /* the open spread always fits the window */
+  placeLights();
+}
+window.addEventListener('resize', resize);
+
+/* ═══ the book itself ═══ */
+var N = K.LEAVES, GAP = K.LEAF_GAP, BT = K.BOARD_T;
+var boardW = K.PAGE_W + K.BOARD_OVER, boardH = K.PAGE_H + 2*K.BOARD_OVER;
+var Ttot = 2*BT + N*GAP;
+var PlaneG = THREE.PlaneBufferGeometry || THREE.PlaneGeometry;
+var BoxG   = THREE.BoxBufferGeometry   || THREE.BoxGeometry;
+
+var bookGroup = new THREE.Group();
+bookGroup.position.set(0, K.BOOK_Y, 0);
+bookGroup.scale.setScalar(K.BOOK_SCALE);
+scene.add(bookGroup);
+var inner = new THREE.Group();          /* holds everything; slides so the closed book sits centred */
+inner.position.z = -Ttot/2;
+bookGroup.add(inner);
+
+var TEX = {};
+var frontPivot, backPivot, spineMesh, emblemMesh, emblemMat;
+var leaves = [], blockR, blockL, hitRight, hitLeft, hitClosed;
+var edgeMats = [];   /* the gilt block edges — the loop breathes candle into them */
+
+function makeTex(cnv, aniso){
+  var t = new THREE.CanvasTexture(cnv);
+  t.needsUpdate = true;
+  try{ if (aniso && renderer.capabilities.getMaxAnisotropy) t.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy()); }catch(e){}
+  return t;
+}
+function leafGeom(isBack){
+  var cols = K.SEG_X+1, rows = K.SEG_Y+1;
+  var pos = new Float32Array(cols*rows*3);
+  var uv  = new Float32Array(cols*rows*2);
+  var idx = [];
+  var j,i;
+  for (j=0;j<rows;j++) for (i=0;i<cols;i++){
+    var p=(j*cols+i);
+    pos[p*3]   = (i/K.SEG_X)*K.PAGE_W;
+    pos[p*3+1] = (j/K.SEG_Y)*K.PAGE_H - K.PAGE_H/2;
+    pos[p*3+2] = 0;
+    uv[p*2]    = isBack ? 1-(i/K.SEG_X) : (i/K.SEG_X);
+    uv[p*2+1]  = j/K.SEG_Y;
+  }
+  for (j=0;j<K.SEG_Y;j++) for (i=0;i<K.SEG_X;i++){
+    var a=j*cols+i, b=a+1, c=a+cols, d=c+1;
+    if (!isBack){ idx.push(a,b,d, a,d,c); }
+    else        { idx.push(a,d,b, a,c,d); }
+  }
+  var g = new THREE.BufferGeometry();
+  g.setAttribute ? g.setAttribute('position', new THREE.BufferAttribute(pos,3))
+                 : g.addAttribute('position', new THREE.BufferAttribute(pos,3));
+  g.setAttribute ? g.setAttribute('uv', new THREE.BufferAttribute(uv,2))
+                 : g.addAttribute('uv', new THREE.BufferAttribute(uv,2));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  return g;
+}
+var paperNormT = null;
+function paperNormal(){                      /* a whisper of tooth, nothing more — smooth paper */
+  var Wp = 144, Hp = 192, N = Wp*Hp, h = new Float32Array(N), x, y, i;
+  for (y=0;y<Hp;y++){ var v=y/Hp;
+    for (x=0;x<Wp;x++){ var u=x/Wp; i=y*Wp+x;
+      h[i] = 0.5
+        + 0.010*(forgeFBM(u,v,5,2,0xFA9E)-0.5)*2          /* the faintest fibre  */
+        + 0.004*(forgeHash(x,y,0xFA9F)-0.5)*2;            /* a breath of tooth   */
+    }
+  }
+  var nrm = new Uint8ClampedArray(N*4), NS = Wp*0.5;
+  for (y=0;y<Hp;y++) for (x=0;x<Wp;x++){
+    i=y*Wp+x;
+    var xp=h[y*Wp+Math.min(Wp-1,x+1)], xm=h[y*Wp+Math.max(0,x-1)];
+    var yp=h[Math.min(Hp-1,y+1)*Wp+x], ym=h[Math.max(0,y-1)*Wp+x];
+    var dhx=(xp-xm)*NS, dhy=(yp-ym)*NS, il=1/Math.sqrt(dhx*dhx+dhy*dhy+1), o=i*4;
+    nrm[o]=(-dhx*il*0.5+0.5)*255; nrm[o+1]=(-dhy*il*0.5+0.5)*255;
+    nrm[o+2]=(il*0.5+0.5)*255; nrm[o+3]=255;
+  }
+  var c=makeCanvas(Wp,Hp), g=c.getContext('2d');
+  var id=g.createImageData(Wp,Hp); id.data.set(nrm); g.putImageData(id,0,0);
+  return c;
+}
+function paperMat(map){
+  if (!paperNormT) paperNormT = makeTex(paperNormal());
+  var m = new THREE.MeshStandardMaterial({ map:map, roughness:0.93, metalness:0.0,
+    normalMap:paperNormT, normalScale:new THREE.Vector2(0.12, 0.12) });   /* smooth: the grain barely catches */
+  m.emissive = new THREE.Color(0x66491f);   /* candle bleeding through a turning leaf */
+  m.emissiveIntensity = 0;
+  return m;
+}
+
+function buildBook(){
+  /* the boards begin as plain darkness; the forge grows their burnt skin a
+     breath later, one face per frame, so the flame never stutters at load */
+  function darkC(){ var c=makeCanvas(4,4), g=c.getContext('2d'); g.fillStyle='#0e0c0a'; g.fillRect(0,0,4,4); return c; }
+  function charM(){ return new THREE.MeshStandardMaterial({ map:makeTex(darkC()), roughness:0.92, metalness:0.03 }); }
+  var matFront=charM(), matBack=charM(), matSpine=charM(), matPlain=charM();
+
+  var goldT   = makeTex(giltFoil(256, 384, 0xF01D));
+  var goldMat = new THREE.MeshStandardMaterial({
+    map: goldT, roughness: 0.18, metalness: 0.95,
+    emissive: new THREE.Color(0xf2d789), emissiveMap: goldT, emissiveIntensity: 0.05
+  });
+
+  var edgeT = makeTex(giltEdges());
+
+  /* the back board — the base the book rests its weight on */
+  backPivot = new THREE.Group(); backPivot.position.z = BT/2; inner.add(backPivot);
+  var bb = new THREE.Mesh(new BoxG(boardW, boardH, BT),
+    [ matPlain, matPlain, matPlain, matPlain, goldMat, matBack ]);
+  bb.position.x = boardW/2; bb.castShadow = !!K.SHADOWS; bb.receiveShadow = true;
+  backPivot.add(bb);
+
+  /* the front board — carries the star */
+  frontPivot = new THREE.Group(); frontPivot.position.z = BT + N*GAP + BT/2; inner.add(frontPivot);
+  var fb = new THREE.Mesh(new BoxG(boardW, boardH, BT),
+    [ matPlain, matPlain, matPlain, matPlain, matFront, goldMat ]);
+  fb.position.x = boardW/2; fb.castShadow = !!K.SHADOWS; fb.receiveShadow = true;
+  frontPivot.add(fb);
+
+  emblemCanvas = makeCanvas(EMB, EMB); emblemCtx = emblemCanvas.getContext('2d');
+  emblemTex = makeTex(emblemCanvas);
+  emblemMat = new THREE.MeshStandardMaterial({
+    map: emblemTex, transparent: true, depthWrite: false,
+    color: 0x0a0c12,                       /* near-black diffuse: the candle cannot warm it */
+    roughness: 0.5, metalness: 0.08,
+    emissive: new THREE.Color(0xbcd9ff), emissiveMap: emblemTex, emissiveIntensity: 0
+  });
+  emblemMesh = new THREE.Mesh(new PlaneG(0.68, 0.68), emblemMat);
+  emblemMesh.position.set(boardW*0.5, 0.15, BT/2 + 0.003);
+  frontPivot.add(emblemMesh);
+
+  /* the spine — its inner face gold, like the paste-downs it joins */
+  spineMesh = new THREE.Mesh(new BoxG(BT, boardH, 1),
+    [ goldMat, matSpine, matPlain, matPlain, matPlain, matPlain ]);
+  spineMesh.position.set(-BT/2, 0, Ttot/2);
+  spineMesh.scale.z = Ttot;
+  spineMesh.castShadow = !!K.SHADOWS; spineMesh.receiveShadow = true;
+  inner.add(spineMesh);
+
+  /* the forge — one skin per frame; the page is alive throughout */
+  window.__forgeReady = false;
+  (function forgeBoards(){
+    function apply(m, F, post){
+      if (post) try{ post(F.map); }catch(e){}
+      m.map = makeTex(F.map, true);
+      m.normalMap = makeTex(F.normal);
+      m.roughnessMap = makeTex(F.rough);
+      m.normalScale = new THREE.Vector2(0.95, 0.95);
+      m.roughness = 1;                      /* the map carries it now */
+      m.needsUpdate = true;
+    }
+    function spineWord(alb){                /* bands and the sooted gilt name */
+      var g = alb.getContext('2d'), w = alb.width, h = alb.height, i;
+      for (i=1;i<=5;i++){
+        var by = h*(0.10+i*0.135);
+        g.fillStyle='rgba(0,0,0,0.35)';      g.fillRect(0, by+2, w, 3);
+        g.fillStyle='rgba(120,96,52,0.28)';  g.fillRect(0, by-1, w, 2);
+      }
+      g.save(); g.translate(w/2, h*0.46); g.rotate(Math.PI/2);
+      g.font='600 '+Math.round(w*0.34)+'px Georgia, serif';
+      g.textAlign='center'; g.textBaseline='middle';
+      g.fillStyle='rgba(196,158,84,0.55)'; g.fillText('notes', 0, 0);
+      g.fillStyle='rgba(0,0,0,0.30)';      g.fillText('notes', 1.5, 1.5);
+      g.restore();
+    }
+    var jobs = [
+      function(){ apply(matFront, charForge(368, 536, {seed:0xB22, heavy:1})); },
+      function(){ apply(matBack,  charForge(368, 536, {seed:0xC33, heavy:1, scar:true})); },
+      function(){ apply(matSpine, charForge(96, 640,  {seed:0xD44, heavy:0.95}), spineWord); },
+      function(){ apply(matPlain, charForge(160, 224, {seed:0xA11, heavy:0.85})); }
+    ];
+    (function step(){
+      var j = jobs.shift();
+      if (!j){ window.__forgeReady = true; return; }
+      try{ j(); }catch(e){}
+      requestAnimationFrame(function(){ setTimeout(step, 40); });
+    })();
+  })();
+
+  /* the leaves */
+  var i;
+  for (i=0;i<N;i++){
+    var pivot = new THREE.Group();
+    var zR = BT + (N - i - 0.5)*GAP;
+    var zL = BT + (i + 0.5)*GAP;
+    pivot.position.z = zR;
+    inner.add(pivot);
+    var texF = makeTex(FACES[2*i], true), texB = makeTex(FACES[2*i+1], true);
+    if (i === LIVE_LEAF){     /* the living page keeps a canvas of its own */
+      liveBase = FACES[LIVE_FACE];
+      liveCanvas = makeCanvas(576,800); liveCtx = liveCanvas.getContext('2d');
+      liveCtx.drawImage(liveBase,0,0);
+      liveTex = makeTex(liveCanvas, true);
+      texF = liveTex;
+    }
+    if (i === PULSAR_LEAF){   /* so does the dead star's page */
+      pulsarBase = FACES[PULSAR_FACE];
+      pulsarCanvas = makeCanvas(576,800); pulsarCtx = pulsarCanvas.getContext('2d');
+      pulsarCtx.drawImage(pulsarBase,0,0);
+      pulsarTex = makeTex(pulsarCanvas, true);
+      texF = pulsarTex;
+    }
+    var gF = leafGeom(false), gB = leafGeom(true);
+    var mF = new THREE.Mesh(gF, paperMat(texF)); mF.name='leaf'+i+'F';
+    var mB = new THREE.Mesh(gB, paperMat(texB)); mB.name='leaf'+i+'B';
+    mF.receiveShadow = true; mB.receiveShadow = true;
+    if (BURNT[i]){                          /* the fire's leaves — the bites are truly gone */
+      mF.material.alphaTest = 0.45; mB.material.alphaTest = 0.45;
+      if (BURNT[i] === 2){ mF.castShadow = false; mB.castShadow = false; }
+    }
+    pivot.add(mF); pivot.add(mB);
+    leaves.push({ pivot:pivot, gF:gF, gB:gB, mF:mF, mB:mB, T:0, zR:zR, zL:zL });
+  }
+
+  /* the block's edges — two thin stacks whose thickness follows the turning.
+     gold foil: real metal to the lights, plus a whisper of emissive gold that
+     the loop drives with the flicker, and lifts when the book is turned. */
+  var edgeMat = new THREE.MeshStandardMaterial({
+    map: edgeT, roughness: 0.24, metalness: 0.88,
+    emissive: new THREE.Color(0xd8a94e), emissiveMap: edgeT, emissiveIntensity: 0.05
+  });
+  blockR = new THREE.Mesh(new BoxG(1,1,1), edgeMat); blockR.name='blockR'; blockR.receiveShadow = true; inner.add(blockR);
+  blockL = new THREE.Mesh(new BoxG(1,1,1), edgeMat.clone ? edgeMat.clone() : edgeMat); blockL.name='blockL'; blockL.receiveShadow = true; inner.add(blockL);
+  edgeMats = [blockR.material, blockL.material, goldMat];   /* the paste-downs breathe with the block edges */
+
+  /* silent hit shapes for the fingers */
+  var hidden = new THREE.MeshBasicMaterial({ transparent:true, opacity:0, depthWrite:false });
+  hidden.colorWrite = false;
+  hitRight = new THREE.Mesh(new PlaneG(K.PAGE_W*1.10, K.PAGE_H*1.08), hidden);
+  hitRight.position.set(K.PAGE_W/2, 0, BT + N*GAP + 0.02); inner.add(hitRight);
+  hitLeft = new THREE.Mesh(new PlaneG(K.PAGE_W*1.10, K.PAGE_H*1.08), hidden);
+  hitLeft.position.set(-K.PAGE_W/2, 0, BT + N*GAP + 0.02); inner.add(hitLeft);
+  hitClosed = new THREE.Mesh(new BoxG(boardW + BT + 0.06, boardH + 0.06, Ttot + 0.08), hidden);
+  hitClosed.position.set((boardW - BT)/2, 0, Ttot/2); inner.add(hitClosed);
+
+  renderEmblem(0);
+  pulsarTick(performance.now());   /* the sky is in the plate before anyone reaches it */
+  for (i=0;i<N;i++) applyLeaf(leaves[i], leaves[i].T, 0);
+  applyCover(0);
+  updateBlocks();
+}
+
+/* ── the bend of a leaf — the whole turn lives in these few lines ───────── */
+var _colX = new Float64Array(K.SEG_X+1), _colZ = new Float64Array(K.SEG_X+1);
+function applyLeaf(leaf, T, hint){
+  var rt = K.REST_TILT * ease(openT);        /* flat inside a closed cover; a soft v once open */
+  var Th = lerp(-rt, -(Math.PI - rt), T);
+  var B  = K.CURL * Math.sin(2*Math.PI * T); /* the belly lags rising, leads falling — a paper whip */
+  var ds = K.PAGE_W / K.SEG_X;
+  var i, j, x=0, z=0;
+  _colX[0]=0; _colZ[0]=0;
+  for (i=1;i<=K.SEG_X;i++){
+    var s = (i-0.5)*ds;
+    var a = Th + B * Math.sin(Math.PI * s / K.PAGE_W);
+    x += Math.cos(a)*ds; z += -Math.sin(a)*ds;
+    _colX[i]=x; _colZ[i]=z;
+  }
+  var cols=K.SEG_X+1, rows=K.SEG_Y+1;
+  var pF = leaf.gF.attributes.position.array, pB = leaf.gB.attributes.position.array;
+  for (j=0;j<rows;j++){
+    var vv = j/K.SEG_Y;
+    for (i=0;i<cols;i++){
+      var u = i/K.SEG_X, p=(j*cols+i)*3;
+      var px=_colX[i];
+      var pz=_colZ[i] + (hint ? hint*Math.pow(u,3)*Math.pow(vv,2.2) : 0);
+      pF[p]=px; pF[p+2]=pz;
+      pB[p]=px; pB[p+2]=pz;
+    }
+  }
+  leaf.gF.attributes.position.needsUpdate = true;
+  leaf.gB.attributes.position.needsUpdate = true;
+  leaf.gF.computeVertexNormals(); leaf.gB.computeVertexNormals();
+  leaf.gF.computeBoundingSphere(); leaf.gB.computeBoundingSphere();
+  leaf.pivot.position.z = lerp(leaf.zR, leaf.zL, T) + K.LIFT*Math.sin(Math.PI*T);
+  /* candlelight leaking through the paper at the height of the turn */
+  var glow = Math.sin(Math.PI*T);
+  leaf.mF.material.emissiveIntensity = 0.10*glow;
+  leaf.mB.material.emissiveIntensity = 0.10*glow;
+}
+function applyCover(t){
+  var e = ease(t);
+  frontPivot.rotation.y = lerp(-0.02, -(Math.PI - 0.06), e);
+  frontPivot.position.z = lerp(BT + N*GAP + BT/2, BT/2, e) + K.LIFT*1.4*Math.sin(Math.PI*e);
+  backPivot.rotation.y  = lerp(0, -0.055, e);
+  spineMesh.scale.z     = Math.max(0.02, lerp(Ttot, BT*1.6, e));
+  spineMesh.position.z  = lerp(Ttot/2, BT*0.8, e);
+  inner.position.z      = lerp(-Ttot/2, -BT*1.1, e);
+  inner.position.x      = lerp(-(boardW - BT)/2, 0, e);   /* closed: centred on the board · open: centred on the spine */
+  bookGroup.rotation.x  = 0.15*e + rot.pitch + br.x;
+}
+function updateBlocks(){
+  var turnedF = turned + (turn ? (turn.forward ? turn.T : -(1-turn.T)) : 0);
+  turnedF = clamp(turnedF, 0, N);
+  var thickR = Math.max(0.0001, (N - turnedF)*GAP), thickL = Math.max(0.0001, turnedF*GAP);
+  blockR.scale.set(K.PAGE_W-0.014, K.PAGE_H-0.014, thickR);
+  blockR.position.set((K.PAGE_W-0.014)/2 + 0.007, 0, BT + thickR/2);
+  blockL.scale.set(K.PAGE_W-0.014, K.PAGE_H-0.014, thickL);
+  blockL.position.set(-((K.PAGE_W-0.014)/2 + 0.007), 0, BT + thickL/2);
+  blockR.visible = thickR > 0.004;
+  blockL.visible = thickL > 0.004 && openT > 0.35;
+}
+
+/* ═══ state, time, and the hand ═══ */
+var state = 'hidden';
+var turned = 0, openT = 0, everOpened = false;
+var turn = null, coverAnim = null, pendingOpen = false, ritualOn = false;
+var reveal = 0, revealStarted = false, revealT0 = 0;
+var igniteT0 = 0, hintT0 = 0, hintShown = false;
+var surge3d = 0;
+var rot = { yaw:0, pitch:0, vyaw:0, vpitch:0, last:0 };
+var _pYaw = 0, _pPitch = 0;   /* last frame's pose — the gilt glint reads the difference */
+var br  = { x:0, y:0, z:0 };
+
+var SND = window.__bookSound || {};
+var EAR = window.__bookEar || null;
+var homing = false, voiceArmed = false;   /* the ear waits until the reader has met the words */
+
+/* ── pages that carry a sound — face index → url. the word "play" (or a
+      wired tap) plays the page you are looking at. the pulsar plate
+      (face 14) keeps its own living player and is handled specially.
+      example:  AUDIO_SLOTS[8] = 'https://…/poem-iii.mp3';  ── */
+var AUDIO_SLOTS = {};
+var pageA = null, pageAUrl = '';
+function playCurrentPage(){
+  var rf = 2*turned, lf = 2*turned - 1;
+  if (rf === PULSAR_FACE || lf === PULSAR_FACE){ snd('pulsarToggle'); pulsarLast = 0; return true; }
+  var url = AUDIO_SLOTS[rf] || (lf >= 0 ? AUDIO_SLOTS[lf] : null);
+  if (!url) return false;
+  try{
+    if (pageAUrl !== url){
+      pageA = new Audio(url);
+      pageA.playsInline = true; pageA.setAttribute('playsinline','');
+      pageA.volume = 0.9; pageAUrl = url;
+    }
+    if (pageA.paused || pageA.ended){
+      try{ pageA.currentTime = 0; }catch(e){}
+      var p = pageA.play(); if (p && p.catch) p.catch(function(){});
+    } else pageA.pause();
+    return true;
+  }catch(e){ return false; }
+}
+function anyPagePlaying(){
+  var pp = false; try{ pp = !!(SND.pulsarPlaying && SND.pulsarPlaying()); }catch(e){}
+  return pp || !!(pageA && !pageA.paused && !pageA.ended);
+}
+function hushPage(){
+  try{ if (pageA && !pageA.paused) pageA.pause(); }catch(e){}
+  snd('pulsarHush');
+}
+function snd(n){ var f=SND[n]; if (f) try{ f.apply(null, [].slice.call(arguments,1)); }catch(e){} }
+
+/* the candle's surge reaches the 3d light too */
+(function(){
+  var orig = window.__flameSurge;
+  window.__flameSurge = function(v){
+    if (orig) try{ orig(v); }catch(e){}
+    if (typeof v === 'number' && isFinite(v)) surge3d = Math.min(2.2, Math.max(surge3d, v));
+  };
+})();
+
+var revealDur = K.REVEAL_MS, awakenT0 = 0, embLast = 0;
+function startIgnite(formMs){            /* the book forms out of the dark — from ash, if the moth came */
+  if (state !== 'hidden') return;
+  if (!emblemCtx){ setTimeout(function(){ startIgnite(formMs); }, 200); return; }
+  if (typeof formMs === 'number' && isFinite(formMs)) revealDur = formMs;
+  state = 'igniting';
+  igniteT0 = performance.now();
+  revealT0 = igniteT0 + 300; revealStarted = true;
+  awakenT0 = igniteT0 + revealDur*0.62;   /* the star lights near the end of the forming */
+  snd('emberHiss');
+}
+window.addEventListener('apwnp:emblem-ignite', function(){ startIgnite(); });
+window.addEventListener('apwnp:book-form',  function(){ startIgnite(5000); });   /* the ash builds it slowly */
+
+function openQuiet(){                    /* open without asking — the console, the words, a voice */
+  if (state !== 'closed') return;
+  ritualOn = false;
+  if (EAR) try{ EAR.gateStop(); }catch(e){}
+  pendingOpen = true; rot.vyaw = 0; rot.vpitch = 0;
+}
+function requestOpen(){                  /* the star was touched */
+  if (state !== 'closed') return;
+  if (ritualOn){ openQuiet(); return; }   /* touched twice — impatience is answer enough */
+  rot.vyaw = 0; rot.vpitch = 0;
+  snd('sing');                            /* "sing me a song?" — inside the tap, the ios way */
+  /* no mic (unsupported, refused, or switched off) → the touch alone opens it */
+  var wantGate = true;
+  try{ wantGate = !!(SND && SND.VOICE && SND.VOICE.micGate); }catch(e){ wantGate = true; }
+  if (!wantGate || !EAR || !EAR.supported || !EAR.supported.mic){ openQuiet(); return; }
+  /* otherwise the book waits, and listens: any answer — a sung note, a hum,
+     a word — opens the covers. it learns the room's quiet first, so silence
+     won't do it. (see gatePoll: calibration + a leaky threshold.) */
+  ritualOn = true;
+  EAR.gate(
+    function(){ ritualOn = false; openQuiet(); },     /* a voice was heard */
+    function(){ ritualOn = false; openQuiet(); }      /* mic wouldn't open — fall back to the touch */
+  );
+}
+function beginOpen(){
+  pendingOpen = false;
+  state = 'opening';
+  coverAnim = { from:0, to:1, t0:performance.now(), dur:K.COVER_MS };
+  snd('coverCreak');
+  if (!everOpened){ everOpened = true; hidePageHint(); }
+  /* the house may be listening — it wakes its mic on this word */
+  try{
+    window.dispatchEvent(new CustomEvent('apwnp:book-open'));
+    if (window.parent && window.parent !== window) window.parent.postMessage({apwnp:'book-open'}, '*');
+  }catch(e){}
+}
+function beginClose(){
+  if (state !== 'open' || turned !== 0 || turn) return;
+  state = 'closing';
+  coverAnim = { from:openT, to:0, t0:performance.now(), dur:K.COVER_MS*0.72 };
+  hushPage();          /* a closing book quiets whatever was singing */
+}
+function hidePageHint(){
+  var h = document.getElementById('pagehint');
+  if (h) h.classList.remove('in');
+  hintShown = true;   /* never again */
+}
+function startTurn(forward, viaDrag){
+  lastTurnTry = { forward:forward, drag:!!viaDrag, state:state, hadTurn:!!turn, turned:turned, ok:false };
+  if (state !== 'open' || turn) return false;
+  if (forward && turned >= N) return false;
+  if (!forward && turned <= 0) return false;
+  lastTurnTry.ok = true;
+  var i = forward ? turned : turned-1;
+  turn = { i:i, forward:forward, T: forward?0:1, from: forward?0:1,
+           target: viaDrag ? null : (forward?1:0),
+           t0: performance.now(), dur: K.TURN_MS, drag: !!viaDrag, lastX:0, vel:0 };
+  if (viaDrag) snd('paperTouch'); else snd('pageTurn', 1);
+  if (i === PULSAR_LEAF) snd('pulsarHush');               /* its page is leaving — it falls quiet */
+  try{ if (pageA && !pageA.paused) pageA.pause(); }catch(e){}
+  try{ if (window.__candleWisp) window.__candleWisp(); }catch(e){}   /* every turn stirs the flame — one wisp climbs */
+  return true;
+}
+function releaseTurn(vel){
+  if (!turn || !turn.drag) return;
+  var t = turn;
+  t.drag = false;
+  var go;
+  if (t.forward) go = (t.T > 0.34 || vel < -0.55) ? 1 : 0;
+  else           go = (t.T < 0.66 || vel > 0.55) ? 0 : 1;
+  t.from = t.T; t.target = go; t.t0 = performance.now();
+  t.dur = Math.max(160, K.TURN_MS * Math.abs(go - t.T));
+  if ((t.forward && go===1) || (!t.forward && go===0)) snd('pageTurn', 0.9);
+}
+function finishTurn(){
+  var t = turn; if (!t) return;
+  var leaf = leaves[t.i];
+  if (t.forward && t.target===1){ turned++; leaf.T = 1;
+    if (!voiceArmed && turned >= 1 && EAR && EAR.supported && EAR.supported.words){
+      voiceArmed = true;                 /* the reader has met the words — the ear may listen now */
+      try{ EAR.start(); }catch(e){}
+    }
+  }
+  else if (!t.forward && t.target===0){ turned--; leaf.T = 0; }
+  else { leaf.T = t.forward ? 0 : 1; }
+  applyLeaf(leaf, leaf.T, 0);
+  turn = null;
+  updateBlocks();
+  if (homing) homeStep();
+}
+
+/* "close", said from any page — the leaves riffle home, then the covers shut */
+function closeAll(){
+  if (state === 'closed' || state === 'closing' || state === 'hidden' || state === 'igniting') return;
+  hushPage();
+  if (state !== 'open') return;
+  if (turned === 0 && !turn){ beginClose(); return; }
+  homing = true;
+  if (!turn) homeStep();
+}
+function homeStep(){
+  if (!homing) return;
+  if (state !== 'open'){ homing = false; return; }
+  if (turned > 0){
+    if (startTurn(false, false) && turn) turn.dur = K.TURN_MS * 0.55;   /* quicker on the way home */
+  } else {
+    homing = false;
+    beginClose();
+  }
+}
+
+/* pointers — one finger does everything */
+var pd = null;
+var lastDown = null, lastTurnTry = null, lastTap = null;
+var ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+function castAt(x, y, objs){
+  ndc.x = (x/VW)*2-1; ndc.y = -(y/VH)*2+1;
+  ray.setFromCamera(ndc, camera);
+  var hits = ray.intersectObjects(objs, false);
+  return hits && hits.length ? hits[0] : null;
+}
+canvas3.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+canvas3.addEventListener('pointerdown', function(e){
+  if (state==='hidden' || state==='igniting') return;
+  homing = false;                       /* a touch takes over from a voice-close */
+  try{ canvas3.setPointerCapture(e.pointerId); }catch(err){}
+  pd = { id:e.pointerId, x0:e.clientX, y0:e.clientY, x:e.clientX, y:e.clientY,
+         t0:performance.now(), moved:false, mode:'pend', lastX:e.clientX, lastT:performance.now(), vel:0 };
+  rot.last = performance.now();
+  if (state==='open' || state==='turning'){
+    var hR = castAt(e.clientX, e.clientY, [hitRight]);
+    var hL = castAt(e.clientX, e.clientY, [hitLeft]);
+    pd.side = hR ? 'R' : (hL ? 'L' : 'bg');
+  } else {
+    var hC = castAt(e.clientX, e.clientY, [hitClosed]);
+    pd.side = hC ? 'book' : 'bg';
+  }
+  lastDown = { x:e.clientX, y:e.clientY, side:pd.side, state:state, hadTurn:!!turn };
+});
+canvas3.addEventListener('pointermove', function(e){
+  if (!pd || e.pointerId !== pd.id) return;
+  var now = performance.now();
+  var dx = e.clientX - pd.x, dy = e.clientY - pd.y;
+  pd.x = e.clientX; pd.y = e.clientY;
+  var dt = Math.max(1, now - pd.lastT);
+  pd.vel = (e.clientX - pd.lastX)/dt;   /* px per ms */
+  pd.lastX = e.clientX; pd.lastT = now;
+  if (!pd.moved && Math.hypot(e.clientX-pd.x0, e.clientY-pd.y0) > 7){
+    pd.moved = true;
+    if (state==='closed'){ pd.mode = 'rotate'; }
+    else if (state==='open' && !turn){
+      if (pd.side==='R' && turned < N){ pd.mode='page'; startTurn(true, true); }
+      else if (pd.side==='L' && turned > 0){ pd.mode='page'; startTurn(false, true); }
+      else if (pd.side==='L' && turned === 0){ pd.mode='closeDrag'; }
+      else pd.mode='tilt';
+    }
+    else if (turn && turn.drag){ pd.mode='page'; }
+    else pd.mode='tilt';
+  }
+  if (!pd.moved) return;
+  rot.last = now;
+  if (pd.mode==='rotate'){
+    rot.yaw   += dx*0.0068;
+    rot.pitch  = clamp(rot.pitch + dy*0.0052, -1.05, 1.05);
+    rot.vyaw   = (dx*0.0068)/dt*16.667; rot.vpitch = (dy*0.0052)/dt*16.667;   /* per 60th, so the loop can replay it at any hz */
+  } else if (pd.mode==='tilt'){
+    rot.yaw   = clamp(rot.yaw + dx*0.0016, -0.14, 0.14);
+    rot.pitch = clamp(rot.pitch + dy*0.0013, -0.10, 0.10);
+  } else if (pd.mode==='page' && turn && turn.drag){
+    var span = Math.min(VW*0.42, 360);
+    if (turn.forward) turn.T = clamp((pd.x0 - e.clientX)/span, 0, 1);
+    else              turn.T = clamp(1 - (e.clientX - pd.x0)/span, 0, 1);
+  } else if (pd.mode==='closeDrag'){
+    if (e.clientX - pd.x0 > 70){ pd.mode='done'; beginClose(); }
+  }
+});
+/* a touch that lands on the star itself, with the front board facing you.
+   the closed hit-box is padded a little proud of the boards, so the star
+   wins any near-tie — and loses only when the book truly faces away. */
+function starHitAt(x, y){
+  if (!emblemMesh || !hitClosed) return false;
+  ndc.x = (x/VW)*2-1; ndc.y = -(y/VH)*2+1;
+  ray.setFromCamera(ndc, camera);
+  var he = ray.intersectObject(emblemMesh, false);
+  if (!he.length) return false;
+  var hc = ray.intersectObject(hitClosed, false);
+  return !hc.length || he[0].distance <= hc[0].distance + 0.09;
+}
+function nudgeHint(){
+  if (state !== 'closed') return;
+  var h = document.getElementById('pagehint');
+  if (!h) return;
+  h.textContent = 'touch the star';
+  h.classList.add('in');
+  clearTimeout(nudgeHint.t);
+  nudgeHint.t = setTimeout(function(){ h.classList.remove('in'); }, 4200);
+}
+
+/* a touch that lands inside the singing plate, while its page faces you */
+function pulsarHitAt(x, y){
+  if (turned !== PULSAR_LEAF || turn) return false;
+  if (!leaves[PULSAR_LEAF]) return false;
+  var h = castAt(x, y, [leaves[PULSAR_LEAF].mF]);
+  if (!h || !h.uv) return false;
+  var px = h.uv.x*576, py = (1-h.uv.y)*800;
+  var P = PULSAR.plate;
+  return px >= P.x-14 && px <= P.x+P.w+14 &&
+         py >= P.y-14 && py <= P.y+P.h+64;   /* generous — the caption counts too */
+}
+function pointerEnd(e){
+  if (!pd || (e && e.pointerId !== pd.id)) return;
+  var now = performance.now();
+  var quick = (now - pd.t0) < 380 && !pd.moved;
+  lastTap = { quick:quick, side:pd.side, state:state, dt:Math.round(now-pd.t0), moved:pd.moved,
+              star:(state==='closed' && quick && pd.side==='book') ? starHitAt(pd.x, pd.y) : null };
+  if (quick){
+    if (state==='closed' && pd.side==='book'){
+      if (lastTap.star) requestOpen();
+      else nudgeHint();                 /* not the moth — say where to touch */
+    }
+    else if (state==='open' && !turn){
+      if (pd.side==='R'){
+        if (pulsarHitAt(pd.x, pd.y)){ snd('pulsarToggle'); pulsarLast = 0; }   /* the star answers, the caption follows */
+        else startTurn(true, false);
+      }
+      else if (pd.side==='L'){ if (turned>0) startTurn(false, false); else beginClose(); }
+    }
+  } else if (turn && turn.drag){
+    releaseTurn(pd.vel);
+  }
+  pd = null;
+}
+canvas3.addEventListener('pointerup', pointerEnd);
+canvas3.addEventListener('pointercancel', pointerEnd);
+
+/* the falling ash asks where the book waits */
+var _wv = new THREE.Vector3();
+window.__emblemTarget = function(){
+  if (!emblemMesh) return null;
+  try{
+    emblemMesh.getWorldPosition(_wv);
+    _wv.project(camera);
+    return { x:(_wv.x*0.5+0.5)*VW, y:(-_wv.y*0.5+0.5)*VH };
+  }catch(e){ return null; }
+};
+window.__coverTop = function(){
+  if (!hitClosed) return null;
+  try{
+    _wv.set(boardW*0.5, boardH*0.52, Ttot);           /* top centre of the front board */
+    inner.localToWorld(_wv);
+    _wv.project(camera);
+    var cx = (_wv.x*0.5+0.5)*VW, cy = (-_wv.y*0.5+0.5)*VH;
+    _wv.set(0, boardH*0.52, Ttot);                    /* the spine corner — half the span */
+    inner.localToWorld(_wv);
+    _wv.project(camera);
+    var lx = (_wv.x*0.5+0.5)*VW;
+    return { x:cx, y:cy, hw:Math.max(24, Math.abs(cx-lx)) };
+  }catch(e){ return null; }
+};
+
+/* ═══ the loop ═══ */
+var hiddenTab = false, lastFrame = 0;
+document.addEventListener('visibilitychange', function(){ hiddenTab = document.hidden; });
+
+function flick(now){
+  var b = 0.40 + 0.13*Math.sin(now*0.00040) + 0.05*Math.sin(now*0.00091 + 1.3);
+  var f = 0.78 + 0.34*b
+        + 0.085*Math.sin(now*0.006)
+        + 0.055*Math.sin(now*0.013 + 1)
+        + 0.035*Math.sin(now*0.0027 + 2);
+  return clamp(f + surge3d*0.85, 0.5, 2.3);
+}
+
+function frame(now){
+  requestAnimationFrame(frame);
+  if (hiddenTab) return;
+  var dtf = lastFrame ? Math.min(4, (now - lastFrame)/16.667) : 1;   /* time, in 60ths — the hand feels the same at 30 or 120hz */
+  lastFrame = now;
+  surge3d *= Math.pow(0.94, dtf);
+
+  /* light finds the book */
+  if (revealStarted) reveal = ease(clamp((now - revealT0)/revealDur, 0, 1));
+  var fl = flick(now) * reveal;
+  key.intensity  = K.PT_INT  * fl * reveal;      /* the candle finds the book only as it forms */
+  spot.intensity = K.SPOT_INT * fl * reveal;
+  amb.intensity  = K.AMB * (0.25 + 0.75*reveal) * Math.min(1, reveal*4);
+  rim.intensity  = K.RIM * reveal;
+  bookGroup.visible = reveal > 0.002;
+
+  /* the gilt fore-edge answers the flame — and flares as the book is turned
+     in the hand, so the closed book throws its glint back to the candle */
+  if (edgeMats.length){
+    var yawD = Math.abs(rot.yaw - _pYaw) + Math.abs(rot.pitch - _pPitch);
+    _pYaw = rot.yaw; _pPitch = rot.pitch;
+    var turnGlint = Math.min(0.85, (yawD / Math.max(0.25, dtf)) * 34) + (coverAnim ? 0.30 : 0);
+    var giltI = reveal * (0.05 + 0.22*Math.max(0, fl - 0.72)
+              + turnGlint * lerp(0.60, 0.25, ease(openT)));
+    for (var gm=0; gm<edgeMats.length; gm++) edgeMats[gm].emissiveIntensity = giltI;
+    if (edgeMats[2]) edgeMats[2].emissiveIntensity = giltI * 1.75;   /* the inner foil catches harder */
+  }
+
+  /* the book forming, and the dead star keeping its light */
+  if (state === 'igniting' && reveal >= 1) { state = 'closed'; hintT0 = now; }
+  if (state !== 'hidden' && awakenT0 > 0){
+    var aw = clamp((now - awakenT0)/1600, 0, 1);
+    if (aw > 0){
+      var vis = (state !== 'open' && state !== 'turning') || openT < 0.98;
+      if (vis && now - embLast > (RM ? 220 : 85)){ embLast = now; renderEmblem(aw, now); }
+      emblemMat.emissiveIntensity = Math.max(0.02, reveal) * aw * (0.55 + 1.25*embPulse(now));
+    }
+  }
+
+  /* the whispered hint is retired — the book waits in silence now; the words
+     appear only as a nudge, when a touch lands off the star (nudgeHint). */
+
+  /* cover */
+  if (coverAnim){
+    var ct = clamp((now - coverAnim.t0)/coverAnim.dur, 0, 1);
+    openT = lerp(coverAnim.from, coverAnim.to, ct);
+    applyCover(openT);
+    for (var li=0; li<N; li++) if (!turn || turn.i!==li) applyLeaf(leaves[li], leaves[li].T, 0);
+    updateBlocks();
+    if (ct >= 1){
+      var was = coverAnim; coverAnim = null;
+      if (was.to === 1){ state = 'open'; snd('coverThump', true); }
+      else { state = 'closed'; snd('coverThump', false); rot.last = now; }
+    }
+  }
+
+  /* a leaf mid-air */
+  if (turn){
+    var t = turn;
+    if (!t.drag && t.target !== null){
+      var tt = clamp((now - t.t0)/t.dur, 0, 1);
+      t.T = lerp(t.from, t.target, ease(tt));
+      if (tt >= 1){ finishTurn(); }
+    }
+    if (turn){ applyLeaf(leaves[turn.i], turn.T, 0); updateBlocks(); }
+  }
+
+  /* the top page curls its corner, an invitation */
+  if (state==='open' && !turn && turned < N && !RM){
+    var hint = (0.5 + 0.5*Math.sin(now*0.0016)) * 0.055;
+    applyLeaf(leaves[turned], leaves[turned].T, hint);
+  }
+
+  /* the living page, while it faces you */
+  if ((state==='open' || state==='turning') &&
+      (turned === LIVE_LEAF || (turn && turn.i === LIVE_LEAF))){
+    liveTick(now);
+  }
+
+  /* the dead star, while its plate faces you — stars blink, beams sweep */
+  if ((state==='open' || state==='turning') &&
+      (turned === PULSAR_LEAF || (turn && turn.i === PULSAR_LEAF))){
+    pulsarTick(now);
+  }
+
+  /* breath, drift, and the slow return to rest */
+  if (!RM && reveal > 0.5){
+    br.y = 0.012*Math.sin(now*0.0011);
+    br.z = 0.008*Math.sin(now*0.0007 + 1.2);
+    br.x = 0.006*Math.sin(now*0.00089);
+  }
+  var idle = (!pd || pd.mode!=='rotate') && !coverAnim;
+  if (idle){
+    if (state==='closed'){
+      rot.yaw += rot.vyaw*dtf; rot.pitch = clamp(rot.pitch + rot.vpitch*dtf, -1.05, 1.05);
+      var dk = Math.pow(0.94, dtf);
+      rot.vyaw *= dk; rot.vpitch *= dk;
+      if (now - rot.last > 3500 || pendingOpen){
+        var k = 1 - Math.pow(1 - (pendingOpen ? 0.10 : 0.028), dtf);
+        rot.yaw = lerp(rot.yaw, 0, k); rot.pitch = lerp(rot.pitch, 0, k);
+      }
+    } else {
+      var ko = 1 - Math.pow(1 - 0.06, dtf);
+      rot.yaw = lerp(rot.yaw, 0, ko); rot.pitch = lerp(rot.pitch, 0, ko);
+    }
+  }
+  if (pendingOpen && Math.abs(rot.yaw) < 0.06 && Math.abs(rot.pitch) < 0.05) beginOpen();
+
+  /* opening shrinks the book to fit the wide spread; that shrink pulls the
+     head down and away from the flame. lift the book by just what the shrink
+     took from the top edge, so the gilt head stays kissing the flame. */
+  var openE = ease(openT);
+  var headLift = K.PAGE_H * 0.635 * K.BOOK_SCALE * (1 - openFit) * openE;   /* +tilt compensation */
+  /* the book grows out of the settling ash — small under the first flakes,
+     full-grown as the light finds it. the bottom edge stays pinned, so the
+     cover's top rises up into the falling stream. */
+  var formS = 0.45 + 0.55*reveal;
+  bookGroup.position.y = K.BOOK_Y + br.y + headLift
+                       - (1 - formS) * boardH * 0.5 * K.BOOK_SCALE;
+  bookGroup.rotation.y = rot.yaw + br.z*0.4;
+  bookGroup.rotation.x = 0.15*openE + rot.pitch + br.x;
+  bookGroup.rotation.z = br.z;
+  var sc = K.BOOK_SCALE * lerp(1, openFit, openE) * (1 + 0.008*surge3d) * formS;
+  bookGroup.scale.setScalar(sc);
+
+  renderer.render(scene, camera);
+}
+
+/* ═══ begin — after the ink dries (the fonts), the book is bound ═══ */
+var ENTER_MOTH = /[?&]enter=moth\b/.test(location.search);
+function begin(){
+  buildFaces();
+  buildBook();
+  loadPlates();
+  resize();
+  requestAnimationFrame(frame);
+  if (!ENTER_MOTH){
+    setTimeout(startIgnite, 900);                 /* opened alone: the embers come anyway */
+  } else {
+    setTimeout(function(){ startIgnite(); }, 14000);   /* if the moth never arrives, don't wait forever */
+  }
+}
+/* the pictures arrive from the shelf and are tipped into their frames */
+function loadPlates(){
+  Object.keys(PLATES).forEach(function(fs){
+    var fi = +fs, img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function(){
+      try{
+        var cv = FACES[fi]; if (!cv) return;
+        var g = cv.getContext('2d'), Rr = PLATE_R;
+        g.save();
+        g.beginPath(); g.rect(Rr.x, Rr.y, Rr.w, Rr.h); g.clip();
+        var s2 = Math.max(Rr.w/img.width, Rr.h/img.height);      /* cover the frame */
+        var dw = img.width*s2, dh = img.height*s2;
+        g.drawImage(img, Rr.x+(Rr.w-dw)/2, Rr.y+(Rr.h-dh)/2, dw, dh);
+        g.fillStyle = 'rgba(232,218,187,0.10)';                  /* so it sits on the paper */
+        g.fillRect(Rr.x, Rr.y, Rr.w, Rr.h);
+        g.restore();
+        var lg = g.createLinearGradient(0, Rr.y, 0, Rr.y+26);    /* a whisper of shadow under the rule */
+        lg.addColorStop(0,'rgba(60,42,20,0.13)'); lg.addColorStop(1,'rgba(60,42,20,0)');
+        g.fillStyle = lg; g.fillRect(Rr.x, Rr.y, Rr.w, 26);
+        var li = fi>>1, leaf = leaves[li];
+        if (leaf){
+          var m = (fi%2===0) ? leaf.mF.material : leaf.mB.material;
+          if (m && m.map) m.map.needsUpdate = true;
+        }
+      }catch(e){}
+    };
+    img.src = PLATES[fs];
+  });
+}
+
+var began = false;
+function beginOnce(){ if (began) return; began = true; begin(); }
+try{
+  if (document.fonts && document.fonts.load){
+    Promise.all([
+      document.fonts.load('400 30px "EB Garamond"'),
+      document.fonts.load('italic 400 26px "EB Garamond"')
+    ]).then(beginOnce, beginOnce);
+    setTimeout(beginOnce, 2500);
+  } else setTimeout(beginOnce, 300);
+}catch(e){ setTimeout(beginOnce, 300); }
+
+/* a small handle, for tuning in the console */
+window.__book = { K:K, open:openQuiet, star:requestOpen, close:beginClose, closeAll:closeAll,
+                  ignite:startIgnite, playPage:playCurrentPage,
+                  say:function(cmd){ if (EAR) EAR.say(cmd); },
+                  starHit:function(x,y){ return starHitAt(x,y); },
+                  state:function(){ return state; }, turnedCount:function(){ return turned; },
+                  wisp:function(n){ try{ if (window.__candleWisp) window.__candleWisp(n); }catch(e){} },
+                  sing:function(){ snd('sing'); },
+                  pulsar:function(){ snd('pulsarToggle'); pulsarLast = 0; },
+                  starAt:function(){
+                    if (!emblemMesh) return null;
+                    emblemMesh.getWorldPosition(_wv); _wv.project(camera);
+                    return { x:(_wv.x*0.5+0.5)*VW, y:(-_wv.y*0.5+0.5)*VH };
+                  },
+                  pageCenters:function(){
+                    function pr(o){ if (!o) return null; o.getWorldPosition(_wv); _wv.project(camera);
+                      return { x:(_wv.x*0.5+0.5)*VW, y:(-_wv.y*0.5+0.5)*VH }; }
+                    return { R:pr(hitRight), L:pr(hitLeft), C:pr(hitClosed) };
+                  },
+                  hitAt:function(x,y){
+                    ndc.x=(x/VW)*2-1; ndc.y=-(y/VH)*2+1; ray.setFromCamera(ndc,camera);
+                    var all=[]; scene.traverse(function(o){ if (o.isMesh && o!==hitRight && o!==hitLeft && o!==hitClosed) all.push(o); });
+                    var hs=ray.intersectObjects(all,false);
+                    return hs.map(function(h){ return { n:h.object.name||h.object.type, z:+h.point.z.toFixed(4), d:+h.distance.toFixed(3) }; }).slice(0,4);
+                  },
+                  blocks:function(v){ blockR.visible=v; blockL.visible=v; },
+                  debug:function(){ return { state:state, turned:turned, openT:openT,
+                    yaw:+rot.yaw.toFixed(3), pitch:+rot.pitch.toFixed(3),
+                    vyaw:+rot.vyaw.toFixed(4), pend:pendingOpen,
+                    pd: pd ? { mode:pd.mode, moved:pd.moved } : null,
+                    cover: !!coverAnim,
+                    turn: turn ? {i:turn.i, T:turn.T, drag:turn.drag, target:turn.target, forward:turn.forward} : null,
+                    lastDown:lastDown, lastTurnTry:lastTurnTry, lastTap:lastTap, reveal:reveal }; } };
+
+/* ── the ear speaks, the book answers ── */
+if (EAR){
+  EAR.setRoute(function(cmd){
+    /* while a page is singing, only "hush" and "close" may cut in —
+       otherwise the song's own words could turn its pages */
+    if (anyPagePlaying() && cmd !== 'hush' && cmd !== 'close') return;
+    if (cmd === 'open'){ if (state === 'closed') openQuiet(); return; }
+    if (cmd === 'close'){ closeAll(); return; }
+    if (cmd === 'hush'){ hushPage(); return; }
+    if (state !== 'open') return;
+    if (cmd === 'turn'){ if (!turn) startTurn(true, false); }
+    else if (cmd === 'back'){ if (!turn){ if (turned > 0) startTurn(false, false); else beginClose(); } }
+    else if (cmd === 'play'){ playCurrentPage(); }
+  });
+}
+})();
+</script>
+
+<!-- the moth arrival (drop-in) — the moon moth bridges in from the doorway (index-doors.html),
+     flutters around the candle, and dies in the flame. drawn to match buildMoonMoth's own
+     wings/veins/antennae. armed by ?enter=moth; started by {apwnp:'arrive-moth'}.
+     NEW in this room: nothing of the moth rises. its ash falls in a long grey
+     stream to the dark below, and out of that falling the book slowly forms
+     ('apwnp:book-form'). the moth does not return — the dead star keeps the cover. -->
+<script>
+(function(){
+  'use strict';
+  if (window.__mothArrivalInit) return; window.__mothArrivalInit = true;
+
+  var params = '';
+  try { params = String(location.search || ''); } catch(e){ params = ''; }
+  if (params.indexOf('enter=moth') === -1) return;
+
+  /* ── [TUNE] the knobs ──────────────────────────────────────────────────── */
+  var MOTH_SCALE = 0.0864;                      // moth size = flame-height × this
+  var T = { enter: 1500, orbit: 3000, dive: 520 };   // ms per phase of the flight
+  var SHOW_MOON = false;                         // the moon above the moth's head (off: no dot between the antennae)
+  var ASH = { delay: 240, span: 4400, dur: 4600, n: 260 };  // the ash stream that builds the book — a real grey rain now
+  var RM = false;
+  try { RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+  if (RM){ T.enter *= 0.6; T.orbit *= 0.5; T.dive *= 0.8; ASH.span = 2200; ASH.dur = 2600; ASH.n = 110; }
+
+  var started = false, done = false;
+
+  var cv = document.createElement('canvas');
+  cv.id = 'mothcanvas'; cv.setAttribute('aria-hidden','true');
+  cv.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:6;pointer-events:none;opacity:1;';
+  (function attach(){ if (document.body) document.body.appendChild(cv);
+    else document.addEventListener('DOMContentLoaded', function(){ document.body.appendChild(cv); }); })();
+
+  var g = null, dpr = 1, W = 0, H = 0;
+  try { g = cv.getContext('2d'); } catch(e){ g = null; }
+  if (!g) return;
+
+  function size(){
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+  }
+  size(); window.addEventListener('resize', size);
+
+  function flame(){
+    var b = document.getElementById('candlebox');
+    var r = b ? b.getBoundingClientRect() : null;
+    if (!r || !r.width){ r = { left:W/2-Math.min(0.32*W,150), top:0.42*H-Math.min(0.24*H,200),
+                                width:Math.min(0.64*W,300), height:Math.min(0.48*H,400) }; }
+    return { x:r.left+r.width*0.5, core:r.top+r.height*0.56, tip:r.top+r.height*0.40, h:r.height };
+  }
+
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  function ease(t){ t=clamp(t,0,1); return t*t*(3-2*t); }
+  function easeIn(t){ t=clamp(t,0,1); return t*t; }
+  function qx2(a,b,c,t){ var m=1-t; return m*m*a + 2*m*t*b + t*t*c; }
+  function cub(a,b,c,d,t){ var m=1-t; return m*m*m*a + 3*m*m*t*b + 3*m*t*t*c + t*t*t*d; }
+  function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+  /* ── the moon moth — baked wings (branching vein-fan + speckles) ────────── */
+  var BAKE = 190;
+  var foreWing = null, hindWing = null;
+
+  function wingParams(isFore){                 /* straight from wingGeo() in the doorway */
+    return isFore ? {span:1.50, ridge:0.56, belly:0.40, sweep:0.60}
+                  : {span:1.04, ridge:0.34, belly:0.50, sweep:0.14};
+  }
+  function bakeWing(isFore, rnd){
+    var P = wingParams(isFore);
+    function pt(u,t){                           /* (u along span, t across chord) -> local x,y (canvas, +y down) */
+      var x=P.span*Math.pow(u,0.95), cY=P.sweep*Math.pow(u,1.15),
+          hT=P.ridge*Math.sin(Math.PI*Math.pow(u,0.80)),
+          hB=P.belly*Math.sin(Math.PI*Math.pow(u,0.72));
+      return [x, -(cY + (t*(hT+hB) - hB))];
+    }
+    function outline(o2){ var N=26,i,p; o2.beginPath();
+      for(i=0;i<=N;i++){ p=pt(i/N,1); if(i===0)o2.moveTo(p[0],p[1]); else o2.lineTo(p[0],p[1]); }
+      for(i=N;i>=0;i--){ p=pt(i/N,0); o2.lineTo(p[0],p[1]); } o2.closePath(); }
+
+    var b = isFore ? {x0:-0.10,x1:1.62,y0:-0.90,y1:0.32}
+                   : {x0:-0.10,x1:1.16,y0:-0.46,y1:0.54};
+    var pad=0.05, wpx=Math.ceil((b.x1-b.x0+2*pad)*BAKE), hpx=Math.ceil((b.y1-b.y0+2*pad)*BAKE);
+    var ox=(-b.x0+pad)*BAKE, oy=(-b.y0+pad)*BAKE;
+    var oc=document.createElement('canvas'); oc.width=wpx; oc.height=hpx;
+    var o=oc.getContext('2d'); o.translate(ox,oy); o.scale(BAKE,BAKE);
+
+    /* near-transparent cool membrane (WING_F: cool 0.64,0.76,1.0 · very faint) */
+    o.globalCompositeOperation='source-over';
+    var reach=P.span*1.06;
+    var mg=o.createRadialGradient(0.05,0,0.02, 0.05,0,reach);
+    mg.addColorStop(0.00,'rgba(163,194,255,0.11)');
+    mg.addColorStop(0.50,'rgba(120,150,210,0.055)');
+    mg.addColorStop(1.00,'rgba(90,110,170,0.015)');
+    outline(o); o.fillStyle=mg; o.fill();
+
+    o.save(); outline(o); o.clip();
+      var rbz=o.createRadialGradient(0.03,0,0, 0.03,0,0.5);
+      rbz.addColorStop(0,'rgba(210,225,255,0.24)'); rbz.addColorStop(1,'rgba(210,225,255,0)');
+      o.fillStyle=rbz; o.beginPath(); o.arc(0.03,0,0.5,0,6.2832); o.fill();
+
+      /* the vein fan — pale veins radiating from the root (wingVeinTex, exactly) */
+      var nMain=isFore?11:9, k, tt;
+      o.globalCompositeOperation='lighter'; o.lineCap='round';
+      for(k=0;k<nMain;k++){
+        var f=nMain>1?k/(nMain-1):0.5;
+        var uE=0.70+0.26*Math.sin(f*Math.PI), tE=0.05+0.90*f;
+        var uM=0.40+0.06*Math.sin(f*Math.PI), tM=0.20+0.58*f;
+        var E=pt(uE,tE), M=pt(uM,tM);
+        var vlen=Math.hypot(E[0],E[1]) || 1, dxn=E[0]/vlen, dyn=E[1]/vlen;
+
+        o.strokeStyle='rgba(233,243,255,0.40)'; o.lineWidth=0.009*(1-0.4*f)+0.003;
+        o.beginPath(); o.moveTo(0.02,0); o.quadraticCurveTo(M[0],M[1], E[0],E[1]); o.stroke();
+
+        /* speckles + dashes streaming along each vein */
+        for(tt=0.14; tt<=1.0; tt+=0.05+0.02*rnd()){
+          var qX=qx2(0.02,M[0],E[0],tt), qY=qx2(0,M[1],E[1],tt);
+          var x=qX+(rnd()-0.5)*0.045, y=qY+(rnd()-0.5)*0.045;
+          var bt=Math.sin(Math.PI*Math.min(1,tt*1.04));
+          o.globalAlpha=(0.16+0.5*bt)*(0.5+0.5*rnd());
+          if(rnd()<0.13){ var dl=0.02+rnd()*0.03; o.lineWidth=0.006+rnd()*0.005; o.strokeStyle='rgba(236,244,255,1)';
+            o.beginPath(); o.moveTo(x-dxn*dl*0.5,y-dyn*dl*0.5); o.lineTo(x+dxn*dl*0.5,y+dyn*dl*0.5); o.stroke();
+            o.strokeStyle='rgba(233,243,255,0.40)';
+          } else { var big=rnd()<0.06, rad=big?(0.011+rnd()*0.013):(0.004+rnd()*0.005);
+            o.fillStyle='rgba(236,244,255,1)'; o.beginPath(); o.arc(x,y,rad,0,6.2832); o.fill(); }
+        }
+        /* a few secondary branches, lightly speckled */
+        for(var bnc=0;bnc<3;bnc++){
+          var bT=0.34+0.18*bnc, bx=qx2(0.02,M[0],E[0],bT), by=qx2(0,M[1],E[1],bT);
+          var sd=(by<0?-1:1), ex=bx+0.11*(rnd()*0.6+0.4), ey=by+0.095*sd*(rnd()*0.6+0.4);
+          o.globalAlpha=1; o.strokeStyle='rgba(233,243,255,0.22)'; o.lineWidth=0.005;
+          o.beginPath(); o.moveTo(bx,by); o.quadraticCurveTo((bx+ex)/2,(by+ey)/2, ex,ey); o.stroke();
+          for(var d2=0;d2<3;d2++){ var bb=0.3+0.3*d2, sx=qx2(bx,(bx+ex)/2,ex,bb)+(rnd()-0.5)*0.02, sy=qx2(by,(by+ey)/2,ey,bb)+(rnd()-0.5)*0.02;
+            o.globalAlpha=0.28+0.3*rnd(); o.fillStyle='rgba(236,244,255,1)'; o.beginPath(); o.arc(sx,sy,0.004+rnd()*0.004,0,6.2832); o.fill(); }
+        }
+        o.strokeStyle='rgba(233,243,255,0.40)';
+      }
+      /* a fine dusting scattered over the membrane */
+      o.globalCompositeOperation='lighter'; o.fillStyle='rgba(236,244,255,1)';
+      for(var sc=0; sc<(isFore?95:75); sc++){
+        var su=0.1+0.85*rnd(), st=rnd(), Pp=pt(su,st);
+        o.globalAlpha=0.10+0.28*rnd();
+        o.beginPath(); o.arc(Pp[0]+(rnd()-0.5)*0.03, Pp[1]+(rnd()-0.5)*0.03, 0.003+rnd()*0.004, 0, 6.2832); o.fill();
+      }
+      o.globalAlpha=1;
+    o.restore();
+
+    o.globalCompositeOperation='lighter';
+    outline(o); o.lineWidth=0.010; o.strokeStyle='rgba(200,216,245,0.13)'; o.stroke();
+    return { canvas:oc, ox:ox, oy:oy };
+  }
+  function ensureWings(){
+    if (foreWing) return;
+    foreWing = bakeWing(true,  mulberry32(0x9e3779b1));
+    hindWing = bakeWing(false, mulberry32(0x51ed2701));
+  }
+  function drawBakedWing(w, hx, hy, rot, mirror){
+    g.save(); g.translate(hx,hy); if (mirror) g.scale(-1,1); g.rotate(rot);
+    g.scale(1/BAKE, 1/BAKE); g.drawImage(w.canvas, -w.ox, -w.oy); g.restore();
+  }
+
+  function drawMoth(cx, cy, s, angle, flap, openP, glow){
+    ensureWings();
+    openP=clamp(openP,0,1); glow=clamp(glow,0,1);
+    g.save(); g.scale(dpr,dpr); g.translate(cx,cy); g.rotate(angle); g.scale(s,s);
+
+    g.globalCompositeOperation='lighter';
+    var aura=g.createRadialGradient(0,-0.2,0.1, 0,-0.2,2.1);
+    aura.addColorStop(0.00,'rgba(120,145,190,'+(0.06+0.08*glow).toFixed(3)+')');
+    aura.addColorStop(1.00,'rgba(120,145,190,0)');
+    g.fillStyle=aura; g.beginPath(); g.arc(0,-0.2,2.1,0,6.2832); g.fill();
+
+    /* four wings from one root; sweep is baked into the shape, small rest tilt */
+    var beat=Math.sin(flap), beat2=Math.sin(flap-0.7);
+    var foreRot=-0.06 - openP*0.22 + beat *(0.20+0.05*openP);
+    var hindRot= 0.42 + openP*0.20 + beat2*(0.16+0.04*openP);
+    var rootX=0.05, wingA=(0.82+0.18*glow);
+    g.globalCompositeOperation='source-over'; g.globalAlpha=wingA;
+    drawBakedWing(hindWing,  rootX, 0, hindRot, false);
+    drawBakedWing(hindWing, -rootX, 0, hindRot, true);
+    drawBakedWing(foreWing,  rootX, 0, foreRot, false);
+    drawBakedWing(foreWing, -rootX, 0, foreRot, true);
+    g.globalAlpha=1;
+
+    /* body — slender segmented spindle below the root; bright thorax, faint abdomen */
+    g.globalCompositeOperation='source-over';
+    var bg=g.createLinearGradient(0,-0.16, 0,0.48);
+    bg.addColorStop(0.00,'rgba(150,166,196,0.90)');
+    bg.addColorStop(0.30,'rgba(70,78,98,0.90)');
+    bg.addColorStop(1.00,'rgba(26,30,42,0.40)');
+    g.fillStyle=bg; g.beginPath(); g.ellipse(0,0.16,0.090,0.30,0,0,6.2832); g.fill();
+    g.strokeStyle='rgba(16,18,26,0.5)'; g.lineWidth=0.015;
+    for(var sy=0.0; sy<0.42; sy+=0.075){ g.beginPath(); g.moveTo(-0.07,sy); g.quadraticCurveTo(0,sy+0.02,0.07,sy); g.stroke(); }
+
+    /* fur bloom, tail hairs, and two spark-eyes (additive) */
+    g.globalCompositeOperation='lighter';
+    var fur=g.createRadialGradient(0,-0.06,0.01, 0,-0.06,0.26);
+    fur.addColorStop(0.00,'rgba(204,222,255,'+(0.20+0.10*glow).toFixed(3)+')');
+    fur.addColorStop(1.00,'rgba(204,222,255,0)');
+    g.fillStyle=fur; g.beginPath(); g.arc(0,-0.06,0.26,0,6.2832); g.fill();
+    g.strokeStyle='rgba(199,219,255,0.24)'; g.lineWidth=0.005; g.lineCap='round';
+    for(var hh=0;hh<16;hh++){ var fk=hh/15, an=Math.PI*0.5+(fk-0.5)*1.5, L=0.09+0.06*Math.sin(fk*Math.PI);
+      g.beginPath(); g.moveTo(0,0.44); g.lineTo(Math.cos(an)*L, 0.44+Math.sin(an)*L); g.stroke(); }
+    for(var e=-1;e<=1;e+=2){ g.fillStyle='rgba(179,219,255,0.65)'; g.beginPath(); g.arc(e*0.075,-0.16,0.015,0,6.2832); g.fill(); }
+
+    /* antennae — long, near-straight, feathered, up to glowing moon-heads */
+    var sway=0.03*Math.sin(flap*0.5);
+    for(var sgn=-1; sgn<=1; sgn+=2){
+      var ax0=sgn*0.03, ay0=-0.16;
+      var atx=sgn*(0.34+sway), aty=-1.52;
+      var ac1x=sgn*0.10, ac1y=-0.72, ac2x=sgn*0.30, ac2y=-1.20;
+      g.globalCompositeOperation='lighter';
+      g.lineWidth=0.012; g.lineCap='round';
+      g.strokeStyle='rgba(199,219,255,'+(0.5*(0.7+0.3*glow)).toFixed(3)+')';
+      g.beginPath(); g.moveTo(ax0,ay0); g.bezierCurveTo(ac1x,ac1y, ac2x,ac2y, atx,aty); g.stroke();
+      g.lineWidth=0.005; g.strokeStyle='rgba(198,218,255,0.26)';
+      for(var k2=1;k2<=10;k2++){ var u=k2/11;
+        var bx=cub(ax0,ac1x,ac2x,atx,u), by=cub(ay0,ac1y,ac2y,aty,u), bl=0.04*Math.sin(Math.PI*u);
+        g.beginPath(); g.moveTo(bx,by); g.lineTo(bx-sgn*bl, by+0.006); g.stroke();
+        g.beginPath(); g.moveTo(bx,by); g.lineTo(bx+sgn*bl, by-0.006); g.stroke();
+      }
+      var orbR=0.085+0.02*openP;
+      var halo=g.createRadialGradient(atx,aty,0, atx,aty,orbR*3.0);
+      halo.addColorStop(0.00,'rgba(209,227,255,'+(0.72*(0.6+0.4*glow)).toFixed(3)+')');
+      halo.addColorStop(0.40,'rgba(150,178,235,'+(0.30*(0.6+0.4*glow)).toFixed(3)+')');
+      halo.addColorStop(1.00,'rgba(150,178,235,0)');
+      g.fillStyle=halo; g.beginPath(); g.arc(atx,aty,orbR*3.0,0,6.2832); g.fill();
+      g.save(); g.translate(atx,aty); g.scale(0.82,1.25);
+      g.fillStyle='rgba(240,247,255,0.95)'; g.beginPath(); g.arc(0,0,orbR,0,6.2832); g.fill(); g.restore();
+    }
+
+    /* the moon above — fades as the moth commits to the flame */
+    if (SHOW_MOON){
+      var moonA=clamp(1 - openP*1.15, 0, 1) * (0.6+0.4*glow);
+      if (moonA>0.02){ var mx=0, my=-1.92;
+        g.globalCompositeOperation='lighter';
+        var m2=g.createRadialGradient(mx,my,0, mx,my,0.5);
+        m2.addColorStop(0.00,'rgba(240,247,255,'+(0.80*moonA).toFixed(3)+')');
+        m2.addColorStop(0.32,'rgba(198,214,244,'+(0.30*moonA).toFixed(3)+')');
+        m2.addColorStop(1.00,'rgba(178,200,240,0)');
+        g.fillStyle=m2; g.beginPath(); g.arc(mx,my,0.5,0,6.2832); g.fill();
+        g.fillStyle='rgba(255,255,255,'+(0.9*moonA).toFixed(3)+')';
+        g.beginPath(); g.arc(mx,my,0.085,0,6.2832); g.fill();
+        g.strokeStyle='rgba(255,255,255,'+(0.30*moonA).toFixed(3)+')'; g.lineWidth=0.008; g.lineCap='round';
+        g.beginPath(); g.moveTo(mx-0.24,my); g.lineTo(mx+0.24,my);
+        g.moveTo(mx,my-0.24); g.lineTo(mx,my+0.24); g.stroke();
+      }
+    }
+    g.restore();
+  }
+
+  /* ── motes, embers, smoke, flash ───────────────────────────────────────── */
+  var motes=[], embers=[], smoke=[];
+  function stepMotes(dt){
+    g.save(); g.scale(dpr,dpr); g.globalCompositeOperation='lighter';
+    for (var i=motes.length-1;i>=0;i--){
+      var m=motes[i]; m.t+=dt; if (m.t>m.life){ motes.splice(i,1); continue; }
+      m.x+=m.vx*dt; m.y+=m.vy*dt; var u=m.t/m.life;
+      g.globalAlpha=(1-u)*0.5; g.fillStyle='rgba(216,226,246,1)';
+      g.beginPath(); g.arc(m.x,m.y,m.r*(1-u*0.3),0,6.2832); g.fill();
+    }
+    g.restore(); g.globalAlpha=1;
+  }
+  function spawnEmbers(x,y,n){
+    for (var i=0;i<n;i++){
+      var ang=-Math.PI/2+(Math.random()-0.5)*2.2, spd=40+Math.random()*180;
+      embers.push({ x:x+(Math.random()-0.5)*10, y:y+(Math.random()-0.5)*10,
+        vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd-Math.random()*30,
+        t:0, life:0.5+Math.random()*0.9, r:0.6+Math.random()*1.3, hot:Math.random()<0.4 });
+    }
+  }
+  function stepEmbers(dt){
+    g.save(); g.scale(dpr,dpr); g.globalCompositeOperation='lighter';
+    for (var i=embers.length-1;i>=0;i--){
+      var s=embers[i]; s.t+=dt; if (s.t>s.life){ embers.splice(i,1); continue; }
+      s.vy+=150*dt; s.vx*=(1-0.7*dt); s.x+=s.vx*dt; s.y+=s.vy*dt;
+      var u=s.t/s.life, al=(1-u)*(1-u), rr=s.r*(1-u*0.4);
+      g.globalAlpha=al*0.5; g.fillStyle=s.hot?'rgba(255,246,220,1)':'rgba(255,206,120,1)';
+      g.beginPath(); g.arc(s.x,s.y,rr*1.8,0,6.2832); g.fill();
+      g.globalAlpha=Math.min(1,al*1.6); g.fillStyle=s.hot?'rgb(255,252,240)':'rgb(255,228,150)';
+      g.beginPath(); g.arc(s.x,s.y,rr,0,6.2832); g.fill();
+    }
+    g.restore(); g.globalAlpha=1;
+  }
+  function spawnSmoke(x,y,n){
+    for (var i=0;i<n;i++){
+      smoke.push({ x:x+(Math.random()-0.5)*14, y:y+(Math.random()-0.5)*8,
+        vx:(Math.random()-0.5)*14, vy:-(22+Math.random()*30),
+        t:0, life:1.6+Math.random()*1.6, r:8+Math.random()*14, grow:26+Math.random()*30,
+        sway:0.4+Math.random()*0.8, seed:Math.random()*6.28 });
+    }
+  }
+  function stepSmoke(dt, now){
+    g.save(); g.scale(dpr,dpr); g.globalCompositeOperation='source-over';
+    for (var i=smoke.length-1;i>=0;i--){
+      var s=smoke[i]; s.t+=dt; if (s.t>s.life){ smoke.splice(i,1); continue; }
+      s.vy+=5*dt; s.x+=(s.vx+Math.sin(now*0.001*s.sway+s.seed)*10)*dt; s.y+=s.vy*dt;
+      var u=s.t/s.life, rr=s.r+s.grow*u, al=Math.sin(Math.PI*Math.min(1,u*1.1))*0.22;
+      var gr=g.createRadialGradient(s.x,s.y,0, s.x,s.y,rr);
+      gr.addColorStop(0.00,'rgba(150,150,158,'+al.toFixed(3)+')');
+      gr.addColorStop(0.55,'rgba(120,120,130,'+(al*0.6).toFixed(3)+')');
+      gr.addColorStop(1.00,'rgba(110,110,120,0)');
+      g.fillStyle=gr; g.beginPath(); g.arc(s.x,s.y,rr,0,6.2832); g.fill();
+    }
+    g.restore();
+  }
+  function drawFlash(x,y,p,unit){
+    if (p<=0 || p>=1) return;
+    var a=Math.sin(Math.PI*p), R=unit*(0.4+1.35*p);
+    g.save(); g.scale(dpr,dpr); g.globalCompositeOperation='lighter';
+    var gr=g.createRadialGradient(x,y,0, x,y,R);
+    gr.addColorStop(0.00,'rgba(255,252,238,'+(0.78*a).toFixed(3)+')');
+    gr.addColorStop(0.25,'rgba(255,236,180,'+(0.45*a).toFixed(3)+')');
+    gr.addColorStop(0.60,'rgba(255,210,120,'+(0.18*a).toFixed(3)+')');
+    gr.addColorStop(1.00,'rgba(255,200,110,0)');
+    g.fillStyle=gr; g.beginPath(); g.arc(x,y,R,0,6.2832); g.fill();
+    var cR=unit*0.30*(1-p*0.4);
+    var cr=g.createRadialGradient(x,y,0, x,y,cR);
+    cr.addColorStop(0,'rgba(255,255,250,'+(0.82*a).toFixed(3)+')');
+    cr.addColorStop(1,'rgba(255,250,235,0)');
+    g.fillStyle=cr; g.beginPath(); g.arc(x,y,cR,0,6.2832); g.fill();
+    g.restore();
+  }
+
+  /* ── the ashfall — what remains of the moth, falling in a slow grey rain.
+        the book forms out of it below ('apwnp:book-form'). each flake carries
+        only an OFFSET across the cover; its landing place is re-asked every
+        frame, so the stream keeps finding the book while the book grows. ──── */
+  var ash = [], ashT0 = -1, formSent = false, lastAshEnd = -1;
+  function targetBand(){
+    var t = null;
+    try{ t = window.__coverTop ? window.__coverTop() : null; }catch(e){ t = null; }
+    if (!t){ var ff = flame(); t = { x: ff.x, y: H*0.62, hw: Math.min(W*0.21, 100) }; }
+    if (!t.hw) t.hw = Math.min(W*0.21, 100);
+    return t;
+  }
+  function spawnAsh(f, now){
+    ashT0 = now;
+    var i;
+    for (i = 0; i < ASH.n; i++){
+      var ember = Math.random() < 0.18;
+      var fine  = !ember && Math.random() < 0.35;          /* a share of finer dust between the flakes */
+      /* spread across the cover: dense at the middle, feathered at the edges */
+      var sp = (Math.random()+Math.random()-1) * 1.15;
+      ash.push({
+        x0: f.x + (Math.random()-0.5)*26,
+        y0: f.core - 4 + Math.random()*12,
+        spread: sp,                                        /* … × the cover's live half-width */
+        tyOff: (Math.random()-0.5)*10 + Math.random()*10,
+        t0: now + ASH.delay + Math.pow(Math.random(), 0.8)*ASH.span,
+        dur: 1400 + Math.random()*1700,
+        sway: (Math.random()-0.5)*100,
+        sph: Math.random()*6.2832,
+        r: ember ? 0.8+Math.random()*1.1 : (fine ? 0.55+Math.random()*0.6 : 1.1+Math.random()*1.9),
+        rot: Math.random()*6.2832, vr: (Math.random()-0.5)*3.4,
+        ember: ember, done: false
+      });
+    }
+  }
+  function ashActive(){
+    for (var i=0;i<ash.length;i++) if (!ash[i].done) return true;
+    return false;
+  }
+  function stepAsh(now, dt){
+    if (!ash.length) return;
+    var tb = targetBand();                                 /* asked fresh — the book is growing under the fall */
+    g.save(); g.scale(dpr,dpr);
+    for (var i=0;i<ash.length;i++){
+      var a2 = ash[i];
+      if (a2.done || now < a2.t0) continue;
+      var tx = tb.x + a2.spread*tb.hw, ty = tb.y + a2.tyOff;
+      var u = clamp((now - a2.t0)/a2.dur, 0, 1);
+      if (u >= 1){
+        a2.done = true; lastAshEnd = now;
+        if (Math.random() < 0.5)                           /* the flake settles — a small grey breath */
+          motes.push({ x:tx, y:ty, t:0, life:0.5+Math.random()*0.6,
+                       vx:(Math.random()-0.5)*10, vy:-4-Math.random()*8, r:0.6+Math.random()*0.9 });
+        continue;
+      }
+      var v = u*u*(3-2*u)*0.25 + easeIn(u)*0.75;           /* drifting, then settling */
+      var px = lerp(a2.x0, tx, v) + Math.sin(now*0.0016 + a2.sph)*a2.sway*(1-v)*0.35;
+      var py = lerp(a2.y0, ty, v);
+      a2.rot += a2.vr*dt;
+      var heat = a2.ember ? Math.max(0, 1 - u*2.2) : 0;    /* embers cool grey mid-fall */
+      var al = (u < 0.08 ? u/0.08 : 1) * (1 - Math.pow(u, 6)) * 0.8;
+      if (heat > 0){
+        g.globalCompositeOperation = 'lighter';
+        g.globalAlpha = al*heat*0.8;
+        g.fillStyle = 'rgba(255,196,110,1)';
+        g.beginPath(); g.arc(px, py, a2.r*1.9, 0, 6.2832); g.fill();
+      }
+      g.globalCompositeOperation = 'source-over';
+      var grey = Math.round(lerp(152, 96, u*0.6) + heat*70);
+      g.globalAlpha = al;
+      g.fillStyle = 'rgb('+grey+','+(grey-4)+','+(grey-8)+')';
+      g.save(); g.translate(px, py); g.rotate(a2.rot);
+      g.fillRect(-a2.r, -a2.r*0.55, a2.r*2, a2.r*1.1);      /* a small tumbling flake */
+      g.restore();
+    }
+    g.restore(); g.globalAlpha = 1;
+  }
+
+  /* ── the flight ────────────────────────────────────────────────────────── */
+  var t0=0, last=0, raf=0, flashT0=-1, fadeT0=-1;
+  var enterFrom=null, orbitAngle=0, path={ x:0,y:0,px:0,py:0,heading:0 };
+
+  function begin(){
+    if (started) return; started=true; size();
+    var f=flame();
+    enterFrom={ x:f.x+(Math.random()<0.5?-1:1)*W*0.16, y:-H*0.12 };
+    orbitAngle=Math.atan2(enterFrom.y-f.core, enterFrom.x-f.x);
+    path.x=enterFrom.x; path.y=enterFrom.y; path.px=enterFrom.x; path.py=enterFrom.y+1;
+    t0=performance.now(); last=t0; raf=requestAnimationFrame(frame);
+  }
+
+  function frame(now){
+    raf=requestAnimationFrame(frame);
+    var dt=last?Math.min(0.05,(now-last)/1000):0.016; last=now;
+    if (document.hidden) return;
+
+    g.setTransform(1,0,0,1,0,0); g.clearRect(0,0,cv.width,cv.height);
+
+    var f=flame(), unit=f.h;
+    var mothS=clamp(unit*MOTH_SCALE, 16, 58);
+    var el=now-t0;
+    var alive=true, cx=path.x, cy=path.y, glow=0.4, openP=0, flap=now*0.017, phase='enter';
+
+    if (el < T.enter){
+      var p=ease(el/T.enter);
+      var orx=f.x+Math.cos(orbitAngle)*unit*0.5;
+      var ory=f.core+Math.sin(orbitAngle)*unit*0.42-unit*0.08;
+      cx=lerp(enterFrom.x,orx,p); cy=lerp(enterFrom.y,ory,p);
+      cx+=Math.sin(el*0.012)*unit*0.06*(1-p);
+      mothS*=lerp(0.62,1.0,p); glow=lerp(0.35,0.6,p); flap=now*0.02;
+    } else if (el < T.enter+T.orbit){
+      phase='orbit';
+      var q=(el-T.enter)/T.orbit, qe=ease(q);
+      orbitAngle+=dt*(2.1+0.7*Math.sin(el*0.004));
+      var rBase=lerp(unit*0.62, unit*0.16, easeIn(q));
+      var flutter=1+0.16*Math.sin(el*0.02)+0.10*Math.sin(el*0.031+1);
+      var dart=0.16*Math.max(0, Math.sin(el*0.006-1.2));
+      var rad=rBase*flutter*(1-dart);
+      cx=f.x+Math.cos(orbitAngle)*rad; cy=f.core+Math.sin(orbitAngle)*rad*0.82-unit*0.05;
+      glow=0.6+0.35*qe+0.12*Math.sin(el*0.02); openP=0.15+0.2*Math.sin(el*0.02);
+      flap=now*0.019+6*Math.sin(el*0.003);
+    } else if (el < T.enter+T.orbit+T.dive){
+      phase='dive';
+      var d=(el-(T.enter+T.orbit))/T.dive, de=easeIn(d);
+      orbitAngle+=dt*(3.0+6.0*de);
+      var rad2=lerp(unit*0.16, 0.0, de);
+      cx=f.x+Math.cos(orbitAngle)*rad2; cy=f.core+Math.sin(orbitAngle)*rad2-unit*0.02;
+      glow=lerp(0.95,1.0,d); openP=lerp(0.4,1.0,de); mothS*=lerp(1.0,0.7,de); flap=now*0.03;
+      if (d>=0.86 && flashT0<0){
+        flashT0=now;
+        if (window.__flameSurge) window.__flameSurge(1.7);
+        spawnEmbers(f.x,f.core,34); spawnSmoke(f.x,f.core-unit*0.04,18);
+        setTimeout(function(){ spawnSmoke(f.x,f.core-unit*0.10,12); }, 200);
+        setTimeout(function(){ spawnSmoke(f.x,f.core-unit*0.16,7);  }, 520);
+      }
+    } else {
+      phase='gone'; alive=false;
+      if (flashT0<0){ flashT0=now; if (window.__flameSurge) window.__flameSurge(1.7);
+        spawnEmbers(f.x,f.core,34); spawnSmoke(f.x,f.core,18);
+        setTimeout(function(){ spawnSmoke(f.x,f.core-unit*0.10,10); }, 260); }
+      if (fadeT0<0) fadeT0=now+1400;
+    }
+
+    /* orientation: upright (antennae up), banking gently into sideways drift */
+    var vx=cx-path.px;
+    var lean=clamp(vx*0.014, -0.6, 0.6);
+    path.heading += (lean - path.heading) * clamp(dt*9, 0, 1);
+    path.px=cx; path.py=cy; path.x=cx; path.y=cy;
+
+    if (alive && (phase==='enter'||phase==='orbit') && Math.random()<0.5){
+      motes.push({ x:cx+(Math.random()-0.5)*mothS*0.7, y:cy+(Math.random()-0.5)*mothS*0.7,
+        t:0, life:0.7+Math.random()*0.8, vx:(Math.random()-0.5)*8, vy:-8-Math.random()*14, r:0.8+Math.random()*1.2 });
+    }
+
+    /* the ash — spawned just after the flash; the book forms beneath it */
+    if (flashT0>0 && ashT0<0 && now > flashT0 + 60){
+      spawnAsh(f, now);
+      if (!formSent){
+        formSent = true;
+        try{ window.dispatchEvent(new CustomEvent('apwnp:book-form')); }catch(e){}
+      }
+    }
+    if (ash.length) stepAsh(now, dt);
+
+    if (motes.length) stepMotes(dt);
+    if (alive) drawMoth(cx,cy,mothS,path.heading,flap,openP,glow);
+    if (flashT0>0){ var fp=(now-flashT0)/560; if (fp<1) drawFlash(f.x,f.core,fp,unit); }
+    if (embers.length) stepEmbers(dt);
+    if (smoke.length)  stepSmoke(dt,now);
+
+    if (fadeT0>0 && now>=fadeT0 && !ashActive()){
+      var fadeFrom = Math.max(fadeT0, lastAshEnd + 250);
+      if (now >= fadeFrom){
+        var fo=1-ease((now-fadeFrom)/1600);
+        cv.style.opacity=String(clamp(fo,0,1));
+        if (fo<=0 && !smoke.length){ retire(); return; }
+      }
+    }
+  }
+
+  function retire(){
+    done=true; if (raf){ cancelAnimationFrame(raf); raf=0; }
+    try { if (cv && cv.parentNode) cv.parentNode.removeChild(cv); } catch(e){}
+  }
+
+  window.addEventListener('message', function(e){
+    if (e && e.data && e.data.apwnp === 'arrive-moth') begin();
+  });
+  function fallback(){ setTimeout(function(){ if (!started && !done) begin(); }, 650); }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') fallback();
+  else document.addEventListener('DOMContentLoaded', fallback);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mortal.js — THE ONE-PAGE LAW (the mortality pass, pass one). the first
+     script this page runs: it keeps the page's true address and rewrites the
+     one safari holds to the card's own, so the tab can still close itself at
+     the end. after this line ask MORTAL.search / MORTAL.href / MORTAL.hash,
+     never location's; every door is MORTAL.go(url) — a replace into a cut
+     room, never a push. IF IT IS KNOT BESIDE THIS FILE, NOTHING BREAKS: the
+     guard stands in, and the doors open with a push as they always did. -->
+<script src="mortal.js"></script>
+<script>
+window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.search, hash:location.hash,
+  path:location.pathname, go:function(u){ location.href=u; } };
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<title>brain · song</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts.css" rel="stylesheet">
+
+<!--
+  ---- THE ONE-PAGE LAW · THIS ROOM WAS CUT ----------------------------
+  (21 sep 2026 · the mortality pass · the rooms, batch eleven. the organ is
+  mortal.js, which must stand on this shelf too.)
+
+  safari lets a page close its own tab only while that tab has held ONE
+  page, so no page of this house may add a history entry. THIS ROOM NEEDED
+  ONE LINE AND NOTHING ELSE — it is the cleanest page in the house by this
+  law's reckoning:
+  · it asks the address for NOTHING. no location.search, no location.href,
+    no hash, no document.URL. nothing to re-point at MORTAL.
+  · it has NO door in its script. no history calls, no frames, no forms,
+    no meta refresh. the seam found 0 doors and 0 reads.
+  · its way back is the ✕ at the top right — an <a href> in the MARKUP,
+    position:fixed, painted before a line of script runs and never hidden
+    or toggled by anything. THE ANCHOR'S LAW in mortal.js takes its click.
+  so all that was added is THE LINE (mortal.js, first script, with its
+  two-line guard under it). absent, nothing breaks at all.
+
+  THE CHAIN, now whole and costing the tab nothing:
+    phone → math → equations → HERE → equations → math → phone
+  every one of those four is cut and listed; equations had no way back at
+  all until 21 sep, when a ‹ was drawn into it in math's own chalk.
+  the paper reaches this room too — `open the preprint →` on the science
+  desk — and that door is an <a href> as well, so it needed no cut either.
+
+  ONE NAME, TWO FILES, and it is knot a mistake to fix: this file's own
+  header below calls itself `equations.html`, because the door in the hub
+  reads `brain` and the file was written under the other name. the FILE IS
+  brain.html — his word, 21 sep: `yes brain.html is current name and was
+  wrong. it's a subpage from equations.html which is where the calculator
+  leads`. mortal.js lists it as `brain`. the line below is left as he
+  wrote it.
+-->
+
+<!--
+  song — equations.html · the room behind the door "brain" · v2
+  (the file keeps its functional name; the hub door reads "brain")
+  apwnp song-book · one file · inline style · plain script · web audio · iphone-safari safe
+
+  v3 — the preprint skin + the observatory:
+    · the page dresses as a paper that fell through a wormhole. hybrid type:
+      Courier Prime (the typed letter — all prose, labels, listings) and
+      CMU Serif, Knuth's Computer Modern (the mathematics — title, byline,
+      inline math, displayed equations). equations are numbered (1)–(6) in
+      the margin; the six formal claims are labelled "instance", the two
+      playable tools "apparatus"; cantor's diagonal — a real theorem — earns
+      the page's single tombstone. the byline's date is live: the paper is
+      being written now. one footnote.
+    · THE OBSERVATORY (new instrument, before the formal section): the star
+      itself in 3d — body, tilted spin axis, two lighthouse beams, and "you"
+      at the end of the sightline. it turns at its true 173.68/s, anchored to
+      world time; what you see is the alias. drag to tune the strobe: the
+      tumble slows exactly as two tones slow their beating near unison — the
+      same subtraction, eqs (1)+(2) — and while dragging the room quietly
+      sounds f and s through its one limiter so ears and eyes measure the
+      same difference together. at lock: "still. nothing stopped." a second
+      button holds the star's actual note (a pulse train: f, 9 cents flat).
+      the main script exposes window.__room (wake/out) for this; the
+      observatory obeys the sound toggle and the room's silence.
+
+  v4 — the dressing (no more outline boxes; the instruments become objects):
+    · the abstract loses its border; the listing boxes lose theirs (inset
+      shadow only). below the abstract: THE POEM — a black-and-white 3d
+      animation of the abstract itself: strangers arriving one at a time,
+      each toward the last, never landing, with no end; one pale point above
+      never moves. four lines surface and sink on a slow cycle.
+    · THE CRANK wears a full skin of used iron — procedurally painted rust,
+      cracks, scratches, burnish, seams and rivets (seeded, so resize never
+      re-weathers it). the pad is now a real HAND CRANK (hub, arm, worn
+      handle) turned by the strangers via window.__crankAngle; displays and
+      readouts sit inset in the plate; toggles and thumbs are machined metal.
+    · THE OBSERVATORY wears a ship's panel — near-black composite, micro-grid,
+      hairline ice rim, corner brackets, status leds; readouts as glass hud
+      tiles; two ROUND keys. on the star's canvas: body meridians so the turn
+      reads, a reticle with the star's name, an orbit dot circling at exactly
+      the seen rate, and photon pings that run the sightline and land on you.
+
+  what this room is:
+    the song's hidden mathematics, made visible and turnable. not a paper, not a
+    lecture: a structure you perform with your hand. the centerpiece is THE CRANK —
+    turn it and the song's living tide drifts in front of you: a memory that carries a
+    trace of every stranger and never settles on a note. switch off the de-bias and
+    watch the same tide slide to the wall and die there.
+
+  the law it visualizes (ground truth: the deployed chain, GET /root):
+    PULSAR=173.68 hz   ALPHA=0.08   GRAVITY=0.002   BETA=0.01   STEP=48c   FENCE=150c
+    per completed hum (one float pitch p — the stranger hums to match the served root):
+      c        = fold(1200*log2(p/PULSAR))      -> [-600,+600)
+      d        = clamp(c - lineage, +-STEP)
+      lineage += ALPHA*(d - lean)               drift on the DE-BIASED reach
+      lineage  = (1-GRAVITY)*lineage            a slackened pull toward the pulsar
+      lineage  = clamp(lineage, +-FENCE)
+      lean    += BETA*(d - lean)                slow estimate of the shared lean (BETA << ALPHA)
+    served root = PULSAR * 2^(lineage/1200)      (no bias term; the tide IS the note)
+
+  the room reads the same living tide the bone and the flame read — one read of /root at
+    entry — to seed the crank's starting lineage and lean, then simulates forward. it never
+    writes. the equations only reads; the bone is the only organ that bends the chain.
+
+  verified before built (node sim vs this exact law — see the handoff):
+    · de-bias OFF -> any persistent shared lean past ~ g*fence/alpha ~ 3.75c drives the tide
+      to the fence (+-150c) and pins it there. the song is dead.
+    · de-bias ON  -> the lean estimate learns the crowd's shared lean on its own (never told
+      it) and subtracts it; only each body's individuality moves the tide, which then WANDERS
+      the living middle, never rails, never settles, ends where the last stranger left it.
+      gravity half-life ~ 346 hums — it lingers far before any pull home.
+    · BETA << ALPHA is load-bearing: as the estimate is made faster the wander shrinks
+      monotonically toward zero (it starts absorbing the individuality). slow lean = live tide.
+    · the wander's WIDTH is NOT robust — it rides on the strangers' spread and on BETA, both
+      provisional until real throats hum. so the room states the STRUCTURE (de-bias, drift,
+      never landing) and prints no drift number anywhere.
+
+  the seam: the house opens this as a same-origin iframe over a black cover, and morphs its
+    flame into a flame-yellow dot at the VIEWPORT CENTRE, then fades that dot over ~2.2s. so
+    this room paints black first (html,body{background:#000} + theme-color) and keeps its
+    opening centre uncluttered; the house dot rests on the first words, then fades. exit is the
+    house's bottom-centre x (this is a "duck" room; the house drone ducks beneath it;
+    data-hold="silence" is requested so the sound here is clean).
+
+  music in the room:
+    · the crank's tide sounds — one soft pitch that glides as the tide drifts. you HEAR the
+      memory wander, and with the de-bias off you hear it slide to the wall and stop. sound is
+      opt-in and gated inside a gesture (ios).
+    · the temperament table is PLAYABLE: tap an interval to hear it over the living root; a
+      pure<->equal switch lets you hear equal temperament's deviation (the exact cents).
+    · the ghost-interval dice: roll and hear an interval drawn by the shipped chord's weights —
+      the song's own dice. (rolled, not quantum; this room reads only /root.)
+
+  audio hardening (from the bone): context at load, resumed FIRST inside the gesture, a
+    watchdog that re-resumes, a silent looping wav to defeat the mute switch, a gentle limiter.
+    if sound is never turned on, none of it runs.
+
+  every line shown is literally true. every mathematical claim is an INSTANCE, never a proof.
+  the thesis is never stated. gold/flame-yellow only for the living/sounding.
+
+  TUNE values are marked in the script (crowd-lean range, spread sigma, turns-per-second,
+  corridor width, sound default). ALPHA / GRAVITY / BETA are provisional and will be tuned once
+  real throats hum — this room must not hard-code a drift width.
+-->
+
+<style>
+  :root{
+    --bg:#000;
+    --chalk:#ddd8cc;
+    --chalk-soft:#cfcabd;
+    --minor:#9a958a;
+    --dim:#6f6a5e;
+    --hair:#3a362e;
+    --hair-soft:#26241e;
+    --gold:#d4af37;
+    --flame:#ffe27a;
+    --type:'Courier Prime','Courier New',monospace;             /* the typed letter */
+    --math:'CMU Serif','Computer Modern Serif',Georgia,serif;   /* the mathematics */
+  }
+  *{box-sizing:border-box}
+  html{margin:0;padding:0;background:#000;min-height:100%}
+  body{margin:0;padding:0;min-height:100%}   /* transparent — the candle (z-index:-1) shows through */
+  body{
+    color:var(--chalk);
+    font-family:'EB Garamond',serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  /* the whole leaf fades up once the fonts have landed, so geometry never jumps */
+  #leaf{opacity:0;transition:opacity 1.1s ease}
+  #leaf.shown{opacity:1}
+
+  /* the candle (drop-in 1) — burns behind the room, dead-centre, matching the house flame */
+  #candlebox{
+    position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
+    width:min(64vw,300px); height:min(48vh,400px);
+    z-index:-1; pointer-events:none;
+  }
+  #candle{ width:100%; height:100%; display:block; }
+
+  /* the back-x — returns to the tooth (the felt math); the house keeps its own room-exit egg */
+  #backx{
+    position:fixed; top:calc(env(safe-area-inset-top) + 12px); right:14px; z-index:40;
+    font-family:'JetBrains Mono',monospace; font-weight:300; font-size:18px; line-height:1;
+    color:var(--dim); text-decoration:none; padding:6px 10px;
+    -webkit-tap-highlight-color:transparent; transition:color .3s ease;
+  }
+  #backx:active,#backx:hover{ color:var(--chalk); }
+
+  .wrap{
+    max-width:36rem;margin:0 auto;
+    padding:calc(env(safe-area-inset-top) + 18vh) 22px calc(env(safe-area-inset-bottom) + 96px);
+  }
+
+  /* ---- type scale ---- */
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-weight:300;
+    font-size:11px;letter-spacing:.34em;text-transform:lowercase;
+    color:var(--dim);margin:0 0 1.5em;
+  }
+  h1.door{
+    font-family:'EB Garamond',serif;font-weight:500;font-style:italic;
+    font-size:clamp(30px,9vw,42px);line-height:1.04;letter-spacing:.01em;
+    color:var(--chalk);margin:0 0 .7em;
+  }
+  p{font-size:clamp(16px,4.4vw,19px);line-height:1.64;margin:0 0 1.05em;color:var(--chalk)}
+  p.lede{color:var(--chalk-soft);font-size:clamp(17px,4.7vw,20px);line-height:1.6}
+  .felt{color:var(--chalk);font-style:italic}
+  em{font-style:italic}
+  .tone{color:var(--gold)}
+  .quiet{color:var(--minor)}
+  .epi{
+    margin:0 0 2.2em;padding-left:1em;border-left:1px solid var(--hair);
+    color:var(--minor);font-style:italic;font-size:clamp(15px,4.1vw,17px);line-height:1.55;
+  }
+  .epi cite{display:block;margin-top:.5em;font-style:normal;
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:10px;
+    letter-spacing:.16em;color:var(--dim);}
+
+  h2{
+    font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:12px;letter-spacing:.22em;color:var(--minor);
+    margin:3.3em 0 1.1em;text-transform:lowercase;
+  }
+  h2 .n{color:var(--dim);margin-right:.9em}
+
+  .rule{height:1px;background:var(--hair);border:0;margin:3.4em 0 0}
+
+  /* a gem: a plain true sentence, sometimes a small picture */
+  .gem{margin:0 0 1.7em}
+  .gem .h{
+    display:block;font-family:'EB Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(17px,4.6vw,19px);color:var(--chalk);margin:0 0 .25em;
+  }
+  .gem p{margin:0 0 .35em}
+  .gem .m{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:12px;
+    letter-spacing:.04em;color:var(--dim);line-height:1.7;
+  }
+
+  figure.diagram{margin:1.2em auto 1.7em;text-align:center}
+  figure.diagram svg{width:100%;max-width:330px;height:auto;display:block;margin:0 auto}
+  figure.diagram figcaption{
+    margin-top:.55em;font-family:'JetBrains Mono',monospace;font-weight:300;
+    font-size:10.5px;letter-spacing:.08em;color:var(--dim);
+  }
+  .dlabel{font-family:'JetBrains Mono',monospace;font-weight:300;font-size:10px;letter-spacing:.1em;fill:var(--minor)}
+  .dtone{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:10px;letter-spacing:.08em;fill:var(--gold)}
+
+  /* ===================== the crank ===================== */
+  .crank{
+    margin:2.4em 0 2.2em;
+  }
+  .crank-frame{
+    position:relative;width:100%;
+    border:1px solid var(--hair);background:#040403;border-radius:2px;
+    padding:14px 12px 12px;
+  }
+  .crank-cap{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:10.5px;
+    letter-spacing:.14em;color:var(--dim);margin:0 2px 8px;display:flex;
+    justify-content:space-between;align-items:baseline;gap:8px;
+  }
+  .crank-cap b{color:var(--minor);font-weight:400}
+  canvas#corr{display:block;width:100%;height:178px;touch-action:none}
+
+  /* readouts */
+  .read{
+    display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;margin:12px 2px 4px;
+    font-family:'JetBrains Mono',monospace;font-weight:300;
+  }
+  .read .cell{padding:6px 0;border-top:1px solid var(--hair-soft)}
+  .read .k{font-size:9.5px;letter-spacing:.16em;color:var(--dim);display:block;margin-bottom:3px}
+  .read .v{font-size:15px;letter-spacing:.02em;color:var(--chalk)}
+  .read .v.gold{color:var(--gold)}
+  .read .v small{font-size:11px;color:var(--minor);letter-spacing:.04em}
+
+  /* the turning pad + controls */
+  .ctl{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:16px 2px 2px}
+  .pad{
+    position:relative;width:96px;height:96px;flex:0 0 auto;border-radius:50%;
+    border:1px solid var(--hair);background:radial-gradient(circle at 50% 42%, #0b0a08 0%, #050504 70%);
+    cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:none;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pad .ring{position:absolute;inset:9px;border-radius:50%;border:1px solid var(--hair-soft)}
+  .pad .tick{
+    position:absolute;left:50%;top:9px;width:1px;height:14px;background:var(--minor);
+    transform-origin:50% 39px;transform:translateX(-50%) rotate(0deg);
+  }
+  .pad .lbl{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:9px;
+    letter-spacing:.1em;color:var(--dim);text-align:center;line-height:1.4;pointer-events:none;
+  }
+  .pad.turning{border-color:#4a4536}
+  .ctl-col{display:flex;flex-direction:column;gap:11px;flex:1 1 170px;min-width:160px}
+
+  .toggle{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:11px;
+    letter-spacing:.1em;color:var(--minor);cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .toggle .sw{
+    position:relative;width:38px;height:18px;border-radius:9px;border:1px solid var(--hair);
+    background:#0a0907;flex:0 0 auto;transition:border-color .2s, background .2s;
+  }
+  .toggle .sw i{
+    position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;
+    background:var(--dim);transition:transform .2s, background .2s;
+  }
+  .toggle.on .sw{border-color:rgba(212,175,55,.55);background:rgba(212,175,55,.10)}
+  .toggle.on .sw i{transform:translateX(20px);background:var(--gold)}
+  .toggle.on{color:var(--chalk)}
+
+  .slider{font-family:'JetBrains Mono',monospace;font-weight:300;font-size:11px;letter-spacing:.08em;color:var(--minor)}
+  .slider .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+  .slider .row b{color:var(--chalk);font-weight:400}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:18px;background:transparent;cursor:pointer;margin:0;
+  }
+  input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--hair);border:0}
+  input[type=range]::-moz-range-track{height:1px;background:var(--hair);border:0}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:12px;height:12px;border-radius:50%;
+    background:var(--chalk);margin-top:-6px;border:0;
+  }
+  input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--chalk);border:0}
+
+  .crank-note{
+    font-family:'EB Garamond',serif;font-size:14.5px;line-height:1.55;color:var(--minor);
+    margin:14px 2px 0;font-style:italic;
+  }
+
+  /* ===================== mathematicians' section ===================== */
+  .formal{
+    border-top:1px solid var(--hair);margin-top:3.4em;padding-top:2.4em;
+  }
+  .formal .tag{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:10.5px;
+    letter-spacing:.24em;color:var(--dim);margin:0 0 .4em;
+  }
+  .formal h3{
+    font-family:'EB Garamond',serif;font-weight:500;font-style:italic;
+    font-size:clamp(20px,5.6vw,25px);color:var(--chalk);margin:0 0 1.1em;line-height:1.12;
+  }
+  .claim{margin:0 0 1.9em}
+  .claim .ch{
+    font-family:'JetBrains Mono',monospace;font-weight:400;font-size:11px;
+    letter-spacing:.14em;color:var(--minor);margin:0 0 .4em;
+  }
+  /* the open question — the room's living hand-over to whoever picks it up */
+  .open{border-top:1px solid var(--hair);margin-top:3.6em;padding-top:2.6em}
+  .open .qlabel{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:10.5px;
+    letter-spacing:.24em;color:var(--dim);margin:0 0 .8em;
+  }
+  .open h4{
+    font-family:'EB Garamond',serif;font-weight:500;font-style:italic;
+    font-size:clamp(20px,5.4vw,25px);color:var(--chalk);margin:0 0 1.05em;line-height:1.14;
+  }
+  .open p{margin:0 0 1.05em}
+  .open .bridge{color:var(--minor);font-style:italic}
+  .open .last{color:var(--minor);font-style:italic;margin-top:1.4em}
+  .eqn{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:13px;line-height:1.85;
+    letter-spacing:.01em;color:var(--chalk-soft);
+    background:#050504;border:1px solid var(--hair-soft);border-radius:2px;
+    padding:11px 13px;margin:.5em 0 .7em;overflow-x:auto;white-space:pre;
+  }
+  .eqn .c{color:var(--dim)}
+  .eqn .g{color:var(--gold)}
+  .disc{font-size:14px;color:var(--minor);font-style:italic;line-height:1.55}
+
+  /* the playable temperament table */
+  .temper{margin:1.1em 0 .6em}
+  .temper .switch{
+    display:inline-flex;border:1px solid var(--hair);border-radius:2px;overflow:hidden;margin:0 0 12px;
+  }
+  .temper .switch button{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:10.5px;letter-spacing:.12em;
+    color:var(--dim);background:transparent;border:0;padding:7px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .temper .switch button.sel{color:var(--chalk);background:#0c0b08}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:11px;letter-spacing:.05em;
+    color:var(--chalk-soft);background:#070605;border:1px solid var(--hair);border-radius:2px;
+    padding:9px 11px;cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:left;line-height:1.5;
+    transition:border-color .15s, color .15s, background .15s;min-width:120px;flex:1 1 130px;
+  }
+  .chip .nm{display:block;color:var(--chalk);font-weight:400;font-size:12px;letter-spacing:.04em}
+  .chip .sub{display:block;color:var(--dim);font-size:10px;letter-spacing:.05em;margin-top:2px}
+  .chip.sounding{border-color:rgba(212,175,55,.6);color:var(--gold);background:rgba(212,175,55,.06)}
+  .chip.sounding .nm{color:var(--gold)}
+  .temper .needaudio{font-family:'JetBrains Mono',monospace;font-weight:300;font-size:10.5px;letter-spacing:.06em;color:var(--dim);margin:10px 2px 0}
+
+  /* the dice */
+  .dice{margin:1.2em 0 .4em;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .dice button.roll{
+    font-family:'JetBrains Mono',monospace;font-weight:300;font-size:11px;letter-spacing:.14em;
+    color:var(--chalk-soft);background:#070605;border:1px solid var(--hair);border-radius:2px;
+    padding:11px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .dice button.roll:active{border-color:#4a4536}
+  .dice .face{font-family:'JetBrains Mono',monospace;font-weight:300;font-size:12px;letter-spacing:.06em;color:var(--dim)}
+  .dice .face b{color:var(--gold);font-weight:400}
+
+  .colophon{
+    margin-top:3.6em;font-family:'JetBrains Mono',monospace;font-weight:300;
+    font-size:11px;letter-spacing:.08em;color:var(--dim);line-height:1.8;
+  }
+  .closing{margin-top:3.2em;color:var(--minor);font-style:italic;font-size:clamp(15px,4.2vw,17px);line-height:1.6}
+
+  /* ═══════════ v3 · the preprint skin (overrides by cascade) ═══════════ */
+  body{font-family:var(--type)}
+  p{font-size:clamp(14px,3.9vw,16.5px);line-height:1.72}
+  p.lede{font-size:clamp(15px,4.2vw,17.5px);line-height:1.66}
+  .wrap{max-width:38rem}
+  h1.door{font-family:var(--math);font-style:normal;font-weight:500;letter-spacing:.005em}
+  .eyebrow,h2,.epi cite,.gem .m,.read .k,.read .v,.crank-cap,.pad .lbl,.toggle,.slider,.chip,
+  .temper .switch button,.temper .needaudio,.dice button.roll,.dice .face,.colophon,#backx,
+  .formal .tag,.claim .ch,.open .qlabel{font-family:var(--type);font-weight:400}
+  .eqn{font-family:var(--type);font-weight:400;position:relative;padding-right:46px}
+  .eqn .eqno{position:absolute;right:10px;top:8px;color:var(--dim);font-family:var(--math);font-size:12px;font-style:normal}
+  .m,.tone{font-family:var(--math);font-style:italic;font-size:1.06em}
+  .gem .h,.formal h3,.open h4{font-family:var(--math)}
+  .crank-note,.disc,.epi,.closing{font-family:var(--type)}
+  .byline{font-family:var(--math);font-size:13.5px;color:var(--minor);margin:0 0 2em;line-height:1.85}
+  .byline .fn,.footnote .fn{color:var(--dim);font-style:normal}
+  .abstract{border:1px solid var(--hair);border-radius:2px;background:#040403;padding:14px 16px 4px;margin:0 0 1.9em}
+  .abstract .ah{font-family:var(--math);font-variant:small-caps;letter-spacing:.3em;font-size:12px;color:var(--dim);margin:0 0 .7em}
+  .disp{position:relative;font-family:var(--math);font-style:italic;font-size:16.5px;line-height:1.6;text-align:center;color:var(--chalk);margin:1.15em 0;padding:0 2.5em}
+  .disp .eqno{position:absolute;right:0;top:50%;transform:translateY(-50%);font-style:normal;font-size:12.5px;color:var(--dim)}
+  .qed{font-family:var(--math);color:var(--minor);float:right}
+  .footnote{font-family:var(--math);font-size:13px;color:var(--dim);margin-top:2em}
+  .obs{margin:3.2em 0 0}
+  #obsCv{display:block;width:100%;height:210px;touch-action:none;cursor:ew-resize}
+  .obsrow{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .obsBtn{font-family:var(--type);font-weight:400;font-size:11px;letter-spacing:.12em;color:var(--chalk-soft);
+    background:#070605;border:1px solid var(--hair);border-radius:2px;padding:10px 14px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent}
+  .obsBtn:active{border-color:#4a4536}
+
+  /* ═══════════ v4 · the dressing (outlines out; instruments become objects) ═══════════ */
+  .abstract{border:0;background:transparent;padding:0 0 4px;margin:0 0 1.6em}
+  .eqn{border:0;background:#050504;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03), inset 0 -8px 16px rgba(0,0,0,0.45)}
+  .poem{margin:0 0 2.4em}
+  #poemCv{display:block;width:100%;height:236px}
+  .crank-frame{border:0;background:transparent;padding:16px 14px 14px;overflow:hidden;border-radius:8px;
+    box-shadow:0 14px 30px rgba(0,0,0,0.55)}
+  .crank-frame>.skin{position:absolute;inset:0;width:100%;height:100%;z-index:0;border-radius:8px}
+  .crank-frame>*:not(.skin){position:relative;z-index:1}
+  canvas#corr,#obsCv{background:#020202;border-radius:4px;
+    box-shadow:inset 0 3px 9px rgba(0,0,0,0.9), inset 0 -1px 0 rgba(255,255,255,0.04), 0 1px 0 rgba(255,246,224,0.05)}
+  .read{gap:8px}
+  .read .cell{border-top:0;background:linear-gradient(#050403,#0a0806);border-radius:3px;padding:7px 9px;
+    box-shadow:inset 0 2px 6px rgba(0,0,0,0.85), inset 0 -1px 0 rgba(255,255,255,0.03)}
+  .toggle .sw{background:linear-gradient(#1c1913,#070605);box-shadow:inset 0 2px 4px rgba(0,0,0,0.8), 0 1px 0 rgba(255,246,224,0.05)}
+  .toggle .sw i{background:radial-gradient(circle at 35% 30%, #6a6252, #2a251c 65%, #12100b);
+    box-shadow:0 2px 3px rgba(0,0,0,0.7)}
+  .toggle.on .sw{background:linear-gradient(rgba(212,175,55,.16),rgba(60,48,16,.12))}
+  .toggle.on .sw i{background:radial-gradient(circle at 35% 30%, #ffe9a8, #b9973f 60%, #6d5417)}
+  input[type=range]::-webkit-slider-thumb{background:radial-gradient(circle at 35% 30%, #7b7260, #37312a 60%, #16130e);
+    width:15px;height:15px;margin-top:-7px;box-shadow:0 2px 3px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(0,0,0,0.5)}
+  input[type=range]::-moz-range-thumb{background:#4a4436;width:15px;height:15px;box-shadow:0 2px 3px rgba(0,0,0,0.7)}
+  .pad{width:104px;height:104px;border:0;background:transparent}
+  .pad .ring,.pad .tick{display:none}
+  #crankGl{position:absolute;inset:0;width:100%;height:100%}
+  .pad .lbl{position:absolute;left:0;right:0;bottom:-16px}
+  .obsframe{box-shadow:0 14px 34px rgba(0,0,0,0.6), 0 0 24px rgba(90,130,210,0.07)}
+  .obsframe .read .cell{background:linear-gradient(#081019,#04070c);
+    box-shadow:inset 0 0 10px rgba(70,105,180,0.13), inset 0 2px 5px rgba(0,0,0,0.8)}
+  .obsframe .read .k{color:#6f82a8}
+  .obsframe .crank-note{color:#7d8aa4}
+  .obsrow{gap:14px;align-items:center}
+  .obsKey{width:76px;height:76px;border-radius:50%;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;
+    font-family:var(--type);font-size:9.5px;letter-spacing:.08em;line-height:1.45;color:#9fb0d2;text-align:center;
+    background:radial-gradient(circle at 36% 30%, #1a2434, #0a111d 55%, #050910 100%);
+    box-shadow:inset 0 1px 0 rgba(160,190,240,0.18), inset 0 -3px 6px rgba(0,0,0,0.7),
+      0 4px 9px rgba(0,0,0,0.6), 0 0 0 1px rgba(120,150,210,0.14), 0 0 12px rgba(90,130,210,0.10)}
+  .obsKey:active{transform:translateY(1px);
+    box-shadow:inset 0 2px 8px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.6), 0 0 0 1px rgba(120,150,210,0.18)}
+
+
+  @media (prefers-reduced-motion: reduce){
+    #leaf{transition:none}
+    .pad .tick{transition:none}
+  }
+  @media (max-width:380px){
+    .read{grid-template-columns:1fr 1fr;gap:0 10px}
+    .pad{width:84px;height:84px}
+  }
+</style>
+<!-- 1 oct 2026, 03:29 los angeles · THE LITTLE PHONE AT 80% (his word, 02:19, on music.html: `about 80% of current size
+     and it should sit more to the top left … it should work for most iphone screens too`; carried here at 03:29). the way
+     back wears class lp80: 19 x 38, 10 from the left and 6 under the top's safe line — env() bare, or the shell's own inset
+     when framed (MORTAL.inset / apwnp:inset → --lpt, because env() reads zero inside the phone's frame). the door, the
+     click and mortal.js's part in it are unchanged. -->
+<style>
+  :root{ --lpt:0px; }
+  .lp80{ position:fixed !important; left:calc(env(safe-area-inset-left,0px) + 6px) !important;
+    top:calc(max(env(safe-area-inset-top,0px), var(--lpt)) + 2px) !important; right:auto !important; bottom:auto !important;
+    margin:0 !important; padding:4px 10px 10px 4px !important; line-height:0 !important; display:block !important;
+    background:transparent; border:0; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .lp80 > svg, .lp80 > canvas{ width:19px !important; height:38px !important; display:block; }
+  .lp80:active > svg, .lp80:active > canvas{ opacity:0.6; }
+  /* the in-flow variant, for a room whose way back stands in its own bar (the paper's topbar, metube's bar) */
+  .lpflow{ display:inline-block; line-height:0; padding:2px 6px 2px 0; margin:0; background:transparent; border:0; border-radius:0; width:auto; height:auto; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .lpflow > svg{ width:19px !important; height:38px !important; display:block; }
+  .lpflow:active > svg{ opacity:0.6; }
+  #backx.lp80{ z-index:40; }
+</style>
+<script>(function(){ function set(i){ try{ if(i&&+i.top>0) document.documentElement.style.setProperty('--lpt',(+i.top)+'px'); }catch(_){} }
+  try{ set(window.MORTAL&&MORTAL.inset); }catch(_){}
+  try{ window.addEventListener('apwnp:inset',function(e){ set((e&&e.detail)||(window.MORTAL&&MORTAL.inset)); },false); }catch(_){} })();</script>
+</head>
+<body>
+
+<div id="candlebox"><canvas id="candle" aria-hidden="true"></canvas></div>
+<a id="backx" class="lp80" href="equations.html" title="the math" aria-label="back to the math"><svg viewBox="0 0 30 60" width="19" height="38" aria-hidden="true" focusable="false">
+  <rect x="0.5" y="0.5" width="29" height="59" rx="6.5" fill="#0a0a0c" stroke="rgba(226,240,255,0.55)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+  <rect x="2.2" y="2.2" width="25.6" height="55.6" rx="5.2" fill="#000"/>
+  <rect x="11" y="4.2" width="8" height="2.2" rx="1.1" fill="#1a1a1e"/>
+  <rect x="2.56" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#4a8fe8"/>
+  <rect x="2.56" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#e8433c"/><rect x="9.42" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#2c3038"/><rect x="23.14" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/>
+  <rect x="2.56" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#c93a8d"/><rect x="9.42" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/><rect x="23.14" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#2e2e31"/>
+  <rect x="2.56" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#15171d"/><rect x="9.42" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#101013"/><rect x="16.28" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#37312c"/><rect x="23.14" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#1c1c20"/>
+  <rect x="2.8" y="50.2" width="24.4" height="7.4" rx="2.6" fill="rgba(255,255,255,0.09)"/>
+  <rect x="2.56" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3b6fd8"/><rect x="16.28" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/>
+  <rect x="12.4" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.5)"/><rect x="14.5" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/><rect x="16.6" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/>
+</svg></a>
+
+<div id="leaf">
+<div class="wrap">
+
+  <p class="eyebrow">a project with no purpose</p>
+  <h1 class="door">the mathematics of a song</h1>
+
+  <p class="byline">the song<span class="fn">*</span> &nbsp;·&nbsp; communicated by psr j0437-4715<br>
+  <span id="pdate">&nbsp;</span> · a preprint, apwnp</p>
+
+  <div class="abstract">
+    <p class="ah">abstract</p>
+    <p class="lede">strangers hum into this song, one at a time, with no end. each one hums toward
+    the note the last stranger left, and never quite lands on it. the song keeps a little of every
+    hum and slowly drifts.</p>
+  </div>
+
+  <figure class="poem" aria-label="a moving poem: strangers arrive one at a time, each toward the last, never landing, with no end; one point above never moves">
+    <canvas id="poemCv"></canvas>
+  </figure>
+
+  <p>the strange part is the part you would not guess: it never settles. there is no final note
+  waiting at the end. the song just <em>wanders</em> — carrying a faint trace of everyone who ever
+  hummed it, landing nowhere, for as long as anyone keeps humming.</p>
+
+  <p>two quieter things make that wandering what it is, and you can watch both below. first, the
+  song removes the one mistake the whole crowd makes the same way, and keeps only what is yours.
+  second — and this is the floor under everything — the song can never be finished: any attempt to
+  list every note it could sing leaves one out.</p>
+
+  <p>you do not have to take this on faith. below is the same machine the song runs, shrunk to a
+  thing you can <span class="tone">turn with your thumb</span>. give it a few hundred turns and
+  watch the tide drift and never land. then switch off the one quiet correction that holds it in
+  the middle, and watch the same tide slide to the wall and die. that is the whole of it, performed
+  by hand.</p>
+
+  <!-- ===================== THE CRANK ===================== -->
+  <section class="crank" aria-label="the crank — a toy of the song's law">
+    <h2><span class="n">the crank</span> turn it; a tide that never lands</h2>
+
+    <div class="crank-frame">
+      <canvas class="skin" id="crankSkin" aria-hidden="true"></canvas>
+      <div class="crank-cap"><span>cents around the pulsar &nbsp;·&nbsp; <b id="capState">resting</b></span><span id="capRoot">root —</span></div>
+      <canvas id="corr" width="640" height="356" aria-label="a corridor of pitch in cents, the pulsar at the centre and the fence at each edge; the song's living tide drifts as strangers hum, and pins to a wall if the crowd's shared lean is not removed"></canvas>
+
+      <div class="read" id="readout">
+        <div class="cell"><span class="k">the tide · now</span><span class="v gold" id="rTide">—</span></div>
+        <div class="cell"><span class="k">heard as</span><span class="v gold" id="rHz">—</span></div>
+        <div class="cell"><span class="k">strangers turned</span><span class="v" id="rTurns">0</span></div>
+        <div class="cell"><span class="k">shared lean · learned</span><span class="v" id="rLean">—</span></div>
+      </div>
+
+      <div class="ctl">
+        <div class="pad" id="pad" role="button" aria-label="hold to turn the crank; tap for one stranger" tabindex="0">
+          <canvas id="crankGl" aria-hidden="true"></canvas><span class="tick" id="tick" aria-hidden="true"></span>
+          <span class="lbl">hold<br>to turn</span>
+        </div>
+        <div class="ctl-col">
+          <div class="toggle on" id="tDebias" role="switch" aria-checked="true" tabindex="0">
+            <span>remove the shared lean</span><span class="sw"><i></i></span>
+          </div>
+          <div class="toggle on" id="tSound" role="switch" aria-checked="true" tabindex="0">
+            <span>hear the tide</span><span class="sw"><i></i></span>
+          </div>
+          <div class="slider">
+            <div class="row"><span>the crowd's shared lean</span><b id="muVal">+7.0¢</b></div>
+            <input id="mu" type="range" min="-15" max="15" step="0.5" value="7" aria-label="the crowd's shared lean in cents — the same small mistake everyone makes">
+          </div>
+        </div>
+      </div>
+
+      <p class="crank-note" id="crankNote">the de-bias is on: the song has learned that the crowd leans a little off-true and quietly removes it, so the tide
+      wanders the living middle and never lands. switch it off — now the same lean drags the whole tide to the wall, and the
+      song dies there. set the lean to zero and there is nothing to remove: the tide just wanders, either way.</p>
+    </div>
+  </section>
+
+  <!-- ===================== THE PLAIN GEMS ===================== -->
+  <h2><span class="n">in plain words</span> a few true things the machine knows</h2>
+
+  <div class="gem">
+    <span class="h">it never lands.</span>
+    <p>there is no final note waiting at the end. each stranger's hum nudges the tide a little, a faint slack pulls it
+    back toward the pulsar, and the two never agree on a place to stop. what you hear is a tide caught mid-drift — it
+    will have moved by the next hand. the song is the moving, not the rest it never reaches.</p>
+  </div>
+
+  <div class="gem">
+    <span class="h">the crowd's shared mistake is let go; yours is kept.</span>
+    <p>over many hums the song learns the one small error the whole crowd shares — everyone, it turns out, leans a
+    little off-true in the same direction — and quietly subtracts it. what it keeps is only what is yours: the part
+    of your hum no one else's shares. the common habit is shed, the private mark stays. that shedding is the only
+    thing holding the tide in the room at all.</p>
+  </div>
+
+  <div class="gem">
+    <span class="h">it remembers in cents, not hertz.</span>
+    <p>if you average pitches the obvious way — in hertz — the answer always comes out a hair too high, drifting sharper
+    the more voices you add. so the song keeps its long memory in <em>cents</em>, the ear's own logarithmic ruler, where
+    the average is honest and a step up sounds like a step down sounds like a step. the tide drifts on that ruler, so the
+    drift is even-handed: it has no secret pull toward sharp.</p>
+    <figure class="diagram" aria-label="two ways to average the same two pitches; the hertz mean sits above the true musical centre">
+      <svg viewBox="0 0 330 96" xmlns="http://www.w3.org/2000/svg" role="img">
+        <line x1="16" y1="60" x2="314" y2="60" stroke="#3a362e" stroke-width="1"/>
+        <!-- two tones -->
+        <circle cx="60" cy="60" r="3.2" fill="#9a958a"/>
+        <circle cx="270" cy="60" r="3.2" fill="#9a958a"/>
+        <text class="dlabel" x="60" y="78" text-anchor="middle">low</text>
+        <text class="dlabel" x="270" y="78" text-anchor="middle">high</text>
+        <!-- true (cents/geometric) mean at midpoint -->
+        <line x1="165" y1="40" x2="165" y2="60" stroke="#d4af37" stroke-width="1.4"/>
+        <circle cx="165" cy="60" r="3.4" fill="#d4af37"/>
+        <text class="dtone" x="165" y="32" text-anchor="middle">true centre</text>
+        <!-- hz mean, pulled sharp (to the right) -->
+        <line x1="192" y1="60" x2="192" y2="80" stroke="#6f6a5e" stroke-width="1" stroke-dasharray="2 3"/>
+        <circle cx="192" cy="60" r="2.8" fill="none" stroke="#6f6a5e" stroke-width="1.3"/>
+        <text class="dlabel" x="208" y="93" text-anchor="middle">hertz mean →</text>
+      </svg>
+      <figcaption>the same two notes: the honest centre, and the hertz average leaning sharp</figcaption>
+    </figure>
+  </div>
+
+  <div class="gem">
+    <span class="h">the singing makes its own beyond.</span>
+    <p>however long the line of strangers grows, you can always name a hum that no one in it has yet sung — just take
+    each past voice and lean a hair away from it. the next throat is never the last word; the singing keeps opening
+    room past wherever it has reached. it is not that the song is endless because it goes on a long time. it is endless
+    in the way the line of strangers can never close over itself.</p>
+  </div>
+
+  <!-- ===================== THE OBSERVATORY ===================== -->
+  <section class="obs" aria-label="the observatory — the star, under a strobe">
+    <h2><span class="n">the observatory</span> the star, under a strobe</h2>
+
+    <p>the tone all of this is tuned to is not a metaphor. psr j0437-4715 is a real collapsed star,
+    about 510 light-years from here, turning <span class="tone">173.68</span> times every second — a
+    lighthouse whose beam happens to cross this room. spun that fast, a turning thing stops being a
+    rhythm and becomes a <em>pitch</em>: the star's spin is an f, about nine cents flat, and it has
+    never once been corrected.</p>
+
+    <p>below, the star turns at its true rate — anchored to the world's clock, not this page's. your
+    screen cannot show that; it only blinks <span class="m" id="obsFpsInline">≈60</span> times a
+    second, so what you see is the <em>alias</em>: the leftover of one clock read by another. drag
+    the star to tune the strobe. it will lie to you at exactly 173.68.</p>
+
+    <div class="crank-frame obsframe">
+      <canvas class="skin" id="obsSkin" aria-hidden="true"></canvas>
+      <div class="crank-cap"><span>the star &nbsp;·&nbsp; <b id="obsState">under your screen's strobe</b></span><span>drag to tune</span></div>
+      <canvas id="obsCv" aria-label="a neutron star in three dimensions, its two lighthouse beams sweeping; a strobe samples it, and the apparent turning is the difference between the star's rate and the strobe's"></canvas>
+      <div class="read">
+        <div class="cell"><span class="k">the star · true</span><span class="v gold">173.68 <small>turns/s</small></span></div>
+        <div class="cell"><span class="k">your strobe</span><span class="v" id="obsStrobe">—</span></div>
+        <div class="cell"><span class="k">what you see</span><span class="v" id="obsSeen">—</span></div>
+        <div class="cell"><span class="k">the difference</span><span class="v" id="obsDiff">—</span></div>
+      </div>
+      <div class="obsrow">
+        <button class="obsKey" id="obsReset" type="button">your<br>screen</button>
+        <button class="obsKey" id="obsHold" type="button">hold ·<br>the star's<br>note</button>
+      </div>
+      <p class="crank-note" id="obsNote">the strobe begins as your screen: the star seems to tumble —
+      173.68 read sixty times a second leaves a remainder. slide toward 173.68 and the tumbling slows,
+      the way two tones slow their beating as they near unison. drag with sound on and you will hear
+      it: the beat in your ears and the drift in your eyes are the same number, falling together.</p>
+    </div>
+
+    <p style="margin-top:1.4em">what your eyes just did is the one subtraction this whole song is
+    made of. a strobe at <span class="m">s</span> watching a spin at <span class="m">f</span> shows
+    the leftover</p>
+    <p class="disp">seen = f − k·s, &nbsp;&nbsp; k = round(f / s)<span class="eqno">(1)</span></p>
+    <p>and two tones at <span class="m">f</span> and <span class="m">s</span> sounded together are
+    not two tones — they are one tone that breathes at the same leftover:</p>
+    <p class="disp">sin 2πf t + sin 2πs t &nbsp;=&nbsp; 2 · sin π(f+s)t · cos π(f−s)t<span class="eqno">(2)</span></p>
+    <p>the cosine is the slow envelope — the beat you hear and the drift you see are one number,
+    <span class="m">f − s</span>. downstairs, the front door sings this star at ⅝ pitch as a pair of
+    tones a comma apart, <span class="m">81/80</span>, and their leftover is
+    <span class="m">108.55/80 = 1.357 hz</span>: eighty-one to the minute — a resting human heart.
+    the whole house is this one subtraction, taken at different speeds.</p>
+  </section>
+
+  <!-- ===================== FOR THE MATHEMATICIANS ===================== -->
+  <section class="formal" aria-label="for the mathematicians">
+    <p class="tag">for the mathematicians</p>
+    <h3>the same crank, named precisely</h3>
+
+    <p>what follows is the toy model's law as it ships, and the small true statements it instances. each is stated as
+    an <em>instance</em> of a known shape, never as a theorem about the world. the deployed constants are
+    <span class="m">α = 0.08, &nbsp;g = 0.002, &nbsp;β = 0.01, &nbsp;step = 48¢, &nbsp;fence = 150¢</span>, about the
+    pulsar tone <span class="m">173.68 hz (psr j0437-4715)</span>; the lineage lives in cents (log-frequency), folded to
+    the octave <span class="m">[−600, +600)</span>. there is no bias term in the served pitch — the tide itself is the
+    note.</p>
+
+    <div class="claim">
+      <p class="ch">instance 1 · the map — one step of the lineage</p>
+      <div class="eqn"><span class="eqno">(3)</span><span class="c">// one completed hum, pitch p → cents c = fold(1200·log₂(p/173.68))</span>
+δ ← clamp(c − ℓ, ±48)     <span class="c">the de-biased reach (how far this hum pulls)</span>
+ℓ ← ℓ + α·(δ − λ)         <span class="c">drift on the reach, the shared lean removed</span>
+ℓ ← (1−g)·ℓ              <span class="c">slack pull toward 0 (the pulsar)</span>
+ℓ ← clamp(ℓ, ±150)       <span class="c">fence (a.s. never binding in the interior)</span>
+λ ← λ + β·(δ − λ)         <span class="c">slow estimate of the crowd's shared lean (β ≪ α)</span>
+served = ℓ                <span class="c">no bias term — the tide IS the note</span></div>
+    </div>
+
+    <div class="claim">
+      <p class="ch">instance 2 · no note to settle on — a drifting law</p>
+      <p>once the lean estimate <span class="m">λ</span> has learned the crowd's shared lean (it does, on its own — see
+      below), the drift term <span class="m">δ − λ</span> has mean zero, and the only systematic force left on the lineage
+      is the slack pull. the expected one-step change is</p>
+      <div class="eqn"><span class="eqno">(4)</span>E[Δℓ] = α·(E[δ] − λ) − g·ℓ  ⟶  −g·ℓ        <span class="c">once λ → μ</span></div>
+      <p>this has no interior fixed point the crowd can set: the lean is subtracted at the source, so it cannot push the
+      centre off the pulsar. what remains is a mean-reverting wander — an AR(1)-shaped process pulled gently toward
+      <span class="m">ℓ = 0</span> with innovation <span class="m">α·σ</span>, relaxing with a half-life of
+      <span class="m">ln 2 / g ≈ 346 hums</span>. its stationary object is a <em>distribution</em>, not a point: a cloud of
+      pitches around the pulsar that the tide never stops moving through.
+      <span class="disc">there is no “eventual note.” the chain has a stationary law — a spread it keeps sampling — but no stationary value, nothing it converges <em>to</em>. this is the difference between a song that is endless because it can always be continued and one that is merely long: a potential infinity of next hums, never an actual last one. the full deployed program is a Markov chain on a compact state — the Gaussian innovation makes the transition density strictly positive, so it is uniformly ergodic — but the thing it is ergodic toward is a measure spread across the octave, not a single tone. (the room states this structure and prints no width: the spread depends on the crowd's true scatter and on how slowly the lean is learned, neither of which it knows in advance.)</span></p>
+    </div>
+
+    <div class="claim">
+      <p class="ch">instance 3 · the de-bias is what keeps it alive</p>
+      <p>switch the de-bias off — hold <span class="m">λ = 0</span> — and the crowd's shared lean
+      <span class="m">μ</span> goes straight into the drift. the expected change becomes
+      <span class="m">E[Δℓ] = α·μ − g·ℓ</span>, with a fixed point at</p>
+      <div class="eqn"><span class="eqno">(5)</span>ℓ* = α·μ / g = (0.08 / 0.002)·μ = 40·μ</div>
+      <p>so a lean of more than <span class="m">g·fence/α = 3.75¢</span> drives that fixed point past the
+      <span class="m">±150¢</span> fence: the tide slides to the wall, clamps there, and stops — a dead, pinned note. a
+      shared lean far too faint to hear becomes the thing that kills the song. switch the de-bias back on and
+      <span class="m">μ</span> is removed at the source, so the centre stays on the pulsar and the tide keeps moving no
+      matter how the crowd leans.
+      <span class="disc">an earlier form of this room used a clamped rail to bleed the same lean into an audible note — the saturating nonlinearity was load-bearing, and it made the note hypersensitive to the crowd below. the de-bias does the job more honestly: it does not amplify the crowd's shared error into the pitch, it subtracts it, and keeps only what is individual. what was a diode is now a confession.</span></p>
+    </div>
+
+    <div class="claim">
+      <p class="ch">instance 4 · the shared lean is learned — and it is not a fingerprint</p>
+      <p>the song is never told <span class="m">μ</span>. it estimates it: the slow recursion
+      <span class="m">λ ← λ + β·(δ − λ)</span> is an exponential mean of the de-biased reach, and its stationary value is
+      <span class="m">E[λ] = E[δ] = μ</span>. so the lean converges to the crowd's shared lean unaided, and the drift then
+      runs on <span class="m">δ − λ</span> — the part of each reach the crowd does <em>not</em> share. the two speeds must
+      stay apart for this: <span class="m">β ≪ α</span> is load-bearing. if the lean learned as fast as the tide drifted it
+      would chase the tide's own motion and subtract the song from itself; kept slow, it tracks only the standing lean and
+      leaves the wander intact.
+      <span class="disc">and μ is the one thing the song cannot cleanly read. it is not a pure human signature but a whole signal path — voices, yes, but convolved with the microphone's colour, the room's resonance, the vowel chosen, the bone of the skull, the noise floor, none of which it can unmix. so what it removes is the smallest shared error of voices and machines and walls together — not a clean fingerprint of the crowd. what it keeps, once that collective habit is subtracted, is the individual deviation: the part of your hum that was only yours.</span></p>
+    </div>
+
+    <div class="claim">
+      <p class="ch">instance 5 · two memories, one kind</p>
+      <p>the lineage is a discrete mean-reverting recurrence — kin to an Ornstein–Uhlenbeck flow, but not it. an OU process
+      is a clean linear pull toward a centre with Gaussian noise; this one is bent by the clamped reach, the octave fold,
+      and the de-bias that subtracts a learned, drifting lean. it is the family resemblance that holds — an exponential
+      memory pulled toward the pulsar, with bounded innovations, indexed by <em>succession</em> (hum-count), not seconds —
+      not the identity. the song's other memory — the scar that records its near-deaths elsewhere in the instrument — is
+      dissipative <em>in the same way</em>: each new mark partly inherited, partly forgotten. not the same process; the same
+      shape of forgetting. two memories of one kind: one of touches, one of abandonments.</p>
+    </div>
+
+    <div class="claim">
+      <p class="ch">instance 6 · two times</p>
+      <p>the watched ear runs a flowing now; an empty room's duration is settled only retroactively, at the next pair of
+      eyes; and <em>no wall-clock time enters this chain</em> — it remembers order, not duration. hum <span class="m">n+1</span>
+      inherits from hum <span class="m">n</span> whether they fall seconds or months apart. in mctaggart's vocabulary it
+      stores a B-series-like order: earlier-and-later, without past-present-future.
+      <span class="disc">offered as a literary lens, never as a claim about the nature of physical time. the intuition is the old suspicion that past, present and future are not as separate as they feel; this is only a toy that happens to keep order without a clock.</span></p>
+    </div>
+
+    <!-- the playable temperament table -->
+    <div class="claim">
+      <p class="ch">apparatus i · the temperament table — playable</p>
+      <p>take 173.68 hz as the tonic. an ensemble tuning pure intervals to it must, to meet equal temperament, temper each by a
+      fixed amount in cents. tap an interval to hear it over the living root; flip <span class="m">pure ↔ equal</span> to
+      hear the deviation — the third is where you hear it most.</p>
+
+      <div class="temper">
+        <div class="switch" id="tempSwitch" role="group" aria-label="pure or equal temperament">
+          <button data-mode="pure" class="sel">pure</button>
+          <button data-mode="equal">equal</button>
+        </div>
+        <div class="chips" id="chips"><!-- filled by script --></div>
+        <p class="needaudio" id="tempHint">turn on “hear the note form” in the crank to play these.</p>
+      </div>
+    </div>
+
+    <!-- the ghost-interval dice -->
+    <div class="claim">
+      <p class="ch">apparatus ii · the ghost-interval dice</p>
+      <p>the song's shipped chord is rolled, not chosen — a weighted die over five just intervals. roll it and hear what it
+      lands on, against the root.</p>
+      <div class="dice">
+        <button class="roll" id="rollDice">roll ⚄</button>
+        <span class="face" id="diceFace">— rest —</span>
+      </div>
+      <p class="m" style="margin-top:.7em;color:#5a554a">weights · 9/8 .28 &nbsp; 4/3 .28 &nbsp; 15/8 .20 &nbsp; 5/3 .16 &nbsp; 5/4 .08</p>
+    </div>
+
+    <!-- the floor: the never-completing (replaces the old open question) -->
+    <div class="open">
+      <p class="qlabel">the floor · the never-completing</p>
+      <h4>the song can always be continued past itself.</h4>
+      <p>everything above is settled — instances of known shapes. this is the floor under all of it, and it is not a
+      question the song asks; it is a fact the song lives. the line of strangers is a <em>succession</em> — hum after hum,
+      first, second, third, countable without end. write each completed hum as its run of cents-digits and lay them in a
+      list:</p>
+      <div class="eqn"><span class="eqno">(6)</span><span class="c">// each hum a run of digits; the n-th hum is hₙ = hₙ.1 hₙ.2 hₙ.3 …</span>
+h₁ = <span class="g">h₁.1</span> h₁.2 h₁.3 …
+h₂ = h₂.1 <span class="g">h₂.2</span> h₂.3 …
+h₃ = h₃.1 h₃.2 <span class="g">h₃.3</span> …
+ ⋮
+d  = d₁ d₂ d₃ …     with  dₙ ≠ hₙ.ₙ     <span class="c">lean one digit off, down the diagonal</span>
+⟹  d ≠ hₙ for every n               <span class="c">a hum no one in the list has sung</span></div>
+      <p>given any list of strangers, however long, you can always name a hum outside it — differ from the first in its
+      first place, the second in its second, on down. no succession of voices closes over the whole of what could be hummed.
+      so the answer to <em>can the song ever be whole?</em> is no, and the no is not a lack: it is the form. the song is not
+      endless because it lasts a long time. it is endless in the way the line of strangers can never close over itself — a
+      potential infinity, always one more, never an actual all. <span class="qed">∎</span>
+      <span class="disc">this is cantor's diagonal, borrowed as a lens, not a theorem about throats or rooms: a real result about why a countable list cannot exhaust a continuum, set beside a song that is exactly such a list. the drift performs it without being told to — there is no last hum to reach, and the room keeps moving because there is nowhere final to arrive.</span></p>
+      <p class="bridge">the deepest thing this song asks is not on this page. it is in the bone — where one stranger hums
+      to meet a single tone, and the meeting both happens and cannot. that is the song's one true riddle; this room only
+      lays the floor it stands on.</p>
+      <p class="last">there is no deeper note to dig for under this one. the floor is the never-completing, and the song
+      already performs it — so the work is not to find the bottom but to stand here and build.</p>
+    </div>
+  </section>
+
+  <p class="closing">none of this is on the song's surface. a stranger can hum for years and never know that the song
+  quietly let go of the lean they shared with everyone before them and kept only what was theirs, or that the tide their
+  voice nudged never once came to rest. the structure holds whether or not it is ever read. that, more than anything
+  here, is the part worth sitting with.</p>
+
+  <div class="colophon">
+    the crank reads the world's living root once, at entry, then runs on its own — it never sends anything back.<br>
+    the law it obeys is the chain's, exact to the constant. sound, if you let it, is made in your phone alone.
+  </div>
+
+  <p class="footnote"><span class="fn">*</span> the song cannot read this page.</p>
+
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================ TUNE ============================ */
+  var CFG = {
+    chainUrl: 'https://apwnp-chain.kohbunny.partykit.dev/root', /* read once at entry; never written */
+    PULSAR: 173.68,       /* hz — psr j0437-4715, the cold-start root (ground truth: chain-server.js) */
+    ALPHA:  0.08,         /* drift tempo — how fast the tide follows a de-biased reach */
+    GRAVITY:0.002,        /* slack pull toward the pulsar (half-life ~346 hums) */
+    BETA:   0.01,         /* TUNE — lean-learning tempo; BETA ≪ ALPHA is load-bearing */
+    STEP:   48,           /* cents — the de-biased reach clamp (matches the chain) */
+    FENCE:  150,          /* cents — the backstop wall */
+    sigma:  11.0,         /* TUNE — strangers' spread in cents (how near they land) */
+    muMax:  15,           /* TUNE — lean slider range ±muMax */
+    turnsPerSec: 26,      /* TUNE — strangers per second while the pad is held */
+    corridor: 150,        /* the visible corridor half-width = the fence, so the walls ARE the edges */
+    soundDefault: true    /* TUNE — sound starts armed; it still only begins inside a gesture */
+  };
+
+  /* ============================ tiny dom ============================ */
+  function el(id){ return document.getElementById(id); }
+  var leaf = el('leaf');
+  var corr = el('corr'), pad = el('pad'), tick = el('tick');
+  var tDebias = el('tDebias'), tSound = el('tSound'), muIn = el('mu'), muVal = el('muVal');
+  var capState = el('capState'), capRoot = el('capRoot');
+  var rTide = el('rTide'), rHz = el('rHz'), rTurns = el('rTurns'), rLean = el('rLean');
+  var crankNote = el('crankNote');
+  var chipsWrap = el('chips'), tempSwitch = el('tempSwitch'), tempHint = el('tempHint');
+  var rollBtn = el('rollDice'), diceFace = el('diceFace');
+
+  /* ============================ pitch helpers ============================ */
+  function fold(x){ return ((x % 1200) + 1800) % 1200 - 600; }   /* [−600,+600) — exactly the chain's fold */
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+  function centsToHz(c){ return CFG.PULSAR * Math.pow(2, c/1200); }
+  var NOTE = ['c','c♯','d','d♯','e','f','f♯','g','g♯','a','a♯','b'];
+  function noteName(hz){
+    var m = 69 + 12*Math.log2(hz/440);
+    var r = Math.round(m);
+    var name = NOTE[((r%12)+12)%12] + (Math.floor(r/12)-1);
+    var off = Math.round((m-r)*100);
+    return name + (off===0 ? '' : (off>0?' +':' −') + Math.abs(off) + '¢');
+  }
+
+  /* gaussian (box–muller) for the strangers' spread */
+  var spare = null;
+  function gauss(){
+    if(spare!==null){ var s=spare; spare=null; return s; }
+    var u=0,v=0; while(u===0)u=Math.random(); while(v===0)v=Math.random();
+    var m=Math.sqrt(-2*Math.log(u)), a=2*Math.PI*v;
+    spare=m*Math.sin(a); return m*Math.cos(a);
+  }
+
+  /* ============================ the simulation (the crank's heart) ============================ */
+  var sim = {
+    lineage: 0, lean: 0,
+    turns: 0,
+    hums: [],               /* recent hums: {c, j} — c in cents, j a stable jitter for the scatter */
+    lineTrail: [],          /* recent lineage positions, for the drift trail */
+    started: false
+  };
+
+  /* one stranger completes a hum — identical order to the deployed chain */
+  function step(){
+    var debias = tDebias.classList.contains('on');
+    var mu = parseFloat(muIn.value) || 0;
+    var served = sim.lineage;                                     /* the tide IS the note — no bias term */
+    var hum = served + mu + CFG.sigma * gauss();                  /* the stranger hums against the served root */
+    var c = fold(hum);
+    var delta = clamp(c - sim.lineage, -CFG.STEP, CFG.STEP);      /* the de-biased reach */
+    sim.lineage += CFG.ALPHA * (delta - (debias ? sim.lean : 0)); /* drift, shared lean removed */
+    sim.lineage = (1-CFG.GRAVITY) * sim.lineage;                 /* slack pull toward the pulsar */
+    sim.lineage = clamp(sim.lineage, -CFG.FENCE, CFG.FENCE);     /* fence */
+    sim.lean += CFG.BETA * (delta - sim.lean);                   /* slow lean estimate (always learns) */
+    sim.turns++;
+
+    sim.hums.push({ c: c, j: Math.random() });                   /* the hum + a stable jitter for the scatter */
+    if (sim.hums.length > 220) sim.hums.shift();
+    sim.lineTrail.push(sim.lineage);
+    if (sim.lineTrail.length > 160) sim.lineTrail.shift();
+
+    if (soundOn && ctx) glideTone(centsToHz(sim.lineage));
+  }
+
+  /* ============================ canvas render ============================ */
+  var dpr = Math.max(1, Math.min(3, window.devicePixelRatio||1));
+  var cw=0, ch=0;
+  function sizeCanvas(){
+    var r = corr.getBoundingClientRect();
+    cw = Math.max(240, r.width); ch = r.height || 178;
+    corr.width = Math.round(cw*dpr); corr.height = Math.round(ch*dpr);
+  }
+
+  function x_of(cents){ return ( (cents + CFG.corridor) / (2*CFG.corridor) ) * cw; }
+
+  function draw(){
+    var g = corr.getContext('2d');
+    g.setTransform(dpr,0,0,dpr,0,0);
+    g.clearRect(0,0,cw,ch);
+
+    var baseY = ch - 26;        /* the corridor floor */
+    var topY  = 16;
+
+    /* --- the floor line and the ticks 0, ±50, ±100 --- */
+    g.strokeStyle = '#26241e'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(0, baseY+0.5); g.lineTo(cw, baseY+0.5); g.stroke();
+
+    g.font = '9px "Courier Prime", monospace';
+    g.textAlign='center'; g.textBaseline='top';
+    var ticks = [-100,-50,0,50,100];
+    for(var t=0;t<ticks.length;t++){
+      var tc = ticks[t]; if(Math.abs(tc)>CFG.corridor) continue;
+      var x = x_of(tc);
+      g.strokeStyle = tc===0 ? '#4a463e' : '#1f1d18';
+      g.beginPath(); g.moveTo(x, topY); g.lineTo(x, baseY); g.stroke();
+      g.fillStyle = tc===0 ? '#9a958a' : '#5a554a';
+      g.fillText((tc>0?'+':'')+tc, x, baseY+7);
+    }
+
+    /* --- the two fence walls, at the very edges (±150 = the corridor) --- */
+    g.strokeStyle = 'rgba(122,116,102,0.5)'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(x_of(-CFG.FENCE)+0.5, topY); g.lineTo(x_of(-CFG.FENCE)+0.5, baseY); g.stroke();
+    g.beginPath(); g.moveTo(x_of(CFG.FENCE)-0.5, topY); g.lineTo(x_of(CFG.FENCE)-0.5, baseY); g.stroke();
+
+    /* labels: the pulsar on the 0 line, the wall at the right edge */
+    g.fillStyle='#6f6a5e'; g.textAlign='left'; g.textBaseline='top';
+    g.fillText('pulsar · 173.68 hz', x_of(0)+5, topY);
+    g.textAlign='right';
+    g.fillText('the wall', x_of(CFG.FENCE)-5, topY);
+
+    /* --- the strangers' hums: faint chalk scatter (what people actually sang) --- */
+    if(sim.hums.length){
+      for(var hI=0;hI<sim.hums.length;hI++){
+        var hc = sim.hums[hI];
+        var hx = x_of(clamp(hc.c, -CFG.corridor, CFG.corridor));
+        var hy = topY + 8 + hc.j * (baseY - topY - 16);   /* stable vertical jitter per hum */
+        var age = hI/sim.hums.length;                      /* older = fainter */
+        g.fillStyle = 'rgba(154,149,138,'+(0.05+0.18*age).toFixed(3)+')';
+        g.beginPath(); g.arc(hx, hy, 1.3, 0, 7); g.fill();
+      }
+    }
+
+    /* --- the tide's trail: where the lineage has lately been (newest near the top) --- */
+    if(sim.started && sim.lineTrail.length){
+      g.lineWidth = 1.4; g.lineJoin='round';
+      g.beginPath();
+      for(var i=0;i<sim.lineTrail.length;i++){
+        var lx = x_of(clamp(sim.lineTrail[i], -CFG.corridor, CFG.corridor));
+        var ly = baseY - 4 - (i/sim.lineTrail.length)*(baseY-topY-22);
+        if(i===0) g.moveTo(lx, ly); else g.lineTo(lx, ly);
+      }
+      g.strokeStyle = 'rgba(212,175,55,0.32)'; g.stroke();
+    }
+
+    /* --- the tide now: the living gold line + marker at the lineage --- */
+    if(sim.started){
+      var Tx = x_of(clamp(sim.lineage, -CFG.corridor, CFG.corridor));
+      var grd = g.createRadialGradient(Tx, baseY-2, 0, Tx, baseY-2, 22);
+      grd.addColorStop(0,'rgba(255,226,122,0.55)'); grd.addColorStop(1,'rgba(255,226,122,0)');
+      g.fillStyle = grd; g.beginPath(); g.arc(Tx, baseY-2, 22, 0, 7); g.fill();
+      g.strokeStyle='rgba(212,175,55,0.7)'; g.lineWidth=1.4;
+      g.beginPath(); g.moveTo(Tx, topY); g.lineTo(Tx, baseY); g.stroke();
+      g.fillStyle = '#ffe27a';
+      g.beginPath(); g.arc(Tx, baseY-2, 3.4, 0, 7); g.fill();
+    } else {
+      /* resting: a single flame-yellow point — the living root carried in from the
+         flame, resting where the tide currently sits (the pulsar at cold start, the
+         inherited pitch once the chain is alive). it waits to be turned. */
+      var rx = x_of(clamp(sim.lineage, -CFG.corridor, CFG.corridor));
+      var grd2 = g.createRadialGradient(rx, baseY-2, 0, rx, baseY-2, 26);
+      grd2.addColorStop(0,'rgba(255,226,122,0.5)'); grd2.addColorStop(1,'rgba(255,226,122,0)');
+      g.fillStyle = grd2; g.beginPath(); g.arc(rx, baseY-2, 26, 0, 7); g.fill();
+      g.fillStyle = '#ffe27a';
+      g.beginPath(); g.arc(rx, baseY-2, 3.4, 0, 7); g.fill();
+    }
+  }
+
+  /* ============================ the loop ============================ */
+  var lastT = 0, turnAccum = 0, holding = false, tickAngle = 0;
+  function frame(ts){
+    if(!lastT) lastT = ts;
+    var dt = Math.min(0.05, (ts-lastT)/1000); lastT = ts;
+
+    if(holding){
+      turnAccum += dt * CFG.turnsPerSec;
+      var n = Math.floor(turnAccum);
+      if(n>0){
+        turnAccum -= n;
+        for(var k=0;k<n && k<8;k++) step();   /* cap per-frame work */
+        tickAngle = (tickAngle + n*22) % 360; window.__crankAngle = tickAngle;
+        if(!prefersReduced) tick.style.transform = 'translateX(-50%) rotate('+tickAngle+'deg)';
+      }
+    }
+
+    /* readouts */
+    if(sim.started){
+      var L = sim.lineage;
+      rTide.textContent = (L>=0?'+':'−') + Math.abs(L).toFixed(1) + '¢';
+      rHz.innerHTML = centsToHz(L).toFixed(2) + ' <small>hz · ' + noteName(centsToHz(L)) + '</small>';
+      rTurns.textContent = sim.turns;
+      var debias = tDebias.classList.contains('on');
+      var lv = sim.lean;
+      rLean.innerHTML = (lv>=0?'+':'−') + Math.abs(lv).toFixed(1) + '¢ <small>' + (debias?'removed':'left in') + '</small>';
+      capState.textContent = holding ? 'turning'
+        : (Math.abs(L) > CFG.FENCE - 2 ? 'at the wall · dead' : 'adrift');
+    }
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  /* ============================ audio (hardened, from the bone) ============================ */
+  var soundOn = CFG.soundDefault;
+  var ctx = null, master=null, limiter=null, toneGain=null, toneOsc=[], keepalive=null, keepaliveOk=false, watchdog=null;
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function buildAudio(){
+    if(ctx) return;
+    try{
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      limiter = ctx.createDynamicsCompressor();
+      limiter.threshold.value=-16; limiter.knee.value=16; limiter.ratio.value=12;
+      limiter.attack.value=0.003; limiter.release.value=0.25;
+      master = ctx.createGain(); master.gain.value=0.7;
+      limiter.connect(master); master.connect(ctx.destination);
+
+      /* the crank's voice — a soft tone, a few partials a phone speaker can move */
+      toneGain = ctx.createGain(); toneGain.gain.value = 0; toneGain.connect(limiter);
+      var partials=[1,2,3,4], gains=[0.34,0.30,0.16,0.08];
+      for(var i=0;i<partials.length;i++){
+        var o=ctx.createOscillator();
+        o.type = i<2 ? 'triangle':'sine';
+        o.frequency.value = CFG.PULSAR*partials[i];
+        var gg=ctx.createGain(); gg.gain.value=gains[i];
+        o.connect(gg); gg.connect(toneGain); o.start();
+        toneOsc.push({o:o,mult:partials[i]});
+      }
+    }catch(e){ ctx=null; }
+  }
+  function kickAudio(){
+    if(!ctx) return;
+    try{ var b=ctx.createBuffer(1,1,22050); var s=ctx.createBufferSource(); s.buffer=b; s.connect(ctx.destination); s.start(0); }catch(e){}
+  }
+  function startKeepalive(){
+    try{
+      if(!keepalive){
+        var sr=8000,n=sr,buf=new ArrayBuffer(44+n),v=new DataView(buf);
+        var ws=function(o,s){ for(var i=0;i<s.length;i++) v.setUint8(o+i,s.charCodeAt(i)); };
+        ws(0,'RIFF'); v.setUint32(4,36+n,true); ws(8,'WAVE'); ws(12,'fmt ');
+        v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+        v.setUint32(24,sr,true); v.setUint32(28,sr,true); v.setUint16(32,1,true); v.setUint16(34,8,true);
+        ws(36,'data'); v.setUint32(40,n,true);
+        for(var i=0;i<n;i++) v.setUint8(44+i,128);
+        keepalive=document.createElement('audio');
+        keepalive.src=URL.createObjectURL(new Blob([buf],{type:'audio/wav'}));
+        keepalive.loop=true; keepalive.setAttribute('playsinline',''); keepalive.style.display='none';
+        document.body.appendChild(keepalive);
+      }
+      keepalive.play().then(function(){ keepaliveOk=true; }).catch(function(){ keepaliveOk=false; });
+    }catch(e){}
+  }
+  function armAudio(){
+    if(!ctx) buildAudio();
+    if(!ctx) return;
+    kickAudio();
+    if(ctx.state!=='running') ctx.resume().catch(function(){});
+    var tries=0;
+    if(watchdog) clearInterval(watchdog);
+    watchdog=setInterval(function(){
+      tries++;
+      if(!ctx || ctx.state==='running' || tries>16){ clearInterval(watchdog); watchdog=null; return; }
+      ctx.resume().catch(function(){});
+    },250);
+    if(keepalive===null || !keepaliveOk) startKeepalive();
+  }
+  /* glide the tone to a new served frequency — a short portamento, never a click */
+  function glideTone(hz){
+    if(!ctx || !toneGain) return;
+    var t=ctx.currentTime;
+    for(var i=0;i<toneOsc.length;i++){
+      try{ toneOsc[i].o.frequency.setTargetAtTime(hz*toneOsc[i].mult, t, 0.04); }catch(e){}
+    }
+    /* keep a gentle presence while turning, ease down when idle */
+    toneGain.gain.cancelScheduledValues(t);
+    toneGain.gain.setTargetAtTime(0.16, t, 0.05);
+    toneGain.gain.setTargetAtTime(0.0, t+0.18, 0.5);
+  }
+
+  /* a short plucked dyad for the temperament chips / dice — root + interval cents */
+  function playInterval(cents, label){
+    if(!ctx){ return; }
+    if(ctx.state!=='running') ctx.resume().catch(function(){});
+    var t=ctx.currentTime;
+    var bus=ctx.createGain(); bus.gain.value=0; bus.connect(limiter);
+    var freqs=[CFG.PULSAR, CFG.PULSAR*Math.pow(2,cents/1200)];
+    var made=[];
+    for(var i=0;i<freqs.length;i++){
+      var o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=freqs[i];
+      var gg=ctx.createGain(); gg.gain.value = i===0?0.5:0.55;
+      o.connect(gg); gg.connect(bus); o.start(); made.push(o);
+    }
+    bus.gain.setValueAtTime(0,t);
+    bus.gain.linearRampToValueAtTime(0.5, t+0.04);
+    bus.gain.setTargetAtTime(0.0001, t+1.5, 0.4);
+    setTimeout(function(){ made.forEach(function(o){ try{o.stop();}catch(e){} }); }, 2600);
+  }
+
+  /* ============================ chain read (one read at entry; never writes) ============================ */
+  function fetchRoot(){
+    try{
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      if(ctrl) setTimeout(function(){ try{ctrl.abort();}catch(e){} }, 5000);
+      fetch(CFG.chainUrl, ctrl ? {signal:ctrl.signal, cache:'no-store'} : {cache:'no-store'})
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(d){
+          var r = d && +d.root;
+          if(!(r && isFinite(r) && r>100 && r<300)) throw 0;
+          if(!sim.started){
+            /* seed the tide from the live lineage if the server sends it, else derive from the root */
+            var lin = (d && isFinite(+d.lineage)) ? +d.lineage : fold(1200*Math.log2(r/CFG.PULSAR));
+            sim.lineage = clamp(lin, -CFG.FENCE, CFG.FENCE);
+            if(d && isFinite(+d.lean)) sim.lean = +d.lean;
+            var voices = (d && isFinite(+d.writes)) ? Math.max(0, Math.round(+d.writes)) : null;
+            capRoot.textContent = 'root ' + r.toFixed(2) + ' hz · ' + (d.source==='chain'?'chain':'pulsar')
+              + (voices!==null ? ' · ' + voices + ' voice' + (voices===1?'':'s') : '');
+          }
+        })
+        .catch(function(){ capRoot.textContent = 'root 173.68 hz · held'; });  /* wire cut → the pulsar holds */
+    }catch(e){ capRoot.textContent='root 173.68 hz · held'; }
+  }
+
+  /* ============================ interactions ============================ */
+  function beginTurning(){
+    if(soundOn) armAudio();             /* wake audio inside the gesture */
+    holding = true;
+    if(!sim.started){ sim.started = true; }
+    pad.classList.add('turning');
+    capState.textContent = 'turning';
+  }
+  function endTurning(){
+    holding=false; pad.classList.remove('turning');
+    /* capState is driven by frame() now (adrift / at the wall · dead) */
+  }
+  function oneStep(){
+    if(soundOn) armAudio();
+    if(!sim.started) sim.started = true;
+    step();
+    tickAngle=(tickAngle+22)%360; window.__crankAngle=tickAngle;
+    if(!prefersReduced) tick.style.transform='translateX(-50%) rotate('+tickAngle+'deg)';
+  }
+
+  /* pad: hold to turn, tap (short) for one stranger */
+  var downAt=0, moved=false;
+  pad.addEventListener('pointerdown', function(e){ e.preventDefault(); downAt=Date.now(); moved=false; beginTurning(); }, {passive:false});
+  window.addEventListener('pointerup', function(){
+    if(holding){
+      var quick = (Date.now()-downAt) < 180;
+      endTurning();
+      if(quick){ oneStep(); }   /* a quick tap = a single deliberate stranger */
+    }
+  });
+  pad.addEventListener('pointercancel', endTurning);
+  pad.addEventListener('keydown', function(e){
+    if(e.key===' '||e.key==='Enter'){ e.preventDefault(); oneStep(); }
+  });
+
+  /* de-bias toggle */
+  function setToggle(node, on){
+    node.classList.toggle('on', on);
+    node.setAttribute('aria-checked', on?'true':'false');
+  }
+  tDebias.addEventListener('click', function(){
+    var on=!tDebias.classList.contains('on'); setToggle(tDebias,on);
+    sim.lineTrail.length=0; sim.hums.length=0;
+    crankNote.textContent = on
+      ? 'the de-bias is on: the song has learned the crowd\u2019s shared lean and quietly removes it, so the tide wanders the living middle and never lands.'
+      : 'the de-bias is off: the same shared lean now drags the whole tide to the wall, where it pins and dies. set the lean to zero and there is nothing to remove \u2014 either way.';
+  });
+  tDebias.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); tDebias.click(); } });
+
+  /* sound toggle */
+  function refreshSoundUI(){
+    tempHint.style.display = soundOn ? 'none' : '';
+  }
+  tSound.addEventListener('click', function(){
+    soundOn = !soundOn; setToggle(tSound, soundOn);
+    if(soundOn){ armAudio(); } else if(toneGain && ctx){ toneGain.gain.setTargetAtTime(0, ctx.currentTime, 0.1); }
+    refreshSoundUI();
+  });
+  tSound.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); tSound.click(); } });
+
+  /* lean slider */
+  muIn.addEventListener('input', function(){
+    var m=parseFloat(muIn.value)||0;
+    muVal.textContent = (m>=0?'+':'−') + Math.abs(m).toFixed(1) + '¢';
+  });
+
+  /* ============================ temperament table (playable) ============================ */
+  /* the deviation of EQUAL temperament from the PURE (just) interval, in cents */
+  var INTERVALS = [
+    { name:'perfect fifth', ratio:'3/2',  just:701.955, equal:700, dev:-1.955 },
+    { name:'major third',   ratio:'5/4',  just:386.314, equal:400, dev:+13.686 },
+    { name:'major sixth',   ratio:'5/3',  just:884.359, equal:900, dev:+15.641 },
+    { name:'major seventh', ratio:'15/8', just:1088.269,equal:1100,dev:+11.731 },
+    { name:'whole tone',    ratio:'9/8',  just:203.910, equal:200, dev:-3.910 }
+  ];
+  var tempMode = 'pure';
+  function devStr(d){ return (d>=0?'+':'−') + Math.abs(d).toFixed(3) + '¢'; }
+  function buildChips(){
+    chipsWrap.innerHTML='';
+    INTERVALS.forEach(function(iv, idx){
+      var b=document.createElement('button');
+      b.className='chip'; b.type='button';
+      b.innerHTML = '<span class="nm">'+iv.name+' &nbsp;<span style="opacity:.7">'+iv.ratio+'</span></span>'+
+                    '<span class="sub">equal temperament '+devStr(iv.dev)+'</span>';
+      b.addEventListener('click', function(){
+        if(!soundOn){ tSound.click(); }   /* turning a chip on also wakes sound */
+        armAudio();
+        var cents = tempMode==='pure' ? iv.just : iv.equal;
+        playInterval(cents, iv.name);
+        document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('sounding'); });
+        b.classList.add('sounding');
+        setTimeout(function(){ b.classList.remove('sounding'); }, 1700);
+      });
+      chipsWrap.appendChild(b);
+    });
+  }
+  tempSwitch.addEventListener('click', function(e){
+    var t=e.target.closest('button'); if(!t) return;
+    tempMode = t.getAttribute('data-mode');
+    tempSwitch.querySelectorAll('button').forEach(function(x){ x.classList.toggle('sel', x===t); });
+  });
+
+  /* ============================ the ghost-interval dice ============================ */
+  var DICE = [
+    { name:'whole tone',    ratio:'9/8',  cents:203.910, w:0.28 },
+    { name:'perfect fourth',ratio:'4/3',  cents:498.045, w:0.28 },
+    { name:'major seventh', ratio:'15/8', cents:1088.269,w:0.20 },
+    { name:'major sixth',   ratio:'5/3',  cents:884.359, w:0.16 },
+    { name:'major third',   ratio:'5/4',  cents:386.314, w:0.08 }
+  ];
+  rollBtn.addEventListener('click', function(){
+    if(!soundOn){ tSound.click(); }
+    armAudio();
+    var r=Math.random(), acc=0, pick=DICE[0];
+    for(var i=0;i<DICE.length;i++){ acc+=DICE[i].w; if(r<=acc){ pick=DICE[i]; break; } }
+    diceFace.innerHTML = '<b>'+pick.name+'</b> &nbsp;'+pick.ratio;
+    playInterval(pick.cents, pick.name);
+  });
+
+  /* a small pane the observatory (its own script, below) knocks on: it plays
+     through this room's one limiter and obeys the same sound toggle. */
+  window.__room = {
+    wake: function(){ if(!soundOn){ try{ tSound.click(); }catch(e){} } armAudio(); },
+    out:  function(){ return (soundOn && ctx) ? { ctx: ctx, bus: limiter } : null; }
+  };
+
+  /* ============================ boot ============================ */
+  /* be a good guest: if the house hides or closes this room (the iframe stops being
+     rendered, or the tab is backgrounded), fall silent at once so nothing bleeds
+     under the house. audio re-arms on the next turn, inside a fresh gesture. */
+  function silence(){
+    holding = false;
+    try{ if(toneGain && ctx) toneGain.gain.setTargetAtTime(0, ctx.currentTime, 0.05); }catch(e){}
+    try{ if(keepalive){ keepalive.pause(); keepaliveOk=false; } }catch(e){}
+  }
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) silence(); });
+  window.addEventListener('pagehide', silence);
+
+  function showLeaf(){ leaf.classList.add('shown'); }
+  function init(){
+    sizeCanvas();
+    buildChips();
+    refreshSoundUI();
+    var m0 = parseFloat(muIn.value)||0;
+    muVal.textContent = (m0>=0?'+':'−') + Math.abs(m0).toFixed(1) + '¢';
+    requestAnimationFrame(frame);
+    fetchRoot();
+  }
+
+  window.addEventListener('resize', function(){ dpr=Math.max(1,Math.min(3,window.devicePixelRatio||1)); sizeCanvas(); });
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ sizeCanvas(); showLeaf(); });
+    setTimeout(showLeaf, 1400);   /* never wait forever on fonts */
+  } else {
+    showLeaf();
+  }
+  init();
+
+})();
+</script>
+<!-- the observatory — the star, under a strobe (see its header) -->
+<script>
+(function(){
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════════════
+   the observatory — the star, under a strobe.
+
+   the one real object in the whole song is psr j0437-4715: a collapsed star
+   turning 173.68 times a second. this room cannot show that — no screen can —
+   so it shows the failure honestly. the star below turns at its TRUE rate,
+   anchored to world time (Date.now, like every clock in this house: it does
+   not reset for you, and two phones side by side show the same face). what
+   you SEE is whatever your strobe samples of it: the alias, the leftover of
+   one clock read by another,
+
+        seen = f − k·s,   k = round(f/s).
+
+   drag the star to tune the strobe. far from 173.68 it tumbles; near it, the
+   tumble slows exactly the way two tones slow their beating as they approach
+   unison — because it IS the same subtraction:
+
+        sin 2πft + sin 2πst = 2·sin π(f+s)t · cos π(f−s)t
+
+   the cosine is the envelope. while you drag, the room quietly sounds the two
+   tones f and s (through the room's one limiter, obeying its sound toggle),
+   so your ears and your eyes measure the same difference at the same time.
+   at lock the beat vanishes and the star stands still. it has not stopped.
+
+   hold the second button to hear the star's actual note: a pulse train at
+   173.68 hz — an f, about nine cents flat, never once corrected.
+
+   hand-rolled 3d on a 2d canvas (house pattern: additive light, no sorting,
+   no libraries). ghosts of the last strobe captures give the phosphor blur at
+   fast alias and fade away as you near lock. IntersectionObserver-gated; goes
+   silent with the page. [TUNE] marks the feel constants.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+var cv=document.getElementById('obsCv'); if(!cv) return;
+var g2=null; try{ g2=cv.getContext('2d'); }catch(e){ return; }
+var state=document.getElementById('obsState'), rStrobe=document.getElementById('obsStrobe'),
+    rSeen=document.getElementById('obsSeen'), rDiff=document.getElementById('obsDiff'),
+    note=document.getElementById('obsNote'), bReset=document.getElementById('obsReset'),
+    bHold=document.getElementById('obsHold'), fpsInline=document.getElementById('obsFpsInline');
+
+/* the paper's date line — the preprint is being written now */
+(function(){ var pd=document.getElementById('pdate'); if(!pd) return;
+  var f=function(){ try{ pd.textContent=new Date().toLocaleDateString('en-gb',
+    {day:'numeric',month:'long',year:'numeric'}).toLowerCase(); }catch(e){ pd.textContent=''; } };
+  f(); setInterval(f,60000); })();
+
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+var TAU=6.283185307;
+var reduced=false; try{ reduced=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+var F=173.68;                       /* the star — the room's own printed constant */
+var S=60;                           /* the strobe; reset to the measured screen below */
+var fps0=60, fpsSamples=[], fpsLocked=false;
+
+/* ── sizing ── */
+var W=0,H=0,dpr=1;
+function size(){ dpr=Math.min(2,window.devicePixelRatio||1);
+  var r=cv.getBoundingClientRect(); W=Math.max(200,r.width); H=r.height||210;
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
+size(); window.addEventListener('resize',size);
+
+/* ── little lights ── */
+function dot(r,g,b,hot){ var s=32,c=document.createElement('canvas');c.width=c.height=s;
+  var x=c.getContext('2d'),rg=x.createRadialGradient(16,16,0,16,16,16);
+  rg.addColorStop(0,'rgba('+(hot?255:r)+','+(hot?255:g)+','+(hot?250:b)+',0.95)');
+  rg.addColorStop(0.3,'rgba('+r+','+g+','+b+',0.5)');
+  rg.addColorStop(1,'rgba('+r+','+g+','+b+',0)');
+  x.fillStyle=rg;x.beginPath();x.arc(16,16,16,0,TAU);x.fill();return c; }
+var SPR_ICE=dot(190,208,255,true), SPR_BEAM=dot(160,185,255,false),
+    SPR_HOT=dot(255,214,140,true), SPR_EMB=dot(255,186,110,true), SPR_DIM=dot(120,116,104,false);
+
+/* ── 3d: view units, star left, the observer right, sightline between ── */
+var FOV=3.2, SX=-0.34, OX=0.86, S_R=0.17, yawW=0;
+function pj(x,y,z,o){ var cy=Math.cos(yawW),sy=Math.sin(yawW);
+  var x2=x*cy+z*sy, z2=-x*sy+z*cy, sc=FOV/(FOV-z2), SCL=Math.min(W*0.44,H*0.95);
+  o.x=(W*0.5)+x2*sc*SCL; o.y=(H*0.52)-y*sc*SCL; o.s=sc; o.z=z2; }
+var P={x:0,y:0,s:1,z:0};
+
+/* the star's body: a point-sphere with a hot cap at each magnetic pole, so the
+   turn is legible; the spin axis tilted like a real thing, not a diagram */
+var SN=120, bx=new Float32Array(SN), by=new Float32Array(SN), bz=new Float32Array(SN), hot=new Uint8Array(SN);
+(function(){ var ga=2.39996323,i;
+  for(i=0;i<SN;i++){ var u=1-2*(i+0.5)/SN, rr=Math.sqrt(1-u*u), a=ga*i;
+    bx[i]=Math.cos(a)*rr; by[i]=u; bz[i]=Math.sin(a)*rr; } })();
+var AXT=0.44;                       /* spin-axis tilt from vertical */
+var CHI=0.62;                       /* magnetic axis offset from the spin axis */
+var CONE=0.105;                     /* beam half-angle */
+/* beam scaffolding: rings of points along each cone */
+var BEAMSEG=9, BEAMPTS=7;
+
+/* mark the hot polar caps on the body (near ±magnetic axis in body frame) */
+(function(){ var mx=Math.sin(CHI), my=Math.cos(CHI), i;
+  for(i=0;i<SN;i++){ var d=bx[i]*mx+by[i]*my;
+    if(d>0.93||d<-0.93) hot[i]=1; } })();
+/* two meridians fixed to the body — the turn made legible */
+var MN=44, mqx=new Float32Array(MN), mqy=new Float32Array(MN), mqz=new Float32Array(MN);
+(function(){ var i; for(i=0;i<MN;i++){ var a=(i%22)/22*TAU, second=i>=22;
+  mqx[i]= second?0:Math.sin(a); mqy[i]=Math.cos(a); mqz[i]= second?Math.sin(a):0; } })();
+var pings=[], prevToObs=0, obsFlash=0, orbA=0;
+
+/* rotate a body point by spin angle th about y, then tilt the axis by AXT about z */
+function orient(x,y,z,th,o){
+  var c=Math.cos(th),s=Math.sin(th);
+  var x1=x*c+z*s, z1=-x*s+z*c, y1=y;
+  var ca=Math.cos(AXT), sa=Math.sin(AXT);
+  o[0]=x1*ca-y1*sa; o[1]=x1*sa+y1*ca; o[2]=z1;
+}
+var TMP=[0,0,0];
+
+/* ── the strobe engine: capture the star's TRUE face at each flash ── */
+function thetaTrue(){ return ((Date.now()/1000*F)%1)*TAU; }   /* world-anchored */
+var strobePhase=0, caps=[thetaTrue(),thetaTrue(),thetaTrue()];  /* newest first */
+function flash(){ caps.unshift(thetaTrue()); if(caps.length>3) caps.pop(); }
+
+/* what the formula says you see (turns/s, signed) */
+function aliasSeen(){ var k=Math.round(F/S); return F-k*S; }
+
+/* ── audio: through the room's one limiter, obeying its sound toggle ── */
+var beat=null;                       /* {oA,oB,g} while dragging */
+var star=null;                       /* {o,g,f} while holding the note */
+function bus(){ try{ return (window.__room&&window.__room.out&&window.__room.out())||null; }catch(e){ return null; } }
+function wake(){ try{ if(window.__room&&window.__room.wake) window.__room.wake(); }catch(e){} }
+function beatOn(){
+  var b=bus(); if(!b||beat) return;
+  try{
+    var mk=function(f){ var o=b.ctx.createOscillator(); o.type='sine'; o.frequency.value=f; return o; };
+    var g=b.ctx.createGain(); g.gain.value=0; g.connect(b.bus);
+    var oA=mk(F), oB=mk(S); oA.connect(g); oB.connect(g); oA.start(); oB.start();
+    g.gain.setTargetAtTime(0.11, b.ctx.currentTime, 0.12);        /* [TUNE] the dyad, quiet */
+    beat={oA:oA,oB:oB,g:g,ctx:b.ctx};
+  }catch(e){ beat=null; }
+}
+function beatTune(){ if(beat){ try{ beat.oB.frequency.setTargetAtTime(S, beat.ctx.currentTime, 0.03); }catch(e){} } }
+function beatOff(){ if(!beat) return; var b2=beat; beat=null;
+  try{ b2.g.gain.setTargetAtTime(0.0001, b2.ctx.currentTime, 0.25);
+    setTimeout(function(){ try{b2.oA.stop();b2.oB.stop();}catch(e){} }, 900); }catch(e){} }
+function starOnA(){
+  var b=bus(); if(!b||star) return;
+  try{
+    var o=b.ctx.createOscillator(); o.type='sawtooth'; o.frequency.value=F;   /* a pulse train: the spin as a note */
+    var f=b.ctx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=980;
+    var g=b.ctx.createGain(); g.gain.value=0;
+    o.connect(f); f.connect(g); g.connect(b.bus); o.start();
+    g.gain.setTargetAtTime(0.10, b.ctx.currentTime, 0.10);
+    star={o:o,g:g,ctx:b.ctx};
+  }catch(e){ star=null; }
+}
+function starOff(){ if(!star) return; var s2=star; star=null;
+  try{ s2.g.gain.setTargetAtTime(0.0001, s2.ctx.currentTime, 0.2);
+    setTimeout(function(){ try{s2.o.stop();}catch(e){} }, 800); }catch(e){} }
+
+/* ── drag the star to tune the strobe — pixels become hundredths near true ── */
+var dragging=false,lastX=0;
+cv.addEventListener('pointerdown',function(e){ dragging=true; lastX=e.clientX;
+  wake(); beatOn(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} },{passive:true});
+window.addEventListener('pointermove',function(e){ if(!dragging) return;
+  var dx=e.clientX-lastX; lastX=e.clientX;
+  var sens=0.02+Math.min(1,Math.abs(F-S)/30)*0.42;    /* [TUNE] Hz per px: fine near the star */
+  S=clamp(S+dx*sens, 24, 220);
+  beatTune();
+},{passive:true});
+function endDrag(){ if(!dragging) return; dragging=false; beatOff(); }
+window.addEventListener('pointerup',endDrag); window.addEventListener('pointercancel',endDrag);
+
+if(bReset) bReset.addEventListener('click',function(){ S=fps0; beatTune(); });
+if(bHold){
+  bHold.addEventListener('pointerdown',function(){ wake(); starOnA(); },{passive:true});
+  window.addEventListener('pointerup',starOff);
+  bHold.addEventListener('pointerleave',starOff);
+}
+
+/* ── frame ── */
+var running=true,hidden=false,_last=0,capT=0;
+function frame(pn){
+  requestAnimationFrame(frame);
+  if(!running||hidden){ _last=pn; return; }
+  var dt=_last?Math.min((pn-_last)/1000,0.05):0.016; _last=pn;
+
+  /* the screen's own rate, measured once, honestly */
+  if(!fpsLocked){ if(dt>0.001&&dt<0.05) fpsSamples.push(1/dt);
+    if(fpsSamples.length>=42){ fpsSamples.sort(function(a,b){return a-b;});
+      fps0=Math.round(fpsSamples[21]*10)/10; fpsLocked=true; S=fps0;
+      if(fpsInline) fpsInline.textContent='\u2248'+Math.round(fps0);
+      if(bReset) bReset.textContent='your screen \u00b7 '+Math.round(fps0); } }
+
+  yawW = reduced?0 : 0.10*Math.sin(pn*0.00011);       /* the room breathes, barely */
+
+  /* strobe flashes — capture the true face at each */
+  strobePhase+=S*dt; var nF=0;
+  while(strobePhase>=1&&nF<4){ strobePhase-=1; flash(); nF++; }
+  if(strobePhase>=1) strobePhase%=1;
+
+  var seen=aliasSeen(), ad=Math.abs(seen), diff=Math.abs(F-S);
+  var still=ad<0.02;
+
+  /* readouts, 4×/s */
+  if(pn-capT>250){ capT=pn;
+    var fine=diff<1;
+    if(rStrobe) rStrobe.textContent=S.toFixed(fine?4:2)+' /s';
+    if(rSeen)   rSeen.innerHTML= still ? '<span style="color:#ffe27a">still</span>'
+                 : (seen>0?'+':'\u2212')+ad.toFixed(fine?4:2)+' <small>turns/s</small>';
+    if(rDiff)   rDiff.textContent=(diff<0.0001?'0':diff.toFixed(fine?4:2))+' hz';
+    if(state)   state.textContent= dragging?'tuning'
+                 : still?'still \u00b7 and turning 173.68/s'
+                 : (fpsLocked&&Math.abs(S-fps0)<0.06)?'under your screen\u2019s strobe':'adrift';
+    if(note&&still&&!note._lit){ note._lit=true;
+      note.textContent='still. nothing stopped \u2014 173.68 read 173.68 times a second leaves no remainder. '
+        +'the star turns exactly as before; the beat between your clock and its clock is zero. '
+        +'this is what unison is: not silence, agreement.'; }
+  }
+
+  /* ── draw ── */
+  g2.setTransform(dpr,0,0,dpr,0,0);
+  g2.clearRect(0,0,W,H);
+  g2.globalCompositeOperation='lighter';
+  var i,j,k2;
+
+  /* dust */
+  for(i=0;i<26;i++){ var dxr=Math.sin(i*37.7)*1.15, dyr=Math.sin(i*91.3)*0.5, dzr=Math.cos(i*53.1)*0.8;
+    pj(dxr,dyr,dzr,P); g2.globalAlpha=0.05;
+    g2.drawImage(SPR_DIM,P.x-1.6,P.y-1.6,3.2,3.2); }
+
+  /* the sightline — its base glow is constant, which is the truth: at full speed
+     the beam crosses it 347 times a second; to an eye that is simply "lit" */
+  pj(SX,0,0,P); var sx1=P.x, sy1=P.y; pj(OX,0,0,P); var sx2=P.x, sy2=P.y;
+  var swp=0;   /* how near the CAPTURED beam lies to the line: the seen crossing */
+  orient(Math.sin(CHI),Math.cos(CHI),0,caps[0],TMP);
+  var toObs=Math.abs(TMP[0]);  /* |dot(beam, +x)| for either pole */
+  swp=smooth(0.79,0.865,toObs);   /* peaks at sin(AXT+CHI)=0.872: the sweep truly grazes the line */
+  if(toObs>0.862 && prevToObs<=0.862 && Math.abs(seen)<8 && pings.length<3) pings.push({p:0});
+  prevToObs=toObs; obsFlash*=Math.exp(-dt*4);
+  g2.globalAlpha=0.05+0.22*swp;
+  g2.strokeStyle='rgba(170,190,240,1)'; g2.lineWidth=1;
+  g2.beginPath(); g2.moveTo(sx1,sy1); g2.lineTo(sx2,sy2); g2.stroke();
+
+  /* photons — the pulse itself, arriving */
+  for(i=pings.length-1;i>=0;i--){ var pg=pings[i]; pg.p+=dt/0.55;
+    if(pg.p>=1){ pings.splice(i,1); obsFlash=1; continue; }
+    var px3=sx1+(sx2-sx1)*pg.p, py3=sy1+(sy2-sy1)*pg.p;
+    g2.globalAlpha=0.7*(1-pg.p*0.5);
+    g2.drawImage(SPR_ICE,px3-2,py3-2,4,4);
+    g2.globalAlpha=0.18; g2.drawImage(SPR_ICE,px3-6,py3-6,12,12); }
+
+  /* the observer — you */
+  pj(OX,0,0,P);
+  g2.globalAlpha=0.5+0.4*Math.max(swp,obsFlash); g2.drawImage(SPR_EMB,P.x-3.5,P.y-3.5,7,7);
+  g2.globalAlpha=0.10+0.25*Math.max(swp,obsFlash); g2.drawImage(SPR_EMB,P.x-10,P.y-10,20,20);
+  g2.globalAlpha=0.5; g2.fillStyle='#6f6a5e';
+  g2.font='9px "Courier Prime", monospace'; g2.textAlign='center';
+  g2.fillText('you',P.x,P.y+16);
+
+  /* ghosts of the last captures — the phosphor of a fast alias; they fade as
+     you near lock so the standing star is clean */
+  var ghostA=Math.min(1,ad/3)*0.5;
+  for(k2=2;k2>=0;k2--){
+    var a0=(k2===0)?1:(k2===1?ghostA*0.6:ghostA*0.3);
+    if(a0<0.02) continue;
+    var th=caps[k2];
+    /* beams: two cones along ±magnetic axis */
+    for(var pole=-1;pole<=1;pole+=2){
+      for(i=1;i<=BEAMSEG;i++){ var d=0.16+ (i/BEAMSEG)*0.92;
+        var rr2=d*Math.tan(CONE);
+        for(j=0;j<BEAMPTS;j++){ var an=(j/BEAMPTS)*TAU+i*0.7;
+          /* a point on the cone ring, in body frame (magnetic axis = +y tilted by CHI) */
+          var px0=Math.sin(CHI)*d+Math.cos(CHI)*rr2*Math.cos(an);
+          var py0=Math.cos(CHI)*d-Math.sin(CHI)*rr2*Math.cos(an);
+          var pz0=rr2*Math.sin(an);
+          orient(px0*pole,py0*pole,pz0*pole,th,TMP);
+          pj(SX+TMP[0]*S_R*3.2, TMP[1]*S_R*3.2, TMP[2]*S_R*3.2, P);
+          var fall=(1-i/BEAMSEG);
+          g2.globalAlpha=a0*0.30*fall*fall*(0.6+0.4*P.s);
+          var bs=2.6*fall+0.8;
+          g2.drawImage(SPR_BEAM,P.x-bs,P.y-bs,bs*2,bs*2);
+        }
+      }
+    }
+    /* the body */
+    for(i=0;i<SN;i++){
+      orient(bx[i],by[i],bz[i],th,TMP);
+      pj(SX+TMP[0]*S_R, TMP[1]*S_R, TMP[2]*S_R, P);
+      g2.globalAlpha=a0*(0.35+0.45*((TMP[2]+1)/2));
+      var ps=hot[i]?2.6:1.7;
+      g2.drawImage(hot[i]?SPR_HOT:SPR_ICE,P.x-ps,P.y-ps,ps*2,ps*2);
+    }
+    for(i=0;i<MN;i++){
+      orient(mqx[i],mqy[i],mqz[i],th,TMP);
+      pj(SX+TMP[0]*S_R, TMP[1]*S_R, TMP[2]*S_R, P);
+      g2.globalAlpha=a0*0.18*(0.4+0.6*((TMP[2]+1)/2));
+      g2.drawImage(SPR_ICE,P.x-1.1,P.y-1.1,2.2,2.2);
+    }
+  }
+  /* the spin axis — a still, thin truth through all of it */
+  orient(0,1.55,0,0,TMP);
+  pj(SX+TMP[0]*S_R,TMP[1]*S_R,TMP[2]*S_R,P); var ax1=P.x,ay1=P.y;
+  pj(SX-TMP[0]*S_R,-TMP[1]*S_R,-TMP[2]*S_R,P);
+  g2.globalAlpha=0.14; g2.strokeStyle='rgba(154,149,138,1)'; g2.lineWidth=1;
+  g2.beginPath(); g2.moveTo(ax1,ay1); g2.lineTo(P.x,P.y); g2.stroke();
+
+  /* hud — the ship reads the star */
+  orbA += seen*TAU*dt;                       /* a dot orbiting at exactly the seen rate */
+  pj(SX,0,0,P);
+  var hr=0.30*Math.min(W*0.44,H*0.95)*P.s;
+  g2.globalAlpha=0.10; g2.strokeStyle='rgba(140,170,230,1)'; g2.lineWidth=1;
+  g2.beginPath(); g2.arc(P.x,P.y,hr,0,TAU); g2.stroke();
+  g2.globalAlpha=0.7;
+  g2.drawImage(SPR_ICE,P.x+Math.cos(orbA)*hr-1.8,P.y+Math.sin(orbA)*hr-1.8,3.6,3.6);
+  g2.globalAlpha=0.20; g2.strokeStyle='rgba(140,170,230,1)';
+  (function(bx2,by2,r2){ var L=7;
+    g2.beginPath();
+    g2.moveTo(bx2-r2+L,by2-r2); g2.lineTo(bx2-r2,by2-r2); g2.lineTo(bx2-r2,by2-r2+L);
+    g2.moveTo(bx2+r2-L,by2-r2); g2.lineTo(bx2+r2,by2-r2); g2.lineTo(bx2+r2,by2-r2+L);
+    g2.moveTo(bx2-r2+L,by2+r2); g2.lineTo(bx2-r2,by2+r2); g2.lineTo(bx2-r2,by2+r2-L);
+    g2.moveTo(bx2+r2-L,by2+r2); g2.lineTo(bx2+r2,by2+r2); g2.lineTo(bx2+r2,by2+r2-L);
+    g2.stroke(); })(P.x,P.y,hr+9);
+  g2.globalAlpha=0.45; g2.fillStyle='#6f82a8';
+  g2.font='8px "Courier Prime", monospace'; g2.textAlign='left';
+  g2.fillText('psr j0437-4715', P.x-hr-9, P.y-hr-14);
+
+  g2.globalAlpha=1; g2.globalCompositeOperation='source-over';
+}
+function smooth(a,b,x){ var t=clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); }
+
+/* only breathe when watched; fall silent with the room */
+try{ if('IntersectionObserver' in window){ running=false;
+  new IntersectionObserver(function(es){ var i;for(i=0;i<es.length;i++){ running=es[i].isIntersecting;
+    if(!running){ beatOff(); starOff(); } } },{threshold:0.15}).observe(cv);
+}}catch(e){ running=true; }
+document.addEventListener('visibilitychange',function(){ hidden=document.hidden;
+  if(hidden){ beatOff(); starOff(); } },false);
+window.addEventListener('pagehide',function(){ beatOff(); starOff(); },false);
+
+requestAnimationFrame(frame);
+})();
+</script>
+
+<!-- v4 · the dressing — the poem, the iron, the ship's panel (see its header) -->
+<script>
+(function(){
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════════════
+   v4 · the dressing — three hands in one script:
+
+   I.  THE POEM — below the abstract: a black-and-white 3d animation poem.
+       the abstract itself, performed: strangers arrive out of the dark one at
+       a time, each drifts toward where the last one stood and never quite
+       lands (every point keeps a faint unrest forever); the procession's
+       spine recedes into depth; one pale point high above never moves.
+       four lines surface and sink on a slow cycle:
+         one at a time, / each toward the last, / never landing, / with no end.
+       no gold here — chalk and white only.
+
+   II. THE CRANK'S SKIN — old cybernetics. a procedurally painted plate of
+       used iron: brushed base, panel seams and rivets, rust blooming from
+       the edges and dripping, cracks with a caught-light lip, scratches,
+       burnished smudges where hands have been. the pad becomes a real hand
+       crank (hub, arm, worn handle) that turns with the strangers — driven
+       by window.__crankAngle, which the room's main script now exports.
+
+   III. THE OBSERVATORY'S SKIN — the same room, a different century: a ship's
+       panel. near-black composite, micro-grid, hairline ice rim, corner
+       brackets, three status leds. (the hud drawn ON the star's canvas —
+       reticles, the seen-rate orbit dot, photon pings — lives in the
+       observatory's own script.)
+
+   all paint is deterministic (seeded) so resize never re-weathers the metal.
+   painters run once per size; only the crank arm and the poem animate, and
+   only while visible. [TUNE] marks the feel constants.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function mulberry(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0;
+  var t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t;
+  return ((t^t>>>14)>>>0)/4294967296; }; }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+var TAU=6.283185307;
+var reduced=false; try{ reduced=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+function fit(cv){ var d=Math.min(2,window.devicePixelRatio||1), r=cv.getBoundingClientRect();
+  var w=Math.max(40,r.width), h=Math.max(40,r.height);
+  cv.width=Math.round(w*d); cv.height=Math.round(h*d);
+  var g=cv.getContext('2d'); g.setTransform(d,0,0,d,0,0); return {g:g,w:w,h:h}; }
+function rrect(g,x,y,w,h,r){ g.beginPath();
+  g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r);
+  g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); }
+
+/* ═════════════ II · the aged plate ═════════════ */
+function paintIron(cv){
+  var f=fit(cv), g=f.g, w=f.w, h=f.h, R=mulberry(19391);
+  g.clearRect(0,0,w,h);
+  rrect(g,0,0,w,h,7); g.save(); g.clip();
+
+  /* base iron + vertical fall of light */
+  var base=g.createLinearGradient(0,0,0,h);
+  base.addColorStop(0,'#181510'); base.addColorStop(0.5,'#100e0a'); base.addColorStop(1,'#0a0806');
+  g.fillStyle=base; g.fillRect(0,0,w,h);
+
+  /* brushing */
+  var y;
+  for(y=0;y<h;y+=2){ g.fillStyle='rgba(255,244,220,'+(0.006+R()*0.022).toFixed(3)+')';
+    g.fillRect(R()*w*0.3, y, w*(0.4+R()*0.6), 1); }
+
+  /* burnished smudges — where hands have been */
+  var i;
+  for(i=0;i<4;i++){ var bx=w*(0.15+R()*0.7), by=h*(0.2+R()*0.6), br=40+R()*90;
+    var bg=g.createRadialGradient(bx,by,0,bx,by,br);
+    bg.addColorStop(0,'rgba(214,192,150,'+(0.035+R()*0.03).toFixed(3)+')');
+    bg.addColorStop(1,'rgba(214,192,150,0)');
+    g.fillStyle=bg; g.beginPath(); g.arc(bx,by,br,0,TAU); g.fill(); }
+
+  /* panel seams (a joint darkens, then catches light just below) */
+  function seamV(x){ g.fillStyle='rgba(0,0,0,0.5)'; g.fillRect(x,6,1,h-12);
+    g.fillStyle='rgba(230,214,180,0.05)'; g.fillRect(x+1,6,1,h-12); }
+  function seamH(yy){ g.fillStyle='rgba(0,0,0,0.5)'; g.fillRect(6,yy,w-12,1);
+    g.fillStyle='rgba(230,214,180,0.05)'; g.fillRect(6,yy+1,w-12,1); }
+  seamV(Math.round(w*0.33)); seamV(Math.round(w*0.71)); seamH(Math.round(h*0.56));
+
+  /* rust — blooming from edges, sometimes dripping */
+  var RUST=['74,44,22','96,58,28','116,74,36','60,34,18'];
+  for(i=0;i<110;i++){
+    var edge=R()<0.62, rx,ry;
+    if(edge){ var side=Math.floor(R()*4);
+      rx = side===0?R()*w : side===1?R()*w : side===2?R()*18 : w-R()*18;
+      ry = side===0?R()*16 : side===1?h-R()*16 : R()*h;
+      if(side>1) ry=R()*h;
+    } else { rx=R()*w; ry=R()*h; }
+    var hue=RUST[Math.floor(R()*RUST.length)], nb=3+Math.floor(R()*8), b;
+    for(b=0;b<nb;b++){
+      g.fillStyle='rgba('+hue+','+(0.06+R()*0.22).toFixed(3)+')';
+      g.beginPath(); g.arc(rx+(R()*2-1)*7, ry+(R()*2-1)*5, 0.6+R()*2.8, 0, TAU); g.fill(); }
+    if(R()<0.16){ var dl=8+R()*26;                        /* the drip */
+      var dg=g.createLinearGradient(rx,ry,rx,ry+dl);
+      dg.addColorStop(0,'rgba('+hue+',0.18)'); dg.addColorStop(1,'rgba('+hue+',0)');
+      g.fillStyle=dg; g.fillRect(rx-0.6,ry,1.2,dl); }
+  }
+
+  /* cracks — dark, with a lip that catches the light */
+  for(i=0;i<7;i++){
+    var cx=R()*w, cy=R()*h, segs=4+Math.floor(R()*6), pth=[[cx,cy]], sgi;
+    for(sgi=0;sgi<segs;sgi++){ cx+=(R()*2-1)*26; cy+=(R()*2-1)*16; pth.push([cx,cy]); }
+    g.strokeStyle='rgba(3,2,1,0.75)'; g.lineWidth=1.3; g.beginPath();
+    g.moveTo(pth[0][0],pth[0][1]); for(sgi=1;sgi<pth.length;sgi++) g.lineTo(pth[sgi][0],pth[sgi][1]); g.stroke();
+    g.strokeStyle='rgba(226,206,168,0.06)'; g.lineWidth=1; g.beginPath();
+    g.moveTo(pth[0][0]+0.8,pth[0][1]+0.8); for(sgi=1;sgi<pth.length;sgi++) g.lineTo(pth[sgi][0]+0.8,pth[sgi][1]+0.8); g.stroke();
+  }
+
+  /* scratches */
+  for(i=0;i<26;i++){ var sx=R()*w, sy=R()*h, an=(R()*0.5-0.25)+(R()<0.5?0:Math.PI), ln=8+R()*40;
+    g.strokeStyle='rgba(220,205,175,'+(0.02+R()*0.035).toFixed(3)+')'; g.lineWidth=0.7;
+    g.beginPath(); g.moveTo(sx,sy); g.lineTo(sx+Math.cos(an)*ln, sy+Math.sin(an)*ln*0.3); g.stroke(); }
+
+  /* chipped edge */
+  for(i=0;i<34;i++){ var t=R(), px,py2;
+    if(R()<0.5){ px=t*w; py2=R()<0.5?1:h-1; } else { px=R()<0.5?1:w-1; py2=t*h; }
+    g.fillStyle='rgba(0,0,0,'+(0.25+R()*0.35).toFixed(2)+')';
+    g.beginPath(); g.arc(px,py2,0.8+R()*2.2,0,TAU); g.fill(); }
+
+  /* rivets — corners and seam meetings; some rusted round the collar */
+  function rivet(x2,y2,rusty){
+    var rg=g.createRadialGradient(x2-1.4,y2-1.6,0.5,x2,y2,5);
+    rg.addColorStop(0,'#4a4436'); rg.addColorStop(0.55,'#26221a'); rg.addColorStop(1,'#0c0a07');
+    g.fillStyle=rg; g.beginPath(); g.arc(x2,y2,4.4,0,TAU); g.fill();
+    g.strokeStyle='rgba(0,0,0,0.7)'; g.lineWidth=1; g.beginPath(); g.arc(x2,y2,4.4,0,TAU); g.stroke();
+    var sa=R()*TAU;
+    g.strokeStyle='rgba(6,5,3,0.9)'; g.lineWidth=1.1; g.beginPath();
+    g.moveTo(x2+Math.cos(sa)*2.8,y2+Math.sin(sa)*2.8); g.lineTo(x2-Math.cos(sa)*2.8,y2-Math.sin(sa)*2.8); g.stroke();
+    if(rusty){ g.strokeStyle='rgba(104,62,30,0.4)'; g.lineWidth=1.6;
+      g.beginPath(); g.arc(x2,y2,5.6,R()*TAU,R()*TAU+2.2); g.stroke(); }
+  }
+  var m=11;
+  rivet(m,m,R()<0.5); rivet(w-m,m,R()<0.5); rivet(m,h-m,R()<0.5); rivet(w-m,h-m,R()<0.5);
+  rivet(Math.round(w*0.33),m,true); rivet(Math.round(w*0.71),h-m,R()<0.7);
+
+  /* inner shading so the plate sits proud of the page */
+  var vg=g.createLinearGradient(0,0,0,h);
+  vg.addColorStop(0,'rgba(255,246,224,0.05)'); vg.addColorStop(0.08,'rgba(255,246,224,0)');
+  vg.addColorStop(0.92,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,0.45)');
+  g.fillStyle=vg; g.fillRect(0,0,w,h);
+  g.restore();
+}
+
+/* the hand crank — hub, arm, worn handle; turned by the strangers */
+function makeCrank(){
+  var cv=document.getElementById('crankGl'); if(!cv) return;
+  var pad=cv.parentNode;
+  var f=null, arm=null, armW=0, shown=-999;
+  function buildArm(sz){
+    armW=sz; arm=document.createElement('canvas'); arm.width=arm.height=sz*2;
+    var a=arm.getContext('2d'), R=mulberry(772), c=sz;   /* pivot at centre */
+    /* the arm: a tapered bar out to 0.78·sz */
+    var L=sz*0.78;
+    var bar=a.createLinearGradient(c,c-4,c,c+4);
+    bar.addColorStop(0,'#3d382c'); bar.addColorStop(0.45,'#242019'); bar.addColorStop(1,'#0e0c09');
+    a.fillStyle=bar;
+    a.beginPath(); a.moveTo(c,c-4.2); a.lineTo(c+L,c-2.8); a.lineTo(c+L,c+2.8); a.lineTo(c,c+4.2); a.closePath(); a.fill();
+    a.strokeStyle='rgba(0,0,0,0.6)'; a.lineWidth=1; a.stroke();
+    var i; for(i=0;i<16;i++){ a.fillStyle='rgba(104,62,30,'+(0.08+R()*0.2).toFixed(2)+')';
+      a.beginPath(); a.arc(c+R()*L, c+(R()*2-1)*3, 0.5+R()*1.3, 0, TAU); a.fill(); }
+    a.strokeStyle='rgba(3,2,1,0.8)'; a.beginPath(); a.moveTo(c+L*0.3,c-2); a.lineTo(c+L*0.62,c+1); a.stroke();
+    /* the handle at the end — a small worn cylinder, brighter where thumbs polish it */
+    var hx=c+L, hg=a.createRadialGradient(hx-2,c-3,1,hx,c,9);
+    hg.addColorStop(0,'#8a7a58'); hg.addColorStop(0.4,'#4c422f'); hg.addColorStop(1,'#171310');
+    a.fillStyle=hg; a.beginPath(); a.arc(hx,c,8,0,TAU); a.fill();
+    a.strokeStyle='rgba(0,0,0,0.65)'; a.beginPath(); a.arc(hx,c,8,0,TAU); a.stroke();
+    a.fillStyle='rgba(255,238,200,0.25)'; a.beginPath(); a.arc(hx-2.4,c-2.8,2.2,0,TAU); a.fill();
+  }
+  function drawHub(g,cx,cy,r){
+    var hg=g.createRadialGradient(cx-r*0.3,cy-r*0.35,r*0.1,cx,cy,r);
+    hg.addColorStop(0,'#37322a'); hg.addColorStop(0.6,'#1b1812'); hg.addColorStop(1,'#080706');
+    g.fillStyle=hg; g.beginPath(); g.arc(cx,cy,r,0,TAU); g.fill();
+    g.strokeStyle='rgba(0,0,0,0.7)'; g.lineWidth=1.5; g.beginPath(); g.arc(cx,cy,r,0,TAU); g.stroke();
+    g.strokeStyle='rgba(216,196,158,0.10)'; g.lineWidth=1; g.beginPath(); g.arc(cx,cy,r-2,-2.4,-0.6); g.stroke();
+    g.strokeStyle='rgba(96,58,28,0.35)'; g.lineWidth=2; g.beginPath(); g.arc(cx,cy,r-1, 0.6, 2.1); g.stroke();
+  }
+  function size(){ f=fit(cv); buildArm(Math.min(f.w,f.h)*0.5); shown=-999; }
+  size(); window.addEventListener('resize',size);
+  var running=true;
+  try{ if('IntersectionObserver' in window){ running=false;
+    new IntersectionObserver(function(es){ var i;for(i=0;i<es.length;i++) running=es[i].isIntersecting; },
+      {threshold:0.1}).observe(pad); } }catch(e){ running=true; }
+  function loop(){
+    requestAnimationFrame(loop);
+    if(!running||!f) return;
+    var ang=((window.__crankAngle||0)*Math.PI/180);
+    if(Math.abs(ang-shown)<0.0001) return;                /* stir only when turned */
+    shown=ang;
+    var g=f.g, w=f.w, h=f.h, cx=w/2, cy=h/2;
+    g.clearRect(0,0,w,h);
+    /* shadow the arm throws on the plate */
+    g.save(); g.translate(cx+2.5,cy+3.5); g.rotate(ang); g.globalAlpha=0.35;
+    g.filter='blur(1.5px)';
+    g.drawImage(arm,-armW,-armW); g.filter='none'; g.restore();
+    g.globalAlpha=1;
+    drawHub(g,cx,cy,Math.min(w,h)*0.20);
+    g.save(); g.translate(cx,cy); g.rotate(ang); g.drawImage(arm,-armW,-armW); g.restore();
+    /* the centre bolt, above the arm */
+    var bg=g.createRadialGradient(cx-1.5,cy-1.5,0.5,cx,cy,5.5);
+    bg.addColorStop(0,'#5a5140'); bg.addColorStop(0.6,'#242017'); bg.addColorStop(1,'#0a0906');
+    g.fillStyle=bg; g.beginPath(); g.arc(cx,cy,5.2,0,TAU); g.fill();
+    g.strokeStyle='rgba(0,0,0,0.75)'; g.lineWidth=1; g.beginPath(); g.arc(cx,cy,5.2,0,TAU); g.stroke();
+  }
+  requestAnimationFrame(loop);
+}
+
+/* ═════════════ III · the ship's panel ═════════════ */
+function paintShip(cv){
+  var f=fit(cv), g=f.g, w=f.w, h=f.h, R=mulberry(40715);
+  g.clearRect(0,0,w,h);
+  rrect(g,0,0,w,h,10); g.save(); g.clip();
+  var base=g.createLinearGradient(0,0,0,h);
+  base.addColorStop(0,'#0b1018'); base.addColorStop(0.5,'#070b11'); base.addColorStop(1,'#04060a');
+  g.fillStyle=base; g.fillRect(0,0,w,h);
+  /* micro-grid */
+  var x,y;
+  for(y=10;y<h;y+=14) for(x=10;x<w;x+=14){
+    g.fillStyle='rgba(140,170,230,'+(R()<0.06?0.06:0.018)+')'; g.fillRect(x,y,1,1); }
+  /* a soft sheen band near the top — the panel catches the room's one light */
+  var sh=g.createLinearGradient(0,0,0,h*0.35);
+  sh.addColorStop(0,'rgba(150,180,240,0.05)'); sh.addColorStop(1,'rgba(150,180,240,0)');
+  g.fillStyle=sh; g.fillRect(0,0,w,h*0.35);
+  /* seams */
+  g.fillStyle='rgba(0,0,0,0.55)'; g.fillRect(Math.round(w*0.5),8,1,h-16);
+  g.fillStyle='rgba(140,170,230,0.05)'; g.fillRect(Math.round(w*0.5)+1,8,1,h-16);
+  /* corner brackets */
+  function brk(x2,y2,dx,dy){ g.strokeStyle='rgba(140,170,230,0.28)'; g.lineWidth=1;
+    g.beginPath(); g.moveTo(x2+dx*14,y2); g.lineTo(x2,y2); g.lineTo(x2,y2+dy*14); g.stroke(); }
+  brk(8,8,1,1); brk(w-8,8,-1,1); brk(8,h-8,1,-1); brk(w-8,h-8,-1,-1);
+  /* status leds */
+  var i; for(i=0;i<3;i++){ var lx=w-20-i*11;
+    g.fillStyle= i===0?'rgba(160,195,255,0.7)':'rgba(120,140,180,0.18)';
+    g.beginPath(); g.arc(lx,14,2,0,TAU); g.fill();
+    if(i===0){ g.fillStyle='rgba(160,195,255,0.12)'; g.beginPath(); g.arc(lx,14,5,0,TAU); g.fill(); } }
+  /* inner vignette */
+  var vg=g.createRadialGradient(w/2,h/2,Math.min(w,h)*0.35,w/2,h/2,Math.max(w,h)*0.75);
+  vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,0.4)');
+  g.fillStyle=vg; g.fillRect(0,0,w,h);
+  g.restore();
+  /* hairline ice rim, just inside the edge */
+  rrect(g,0.5,0.5,w-1,h-1,10); g.strokeStyle='rgba(140,170,230,0.20)'; g.lineWidth=1; g.stroke();
+}
+
+/* ═════════════ I · the poem ═════════════ */
+function makePoem(){
+  var cv=document.getElementById('poemCv'); if(!cv) return;
+  var g=null; try{ g=cv.getContext('2d'); }catch(e){ return; }
+  var W=0,H=0,dpr=1;
+  function size(){ dpr=Math.min(2,window.devicePixelRatio||1);
+    var r=cv.getBoundingClientRect(); W=Math.max(200,r.width); H=r.height||236;
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
+  size(); window.addEventListener('resize',size);
+
+  /* one soft white dot, reused for everyone */
+  var SPR=(function(){ var c=document.createElement('canvas');c.width=c.height=24;
+    var x=c.getContext('2d'),rg=x.createRadialGradient(12,12,0,12,12,12);
+    rg.addColorStop(0,'rgba(238,236,228,0.95)'); rg.addColorStop(0.35,'rgba(222,218,206,0.5)');
+    rg.addColorStop(1,'rgba(222,218,206,0)');
+    x.fillStyle=rg;x.beginPath();x.arc(12,12,12,0,TAU);x.fill(); return c; })();
+
+  var FOV=3.0, yaw=0;
+  var P={x:0,y:0,s:1};
+  function pj(x,y,z,o){ var cy=Math.cos(yaw),sy=Math.sin(yaw);
+    var x2=x*cy+z*sy, z2=-x*sy+z*cy, sc=FOV/(FOV-clamp(z2,-2.6,2.4)),
+        S=Math.min(W*0.42,H*0.85);
+    o.x=W*0.5+x2*sc*S; o.y=H*0.56-y*sc*S; o.s=sc; }
+
+  /* the procession — the abstract's law, walked: each arrival steps from the
+     last (clamped noise), a slack pull holds the middle, nothing ever lands */
+  var pts=[], head={x:0,y:0}, born=0, MAX=46;
+  function gauss(){ var u=0,v=0; while(!u)u=Math.random(); while(!v)v=Math.random();
+    return Math.sqrt(-2*Math.log(u))*Math.cos(TAU*v); }
+  function arrive(){
+    head.x = clamp(head.x + clamp(gauss()*0.16,-0.24,0.24) - 0.03*head.x, -0.85, 0.85);   /* [TUNE] the walk */
+    head.y = clamp(head.y + gauss()*0.05 - 0.06*head.y, -0.3, 0.3);
+    var i; for(i=0;i<pts.length;i++) pts[i].z -= 0.16;                /* everyone steps back into the dark */
+    pts.unshift({x:head.x, y:head.y, z:0, a:0, ph:Math.random()*TAU, unrest:1});
+    if(pts.length>MAX) pts.pop();
+    born++;
+  }
+  arrive(); arrive(); arrive();
+
+  /* the poem's four lines */
+  var LINES=['one at a time,','each toward the last,','never landing,','with no end.'];
+  var LT=11.5;                                                       /* [TUNE] seconds per line */
+
+  var running=true,hidden=false,_last=0,acc=0,t0=0;
+  try{ if('IntersectionObserver' in window){ running=false;
+    new IntersectionObserver(function(es){ var i;for(i=0;i<es.length;i++) running=es[i].isIntersecting; },
+      {threshold:0.15}).observe(cv); } }catch(e){ running=true; }
+  document.addEventListener('visibilitychange',function(){ hidden=document.hidden; },false);
+
+  function frame(pn){
+    requestAnimationFrame(frame);
+    if(!running||hidden){ _last=pn; return; }
+    var dt=_last?Math.min((pn-_last)/1000,0.05):0.016; _last=pn;
+    if(!t0) t0=pn;
+    yaw = reduced?0 : 0.07*Math.sin(pn*0.00009);
+    acc+=dt; if(acc>1.7 && !reduced){ acc=0; arrive(); }              /* [TUNE] one stranger every 1.7 s */
+
+    g.setTransform(dpr,0,0,dpr,0,0);
+    g.clearRect(0,0,W,H);
+    g.globalCompositeOperation='lighter';
+
+    /* the one that never moves */
+    pj(0,0.66,-0.4,P);
+    g.globalAlpha=0.5; g.drawImage(SPR,P.x-2.2,P.y-2.2,4.4,4.4);
+    g.globalAlpha=0.08; g.drawImage(SPR,P.x-8,P.y-8,16,16);
+
+    /* the spine of the procession */
+    var i;
+    g.globalAlpha=1;
+    g.strokeStyle='rgba(190,186,176,1)'; g.lineWidth=0.8;
+    g.beginPath();
+    for(i=0;i<pts.length;i++){ var q=pts[i];
+      pj(q.x,q.y,q.z,P);
+      if(i===0) g.moveTo(P.x,P.y); else g.lineTo(P.x,P.y); }
+    g.save(); g.globalAlpha=0.10; g.stroke(); g.restore();
+
+    /* the strangers — each keeps a faint unrest forever; it never fully lands */
+    for(i=0;i<pts.length;i++){ var q2=pts[i];
+      q2.a += (1-q2.a)*Math.min(1,dt*2.0);
+      q2.ph += dt*(1.1+0.3*Math.sin(i));
+      q2.unrest += (0.18-q2.unrest)*Math.min(1,dt*0.4);              /* it settles, but never to zero */
+      var ux=Math.cos(q2.ph)*0.012*q2.unrest, uy=Math.sin(q2.ph*1.3)*0.012*q2.unrest;
+      pj(q2.x+ux, q2.y+uy, q2.z, P);
+      var deep=clamp(1+q2.z/ (0.16*MAX), 0, 1);                      /* older = farther = fainter */
+      g.globalAlpha=q2.a*(0.12+0.7*deep*deep);
+      var s=(1.2+2.4*deep)*(0.7+0.5*P.s);
+      g.drawImage(SPR,P.x-s,P.y-s,s*2,s*2);
+    }
+
+    /* the lines, surfacing and sinking */
+    var tt=((pn-t0)/1000)%(LT*LINES.length), li=Math.floor(tt/LT), lp=(tt%LT)/LT;
+    var la = lp<0.22 ? lp/0.22 : lp>0.72 ? Math.max(0,1-(lp-0.72)/0.24) : 1;
+    g.globalCompositeOperation='source-over';
+    g.globalAlpha=0.6*la;
+    g.fillStyle='#cfcabd';
+    g.font='italic 15px "CMU Serif","Computer Modern Serif",Georgia,serif';
+    g.textAlign='center';
+    g.fillText(LINES[reduced?0:li], W*0.5, H*0.87);
+    g.globalAlpha=1;
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ═════════════ hang everything ═════════════ */
+function boot(){
+  var ir=document.getElementById('crankSkin'), sp=document.getElementById('obsSkin');
+  function paintAll(){ if(ir) paintIron(ir); if(sp) paintShip(sp); }
+  paintAll();
+  var deb=null;
+  window.addEventListener('resize',function(){ clearTimeout(deb); deb=setTimeout(paintAll,180); });
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(paintAll); }  /* repaint once type has landed (layout may shift) */
+  makeCrank();
+  makePoem();
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
+else boot();
+})();
+</script>
+
+<!-- the candle (drop-in 3) — verbatim, self-contained; dim lowered so it sits behind the math -->
+<script>
+(function(){
+'use strict';
+var box = document.getElementById('candlebox');
+var cv  = document.getElementById('candle');
+if (!cv) return;
+var fctx = null, fdpr = 1;
+try{ fctx = cv.getContext('2d'); }catch(e){ fctx = null; }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+var FL  = { cx:0.5, baseY:0.80, height:0.62, width:0.085, belly:0.28, tipw:0.27, layers:7, core:0.05 };
+var DIM = 0.62;     /* TUNE — lower than the front door, so it doesn't compete with the crank + table */
+var wellF = 0;
+
+function sizeFlame(){
+  if (!fctx || !cv || !box) return;
+  try{
+    var r = box.getBoundingClientRect();
+    fdpr = Math.min(2, window.devicePixelRatio || 1);
+    var w = Math.max(80, r.width || 0), h = Math.max(120, r.height || 0);
+    cv.width = Math.round(w * fdpr); cv.height = Math.round(h * fdpr);
+  }catch(e){}
+}
+window.addEventListener('resize', sizeFlame);
+
+function flameState(now){
+  wellF += ((Math.random()-0.5)*0.12 - wellF) * 0.07;
+  var b = 0.40 + 0.13*Math.sin(now*0.00040) + 0.05*Math.sin(now*0.00091 + 1.3);
+  return {
+    brightness: clamp((0.30 + 0.92*b) * DIM, 0, 1.4),
+    lean:       0.18 + 1.2*b,
+    sway:       Math.sin(now*0.0011)*0.38 + Math.sin(now*0.0027+2)*0.14,
+    flicker:    (0.32 + 0.42*(1-b)) + wellF,
+    austerity:  clamp(0.34 - 0.42*b, 0.07, 0.40)
+  };
+}
+
+function drawFlame(now){
+  if (!fctx) return;
+  try{
+    var W = cv.width, H = cv.height;
+    if (W < 2 || H < 2){ sizeFlame(); return; }
+    fctx.clearRect(0, 0, W, H);
+    var o = flameState(now), bright = clamp(o.brightness, 0, 1.6);
+    if (bright <= 0.004) return;
+    var aust = clamp(o.austerity, 0, 1), sway = clamp(o.sway, -1, 1);
+    var flk = o.flicker * (Math.sin(now*0.006)*0.5 + Math.sin(now*0.013+1)*0.3);
+    var fb = Math.max(bright, 0.14);
+    var cx = W*FL.cx, baseY = H*FL.baseY;
+    var leanV = 0.35 + 0.19 * clamp((clamp(o.lean,0.05,1.7)-0.16)/1.45, 0, 1);
+    var h = H*FL.height*leanV*(1-0.18*aust);
+    h = Math.min(h, (FL.baseY-0.06)*H);
+    var w = W*FL.width*(1-0.22*aust)*(0.94+0.12*Math.sin(now*0.009));
+    var TW = FL.tipw;
+    var tip = sway*0.45 + flk*TW*0.7 + Math.sin(now*0.0032)*0.16*TW*3 + Math.sin(now*0.0069+1.7)*0.09*TW*3;
+    fctx.save(); fctx.globalCompositeOperation = 'lighter';
+
+    var gy = baseY-h*0.5, gr = Math.max(w*3.0, h*0.7);
+    var rg = fctx.createRadialGradient(cx,gy,1, cx,gy,gr);
+    rg.addColorStop(0,  'rgba(244,222,150,'+(0.16*bright).toFixed(3)+')');
+    rg.addColorStop(0.5,'rgba(232,196,102,'+(0.07*bright).toFixed(3)+')');
+    rg.addColorStop(1,  'rgba(232,196,102,0)');
+    fctx.fillStyle = rg; fctx.beginPath(); fctx.arc(cx,gy,gr,0,6.2832); fctx.fill();
+
+    var nL = FL.layers, belly = FL.belly, L;
+    var defs = [{c1:'150,108,46', c2:'207,160,72'}, {c1:'181,142,60', c2:'232,196,102'},
+                {c1:'214,176,86', c2:'240,212,150'},{c1:'232,196,102',c2:'246,228,166'},
+                {c1:'242,222,160',c2:'252,240,196'},{c1:'246,228,166',c2:'255,247,220'}];
+    for (L = 0; L < nL; L++){
+      var frac = L/((nL-1)||1), sc = 1.0-0.56*frac, aa = 0.26+0.34*frac;
+      var ly = defs[Math.min(L, defs.length-1)];
+      var lw = w*sc, lh = h*(0.82+0.18*sc);
+      lh *= (1 + 0.028*Math.sin(now*0.011 + L*1.9));
+      var tipL = tip*(1 + 0.16*Math.sin(now*0.0043 + L*0.9));
+      var tipX = cx+tipL*lw*1.15, tipY = baseY-lh,
+          bul = lw, by = baseY-lh*belly, a = aa*fb;
+      var g = fctx.createLinearGradient(cx,baseY, tipX,tipY);
+      g.addColorStop(0,    'rgba('+ly.c1+',0)');
+      g.addColorStop(0.16, 'rgba('+ly.c1+','+(a*0.72).toFixed(3)+')');
+      g.addColorStop(0.62, 'rgba('+ly.c2+','+a.toFixed(3)+')');
+      g.addColorStop(1,    'rgba('+ly.c2+','+(a*0.85).toFixed(3)+')');
+      fctx.fillStyle = g;
+      fctx.beginPath(); fctx.moveTo(tipX,tipY);
+      fctx.bezierCurveTo(tipX+lw*0.16, tipY+lh*0.24, cx+bul, by, cx+bul*0.5, baseY-lh*0.08);
+      fctx.quadraticCurveTo(cx+bul*0.26, baseY, cx, baseY);
+      fctx.quadraticCurveTo(cx-bul*0.26, baseY, cx-bul*0.5, baseY-lh*0.08);
+      fctx.bezierCurveTo(cx-bul, by, tipX-lw*0.16, tipY+lh*0.24, tipX, tipY);
+      fctx.closePath(); fctx.fill();
+    }
+
+    fctx.save();
+    fctx.translate(cx, baseY - h*0.04);
+    var bw = w*0.55, bhh = h*0.05;
+    fctx.scale(1, Math.max(0.06, (bhh*2)/bw));
+    var bgg = fctx.createRadialGradient(0,0,0.5, 0,0,bw);
+    bgg.addColorStop(0,  'rgba(140,175,255,'+(0.13*fb).toFixed(3)+')');
+    bgg.addColorStop(0.6,'rgba(120,150,235,'+(0.05*fb).toFixed(3)+')');
+    bgg.addColorStop(1,  'rgba(120,150,235,0)');
+    fctx.fillStyle = bgg;
+    fctx.beginPath(); fctx.arc(0,0,bw,0,6.2832); fctx.fill();
+    fctx.restore();
+
+    if (FL.core > 0.001){
+      var coreW = Math.max(w*FL.core,1), coreH = Math.max(h*FL.core,1), ccy = baseY-coreH*0.7;
+      var cg = fctx.createRadialGradient(cx,ccy,0.5, cx,ccy, Math.max(coreW,coreH));
+      cg.addColorStop(0,  'rgba(255,251,235,'+(0.50*fb).toFixed(3)+')');
+      cg.addColorStop(0.6,'rgba(255,240,190,'+(0.20*fb).toFixed(3)+')');
+      cg.addColorStop(1,  'rgba(255,240,190,0)');
+      fctx.fillStyle = cg; fctx.beginPath(); fctx.ellipse(cx,ccy,coreW,coreH,0,0,6.2832); fctx.fill();
+    }
+
+    if (aust > 0.30){
+      var tx = cx+tip*w*0.7, sw = 1.2*fdpr;
+      fctx.fillStyle = 'rgba(214,232,255,'+(0.09*aust*bright).toFixed(3)+')';
+      fctx.beginPath(); fctx.moveTo(tx-sw, baseY-h*0.62);
+      fctx.quadraticCurveTo(tx, baseY-h*1.0, tx+sw, baseY-h*0.62);
+      fctx.closePath(); fctx.fill();
+    }
+    fctx.restore();
+  }catch(e){}
+}
+
+var hidden = false;
+document.addEventListener('visibilitychange', function(){ hidden = document.hidden; });
+function loop(now){
+  requestAnimationFrame(loop);
+  if (hidden) return;
+  drawFlame(now);
+}
+sizeFlame();
+requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>

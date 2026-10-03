@@ -1,0 +1,993 @@
+<!doctype html>
+<!--
+unknown · apwnp landing · the contact sheet, forged
+
+22 sep 2026 · THE NAME IS `nobody`, lowercase, on the sheet, on the call and in
+the grey row. the vcard (mortal.js, makeVcard) is being renamed to match by
+another hand. his reason: even if somebody is home, nobody is home. the
+UNKNOWN/caps notes further down are history, kept as they were.
+
+22 sep 2026 · THE ONE FIELD IS A SOCIAL PROFILE NOW, KNOT A HOMEPAGE. a
+homepage row prints the address, and an address on the card told the visitor
+it was a website before anything began. the card (mortal.js, makeVcard) now
+carries a social profile on a made-up service, and ios prints it as two words
+— `UNKNOWN` small and grey, `.` under it in white — with an ↗ at the right
+(caps: his own screenshot, 22 sep, shows ios printing the service name in caps
+like the name above it, so the forged row is caps too);
+the address, # and all, sits behind the words and the tap still opens it. his
+probe (cardprobe.html, row C, iphone 16 · ios 26.6.1) settled that. so the
+forged row below prints the same two words and the same arrow. everything
+that was true of the homepage row is still true of this one: it is the door
+that never opens, it summons the alert back, and it leaves the sheet after
+No. its id is still #homepage. where this note says `homepage` below, read
+`the row`.
+
+what this is: the front door before phone.html, before intro.html. a friend
+gets a contact card in a text — no name worth reading, a photo of a phone,
+one field: homepage. they tap the homepage. safari goes somewhere. what
+arrives is the sheet they just left, drawn again, pixel for pixel, by us.
+
+then the system speaks: unable to connect. call me instead? no
+keeps them on the page (the forgery holds, and the alert can be summoned
+back by tapping the homepage row — a door that never opens). yes lights the
+call button and the phone dials. it rings twice. no one is home. at about
+five seconds the line gives up on its own, says call ended, and closes —
+and what is underneath is a home screen. theirs, they will assume. it is
+knot theirs. that is the whole trick: the visitor is already inside a phone
+before they are told there is a phone.
+
+the sequence, in seconds:
+  0.00  the sheet is there, already there, no fade — it must feel like it
+        never loaded, like the page they left
+        the sheet says UNKNOWN and nothing else. it never says anything
+        else. the `?` ios draws under an unreadable name is knot drawn here
+        — see the long note at #dot; it is behind ?dot now
+  1.15  the alert
+  no  → the sheet stays and the homepage row does knot: the website is
+        refused, so the website leaves the sheet. the telephone disc carries
+        the way back to the alert from here on
+  yes → 0.35 the call button presses · 0.55 the call screen rises
+  +0.80 connecting (silence), then 2.0 ringing · 3.0 of nobody, repeating
+        for as long as the visitor is willing to hold it
+  red   call ended, held 1.30 · fade · phone.html?arrive=1
+
+the line does knot give up and there is nothing at the far end. no timeout,
+no voicemail: the only door out of this page is the red button, so leaving
+is the visitor's decision and knot the line's — they have to be the one who
+stops waiting. it reads Calling... the whole way down and never says
+ringing, because nothing over there ever rang. the button fires on
+pointerdown, knot click, so the call dies on the frame the thumb lands, and
+the ring is cut node by node rather than by closing the audio context: a
+rebuilt context on ios comes back suspended and the goodbye thump would go
+silent. the hangup handset is drawn already tipped over rather than
+borrowed from the answer glyph and spun — a rotated fill lands its curve on
+the wrong side and reads as a broken hook.
+
+the camera is knot asked for here. it is asked for where it was always
+asked for: the camera app on the home screen, one room later.
+
+frequency ratios (× 173.68 hz): the ringback pair is 5/2 and 11/4 (434.20
+and 477.62) — the same pair phone.html rings with, because it is the same
+telephone. the goodbye thump on hangup is ×1/2 (86.84), the ride's own
+farewell. the ui tick is ×8 (1389.44). the telephone bandpass over the
+ringback is a filter over sound, knot a tone.
+
+laws bent, confessed, and the confession matters here more than usual —
+this page is a forgery of somebody else's design, so nearly every law bends:
+· the background IS #000, and this is the one law this page turns out knot
+  to bend after all. it used to be #1d212c on the belief that a true-black
+  forgery would be a bad forgery; a screenshot of the real sheet says the
+  real sheet is pure black, with cards at #121212 and action discs at
+  #212121 — a neutral ladder with no blue anywhere in it. the old numbers
+  came off a photograph of the screen rather than off the screen. apple and
+  the house agree here, which they had no obligation to do.
+· words are everywhere. sanctioned, as on the phone's screen: a system is
+  the one surface allowed to explain, and this one is explaining a failure.
+· apple's blues and reds are used as apple uses them. gold appears nowhere.
+  nothing on this page is alive and nothing on it sounds except the ring,
+  and the ring is a telephone, knot a voice.
+· the geometry is proportional to a 393pt iphone 16 and scales from there,
+  so the sheet conforms to any screen — the clone fits the hand it is in.
+· no modules, no cdn, no network origin at all. one file. it must open on a
+  bad train.
+· nothing here is generated. no seeds, no noise, no mulberry32 — a forgery
+  does knot improvise, and every value on this page is either sampled off
+  the artist's own iphone or copied from apple.
+· safari's own chrome will sit over this. in ios 26 the address bar rides
+  the bottom and collapses on scroll, so the sheet gets nearly the whole
+  screen; the page is one nudge taller than the viewport for exactly that
+  reason. nothing more can be done from inside a browser, and the seam is
+  left honest.
+
+THE ONE-PAGE LAW (20 sep, the night — the mortality pass, pass one; the
+brief is phone-mortality-handoff-20sep.md). nothing dies yet; this pass
+makes a death possible. safari lets a page close its own tab only while the
+tab has held ONE page, so the hang-up's door is a REPLACE now: phone.html
+takes this page's place in the tab instead of standing on top of it. and
+this page has become the keeper of one small thing for the whole house, and
+the reader of another — both in sessionStorage, both try/catch, neither
+required:
+· `apwnp.card` — the exact address this tab was entered by, # and all. every
+  room rewrites the address safari holds to this one (mortal.js, THE
+  ONE-ADDRESS LAW), so that the same card tapped again is a free load into
+  the living tab and the count stays 1. another card's tap arrives here as
+  a bare # change; it is heard, and becomes the card.
+· `apwnp.at` — written by the rooms, read here: a room's true address. (it
+  also rides in the tab's own history entry, history.state.apwnpAt, which is
+  asked first: see the head script.)
+THE DOOR NEVER TELLS (his ruling: `When someone taps the card of a phone
+that is still alive, does the whole call play again? yes always`). a card's
+tap — navigation type `navigate` — always gets the whole ritual: the sheet,
+the alert, the call, the hang-up. nothing on this page can be read for what
+is behind it. BUT safari's own doing — a pull-to-refresh, ios bringing back
+a tab it had put to sleep: `reload`, `back_forward` — must knot throw a
+living visitor out to the front door; so this page, reached that way with a
+room's address kept, steps straight through to it with a replace and paints
+nothing. DEEMED, and UNPROVEN ON IOS: whether safari really tells the two
+apart is exactly what the ruler prints. if it cannot, his ruling wins — the
+ritual plays even after safari's own reload — and ?thru=0 is that world.
+one bend, confessed: under ?hist this page borrows mortal.js for the ruler.
+no visitor ever sees it, and without the flag this is still one file.
+
+THE BIRTH (21 sep — the mortality pass, PASS TWO; the brief is
+mortality-PASS-TWO-handoff-21sep.md). something dies now, so something is
+born, and it is born HERE, on the red button: `mortality and birth go hand in
+hand`. this page already owned the two numbers the span wants and until
+tonight threw both away — the instant the thumb lands on the red disc, and
+how many times the line rang before it did (`the rings the visitor waited
+before hanging up may lengthen the life`). it keeps them now, with the # the
+card carried (the mother's genes ride there: a fragment is never sent to any
+server), in one small stone — sessionStorage `apwnp.birth`, { t, r, h } —
+and it does NOTHING ELSE with them. it does knot compute a span, read a gene
+or know what a life is: the law lives in mortal.js, the first script the next
+room runs, which eats the stone and conceives the life from it. one law, one
+keeper; this page stays a forgery that improvises nothing.
+· a card tapped again while its tab still lives plays this whole ritual again
+  (`yes always`) and writes the stone again — and mortal.js, finding a life
+  already in the tab, throws the new stone away. the same life. the door never
+  tells, and it never resurrects either.
+· a ring is counted when it BEGINS. a thumb that lands before the first ring
+  has waited for none.
+· nothing here shows any of it. the sheet says UNKNOWN and nothing else.
+the rig (sticky for the whole browser, like the ruler, because the walk
+enters through the real card, which carries no flags): ?life=N — every life
+conceived in this browser lasts N seconds (?life=0 puts it away) · ?wipe=0 —
+the death's wipe is refused while proofing (?wipe=1 puts it away). both are
+only KEPT here; mortal.js is what obeys them.
+
+query flags: ?lower drops the name to lowercase in both places.
+?dot puts back the `?` name-line ios draws beneath an unreadable vcard
+name — OFF by default, ruled off after three passes on the artist's own
+phone; with it on, the mark leaves at 0.94 and is gone by 1.08, before the
+alert.
+?slow triples the timings for filming. ?nocall holds the alert back so the
+sheet can be photographed. ?eye takes the camera grant on the hangup press,
+for phone.html's arrival to inherit — off by default, and argued against at
+the bottom of the file.
+?hist=1 THE RULER, sticky for the whole browser (?hist=0 puts it away): the
+tab's page count · how this page was reached · what the door did; her blue
+at 1, the blood above. tap it, here, to open the log and copy it.
+?thru=0 never step through: the ritual plays even after safari's own reload.
+?mortal=0 the whole law lifted for this tab: the hang-up pushes, as it did.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<title>·</title>
+<link rel="icon" href="data:,">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="·">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<script>
+/* THE ONE-PAGE LAW · the front door's own lines (the mortality pass, pass
+   one, 20 sep). this runs before the sheet is painted, because one of its
+   two answers is to paint nothing at all. see the note in the top comment.
+   no Math.random, no network, nothing generated: the forgery's law stands. */
+(function(){
+  'use strict';
+  var W=window, L=W.location;
+  function sGet(k){ try{ return W.sessionStorage.getItem(k); }catch(_){ return null; } }
+  function sSet(k,v){ try{ W.sessionStorage.setItem(k,v); }catch(_){} }
+  function sDel(k){ try{ W.sessionStorage.removeItem(k); }catch(_){} }
+  function lGet(k){ try{ return W.localStorage.getItem(k); }catch(_){ return null; } }
+  function lSet(k,v){ try{ W.localStorage.setItem(k,v); }catch(_){} }
+  function lDel(k){ try{ W.localStorage.removeItem(k); }catch(_){} }
+  W.__apwnpSearch=String(L.search||'');        /* this page's own flags, taken before anything below can move the bar */
+  var q=null; try{ q=new URLSearchParams(W.__apwnpSearch); }catch(_){}
+  function flag(k){ try{ return q?q.get(k):null; }catch(_){ return null; } }
+
+  /* how this page was reached. a card's tap should read `navigate`; safari's
+     own reload `reload`; a slept tab brought back `back_forward`. */
+  var type='?';
+  try{ var e=W.performance.getEntriesByType('navigation')[0]; if(e&&e.type) type=String(e.type); }catch(_){}
+  if(type==='?'){ try{ var t=W.performance.navigation.type;
+    type=t===1?'reload':(t===2?'back_forward':'navigate'); }catch(_){} }
+
+  /* ?mortal=0 — the law lifted for this tab, the door as it was */
+  var m=flag('mortal');
+  if(m==='0') sSet('apwnp.mortal','0'); else if(m!==null) sDel('apwnp.mortal');
+  var OFF=(m==='0')||(m===null&&sGet('apwnp.mortal')==='0');
+  W.__apwnpOff=OFF;
+
+  /* safari's own doing, with a living room kept: step straight through.
+     the room must be of this origin and must be ANOTHER FILE (or another
+     query): an address that differs from this one only by its # is knot a
+     load at all, and would leave a black page standing. */
+  /* where to: the address the ENTRY itself carries (history.state.apwnpAt —
+     safari keeps it with the entry through a reload and through a walk back
+     or forward, so each entry finds its own room even when several wear the
+     same address). sessionStorage only knows the LAST room, so it is trusted
+     for a plain reload and for nothing else. */
+  var at='', thru=false;
+  try{ var hs=W.history.state; if(hs&&typeof hs==='object'&&typeof hs.apwnpAt==='string') at=hs.apwnpAt; }catch(_){ at=''; }
+  if(!at&&type==='reload') at=sGet('apwnp.at')||'';
+  if(!OFF&&flag('thru')!=='0'&&at&&(type==='reload'||type==='back_forward')){
+    try{ var u=new URL(at,L.href);
+      thru=(u.origin===L.origin&&(u.pathname!==L.pathname||u.search!==L.search)); }catch(_){ thru=false; }
+  }
+  if(thru){
+    sSet('apwnp.via',type);                    /* the room's ruler says how the door was reached */
+    try{ document.documentElement.className='thru'; }catch(_){}
+    W.__apwnpThru=true;
+    try{ L.replace(at); }catch(_){ W.__apwnpThru=false; }
+    if(W.__apwnpThru){
+      /* the watchdog. a step that never lands — a dead line, a stopped load —
+         must knot leave a black page that a reload only repeats: this file
+         never strands anyone. after twenty seconds the kept room is forgotten
+         and the door is asked for again, which with nothing kept is the
+         ritual. a step that DOES land takes this page and its timer with it. */
+      setTimeout(function(){ sDel('apwnp.at'); sDel('apwnp.via');
+        try{ W.history.replaceState(null,'',String(L.href)); }catch(_){}     /* the entry forgets its room too, or the reload would only step again */
+        try{ L.reload(); }catch(_){} },20000);
+      return;
+    }
+    try{ document.documentElement.className=''; }catch(_){}
+  }
+
+  /* the ritual. this address is the card — exactly, # and all.
+     one guard: a page of the house that sends its visitor HERE (no room does
+     today) arrives carrying the house's own referrer, and must knot re-seat
+     the card with whatever name it called this door by. the kept card
+     stands, and this page wears it like any room. a card's tap, a typed
+     address and safari's own reload all arrive with no referrer of ours. */
+  sDel('apwnp.at'); sDel('apwnp.via');
+  try{ var hs2=W.history.state; if(hs2&&typeof hs2==='object'&&hs2.apwnpAt) W.history.replaceState(null,'',String(L.href)); }catch(_){}   /* a ritual's entry carries no room */
+  var kept=sGet('apwnp.card')||'', inHouse=false;
+  try{ inHouse=!!document.referrer&&new URL(document.referrer).origin===L.origin; }catch(_){ inHouse=false; }
+  if(inHouse&&kept&&type==='navigate'){
+    try{
+      var folder=function(x){ return x.origin+x.pathname.replace(/[^\/]*$/,''); };
+      if(folder(new URL(kept))===folder(new URL(String(L.href)))&&String(L.href)!==kept)
+        W.history.replaceState(W.history.state,'',kept);
+    }catch(_){}
+  }else sSet('apwnp.card',String(L.href));
+  W.addEventListener('hashchange',function(){ sSet('apwnp.card',String(L.href)); },false);
+
+  /* THE RIG OF THE LIFE (pass two, 21 sep) — only KEPT here, for the whole
+     browser, the ruler's manner; mortal.js obeys it. ?life=N · ?life=0 ·
+     ?wipe=0 · ?wipe=1. a visitor's card carries no flags and keeps nothing. */
+  (function(){
+    var lf=flag('life'), wp=flag('wipe');
+    if(lf!==null){ if(+lf>0) lSet('apwnp.rig.life',String(+lf)); else lDel('apwnp.rig.life'); }
+    if(wp!==null){ if(wp==='0') lSet('apwnp.rig.wipe','0'); else lDel('apwnp.rig.wipe'); }
+  })();
+
+  /* THE RULER (?hist=1, sticky) — borrowed from mortal.js, and only then */
+  var h=flag('hist');
+  if(h==='0'){ lDel('apwnp.hist'); sDel('apwnp.hist'); }
+  else if(h!==null||lGet('apwnp.hist')==='1'||sGet('apwnp.hist')==='1'){
+    W.MORTAL_DOOR={ type:type, said:'ritual' };
+    try{ var s=document.createElement('script'); s.src='mortal.js'; s.async=true;
+      document.head.appendChild(s); }catch(_){}
+  }
+})();
+</script>
+<style>
+/* ---- the sheet's own measure. 1u = 1pt on a 393pt iphone 16; everything
+   below is written in u, so the forgery conforms to any hand. ---- */
+:root{
+  --u: calc(100vw / 393);
+  /* RE-SEATED off the artist's own screenshot (1179×2556, ios dark). the
+     old ramp was blue — #1d212c / #2e3440 / #3a4050 — and the real sheet has
+     no blue in it anywhere. the whole thing is a neutral greyscale ladder:
+
+       background   #000000   flat, top to bottom (only dither moves it)
+       cards        #121212
+       action discs #212121
+
+     the earlier numbers were almost certainly taken from a PHOTOGRAPH of the
+     phone rather than a screenshot — a camera pointed at an oled in a cool
+     room lifts everything by exactly that much blue. a screenshot carries
+     the rendered values, so it wins. */
+  --bg:      #000000;   /* sampled, the artist's screenshot */
+  --card:    #121212;
+  --circle:  #212121;
+  --glyph:   #565656;
+  --ink:     #fdfeff;
+  --muted:   #7e87a8;
+  --blue:    #0a84ff;   /* ios dark-mode system blue, for system voices */
+  --bubble:  #428ff7;   /* sampled imessage blue, kept for the house */
+  --red:     #ff453a;
+  --green:   #32d74b;
+  --hair:    rgba(255,255,255,0.075);
+}
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; background:var(--bg); }
+/* THE ONE-PAGE LAW: stepping straight through to a living room (safari's own
+   reload) paints nothing — the sheet must knot flash on the way past. */
+html.thru body{ display:none; }
+body{
+  min-height:101svh;            /* one nudge taller: safari's bar collapses */
+  color:var(--ink);
+  font:400 calc(17*var(--u))/1.3 -apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;
+  -webkit-user-select:none; user-select:none;
+  overflow-x:hidden;
+  padding-bottom:calc(24*var(--u));
+}
+
+/* ---- the back chevron, top left ---- */
+#back{
+  position:absolute; left:calc(12*var(--u)); top:calc(10*var(--u));
+  width:calc(40*var(--u)); height:calc(40*var(--u)); border-radius:50%;
+  border:calc(1.2*var(--u)) solid rgba(255,255,255,0.16);
+  display:flex; align-items:center; justify-content:center;
+}
+#back svg{ width:calc(17*var(--u)); height:calc(17*var(--u)); }
+
+/* ---- the photo ----
+   the sheet's own colour, exactly as the vcard carries it: a circle with
+   nothing in it and nothing around it. it is knot invisible so much as
+   absent — there is no photograph of this contact and there never was. ---- */
+#photo{
+  width:calc(205*var(--u)); height:calc(205*var(--u));
+  margin:calc(66*var(--u)) auto 0; border-radius:50%;
+  background:var(--bg); display:block;
+}
+
+/* ---- the name ----
+   UNKNOWN, caps, on the sheet and on the call. RULED, and knot to be
+   quietly lowercased later to match the artist's voice elsewhere in the
+   house: ios and macos render an unknown contact's name in caps on their
+   own sheet no matter what the vcard carries, and the visitor crosses from
+   that sheet to this one in about two seconds. every other surface in the
+   house is lowercase; this one word is knot, because here the forgery
+   outranks the voice. a flip of case on the only word the page says is
+   exactly the kind of wrongness a person feels without being able to name,
+   and it would cost more than the lowercase is worth. the cards carry caps
+   too, so the message bubble — the one surface where lowercase would have
+   survived — agrees as well. ?lower drops all of it for comparison.
+   the name-line is the second line ios draws under an unreadable vcard
+   name, and on the live sheet it is a QUESTION MARK. measured off the
+   artist's screenshot, in this file's own units: 28.3u tall, 18u wide,
+   centred, 19.7u of air between the bottom of UNKNOWN and its top. 28.3u of
+   cap height is a ~40u face. all of that measurement is kept and none of it
+   is drawn — see #dot. ---- */
+#name{
+  text-align:center; margin-top:calc(34*var(--u));
+  font-weight:600; font-size:calc(19*var(--u)); letter-spacing:calc(0.6*var(--u));
+}
+#name.lower{ letter-spacing:calc(0.2*var(--u)); }
+/* ---- the name-line: measured, spaced for, and NOT DRAWN ----
+   RULED, after three passes and three photographs of the artist's own
+   phone. the mark is knot on this page at all. it is knot faded, it is knot
+   hidden, it is knot transparent — the glyph is taken out of the document
+   before the first paint, so there is no frame of any page life in which it
+   could be seen. everything before this was a version of "it is there but
+   you should knot notice it," and every one of those got noticed, which is
+   the answer: on a sheet this still, with one word on it, ANY removal is
+   the most interesting thing on screen. the only removal that cannot be
+   caught is the one that never happens.
+
+   what stays is the SPACE. the box keeps its 7u of margin and its 40u of
+   height whether or knot anything is in it, so the acts row and every card
+   under it sit exactly where they have always sat. height is stated in u
+   rather than left to line-height, because an empty div has no line box and
+   would collapse to nothing and walk the whole lower sheet up 47u.
+
+   FLAGGED, knot ruled: that leaves 47u of deliberate air under UNKNOWN
+   holding the metrics of a glyph nobody will ever see. it is the shape of
+   the real sheet with the ink taken out, and 👁️ think it is right — but if
+   the sheet should close over it instead, it is height:0 and margin-top:0
+   on one line, and everything below rises by 47u, including behind the
+   alert. say the word.
+
+   ?dot puts the mark back, with the timing intact: it goes at 0.94, takes
+   .14 to cross, and is finished at 1.08 — seventy milliseconds before the
+   dialog. that path is kept working rather than deleted, because the
+   argument for the mark is a real one (the live sheet next door carries it,
+   and a visitor crosses in about two seconds) and it lost on evidence, knot
+   on principle. ---- */
+#dot{
+  text-align:center; margin-top:calc(7*var(--u));   /* measured: 19.7u of air under the name, knot 24 */
+  font-weight:600; font-size:calc(40*var(--u)); line-height:1;
+  color:var(--ink);
+  display:block; height:calc(40*var(--u));          /* the space survives the glyph */
+  opacity:0;                                        /* nothing to see, and nothing to fade */
+  transition:opacity .14s ease;
+}
+#dot.on{ opacity:1; }                               /* ?dot only */
+#dot.gone{ opacity:0; }                             /* must follow .on — equal specificity, later wins */
+
+/* ---- the four dead buttons ---- */
+#acts{
+  display:flex; justify-content:center; gap:calc(20*var(--u));
+  margin-top:calc(28*var(--u));
+}
+.act{
+  width:calc(63*var(--u)); height:calc(63*var(--u)); border-radius:50%;
+  background:var(--circle); display:flex; align-items:center; justify-content:center;
+  transition:background .18s ease, transform .18s ease;
+}
+.act svg{ width:calc(27*var(--u)); height:calc(27*var(--u)); fill:var(--glyph); }
+.act.live{ background:var(--bubble); transform:scale(1.06); }
+.act.live svg{ fill:#fff; }
+
+/* ---- the cards ---- */
+.card{
+  margin:calc(22*var(--u)) calc(16*var(--u)) 0;
+  background:var(--card); border-radius:calc(22*var(--u)); overflow:hidden;
+}
+#homepage{
+  display:flex; align-items:flex-start;
+  padding:calc(14*var(--u)) calc(18*var(--u)) calc(16*var(--u));
+  /* .22s on every collapsing property, the same .22s the scrim clears in, so
+     the sheet finishes closing on the frame the dialog finishes leaving. */
+  transition:max-height .22s cubic-bezier(.4,0,.2,1),
+             margin-top .22s cubic-bezier(.4,0,.2,1),
+             padding-top .22s cubic-bezier(.4,0,.2,1),
+             padding-bottom .22s cubic-bezier(.4,0,.2,1),
+             opacity .16s ease;
+}
+#homepage .col{ flex:1; min-width:0; }
+#homepage .lab{ color:var(--muted); font-size:calc(15*var(--u)); }
+#homepage .url{ font-size:calc(19*var(--u)); line-height:1.28; word-break:break-word; margin-top:calc(2*var(--u)); }
+/* 22 sep: the ↗ ios draws on a social-profile row — an 11pt glyph, grey, seated
+   on the centre of the two-line block (measured off his screenshot of the real
+   row: card top to arrow centre 33pt, of which 14 is this row's padding). */
+#homepage .arrow{ width:calc(11*var(--u)); height:calc(11*var(--u)); margin-top:calc(13.5*var(--u)); flex:none; opacity:.55; }
+.row{
+  padding:calc(17*var(--u)) calc(18*var(--u)); font-size:calc(19*var(--u));
+  border-top:calc(0.5*var(--u)) solid var(--hair);
+}
+.row:first-child{ border-top:0; }
+.row:active,#homepage:active{ background:rgba(255,255,255,0.045); }
+/* ---- the website goes when the website is refused ----
+   the system says it cannot connect to the website. the visitor says No.
+   the website is then knot on the sheet. that is the whole rule, and it is
+   the same rule as the mark upstairs: this page subtracts itself every time
+   it is spoken to, and the sheet a visitor is handed back after No is one
+   they would knot recognise on a second look.
+
+   it COLLAPSES rather than vanishing, and this is the one place the file
+   spends a reflow on purpose. the alternative was to empty the card and
+   leave the #121212 slot standing — no motion at all, a hole exactly the
+   shape of the thing that left. it was rejected: an empty card is knot a
+   state ios can produce, so it reads as a page that is broken rather than a
+   page that is wrong, and broken is the one thing a forgery may never look.
+   a sheet with no homepage row is a real sheet. so the sheet closes over
+   it, in the .22s the alert is already leaving in, with the eye on the
+   dialog and the thumb still on No.
+
+   max-height is pinned to the measured height in js first — a css-only
+   collapse off a guessed ceiling sits still for half the animation and then
+   drops, which is a worse motion than the one being hidden. ---- */
+#homepage.gone{
+  max-height:0; margin-top:0; padding-top:0; padding-bottom:0;
+  opacity:0; pointer-events:none;
+}
+
+/* ---- the alert ---- */
+#scrim{
+  position:fixed; inset:0; background:rgba(0,0,0,0.30);
+  display:none; align-items:center; justify-content:center; z-index:40;
+  opacity:0; transition:opacity .22s ease;
+}
+#scrim.on{ opacity:1; }
+#alert{
+  width:calc(270*var(--u)); border-radius:calc(14*var(--u)); overflow:hidden;
+  background:rgba(44,44,46,0.86);
+  -webkit-backdrop-filter:blur(calc(20*var(--u))) saturate(180%);
+  backdrop-filter:blur(calc(20*var(--u))) saturate(180%);
+  text-align:center; transform:scale(1.12); transition:transform .22s cubic-bezier(.2,.9,.3,1);
+}
+#scrim.on #alert{ transform:scale(1); }
+#alert .body{ padding:calc(19*var(--u)) calc(16*var(--u)) calc(17*var(--u)); }
+#alert .t{ font-size:calc(17*var(--u)); font-weight:600; }
+#alert .m{ font-size:calc(13*var(--u)); line-height:1.32; margin-top:calc(3*var(--u)); }
+#alert .btns{ display:flex; border-top:calc(0.5*var(--u)) solid rgba(255,255,255,0.16); }
+#alert .b{
+  flex:1; padding:calc(12*var(--u)) 0; font-size:calc(17*var(--u)); color:var(--blue);
+}
+#alert .b+.b{ border-left:calc(0.5*var(--u)) solid rgba(255,255,255,0.16); font-weight:600; }
+#alert .b:active{ background:rgba(255,255,255,0.09); }
+
+/* ---- the call ---- */
+#call{
+  position:fixed; inset:0; z-index:60; display:none;
+  flex-direction:column; align-items:center;
+  background:linear-gradient(#242a38,#12151d 62%,#0b0d12);
+  transform:translateY(100%); transition:transform .55s cubic-bezier(.22,.9,.28,1);
+  padding:calc(78*var(--u)) 0 calc(46*var(--u));
+}
+#call.up{ transform:translateY(0); }
+#call.gone{ transform:scale(.93); opacity:0; transition:transform .5s ease, opacity .5s ease; }
+#callName{ font-size:calc(30*var(--u)); font-weight:400; letter-spacing:calc(1*var(--u)); }
+#callName.lower{ font-size:calc(34*var(--u)); letter-spacing:calc(0.3*var(--u)); }
+#status{ margin-top:calc(9*var(--u)); font-size:calc(17*var(--u)); color:rgba(255,255,255,0.6); }
+#pad{
+  margin-top:auto; display:grid; grid-template-columns:repeat(3,calc(76*var(--u)));
+  gap:calc(28*var(--u)) calc(24*var(--u)); justify-content:center;
+  transition:opacity .45s ease;
+}
+.key{ text-align:center; }
+.key .k{
+  width:calc(76*var(--u)); height:calc(76*var(--u)); border-radius:50%;
+  background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center;
+}
+.key .k svg{ width:calc(30*var(--u)); height:calc(30*var(--u)); fill:#fff; opacity:.92; }
+.key .l{ margin-top:calc(7*var(--u)); font-size:calc(12.5*var(--u)); color:rgba(255,255,255,0.72); }
+#end{
+  margin-top:calc(34*var(--u)); width:calc(76*var(--u)); height:calc(76*var(--u));
+  border-radius:50%; background:var(--red); display:flex; align-items:center; justify-content:center;
+  transition:opacity .45s ease, transform .3s ease;
+}
+/* the hangup handset is drawn straight, knot borrowed from the answer
+   glyph and spun — a rotated fill lands its curve on the wrong side and
+   reads as a broken hook. this one is built already tipped over. */
+#end svg{ width:calc(35*var(--u)); height:calc(35*var(--u)); fill:#fff; }
+#call.ending #pad, #call.ending #end{ opacity:0; }
+
+/* ---- the fade out of this world ---- */
+#black{
+  position:fixed; inset:0; background:#000; z-index:90;
+  opacity:0; pointer-events:none; transition:opacity .6s ease;
+}
+#black.on{ opacity:1; }
+</style>
+</head>
+<body>
+
+<div id="back">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"/></svg>
+</div>
+
+<!-- the photo: nothing. the sheet's own colour, the same value the vcard
+     carries, so the circle is absent rather than dark -->
+<div id="photo"></div>
+
+<div id="name">nobody</div>
+<div id="dot">?</div>
+
+<div id="acts">
+  <div class="act" data-act="message"><svg viewBox="0 0 24 24"><path d="M12 3C6.9 3 2.8 6.4 2.8 10.6c0 2.4 1.4 4.6 3.5 6-.2 1.3-.9 2.5-1.9 3.4 1.6-.2 3.1-.9 4.4-1.9 1 .3 2.1.4 3.2.4 5.1 0 9.2-3.4 9.2-7.6S17.1 3 12 3z"/></svg></div>
+  <div class="act" id="callBtn" data-act="phone"><svg viewBox="0 0 24 24">
+    <!-- the handset, TRACED off the artist's own screenshot of the real
+         sheet. two wrong ones preceded it: an outline whose closing chord
+         left a spike off the earpiece, and then a ring-sector-plus-two-pads
+         construction that was clean but was knot apple's glyph — a different
+         handset in the same slot is the same failure as a broken one, on a
+         page whose whole job is to be indistinguishable.
+         so this one was knot drawn, it was MEASURED. the glyph was thresholded
+         out of the screenshot at 61×61px, resampled to a 30×30 mask, and this
+         path was fitted against it until the two masks disagreed on 7.7% of
+         cells — which at 27u is under a pixel. the trace is why the earpiece
+         stands upright and the mouthpiece lies along the bottom right, which
+         is knot what either of my inventions did. -->
+    <path d="M4.67 2.0C3.9 2.4 3.1 3.3 2.8 4.4C2.2 5.6 2.0 6.9 2.2 8.2C2.5 9.9 3.2 11.4 4.2 12.9C5.1 14.2 6.2 15.6 7.5 16.8C9.1 18.4 11.0 19.8 13.1 20.7C14.7 21.4 16.5 21.6 18.1 21.2C19.6 20.8 20.9 19.7 21.4 18.3C21.8 17.2 21.3 16.0 20.3 15.4C19.0 14.7 17.5 14.5 16.1 14.7C15.0 14.9 14.0 15.3 13.4 15.9C12.6 15.4 11.7 15.0 11.0 14.4C9.8 13.0 8.7 11.5 7.9 9.9C7.2 8.6 7.3 7.2 8.2 6.2C8.9 5.4 8.7 4.1 7.8 3.3C6.9 2.5 5.7 2.1 4.67 2.0Z"/>
+  </svg></div>
+  <div class="act" data-act="video"><svg viewBox="0 0 24 24"><rect x="2.4" y="6" width="13.4" height="12" rx="3.2"/><path d="M17.4 11.2l3.3-2.4c.5-.4 1.1 0 1.1.6v5.2c0 .6-.6 1-1.1.6l-3.3-2.4z"/></svg></div>
+  <div class="act" data-act="mail"><svg viewBox="0 0 24 24"><path d="M3.4 5.6h17.2c.9 0 1.6.7 1.6 1.6v9.6c0 .9-.7 1.6-1.6 1.6H3.4c-.9 0-1.6-.7-1.6-1.6V7.2c0-.9.7-1.6 1.6-1.6zm8.6 7.1l8-4.5H4l8 4.5z"/></svg></div>
+</div>
+
+<!-- 22 sep 2026: the card's one field is a social profile now, knot a homepage
+     (mortal.js, makeVcard — his probe settled it). ios prints it as two words,
+     the service in grey and the name in white, with an ↗ at the right where the
+     homepage row wore a compass. the id stays #homepage: it is the same row,
+     the same door that never opens, and the same row that leaves after No. -->
+<div class="card" id="homepage">
+  <div class="col">
+    <div class="lab">nobody</div>
+    <div class="url">.</div>
+  </div>
+  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5.5 18.5L18.5 5.5M8.5 5.5h10v10"/>
+  </svg>
+</div>
+
+<div class="card">
+  <div class="row">Share Contact</div>
+  <div class="row">Create New Contact</div>
+  <div class="row">Add to Existing Contact</div>
+</div>
+
+<div class="card">
+  <div class="row">Share My Location</div>
+</div>
+
+<div id="scrim">
+  <div id="alert">
+    <div class="body">
+      <div class="t">Unable to Connect</div>
+      <div class="m">Call me instead?</div>
+    </div>
+    <div class="btns">
+      <div class="b" id="btnNo">No</div>
+      <div class="b" id="btnYes">Yes</div>
+    </div>
+  </div>
+</div>
+
+<div id="call">
+  <div id="callName">nobody</div>
+  <div id="status">Calling...</div>
+  <div id="pad">
+    <div class="key"><div class="k"><svg viewBox="0 0 24 24"><path d="M12 3.2c-1.5 0-2.7 1.2-2.7 2.7v6.2c0 1.5 1.2 2.7 2.7 2.7s2.7-1.2 2.7-2.7V5.9c0-1.5-1.2-2.7-2.7-2.7zM6.4 11.3v.8c0 3 2.4 5.5 5.6 5.5s5.6-2.5 5.6-5.5v-.8h1.7v.8c0 3.7-2.8 6.7-6.4 7.1v2.6h-1.8v-2.6c-3.6-.4-6.4-3.4-6.4-7.1v-.8h1.7z"/></svg></div><div class="l">mute</div></div>
+    <div class="key"><div class="k"><svg viewBox="0 0 24 24"><circle cx="6" cy="5.4" r="2.1"/><circle cx="12" cy="5.4" r="2.1"/><circle cx="18" cy="5.4" r="2.1"/><circle cx="6" cy="11.5" r="2.1"/><circle cx="12" cy="11.5" r="2.1"/><circle cx="18" cy="11.5" r="2.1"/><circle cx="6" cy="17.6" r="2.1"/><circle cx="12" cy="17.6" r="2.1"/><circle cx="18" cy="17.6" r="2.1"/></svg></div><div class="l">keypad</div></div>
+    <div class="key"><div class="k"><svg viewBox="0 0 24 24"><path d="M3 9.4h3.4L11 5.2v13.6L6.4 14.6H3z"/><path d="M14 8.6c1.4 1 2.2 2.1 2.2 3.4s-.8 2.4-2.2 3.4" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path d="M17 6c2.2 1.5 3.4 3.6 3.4 6s-1.2 4.5-3.4 6" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg></div><div class="l">speaker</div></div>
+    <div class="key"><div class="k"><svg viewBox="0 0 24 24"><circle cx="9.4" cy="8" r="3.9"/><path d="M2.6 19.4c0-3.4 3-5.6 6.8-5.6s6.8 2.2 6.8 5.6z"/><path d="M19 6.6v6.2M15.9 9.7h6.2" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg></div><div class="l">add call</div></div>
+    <div class="key"><div class="k"><svg viewBox="0 0 24 24"><rect x="2.4" y="6" width="13.4" height="12" rx="3.2"/><path d="M17.4 11.2l3.3-2.4c.5-.4 1.1 0 1.1.6v5.2c0 .6-.6 1-1.1.6l-3.3-2.4z"/></svg></div><div class="l">facetime</div></div>
+    <div class="key"><div class="k"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.9"/><path d="M5.2 19.4c0-3.4 3-5.6 6.8-5.6s6.8 2.2 6.8 5.6z"/></svg></div><div class="l">contacts</div></div>
+  </div>
+  <div id="end"><svg viewBox="0 0 32 32"><path d="M16 9.4c-4.7 0-9.1 1.3-12.4 3.6-1.1.8-1.5 2.4-.9 3.6l1.4 2.6c.5 1 1.8 1.5 2.9 1.1l3.3-1.2c1-.4 1.6-1.4 1.5-2.4l-.2-1.9c1.4-.4 2.9-.6 4.4-.6s3 .2 4.4.6l-.2 1.9c-.1 1 .5 2 1.5 2.4l3.3 1.2c1.1.4 2.4-.1 2.9-1.1l1.4-2.6c.6-1.2.2-2.8-.9-3.6-3.3-2.3-7.7-3.6-12.4-3.6z"/></svg></div>
+</div>
+
+<div id="black"></div>
+
+<script>
+/* unknown · the forged sheet. no modules, no cdn, one file.
+   ratios ×173.68 hz: 5/2 and 11/4 (ringback), 1/2 (goodbye thump),
+   8 (ui tick). the telephone bandpass is a filter, knot a tone. */
+(function(){
+  'use strict';
+  if(window.__apwnpThru) return;   /* THE ONE-PAGE LAW: stepping through — no sheet, no alert, no timers */
+  var P    = 173.68;
+  var q    = new URLSearchParams(typeof window.__apwnpSearch==='string'?window.__apwnpSearch:location.search);   /* the flags this page arrived with — taken in the head, before the bar could move */
+  var LOWER= q.has('lower');
+  var DOT  = q.has('dot');      /* OFF. the mark is knot drawn — see the note at #dot */
+  var SLOW = q.has('slow') ? 3 : 1;
+  var EYE  = q.has('eye');        /* ?eye — take the camera grant at the hangup. see below. */
+  var HOLD = q.has('nocall');
+  var NEXT = 'phone.html?arrive=1';
+
+  /* the seeded crack that used to sit in the photo is gone with the photo.
+     mulberry32 stays out of this file entirely — nothing here is generated
+     any more; the sheet is a forgery, and a forgery does knot improvise. */
+
+  /* UNKNOWN, caps, because the real sheet next door is caps and the two are
+     seconds apart. ?lower drops both for comparison. ?dot puts back the
+     name-line ios draws under an unreadable vcard name; it is off. */
+  /* 22 sep 2026 · the word is `nobody`, lowercase, everywhere on the sheet
+     and on the call — the vcard is being renamed to match (his ask: "even if
+     somebody is home, nobody is home"). the caps ruling below is superseded;
+     ?lower now does nothing, kept so old links do knot break. */
+  /* off by default, and the glyph leaves the DOCUMENT rather than being
+     hidden inside it. a `?` at opacity 0 is still a `?` one repaint, one
+     forced style recalc or one ios font-loading hiccup away from being
+     seen, and this page has already been caught twice that way. the box
+     keeps its height in css, so nothing below it moves either way. */
+  var dotNode=document.getElementById('dot');
+  if(DOT) dotNode.classList.add('on'); else dotNode.textContent='';
+
+  /* ---- sound. built on the first gesture (ios), never before. ---- */
+  var actx=null, bus=null;
+  function audio(){
+    if(actx) return actx;
+    var AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC) return null;
+    try{
+      actx=new AC({latencyHint:'interactive'});
+      bus=actx.createGain(); bus.gain.value=0.85; bus.connect(actx.destination);
+    }catch(_){ actx=null; }
+    return actx;
+  }
+  function tick(){                                   /* ×8 */
+    var a=audio(); if(!a) return;
+    var t=a.currentTime, o=a.createOscillator(), g=a.createGain();
+    o.type='sine'; o.frequency.value=P*8;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.05,t+0.004);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.055);
+    o.connect(g); g.connect(bus); o.start(t); o.stop(t+0.07);
+  }
+  function thump(){                                  /* ×1/2 — the goodbye */
+    var a=audio(); if(!a) return;
+    var t=a.currentTime, o=a.createOscillator(), g=a.createGain();
+    o.type='sine'; o.frequency.value=P*0.5;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.16,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.42);
+    o.connect(g); g.connect(bus); o.start(t); o.stop(t+0.45);
+  }
+  /* the ringback pair, 5/2 and 11/4, through a telephone bandpass.
+     every ring keeps its own nodes on a list so the line can be cut on the
+     exact frame the visitor asks for it — the context is never torn down
+     and rebuilt, which on ios would leave the goodbye thump suspended and
+     silent. hanging up must be instant and must still be heard. */
+  var live=[];
+  function ring(at,dur){
+    var a=audio(); if(!a) return;
+    var t=a.currentTime+at;
+    var bp=a.createBiquadFilter(); bp.type='bandpass';
+    bp.frequency.value=900; bp.Q.value=0.72;
+    var g=a.createGain(); g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.10,t+0.05);
+    g.gain.setValueAtTime(0.10,t+dur-0.06);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    var oscs=[];
+    [P*5/2, P*11/4].forEach(function(f){
+      var o=a.createOscillator(); o.type='sine'; o.frequency.value=f;
+      o.connect(bp); o.start(t); o.stop(t+dur+0.02); oscs.push(o);
+    });
+    bp.connect(g); g.connect(bus);
+    live.push({ g:g, oscs:oscs });
+  }
+  function cutLine(){
+    var a=actx; if(!a) return;
+    var t=a.currentTime;
+    live.forEach(function(n){
+      try{
+        n.g.gain.cancelScheduledValues(t);
+        n.g.gain.setValueAtTime(Math.max(n.g.gain.value,0.0001),t);
+        n.g.gain.exponentialRampToValueAtTime(0.0001,t+0.035);
+      }catch(_){}
+      n.oscs.forEach(function(o){ try{ o.stop(t+0.05); }catch(_){} });
+    });
+    live=[];
+  }
+
+  /* ---- the alert ---- */
+  var scrim=document.getElementById('scrim');
+  var dotEl=document.getElementById('dot');
+  var cardEl=document.getElementById('homepage');
+
+  /* RETIRED, ON PURPOSE, RECOVERABLE. with the mark off this is a no-op on
+     an empty div — it stays live because ?dot depends on it, and because the
+     ordering it enforces (the mark is always FINISHED before the dialog
+     starts, never fading alongside it) is the one thing that build got
+     right. one way only; there is no raiseDot. */
+  function dropDot(){ dotEl.classList.add('gone'); }
+
+  /* the website leaves when the website is refused. the height is measured
+     and pinned before the class lands — a collapse off a guessed max-height
+     stalls for half its duration and then falls, and a stall followed by a
+     fall is more visible than the collapse it was meant to hide. */
+  function dropCard(){
+    if(cardEl.classList.contains('gone')) return;
+    cardEl.style.maxHeight=cardEl.scrollHeight+'px';
+    void cardEl.offsetHeight;                 /* force the layout before the class */
+    requestAnimationFrame(function(){
+      /* the zero goes back through style, knot through the class. an inline
+         max-height beats a stylesheet rule no matter how specific the
+         selector is, so the pinned height would have sat there winning and
+         only the paddings would have collapsed — a card that loses 30u and
+         keeps 70. caught headless, knot on the phone. */
+      cardEl.style.maxHeight='0px';
+      cardEl.classList.add('gone');
+    });
+  }
+
+  /* showAlert raises the dialog and NOTHING else. every caller drops the
+     mark first, on its own clock, so that the two are never simultaneous
+     on any path — that simultaneity was the whole bug. */
+  function showAlert(){
+    scrim.style.display='flex';
+    requestAnimationFrame(function(){ scrim.classList.add('on'); });
+  }
+  function hideAlert(cb){
+    scrim.classList.remove('on');
+    setTimeout(function(){ scrim.style.display='none'; if(cb) cb(); },230);
+  }
+  /* two events, knot one, and under ?dot the order between them is the
+     point: the mark is finished at 1.08 and the dialog starts at 1.15. with
+     the mark off, the first line does nothing and the sheet has been one
+     word since the first paint. */
+  if(!HOLD){
+    setTimeout(dropDot,   940*SLOW);
+    setTimeout(showAlert,1150*SLOW);
+  }
+
+  /* ---- no ----
+     no still keeps them on the page. it also takes the website with it: the
+     alert said it could knot connect to one, they declined the call, and the
+     row is gone by the time the dialog has finished leaving. the collapse
+     starts on the press so that it runs under the dismissal rather than
+     after it. */
+  document.getElementById('btnNo').addEventListener('click',function(){
+    tick(); dropCard(); hideAlert();
+  });
+
+  /* ---- the door the website used to be ----
+     the homepage row was the way back to the alert — a door that opened onto
+     the same closed door — and No now removes it. something has to carry
+     that, or a visitor who says No is standing on a dead sheet with the
+     whole house behind a door they just deleted, and this file's own law
+     says never strand anyone.
+     it moves to the handset, which is where it should probably have been all
+     along: the four discs are a forgery of buttons that DIAL on the real
+     sheet, so the dead ones were the bend and a live one is the correction.
+     the alert asked about a call; the visitor said no; the telephone is still
+     sitting there. it is live from the start, knot only after No, because a
+     button that becomes tappable partway through a page is its own tell. */
+  function summon(){
+    if(scrim.style.display==='flex' || dialed) return;
+    /* under ?dot: the mark goes here too, and 260ms of air is more than the
+       140 it needs. a thumb on the handset in the first second would
+       otherwise raise the alert BEFORE the scheduled drop at 940 and put
+       the glyph up behind it — the exact photograph terence sent, reachable
+       by a fast visitor. with the mark off this line costs nothing. */
+    dropDot(); tick(); setTimeout(showAlert,260);
+  }
+  document.getElementById('homepage').addEventListener('click',function(){
+    if(cardEl.classList.contains('gone')) return;   /* a collapsed row is knot a door */
+    summon();
+  });
+  /* getElementById and knot the callBtn var: that one is declared below, and
+     `var` would hand this line an undefined. summon itself reads `dialed`,
+     which is also below — that one is safe, because summon only ever runs on
+     a thumb, long after this function body has finished. */
+  document.getElementById('callBtn').addEventListener('click',summon);
+
+  /* ---- yes ---- */
+  var call=document.getElementById('call'),
+      status=document.getElementById('status'),
+      callBtn=document.getElementById('callBtn'),
+      black=document.getElementById('black');
+  var timers=[], dialed=false;
+  function later(fn,ms){ timers.push(setTimeout(fn,ms*SLOW)); }
+
+  document.getElementById('btnYes').addEventListener('click',function(){
+    if(dialed) return; dialed=true;
+    audio(); tick();
+    /* warm the next room while the line is ringing — the html only; the
+       three.js cdn is phone.html's own business. fails silently. */
+    try{ fetch(NEXT,{cache:'force-cache'}).catch(function(){}); }catch(_){}
+    try{ fetch('mortal.js',{cache:'force-cache'}).catch(function(){}); }catch(_){}   /* the next room's first script */
+    hideAlert(function(){
+      /* the button lights, and then it is HELD. it used to light at 350 and
+         be gone at 550 — two tenths, which is long enough to register as a
+         flicker and knot long enough to register as a decision being carried
+         out. a real phone lights the button and sits there while it finds
+         the line. a second and a fifth of it now: the visitor gets to watch
+         their own press take effect before the room changes. */
+      later(function(){ callBtn.classList.add('live'); }, 350);
+      later(dial, 1550);
+    });
+  });
+
+  function dial(){
+    /* redundant — the alert already took it, and there is no route to the
+       call that does knot pass through the alert. it is stated here anyway
+       because the law is about the call as much as the alert, and because
+       the sheet is genuinely on screen twice while the call is up: for the
+       .55 the call slides in over it, and again for the .5 the call scales
+       away at the end, before the black has finished arriving. */
+    dropDot();
+    call.style.display='flex';
+    requestAnimationFrame(function(){ call.classList.add('up'); });
+    /* the line does knot give up. 0.80 of connecting silence, then the
+       telephone cadence — 2.0 ringing, 3.0 of nobody — repeating for as
+       long as the visitor is willing to hold it. there is no timeout and
+       nothing at the far end. the only way out is the red button, which
+       means leaving is the visitor's decision and knot the line's: they
+       have to be the one who stops waiting. */
+    later(cadence, 800);
+  }
+  var rings=0;                     /* THE BIRTH (pass two): the rings the visitor waited, counted as each BEGINS */
+  function cadence(){
+    if(ended) return;
+    rings++;
+    ring(0,2.00);
+    later(cadence, 5000);
+  }
+
+  var ended=false;
+  function hangup(){
+    if(ended) return; ended=true;
+    /* THE BIRTH (21 sep, the mortality pass, pass two). the thumb has landed
+       on the red disc: this instant is the conception, and this page keeps
+       its three raw facts for the first room to wake — when, how many rings
+       were waited, and the # the card carried. it computes nothing: the law
+       is mortal.js's. a living tab's life is never replaced (mortal.js
+       throws a second stone away); under ?mortal=0 nothing is born. */
+    if(!window.__apwnpOff){
+      try{ window.sessionStorage.setItem('apwnp.birth',JSON.stringify({ t:Date.now(), r:rings, h:String(location.hash||'') })); }catch(_){}
+    }
+    timers.forEach(clearTimeout); timers=[];
+    cutLine(); thump();
+    status.textContent='Call Ended';
+    call.classList.add('ending');
+    /* `Call Ended` and the tipped handset used to hold 1.30 and now hold
+       1.80. it is the only moment on this page where nothing is being asked
+       of anyone — the ringing has stopped, the decision is made, and the
+       next room has knot arrived. half a second is the difference between a
+       screen that flashes past and a screen that is read. */
+    later(function(){
+      call.classList.add('gone');
+      black.classList.add('on');
+      /* THE ONE-PAGE LAW (20 sep, the mortality pass): a REPLACE, never a push —
+         phone.html takes this page's place in the tab, so the tab still holds
+         one page and can close itself at the end. ?mortal=0 is the door as
+         it was. */
+      later(function(){
+        try{ if(window.__apwnpOff) location.href=NEXT; else location.replace(NEXT); }
+        catch(_){ location.href=NEXT; }
+      }, 620);
+    }, 1800);
+  }
+
+  /* the red button ends it on the frame it is pressed — pointerdown, knot
+     click: a call ends when the thumb lands on it. it is the only door out
+     of this page, and it opens onto the home screen. */
+  var endBtn=document.getElementById('end');
+  endBtn.addEventListener('pointerdown',function(e){
+    e.preventDefault();
+    if(!dialed) return;
+    endBtn.style.transform='scale(0.92)';
+    /* ---- the eye, offered here and NOT taken by default ----
+       phone.html's arrival wants the visitor's room behind the locked home
+       screen, and a camera needs a gesture, and this press is the last
+       gesture before that page loads. same origin, so a grant taken here is
+       a grant that page inherits. technically it is the right hook and it
+       is one line.
+
+       it is off, and 👁️ argue it should stay off. a permission sheet raised
+       on the frame the call dies puts a system dialog on the only charged
+       moment this page has — and it asks for a camera with nothing to
+       explain why, seconds after the visitor hung up a telephone. that is
+       the shape of a page you stop trusting. the original reasoning at the
+       top of this file was right: the camera is asked for where it makes
+       sense, on the camera app, one room later, where the button the thumb
+       is already on is literally a lens.
+
+       what is lost by leaving it off is small: the arrival's night comes on
+       at the visitor's first touch of that screen instead of before it, and
+       their first touch there is the camera button anyway.
+
+       ?eye turns it on so both can be felt on a real phone and ruled. */
+    if(EYE){
+      try{
+        var md=navigator.mediaDevices;
+        if(md&&md.getUserMedia){
+          md.getUserMedia({ video:{ facingMode:{ ideal:'environment' } }, audio:false })
+            .then(function(st){ try{ st.getTracks().forEach(function(tk){ tk.stop(); }); }catch(_){} })
+            .catch(function(){});
+        }
+      }catch(_){}
+    }
+    hangup();
+  });
+
+  /* ---- RULED, and what it cost ----
+     terence ruled it three times and it landed in the same place each time,
+     harder: the mark is knot drawn at all, and the website goes on No.
+     the page subtracts itself every time the system speaks.
+
+     what that bought, and it is worth saying out loud because it is the
+     only structural change in the file: No used to be free. it kept the
+     visitor on the sheet, the sheet was whole, and the homepage row was
+     still sitting there to be tapped again. now No costs them the row, and
+     the row was the door. the door has moved to the handset (see summon,
+     above) and 👁️ would knot ship this without that move — without it, No
+     is a dead end and the house is unreachable to anyone who presses it,
+     which this file's own law forbids.
+
+     one reading of the instruction 👁️ did knot take: "the website page is no
+     longer there" could have meant this whole page — that No ends the piece
+     rather than thinning it. it is a real move and a harder one, but it
+     shuts the house to every visitor who hesitates, and hesitating is knot
+     a thing this page should punish. 👁️ read it as the row. say so if it
+     was the page and it is a two-line change.
+
+     the alternative that stays available: dropCard() called on the Yes press
+     as well, so the website leaves whichever answer is given. 👁️ left it on
+     No alone — on Yes the sheet is on screen for about a second and a half
+     before the call covers it, and a card collapsing under a lit call button
+     is a second motion competing with the one that matters. */
+})();
+</script>
+</body>
+</html>

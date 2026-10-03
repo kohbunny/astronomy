@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>mommy?</title>
+
+<!--
+  ============================================================
+  MOMMY? · the fall — first playable (v1, 11 aug 2026)
+  a stupid little game from a project with no purpose.
+  one file · canvas 2d · plain script · iphone-safari safe · no modules.
+
+  what this is:
+    egg mode of the game "mommy?". the egg has been swallowed; the gullet
+    scrolls up forever; the diet of the giant tumbles down around you.
+    far below hangs one pale ring — the socket seen from INSIDE, the dead
+    star seated beyond it (psr j0437-4715). the egg runs toward the light
+    because the light is the only way out, and it will never arrive: the
+    score counts DOWN from 510 light-years and barely moves. the game is
+    mathematically unwinnable, on purpose, out loud.
+
+  rulings held (from the design chats):
+    · ARTIFACTS, KNOT ANATOMY. the six eaten men arrive as black-figure
+      pottery shards, corinthian helmets, round shields, broken spears,
+      clean white bones. no flesh, no red. the ONE red in the whole game
+      is the inside of the mouth at the swallow — say-ahh red, threshold
+      red, never blood.
+    · house colour law enforced: gold/flame ONLY for the living/sounding —
+      the call ripple, the "mommy?" cry, the death song-burst, the yolk
+      constellation, "again". the egg's SHELL is inert ivory; the player
+      only turns gold when the body ends. all else bone-ivory/ice/
+      cornflower on true #000 (the deadstar palette).
+    · the swallow IS the app-launch zoom: tap the pale disc, it grows and
+      you fall into the pupil. entered through the eye.
+    · sheep are the mercy (bounce, never crack). wine sways the world
+      drunk for a beat (the odyssey's own plot device). everything else
+      cracks you.
+    · ECHOLOCATION IS MUSIC: the dark is nearly blind; a tap calls
+      "mommy?" — one gold ring; every object the ring crosses LIGHTS and
+      SOUNDS its own note (all rational multiples of 173.68) in distance
+      order — the call comes back as the room's chord. the star's beams
+      sweep a lighthouse band every few seconds: the universe's
+      intermittent grace.
+    · the heartbeat runs at 81 bpm (mommy's tempo — the comma beat, a
+      resting human heart). calls ON the beat climb the just ladder and
+      ring wider; off the beat they reset. with depth the ring shrinks
+      (mommy gets small, small, smaller, smallerer) and the thump goes
+      quieter — the player learns to carry the beat inside.
+    · the seed chain rides the house: reads/writes the SAME
+      localStorage key as tongue.html ('egg_seed_byte', origin 147) —
+      you begin on a note a stranger left; your note is left for a
+      stranger. each fall's gauntlet is dealt by the house's one quantum
+      source (/quantum, anu|local, honest fallback).
+    · death is knot game over: crack (the house's own eggcracksharp.mp3,
+      synth fallback), the shell falls away, the gold song bursts OUT and
+      streaks for the ring — then: "no body here / song still here", the
+      yolk constellation of every call you made (unrepeatable, seeded),
+      the light-years, the byte, "again". no "game over" ever appears.
+      death to restart in under two seconds.
+    · the house owns the exit — no close control lives here. mount from
+      the phone clone as a same-origin iframe (the jewel pattern), allow
+      "autoplay *". the first tap winds everything (v11 law): audio
+      context + the silent-loop mute-switch unlock ride the swallow tap.
+
+  controls: slide anywhere = dodge · tap = call "mommy?" · that's all.
+
+  driving it: ?nosnd (muted) · prefers-reduced-motion honoured (no zoom,
+    no drunk sway, gentler pulses).
+
+  TUNE marks in the script: BPM, SPEED, SPAWN, RIPPLE, DARKNESS, SWEEP,
+    LY_RATE, RING shrink. all tones rational multiples of CFG.pulsarHz.
+  ============================================================
+-->
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden;
+    -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+    -webkit-tap-highlight-color:transparent;
+    font-family:'EB Garamond',Georgia,serif}
+  #cv{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;background:#000}
+  /* portrait please — the fall is a portrait thing */
+  #turnme{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+    background:#000;color:#8a8578;z-index:50;text-align:center;
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em}
+  @media (orientation:landscape) and (max-height:520px){ #turnme{display:flex} }
+</style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+<div id="turnme">turn me upright<br><br>the fall is a portrait thing</div>
+
+<script>
+(function () {
+'use strict';
+try { console.log('mommy? · the fall v1 — artifacts knot anatomy · echolocation is music · 81 bpm · counts down from 510 ly · seed chain shared with tongue (egg_seed_byte) · gold only for the living'); } catch (e) {}
+
+/* ---------- the one number the whole house sits on ---------- */
+var CFG = {
+  pulsarHz: 173.68,
+  ladder: [1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8, 2],   // the house's just ladder (tongue.html)
+  BPM: 81,                                          // TUNE — mommy's tempo. the comma beat.
+  beatWin: 0.115,                                   // s each side of the beat that counts as "on"
+  LY_TOTAL: 510,                                    // light-years to the star
+  LY_RATE: 2.4e-9                                   // TUNE — ly fallen per second at depth 0
+};
+
+var NOSND = /[?&]nosnd\b/.test(location.search);
+var REDUCED = false;
+try { REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+/* ---------- the seed chain (shared with tongue.html) ---------- */
+var SEED_KEY = 'egg_seed_byte', ORIGIN_BYTE = 147, BEST_KEY = 'mommy_best_ly';
+var seedByte = ORIGIN_BYTE, bestLy = null;
+try {
+  var v = localStorage.getItem(SEED_KEY);
+  if (v != null) { var n = parseInt(v, 10); if (isFinite(n)) seedByte = n & 255; }
+  var b = localStorage.getItem(BEST_KEY);
+  if (b != null && isFinite(parseFloat(b))) bestLy = parseFloat(b);
+} catch (e) {}
+
+/* the house's one quantum source — honest fallback to local */
+var ANU_URL = 'https://apwnp-ear.kohbunny.partykit.dev/quantum';
+var qByte = null, qSrc = null;
+function fetchQuantum () {
+  try {
+    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 3200);
+    fetch(ANU_URL, ctrl ? { signal: ctrl.signal, cache: 'no-store' } : { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); })
+      .then(function (j) {
+        clearTimeout(timer);
+        if (j && j.data && j.data.length) { qByte = j.data[0] & 255; qSrc = j.source || 'anu'; }
+      })
+      .catch(function () { clearTimeout(timer); });
+  } catch (e) {}
+}
+fetchQuantum();
+
+/* seeded rng — mulberry32 */
+function mulberry32 (a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* ---------- canvas ---------- */
+var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+var W = 0, H = 0, DPR = 1, MINWH = 0;
+function resize () {
+  DPR = Math.min(2, window.devicePixelRatio || 1);
+  W = window.innerWidth; H = window.innerHeight; MINWH = Math.min(W, H);
+  cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  layout();
+}
+window.addEventListener('resize', resize);
+
+/* layout constants (recomputed on resize) */
+var eggR, eggRy, eggY, ringX, ringY, ringR0;
+function layout () {
+  eggR  = MINWH * 0.033;
+  eggRy = eggR * 1.26;
+  eggY  = H * 0.26;
+  ringX = W * 0.5;
+  ringY = H * 0.865;
+  ringR0 = MINWH * 0.075;
+  if (egg) { egg.x = clamp(egg.xf * W, eggR + 6, W - eggR - 6); egg.tx = egg.x; }
+}
+function clamp (v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+/* ---------- audio (gesture-gated; the first tap winds everything) ---------- */
+var actx = null, master = null, muteLoop = null;
+function getCtx () {
+  if (NOSND) return null;
+  if (!actx) {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    try {
+      actx = new AC();
+      master = actx.createDynamicsCompressor();       // the house's gentle limiter
+      master.threshold.value = -14; master.knee.value = 22;
+      master.ratio.value = 10; master.attack.value = 0.003; master.release.value = 0.25;
+      var g = actx.createGain(); g.gain.value = 0.9;
+      master.connect(g); g.connect(actx.destination);
+    } catch (e) { actx = null; return null; }
+  }
+  if (actx.state === 'suspended') { try { actx.resume(); } catch (e) {} }
+  return actx;
+}
+/* the silent-loop mute-switch unlock (the house's hardening, compacted) */
+var SILENT_WAV = 'data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQIAAAAAAA==';
+function unlockMute () {
+  if (NOSND || muteLoop) return;
+  try {
+    muteLoop = new Audio(SILENT_WAV);
+    muteLoop.loop = true; muteLoop.volume = 0.001;
+    var p = muteLoop.play(); if (p && p.catch) p.catch(function () {});
+  } catch (e) {}
+}
+function tone (f, t0, dur, peak, type) {
+  var c = getCtx(); if (!c) return;
+  var o = c.createOscillator(); o.type = type || 'sine'; o.frequency.value = f;
+  var g = c.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + dur + 0.05);
+}
+function glide (f0, f1, t0, dur, peak, type) {
+  var c = getCtx(); if (!c) return;
+  var o = c.createOscillator(); o.type = type || 'sine';
+  o.frequency.setValueAtTime(f0, t0);
+  o.frequency.exponentialRampToValueAtTime(f1, t0 + dur * 0.8);
+  var g = c.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + dur + 0.05);
+}
+function noiseHit (t0, dur, hp, bp, peak) {
+  var c = getCtx(); if (!c) return;
+  var buf = c.createBuffer(1, Math.max(1, Math.floor(c.sampleRate * dur)), c.sampleRate);
+  var d = buf.getChannelData(0);
+  for (var i = 0; i < d.length; i++) { var t = i / d.length; d[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 2.4); }
+  var s = c.createBufferSource(); s.buffer = buf;
+  var f1 = c.createBiquadFilter(); f1.type = 'highpass'; f1.frequency.value = hp;
+  var f2 = c.createBiquadFilter(); f2.type = 'bandpass'; f2.frequency.value = bp; f2.Q.value = 0.6;
+  var g = c.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.004);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  s.connect(f1); f1.connect(f2); f2.connect(g); g.connect(master); s.start(t0);
+}
+/* the house's own crack (cdn), synth fallback ported from tongue.html */
+var CRACK_URL = 'https://kohmedia.b-cdn.net/eggcracksharp.mp3';
+var crackAudio = null;
+try { crackAudio = new Audio(CRACK_URL); crackAudio.preload = 'auto'; crackAudio.load(); } catch (e) { crackAudio = null; }
+function synthCrack () {
+  var c = getCtx(); if (!c) return;
+  var now = c.currentTime;
+  noiseHit(now, 0.17, 1200, 3600, 0.9);
+  noiseHit(now + 0.055, 0.10, 2200, 5200, 0.34);
+  var o = c.createOscillator(); o.type = 'triangle';
+  o.frequency.setValueAtTime(190, now);
+  o.frequency.exponentialRampToValueAtTime(68, now + 0.09);
+  var g = c.createGain();
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.exponentialRampToValueAtTime(0.5, now + 0.005);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+  o.connect(g); g.connect(master); o.start(now); o.stop(now + 0.13);
+}
+function playCrack () {
+  if (NOSND) return;
+  if (crackAudio) {
+    try { crackAudio.currentTime = 0; var p = crackAudio.play(); if (p && p.catch) p.catch(function () { synthCrack(); }); return; } catch (e) {}
+  }
+  synthCrack();
+}
+/* the voices of the diet — every ratio rational over the star's number */
+var PZ = CFG.pulsarHz;
+function voiceOf (kind, when, gain) {
+  var t0 = when, g = gain;
+  if (kind === 'cheese') tone(PZ * 0.5, t0, 0.22, g * 0.8, 'sine');                    // dull thud · 1/2
+  else if (kind === 'shard') tone(PZ * 3, t0, 0.14, g, 'triangle');                    // clay clink · 3
+  else if (kind === 'helmet') { tone(PZ * 9/4, t0, 0.20, g * 0.7, 'square'); tone(PZ * 9/4 * 1.5, t0, 0.12, g * 0.35, 'square'); } // bronze clang · 9/4 (+fifth)
+  else if (kind === 'shield') { tone(PZ * 2, t0, 0.22, g * 0.7, 'square'); tone(PZ * 3, t0, 0.10, g * 0.3, 'square'); }            // bronze ring · 2
+  else if (kind === 'spear') tone(PZ * 4, t0, 0.10, g * 0.8, 'triangle');              // tick · 4
+  else if (kind === 'femur') { tone(PZ * 3/2, t0, 0.16, g * 0.8, 'sine'); noiseHit(t0, 0.05, 900, 2400, g * 0.4); }               // bone knock · 3/2
+  else if (kind === 'sheep') glide(PZ * 5/4, PZ * 3/2, t0, 0.28, g, 'sine');           // wool boing · 5/4→3/2
+  else if (kind === 'wine') glide(PZ * 2/3, PZ * 0.5, t0, 0.30, g, 'sine');            // bloop · 2/3→1/2
+  else if (kind === 'gate') { tone(PZ * 3/4, t0, 0.30, g * 0.6, 'sine'); tone(PZ, t0 + 0.03, 0.28, g * 0.5, 'sine'); tone(PZ * 3/2, t0 + 0.06, 0.26, g * 0.4, 'sine'); } // bone chord
+}
+/* the heartbeat — 81 bpm, a lookahead scheduler (rhythm games live or die on this) */
+var beatPeriod = 60 / CFG.BPM, nextBeatAt = 0, lastBeatAt = 0, beatPulse = 0, schedTimer = null;
+function startHeart () {
+  var c = getCtx(); if (!c) { nextBeatAt = 0; return; }
+  nextBeatAt = c.currentTime + 0.3;
+  if (schedTimer) clearInterval(schedTimer);
+  schedTimer = setInterval(function () {
+    var cc = getCtx(); if (!cc) return;
+    while (nextBeatAt < cc.currentTime + 0.14) {
+      var quiet = (state === 'FALLING') ? Math.max(0.35, 1 - depth01() * 0.65) : 0.6;  // TUNE — the thump fades with depth
+      thump(nextBeatAt, 0.16 * quiet);
+      lastBeatAt = nextBeatAt;
+      nextBeatAt += beatPeriod;
+    }
+  }, 25);
+}
+function thump (t0, peak) {
+  var c = getCtx(); if (!c) return;
+  var o = c.createOscillator(); o.type = 'sine';
+  o.frequency.setValueAtTime(PZ * 0.5, t0);                       // 86.84 → 43.42 (1/2 → 1/4)
+  o.frequency.exponentialRampToValueAtTime(PZ * 0.25, t0 + 0.10);
+  var g = c.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(peak, t0 + 0.012);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
+  o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + 0.2);
+}
+function onBeatNow () {
+  var c = getCtx(); if (!c || !lastBeatAt) return false;
+  var t = c.currentTime;
+  var dPrev = Math.abs(t - lastBeatAt);
+  var dNext = Math.abs(nextBeatAt - t);
+  return Math.min(dPrev, dNext) <= CFG.beatWin;
+}
+
+/* ---------- palette (house law) ---------- */
+var COL = {
+  ivory: '#ece7d8', bone: '#f2efe6', clay: '#d8cdb8', wheat: '#e3dcc4',
+  ice: '#cfe0f2', corn: '#8fa8d8', steel: '#9fb3cf', cream: '#efece4',
+  violet: '#6f4f8f', violetHi: '#9d7fc0',
+  gold: '#f2c14e', flame: '#ffe27a', ember: '#9a8552',
+  dim: '#6f6a5e', mono: '#8a8578', dark: '#17171a',
+  red: '#8e1b1b', redDeep: '#4a0d0d'
+};
+
+/* ---------- game state ---------- */
+var state = 'BOOT';          // BOOT → TITLE → SWALLOW → FALLING → DYING → CARD
+var tNow = 0, tState = 0, lastTs = 0;
+var runCount = 0, taught = false;
+
+var egg = null, obs = [], ripples = [], parts = [], rippleId = 0;
+var rng = mulberry32(seedByte);
+var runByte = seedByte, runSrc = 'inherit';
+var elapsed = 0, fallenLy = 0, calls = [], streak = 0, ladderIdx = 0;
+var drunkT = 0, invulnT = 0, dieT = 0, cardT = 0, swallowT = 0;
+var spawnAt = 0, gateAt = 0, sweepAt = 0, sweepY = -1, hintA = 1;
+var deathLy = 0, deathByte = 0, deathSrc = '', typedA = 0, typedB = 0;
+var comet = null, glowRing = 0;
+
+function depth01 () { return clamp(elapsed / 90, 0, 1); }         // TUNE — 90 s to full depth
+function speedNow () { return H * (0.22 + 0.30 * depth01()); }    // TUNE SPEED — px/s the diet rises
+function ringR () {
+  var shrink = 1 - 0.42 * depth01();                              // TUNE RING — mommy gets small
+  var breath = 1 + 0.05 * Math.sin(tNow * Math.PI * 2 * 2.2);     // the 2.2 hz law (173 would strobe)
+  var pulse = 1 + (REDUCED ? 0.012 : 0.03) * beatPulse;
+  return ringR0 * shrink * breath * pulse;
+}
+
+/* ---------- input ---------- */
+var ptr = { down: false, id: null, x0: 0, y0: 0, t0: 0, moved: false, lx: 0 };
+cv.addEventListener('pointerdown', function (e) {
+  if (ptr.down) return;
+  ptr.down = true; ptr.id = e.pointerId;
+  ptr.x0 = e.clientX; ptr.y0 = e.clientY; ptr.lx = e.clientX;
+  ptr.t0 = performance.now(); ptr.moved = false;
+  try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+  if (state === 'TITLE') beginSwallow();
+});
+cv.addEventListener('pointermove', function (e) {
+  if (!ptr.down || e.pointerId !== ptr.id) return;
+  var dx = e.clientX - ptr.lx; ptr.lx = e.clientX;
+  if (Math.abs(e.clientX - ptr.x0) > 6 || Math.abs(e.clientY - ptr.y0) > 6) ptr.moved = true;
+  if (state === 'FALLING' && egg) {
+    var wob = (drunkT > 0) ? (1 + 0.5 * Math.sin(tNow * 9)) : 1;  // drunk loosens the hand
+    egg.tx = clamp(egg.tx + dx * 1.15 * wob, eggR + 6, W - eggR - 6);
+    if (ptr.moved) taught = true;
+  }
+});
+function ptrUp (e) {
+  if (!ptr.down || (e.pointerId !== undefined && e.pointerId !== ptr.id)) return;
+  ptr.down = false;
+  var dt = performance.now() - ptr.t0;
+  var isTap = !ptr.moved && dt < 300;
+  if (isTap) {
+    if (state === 'FALLING') doCall();
+    else if (state === 'CARD' && cardT > 0.6) resetRun();
+  }
+}
+cv.addEventListener('pointerup', ptrUp);
+cv.addEventListener('pointercancel', function (e) { ptr.down = false; });
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+
+/* ---------- the call ---------- */
+function doCall () {
+  var on = onBeatNow();
+  if (on) { streak++; } else { streak = 0; ladderIdx = runByte % 8; }
+  var f = PZ * CFG.ladder[ladderIdx % 8];
+  var c = getCtx();
+  if (c) tone(f, c.currentTime + 0.01, 0.5, on ? 0.30 : 0.18, 'sine');
+  if (on) ladderIdx = (ladderIdx + 1) % 8;
+  var rmax = on ? H * 0.62 : H * 0.36;                            // TUNE RIPPLE — reach of the call
+  ripples.push({ id: ++rippleId, x: egg.x, y: egg.y, r: eggR, pr: eggR, rmax: rmax, on: on, dead: false });
+  parts.push({ kind: 'word', x: egg.x + (rng() - 0.5) * eggR, y: egg.y - eggRy, vy: -H * 0.05, a: 1, t: 0, on: on });
+  glowRing = 1;
+  calls.push({ x01: egg.x / W, t: elapsed, on: on });
+  taught = true;
+}
+
+/* ---------- the diet ---------- */
+function spawnObstacle () {
+  var r = rng();
+  var kind;
+  if      (r < 0.16) kind = 'cheese';
+  else if (r < 0.30) kind = 'shard';
+  else if (r < 0.42) kind = 'helmet';
+  else if (r < 0.54) kind = 'shield';
+  else if (r < 0.66) kind = 'spear';
+  else if (r < 0.78) kind = 'femur';
+  else if (r < 0.90) kind = 'sheep';
+  else               kind = 'wine';
+  var base = MINWH * (0.052 + rng() * 0.03);
+  if (kind === 'spear') base *= 1.25;
+  if (kind === 'sheep') base *= 1.15;
+  if (kind === 'wine')  base *= 0.8;
+  obs.push({
+    kind: kind, x: W * (0.09 + rng() * 0.82), y: H + base * 2.4,
+    r: base, rot: rng() * Math.PI * 2,
+    vr: (rng() - 0.5) * (kind === 'femur' ? 3.2 : 1.1),
+    lit: 0, seen: {}, seed: rng() * 1000, hit: false
+  });
+}
+function spawnGate () {
+  var gapW = eggR * 5.0, margin = W * 0.05;
+  var gapX = margin + gapW * 0.5 + rng() * (W - margin * 2 - gapW);
+  var segs = [];
+  if (gapX - gapW / 2 - margin > eggR) segs.push({ x0: margin, x1: gapX - gapW / 2 });
+  if (W - margin - (gapX + gapW / 2) > eggR) segs.push({ x0: gapX + gapW / 2, x1: W - margin });
+  obs.push({ kind: 'gate', x: W / 2, y: H + 60, r: eggR * 1.1, segs: segs, lit: 0, seen: {}, seed: rng() * 1000, hit: false, rot: 0, vr: 0 });
+}
+
+/* ---------- run control ---------- */
+function initEgg () {
+  egg = { x: W / 2, tx: W / 2, xf: 0.5, vx: 0, look: 0 };
+}
+function startRun () {
+  runCount++;
+  runByte = (qByte != null) ? qByte : seedByte;
+  runSrc = (qByte != null) ? (qSrc || 'anu') : 'inherit';
+  rng = mulberry32((runByte ^ (runCount * 0x9E37)) >>> 0);
+  ladderIdx = runByte % 8;
+  obs = []; ripples = []; parts = []; calls = [];
+  elapsed = 0; fallenLy = 0; streak = 0; drunkT = 0; comet = null;
+  invulnT = 1.2; spawnAt = 0.9; gateAt = 12 + rng() * 8; sweepAt = 4.5; sweepY = -1;
+  hintA = (runCount === 1 && !taught) ? 1 : 0;
+  initEgg(); layout();
+  state = 'FALLING'; tState = 0;
+  startHeart();
+}
+function resetRun () { fetchQuantum(); startRun(); }
+function die (killer) {
+  if (state !== 'FALLING') return;
+  state = 'DYING'; tState = 0; dieT = 0;
+  playCrack();
+  deathLy = CFG.LY_TOTAL - fallenLy;
+  deathByte = (qByte != null) ? qByte : ((calls.length * 31 + Math.floor(elapsed * 7)) & 255);
+  deathSrc = (qByte != null) ? (qSrc || 'anu') : 'run';
+  try { localStorage.setItem(SEED_KEY, String(deathByte & 255)); } catch (e) {}   // the pass-forward
+  if (bestLy == null || deathLy < bestLy) {
+    bestLy = deathLy;
+    try { localStorage.setItem(BEST_KEY, String(bestLy)); } catch (e) {}
+  }
+  seedByte = deathByte & 255;
+  /* the shell falls away — inert ivory shards */
+  for (var i = 0; i < 7; i++) {
+    var a = rng() * Math.PI * 2, sp = MINWH * (0.10 + rng() * 0.22);
+    parts.push({ kind: 'shell', x: egg.x, y: egg.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - H * 0.06,
+                 rot: rng() * Math.PI * 2, vr: (rng() - 0.5) * 6, a: 1, t: 0, s: eggR * (0.35 + rng() * 0.4) });
+  }
+  /* the song bursts out — the only time the player turns gold */
+  comet = { x: egg.x, y: egg.y, t: 0 };
+  var c = getCtx();
+  if (c) {
+    var t0 = c.currentTime + 0.30;
+    for (var k = 0; k < 8; k++) tone(PZ * 2 * CFG.ladder[k], t0 + k * 0.055, 0.30, 0.16, 'sine');
+    tone(PZ, t0 + 0.5, 3.0, 0.05, 'sine');
+  }
+}
+
+/* ---------- update ---------- */
+function update (dt) {
+  tNow += dt; tState += dt;
+  beatPulse = Math.max(0, beatPulse - dt * 3.2);
+  var c = actx;
+  if (c && lastBeatAt && Math.abs(c.currentTime - lastBeatAt) < 0.05) beatPulse = 1;
+
+  if (state === 'SWALLOW') {
+    swallowT += dt;
+    var dur = REDUCED ? 0.35 : 1.05;
+    if (swallowT >= dur) startRun();
+    return;
+  }
+
+  if (state === 'FALLING' || state === 'DYING') {
+    if (state === 'FALLING') {
+      elapsed += dt;
+      fallenLy += CFG.LY_RATE * (1 + depth01() * 0.6) * dt;       // TUNE LY_RATE
+      invulnT = Math.max(0, invulnT - dt);
+      drunkT = Math.max(0, drunkT - dt);
+      hintA = Math.max(0, hintA - dt * (taught ? 1.6 : (elapsed > 5 ? 0.4 : 0)));
+      /* spawns */
+      spawnAt -= dt;
+      if (spawnAt <= 0) {
+        spawnObstacle();
+        var interval = Math.max(0.43, 0.9 - elapsed * 0.006);     // TUNE SPAWN
+        spawnAt = interval * (0.75 + rng() * 0.5);
+      }
+      gateAt -= dt;
+      if (gateAt <= 0) { spawnGate(); gateAt = 14 + rng() * 8; }
+      /* the lighthouse sweep */
+      sweepAt -= dt;
+      if (sweepAt <= 0 && sweepY < 0) { sweepY = H * 0.92; }
+      if (sweepY >= 0) {
+        sweepY -= dt * (H / 1.15);                                 // TUNE SWEEP — band speed
+        if (sweepY < -H * 0.1) { sweepY = -1; sweepAt = 7.5; }
+      }
+      /* egg motion */
+      egg.x += (egg.tx - egg.x) * Math.min(1, dt * 14);
+      egg.vx = (egg.tx - egg.x);
+      egg.xf = egg.x / W;
+    }
+    var v = speedNow() * (state === 'DYING' ? 0.35 : 1);
+    /* obstacles rise + grow (coming up from the deep) */
+    var nearest = null, nd = 1e9;
+    for (var i = obs.length - 1; i >= 0; i--) {
+      var o = obs[i];
+      var s = scaleAt(o.y);
+      o.y -= v * (0.55 + 0.65 * s) * dt * (o.kind === 'gate' ? 0.8 : 1);
+      o.rot += o.vr * dt;
+      o.lit = Math.max(0, o.lit - dt * 1.1);
+      if (sweepY >= 0 && Math.abs(o.y - sweepY) < H * 0.09) o.lit = Math.max(o.lit, 0.8);
+      if (o.y < -o.r * 3) { obs.splice(i, 1); continue; }
+      if (state === 'FALLING' && !o.hit) {
+        var d2 = Math.abs(o.y - eggY);
+        if (o.kind !== 'gate' && o.kind !== 'sheep' && o.kind !== 'wine' && d2 < nd) { nd = d2; nearest = o; }
+        collide(o, s);
+      }
+    }
+    egg && (egg.look += (((nearest && nd < H * 0.3) ? clamp((nearest.x - egg.x) / (W * 0.3), -1, 1) : 0) - egg.look) * Math.min(1, dt * 6));
+    /* ripples — the call comes back as the room's chord */
+    for (var j = ripples.length - 1; j >= 0; j--) {
+      var rp = ripples[j];
+      rp.pr = rp.r;
+      rp.r += dt * H * 1.5;
+      var cc = getCtx(), when = cc ? cc.currentTime + 0.01 : 0;
+      for (var k2 = 0; k2 < obs.length; k2++) {
+        var ob = obs[k2];
+        if (ob.seen[rp.id]) continue;
+        var dx = ob.x - rp.x, dy = ob.y - rp.y, dist = Math.sqrt(dx * dx + dy * dy);
+        if (ob.kind === 'gate') dist = Math.abs(ob.y - rp.y);
+        if (dist > rp.pr && dist <= rp.r) {
+          ob.seen[rp.id] = true;
+          ob.lit = 1;
+          if (cc) voiceOf(ob.kind, when, 0.10 * (rp.on ? 1.3 : 1) * clamp(1 - dist / rp.rmax, 0.25, 1));
+        }
+      }
+      if (rp.r >= rp.rmax) ripples.splice(j, 1);
+    }
+    glowRing = Math.max(0, glowRing - dt * 2.4);
+    /* particles */
+    for (var p = parts.length - 1; p >= 0; p--) {
+      var pa = parts[p]; pa.t += dt;
+      if (pa.kind === 'word') { pa.y += pa.vy * dt; pa.a = Math.max(0, 1 - pa.t / 1.1); if (pa.a <= 0) parts.splice(p, 1); }
+      else if (pa.kind === 'shell') {
+        pa.x += pa.vx * dt; pa.y += pa.vy * dt; pa.vy += H * 0.25 * dt; pa.rot += pa.vr * dt;
+        pa.a = Math.max(0, 1 - pa.t / 1.6); if (pa.a <= 0) parts.splice(p, 1);
+      }
+      else if (pa.kind === 'gold') {
+        pa.x += pa.vx * dt; pa.y += pa.vy * dt; pa.a = Math.max(0, 1 - pa.t / 0.7); if (pa.a <= 0) parts.splice(p, 1);
+      }
+    }
+    /* the dying comet — the song streaks for the ring */
+    if (state === 'DYING') {
+      dieT += dt;
+      if (comet) {
+        comet.t += dt;
+        var k3 = clamp(comet.t / 1.5, 0, 1), e2 = k3 * k3;
+        comet.x = egg.x + (ringX - egg.x) * e2;
+        comet.y = egg.y + (ringY - egg.y) * e2;
+        if (Math.random() < 0.7) parts.push({ kind: 'gold', x: comet.x, y: comet.y, vx: (Math.random() - 0.5) * 30, vy: (Math.random() - 0.5) * 30, a: 1, t: 0 });
+        if (k3 >= 1) comet = null;
+      }
+      if (dieT >= 1.9) { state = 'CARD'; tState = 0; cardT = 0; typedA = 0; typedB = 0; }
+    }
+    return;
+  }
+
+  if (state === 'CARD') {
+    cardT += dt;
+    typedA = clamp((cardT - 0.15) / 0.55, 0, 1);
+    typedB = clamp((cardT - 0.85) / 0.60, 0, 1);
+    return;
+  }
+}
+function scaleAt (y) {
+  /* the growth of approach: small when deep (low on screen), full at the egg's band */
+  var k = clamp((H + 40 - y) / (H + 40 - eggY), 0, 1.18);
+  return 0.55 + 0.45 * k;
+}
+function collide (o, s) {
+  if (invulnT > 0) return;
+  var ex = egg.x, ey = eggY;
+  if (o.kind === 'gate') {
+    if (Math.abs(o.y - ey) < o.r + eggRy * 0.8) {
+      for (var i = 0; i < o.segs.length; i++) {
+        var sgm = o.segs[i];
+        if (ex > sgm.x0 - eggR * 0.4 && ex < sgm.x1 + eggR * 0.4) { o.hit = true; die(o); return; }
+      }
+    }
+    return;
+  }
+  var rr = o.r * s * (o.kind === 'sheep' ? 1.05 : o.kind === 'spear' ? 0.55 : 0.82);
+  var dx = o.x - ex, dy = o.y - ey;
+  if (dx * dx + dy * dy > (rr + eggR) * (rr + eggR)) return;
+  if (o.kind === 'sheep') {
+    var push = (dx >= 0 ? -1 : 1) * (rr + eggR - Math.sqrt(dx * dx + dy * dy) + 14);
+    egg.tx = clamp(egg.tx + push, eggR + 6, W - eggR - 6);
+    o.x -= push * 0.4;
+    var cc = getCtx(); if (cc) voiceOf('sheep', cc.currentTime + 0.01, 0.16);
+    o.lit = 1; invulnT = 0.35;
+    return;
+  }
+  if (o.kind === 'wine') {
+    o.hit = true;
+    drunkT = 2.2;
+    var c2 = getCtx(); if (c2) voiceOf('wine', c2.currentTime + 0.01, 0.16);
+    var idx = obs.indexOf(o); if (idx >= 0) obs.splice(idx, 1);
+    return;
+  }
+  o.hit = true;
+  die(o);
+}
+
+/* ---------- swallow ---------- */
+function beginSwallow () {
+  unlockMute();
+  var c = getCtx();
+  if (c) {
+    startHeart();
+    glide(PZ * 3/4, PZ * 0.25, c.currentTime + 0.05, 0.5, 0.22, 'sine');   // the gulp · 3/4 → 1/4
+    noiseHit(c.currentTime + 0.05, 0.35, 200, 700, 0.10);
+  }
+  state = 'SWALLOW'; tState = 0; swallowT = 0;
+}
+
+/* ---------- draw ---------- */
+function draw () {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+
+  if (state === 'BOOT') return;
+
+  if (state === 'TITLE') { drawTitle(); return; }
+  if (state === 'SWALLOW') { drawSwallow(); return; }
+
+  /* the drunk sway */
+  ctx.save();
+  if (drunkT > 0 && !REDUCED) {
+    var dk = clamp(drunkT / 2.2, 0, 1);
+    ctx.translate(W / 2, H / 2);
+    ctx.rotate(Math.sin(tNow * 5.2) * 0.05 * dk);
+    ctx.translate(-W / 2 + Math.sin(tNow * 3.7) * 8 * dk, -H / 2);
+  }
+
+  drawRing();
+  drawSweep();
+  for (var i = 0; i < obs.length; i++) drawObstacle(obs[i]);
+  for (var j = 0; j < ripples.length; j++) drawRipple(ripples[j]);
+  if (state === 'FALLING') drawEgg();
+  drawParts();
+  if (comet) drawComet();
+
+  ctx.restore();
+
+  /* the heartbeat vignette — a breath at the edges */
+  if (!REDUCED && beatPulse > 0.01 && state === 'FALLING') {
+    var vg = ctx.createRadialGradient(W / 2, H / 2, MINWH * 0.45, W / 2, H / 2, MINWH * 0.85);
+    vg.addColorStop(0, 'rgba(0,0,0,0)');
+    vg.addColorStop(1, 'rgba(143,168,216,' + (0.06 * beatPulse).toFixed(3) + ')');
+    ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+  }
+
+  drawHud();
+  if (state === 'CARD') drawCard();
+}
+
+function drawRing () {
+  var r = ringR();
+  /* the deep glow — the throat's one light */
+  var g = ctx.createRadialGradient(ringX, ringY, 1, ringX, ringY, H * 0.45);
+  g.addColorStop(0, 'rgba(143,168,216,0.10)');
+  g.addColorStop(0.5, 'rgba(143,168,216,0.03)');
+  g.addColorStop(1, 'rgba(143,168,216,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(ringX, ringY, H * 0.45, 0, 6.2832); ctx.fill();
+  /* the socket from inside — a bone rim around the dark */
+  ctx.beginPath(); ctx.arc(ringX, ringY, r, 0, 6.2832);
+  ctx.strokeStyle = 'rgba(236,231,216,0.75)';
+  ctx.lineWidth = Math.max(2.5, r * 0.09);
+  ctx.stroke();
+  ctx.beginPath(); ctx.arc(ringX, ringY, r * 0.92, 0, 6.2832);
+  ctx.fillStyle = '#000'; ctx.fill();
+  /* the star seated beyond — ice-white, breathing at 2.2 hz */
+  var breath = 0.65 + 0.35 * (0.5 + 0.5 * Math.sin(tNow * Math.PI * 2 * 2.2));
+  var sr = r * 0.16;
+  var sg = ctx.createRadialGradient(ringX, ringY, 0.5, ringX, ringY, sr * 4);
+  sg.addColorStop(0, 'rgba(240,247,255,' + (0.9 * breath).toFixed(3) + ')');
+  sg.addColorStop(0.35, 'rgba(207,224,242,' + (0.35 * breath).toFixed(3) + ')');
+  sg.addColorStop(1, 'rgba(143,168,216,0)');
+  ctx.fillStyle = sg;
+  ctx.beginPath(); ctx.arc(ringX, ringY, sr * 4, 0, 6.2832); ctx.fill();
+  ctx.fillStyle = 'rgba(245,250,255,' + (0.85 * breath + 0.15).toFixed(3) + ')';
+  ctx.beginPath(); ctx.arc(ringX, ringY, sr, 0, 6.2832); ctx.fill();
+  /* two beams, turning opposite ways */
+  drawBeam(tNow * 0.42, r);
+  drawBeam(-tNow * 0.42 + 2.1, r);
+  /* the little swimmer — only on a true streak, never explained */
+  if (streak >= 6 && state === 'FALLING') {
+    var a = -0.6, rr2 = r * 0.34;
+    ctx.fillStyle = 'rgba(236,231,216,' + (0.5 + 0.3 * Math.sin(tNow * 3)).toFixed(3) + ')';
+    ctx.beginPath();
+    ctx.ellipse(ringX + Math.cos(a) * rr2, ringY + Math.sin(a) * rr2, r * 0.05, r * 0.035, a, 0, 6.2832);
+    ctx.fill();
+  }
+}
+function drawBeam (ang, r) {
+  ctx.save();
+  ctx.translate(ringX, ringY); ctx.rotate(ang);
+  var L = H * 0.5;
+  var bg = ctx.createLinearGradient(0, 0, 0, -L);
+  bg.addColorStop(0, 'rgba(207,224,242,0.10)');
+  bg.addColorStop(1, 'rgba(207,224,242,0)');
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  ctx.moveTo(-1.2, 0); ctx.lineTo(1.2, 0); ctx.lineTo(r * 0.5, -L); ctx.lineTo(-r * 0.5, -L);
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+function drawSweep () {
+  if (sweepY < 0) return;
+  var hgt = H * 0.16;
+  var g = ctx.createLinearGradient(0, sweepY - hgt / 2, 0, sweepY + hgt / 2);
+  g.addColorStop(0, 'rgba(207,224,242,0)');
+  g.addColorStop(0.5, 'rgba(207,224,242,0.09)');
+  g.addColorStop(1, 'rgba(207,224,242,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, sweepY - hgt / 2, W, hgt);
+}
+
+/* the diet — artifacts, knot anatomy; dim silhouettes until called */
+function drawObstacle (o) {
+  var s = scaleAt(o.y);
+  var a = 0.14 + 0.86 * clamp(o.lit, 0, 1);                        // TUNE DARKNESS — idle visibility
+  ctx.save();
+  ctx.globalAlpha = a;
+  if (o.kind === 'gate') { drawGate(o); ctx.restore(); return; }
+  ctx.translate(o.x, o.y); ctx.rotate(o.rot); ctx.scale(s, s);
+  var r = o.r;
+  if (o.kind === 'cheese') {
+    ctx.fillStyle = COL.wheat;
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, 6.2832); ctx.fill();
+    ctx.strokeStyle = 'rgba(90,84,66,0.6)'; ctx.lineWidth = r * 0.12;
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.93, 0, 6.2832); ctx.stroke();
+    ctx.fillStyle = 'rgba(60,56,44,0.5)';
+    hole(r * 0.3, -r * 0.2, r * 0.16); hole(-r * 0.35, r * 0.15, r * 0.12); hole(r * 0.05, r * 0.4, r * 0.10);
+  }
+  else if (o.kind === 'shard') {
+    ctx.fillStyle = COL.clay;
+    shardPath(r, o.seed); ctx.fill();
+    ctx.strokeStyle = 'rgba(40,36,30,0.8)'; ctx.lineWidth = 1.2;
+    shardPath(r, o.seed); ctx.stroke();
+    /* the black-figure warrior — a picture of a man, never a man */
+    ctx.fillStyle = 'rgba(35,30,24,0.9)'; ctx.strokeStyle = 'rgba(35,30,24,0.9)'; ctx.lineWidth = r * 0.09;
+    ctx.beginPath(); ctx.arc(-r * 0.12, -r * 0.28, r * 0.12, 0, 6.2832); ctx.fill();       // head
+    ctx.beginPath(); ctx.moveTo(-r * 0.12, -r * 0.14); ctx.lineTo(-r * 0.12, r * 0.28); ctx.stroke(); // torso
+    ctx.beginPath(); ctx.moveTo(-r * 0.4, r * 0.1); ctx.lineTo(r * 0.32, -r * 0.42); ctx.stroke();   // spear
+    ctx.beginPath(); ctx.arc(r * 0.16, r * 0.06, r * 0.16, 0, 6.2832); ctx.fill();          // shield
+  }
+  else if (o.kind === 'helmet') {
+    ctx.fillStyle = COL.steel;
+    ctx.beginPath();
+    ctx.arc(0, -r * 0.15, r * 0.8, Math.PI, 0);
+    ctx.lineTo(r * 0.8, r * 0.55); ctx.lineTo(r * 0.34, r * 0.75); ctx.lineTo(r * 0.34, r * 0.1);
+    ctx.lineTo(-r * 0.34, r * 0.1); ctx.lineTo(-r * 0.34, r * 0.75); ctx.lineTo(-r * 0.8, r * 0.55);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(12,14,18,0.95)';
+    ctx.fillRect(-r * 0.11, -r * 0.2, r * 0.22, r * 0.9);                                   // the T
+    ctx.fillRect(-r * 0.52, -r * 0.2, r * 1.04, r * 0.2);
+  }
+  else if (o.kind === 'shield') {
+    ctx.fillStyle = COL.ice;
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, 6.2832); ctx.fill();
+    ctx.strokeStyle = COL.corn; ctx.lineWidth = r * 0.1;
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.66, 0, 6.2832); ctx.stroke();
+    ctx.fillStyle = COL.steel;
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.2, 0, 6.2832); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.86, o.rot * 2, o.rot * 2 + 0.7); ctx.stroke();     // the spin glint
+  }
+  else if (o.kind === 'spear') {
+    ctx.strokeStyle = COL.clay; ctx.lineWidth = r * 0.14;
+    ctx.beginPath(); ctx.moveTo(-r, r * 0.1); ctx.lineTo(r * 0.55, -r * 0.06); ctx.stroke();
+    ctx.strokeStyle = COL.clay; ctx.lineWidth = r * 0.1;                                     // the break
+    ctx.beginPath(); ctx.moveTo(r * 0.62, -r * 0.02); ctx.lineTo(r * 0.72, -r * 0.16); ctx.stroke();
+    ctx.fillStyle = COL.ice;
+    ctx.beginPath(); ctx.moveTo(-r, r * 0.1); ctx.lineTo(-r * 1.3, 0); ctx.lineTo(-r, -r * 0.02); ctx.closePath(); ctx.fill();
+  }
+  else if (o.kind === 'femur') {
+    ctx.strokeStyle = COL.bone; ctx.lineWidth = r * 0.3; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(-r * 0.7, 0); ctx.lineTo(r * 0.7, 0); ctx.stroke();
+    ctx.fillStyle = COL.bone;
+    hole(-r * 0.78, -r * 0.16, r * 0.2); hole(-r * 0.78, r * 0.16, r * 0.2);
+    hole(r * 0.78, -r * 0.16, r * 0.2); hole(r * 0.78, r * 0.16, r * 0.2);
+  }
+  else if (o.kind === 'sheep') {
+    var bob = Math.sin(tNow * 3 + o.seed) * r * 0.06;
+    ctx.translate(0, bob);
+    ctx.fillStyle = 'rgba(30,30,32,0.9)';
+    ctx.fillRect(-r * 0.5, r * 0.5, r * 0.12, r * 0.35); ctx.fillRect(-r * 0.15, r * 0.55, r * 0.12, r * 0.32);
+    ctx.fillRect(r * 0.2, r * 0.5, r * 0.12, r * 0.35); ctx.fillRect(r * 0.5, r * 0.55, r * 0.12, r * 0.3);
+    ctx.fillStyle = COL.cream;
+    hole(-r * 0.4, 0, r * 0.5); hole(r * 0.15, -r * 0.12, r * 0.55); hole(r * 0.5, r * 0.1, r * 0.45); hole(-r * 0.05, r * 0.2, r * 0.5);
+    ctx.fillStyle = 'rgba(30,30,32,0.95)';
+    hole(r * 0.85, -r * 0.2, r * 0.22);                                                     // the dark little head
+    ctx.fillRect(r * 0.92, -r * 0.5, r * 0.1, r * 0.22);                                    // an ear
+  }
+  else if (o.kind === 'wine') {
+    ctx.fillStyle = COL.violet;
+    blobPath(o.r, o.seed, tNow); ctx.fill();
+    ctx.strokeStyle = COL.violetHi; ctx.globalAlpha = a * 0.5; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.arc(-o.r * 0.25, -o.r * 0.25, o.r * 0.4, Math.PI * 0.9, Math.PI * 1.6); ctx.stroke();
+  }
+  ctx.restore();
+}
+function hole (x, y, r) { ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill(); }
+function shardPath (r, seed) {
+  var rr = mulberry32(Math.floor(seed * 9973));
+  ctx.beginPath();
+  for (var i = 0; i < 5; i++) {
+    var a = (i / 5) * Math.PI * 2 + rr() * 0.5;
+    var rad = r * (0.7 + rr() * 0.5);
+    var x = Math.cos(a) * rad, y = Math.sin(a) * rad;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+function blobPath (r, seed, t) {
+  ctx.beginPath();
+  for (var i = 0; i <= 10; i++) {
+    var a = (i / 10) * Math.PI * 2;
+    var rad = r * (0.85 + 0.15 * Math.sin(a * 3 + seed + t * 2));
+    var x = Math.cos(a) * rad, y = Math.sin(a) * rad;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+function drawGate (o) {
+  var segH = o.r * 1.5;
+  ctx.fillStyle = COL.bone;
+  for (var i = 0; i < o.segs.length; i++) {
+    var sgm = o.segs[i];
+    var curve = Math.sin(((sgm.x0 + sgm.x1) / 2 / W) * Math.PI) * 8;
+    roundedSeg(sgm.x0, o.y - curve, sgm.x1 - sgm.x0, segH * 0.6);
+    ctx.fillStyle = COL.bone; ctx.fill();
+    ctx.fillStyle = COL.bone;
+    hole(sgm.x0 + segH * 0.28, o.y - curve - segH * 0.18, segH * 0.3);
+    hole(sgm.x0 + segH * 0.28, o.y - curve + segH * 0.18, segH * 0.3);
+    hole(sgm.x1 - segH * 0.28, o.y - curve - segH * 0.18, segH * 0.3);
+    hole(sgm.x1 - segH * 0.28, o.y - curve + segH * 0.18, segH * 0.3);
+  }
+}
+function roundedSeg (x, cy, w2, h2) {
+  var r2 = h2 / 2;
+  ctx.beginPath();
+  ctx.moveTo(x + r2, cy - r2);
+  ctx.lineTo(x + w2 - r2, cy - r2);
+  ctx.arc(x + w2 - r2, cy, r2, -Math.PI / 2, Math.PI / 2);
+  ctx.lineTo(x + r2, cy + r2);
+  ctx.arc(x + r2, cy, r2, Math.PI / 2, -Math.PI / 2);
+  ctx.closePath();
+}
+function drawRipple (rp) {
+  var k = rp.r / rp.rmax;
+  var a = clamp(1 - k, 0, 1);
+  ctx.strokeStyle = 'rgba(242,193,78,' + (a * (rp.on ? 0.85 : 0.55)).toFixed(3) + ')';
+  ctx.lineWidth = rp.on ? 2.6 : 2;
+  ctx.beginPath(); ctx.arc(rp.x, rp.y, rp.r, 0, 6.2832); ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,226,122,' + (a * 0.28).toFixed(3) + ')';
+  ctx.lineWidth = 6;
+  ctx.beginPath(); ctx.arc(rp.x, rp.y, rp.r, 0, 6.2832); ctx.stroke();
+}
+function drawEgg () {
+  var sq = clamp(Math.abs(egg.vx) / 40, 0, 0.18);
+  ctx.save();
+  ctx.translate(egg.x, eggY);
+  ctx.rotate(clamp(egg.vx * 0.004, -0.16, 0.16));
+  ctx.scale(1 + sq, 1 - sq);
+  if (glowRing > 0.02) {
+    ctx.strokeStyle = 'rgba(255,226,122,' + (0.5 * glowRing).toFixed(3) + ')';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.ellipse(0, 0, eggR * 1.4, eggRy * 1.32, 0, 0, 6.2832); ctx.stroke();
+  }
+  var g = ctx.createRadialGradient(-eggR * 0.35, -eggRy * 0.4, eggR * 0.2, 0, 0, eggRy * 1.3);
+  g.addColorStop(0, '#f8f4ea');
+  g.addColorStop(0.7, '#ece7d8');
+  g.addColorStop(1, '#cfc9b6');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.ellipse(0, 0, eggR, eggRy, 0, 0, 6.2832); ctx.fill();
+  /* the one googly eye — the egg is a tiny cyclops too */
+  ctx.fillStyle = '#fdfcf8';
+  ctx.beginPath(); ctx.arc(0, -eggRy * 0.22, eggR * 0.42, 0, 6.2832); ctx.fill();
+  ctx.fillStyle = COL.dark;
+  ctx.beginPath();
+  ctx.arc(egg.look * eggR * 0.18, -eggRy * 0.22, eggR * 0.18, 0, 6.2832);
+  ctx.fill();
+  ctx.restore();
+}
+function drawComet () {
+  var g = ctx.createRadialGradient(comet.x, comet.y, 0.5, comet.x, comet.y, eggR * 2.2);
+  g.addColorStop(0, 'rgba(255,226,122,0.95)');
+  g.addColorStop(0.4, 'rgba(242,193,78,0.5)');
+  g.addColorStop(1, 'rgba(242,193,78,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(comet.x, comet.y, eggR * 2.2, 0, 6.2832); ctx.fill();
+}
+function drawParts () {
+  for (var i = 0; i < parts.length; i++) {
+    var p = parts[i];
+    if (p.kind === 'word') {
+      ctx.globalAlpha = p.a;
+      ctx.fillStyle = p.on ? COL.flame : COL.gold;
+      ctx.font = 'italic 500 ' + Math.round(MINWH * 0.035) + "px 'EB Garamond', serif";
+      ctx.textAlign = 'center';
+      ctx.fillText('mommy?', p.x, p.y);
+      ctx.globalAlpha = 1;
+    } else if (p.kind === 'shell') {
+      ctx.save();
+      ctx.globalAlpha = p.a;
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = COL.ivory;
+      ctx.beginPath(); ctx.moveTo(-p.s, 0); ctx.lineTo(0, -p.s * 0.8); ctx.lineTo(p.s, 0); ctx.lineTo(0, p.s * 0.5);
+      ctx.closePath(); ctx.fill();
+      ctx.restore();
+    } else if (p.kind === 'gold') {
+      ctx.globalAlpha = p.a;
+      ctx.fillStyle = COL.flame;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.8, 0, 6.2832); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+}
+function drawHud () {
+  if (state === 'CARD') return;
+  var ly = CFG.LY_TOTAL - fallenLy;
+  ctx.fillStyle = COL.mono;
+  ctx.font = "300 11px 'JetBrains Mono', monospace";
+  ctx.textAlign = 'center';
+  ctx.fillText(ly.toFixed(10) + ' ly to mommy', W / 2, 24);
+  if (hintA > 0.02 && state === 'FALLING') {
+    ctx.globalAlpha = clamp(hintA, 0, 1) * 0.8;
+    ctx.fillStyle = COL.dim;
+    ctx.font = "300 11px 'JetBrains Mono', monospace";
+    ctx.fillText('slide to dodge  ·  tap to call', W / 2, H * 0.14);
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* ---------- the card (death is knot game over) ---------- */
+function drawCard () {
+  ctx.fillStyle = 'rgba(0,0,0,' + clamp(cardT * 2, 0, 0.8).toFixed(2) + ')';
+  ctx.fillRect(0, 0, W, H);
+  var cx = W / 2, y = H * 0.17;
+  var lineA = 'no body here', lineB = 'song still here';
+  ctx.textAlign = 'center';
+  ctx.font = 'italic 500 ' + Math.round(MINWH * 0.062) + "px 'EB Garamond', serif";
+  ctx.fillStyle = COL.ivory;
+  ctx.fillText(lineA.slice(0, Math.ceil(lineA.length * typedA)), cx, y);
+  y += MINWH * 0.085;
+  var shown = lineB.slice(0, Math.ceil(lineB.length * typedB));
+  if (shown.length <= 4) {
+    ctx.fillStyle = COL.gold;
+    ctx.fillText(shown, cx, y);
+  } else {
+    var wSong = ctx.measureText('song').width;
+    var wRest = ctx.measureText(shown.slice(4)).width;
+    var x0 = cx - (wSong + wRest) / 2;
+    ctx.textAlign = 'left';
+    ctx.fillStyle = COL.gold; ctx.fillText('song', x0, y);
+    ctx.fillStyle = COL.ivory; ctx.fillText(shown.slice(4), x0 + wSong, y);
+    ctx.textAlign = 'center';
+  }
+  /* the yolk constellation — every call you made, unrepeatable */
+  if (cardT > 1.4) {
+    var bw = Math.min(W * 0.68, 300), bh = Math.min(H * 0.30, 280);
+    var bx = cx - bw / 2, by = y + MINWH * 0.06;
+    var ca = clamp((cardT - 1.4) / 0.6, 0, 1);
+    ctx.globalAlpha = ca;
+    ctx.strokeStyle = 'rgba(236,231,216,0.14)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(bx, by, bw, bh);
+    if (calls.length === 0) {
+      ctx.fillStyle = COL.dim;
+      ctx.font = "300 10px 'JetBrains Mono', monospace";
+      ctx.fillText('no calls were made', cx, by + bh / 2);
+    } else {
+      var tMax = Math.max(1, calls.length > 0 ? calls[calls.length - 1].t : 1);
+      ctx.strokeStyle = 'rgba(242,193,78,0.22)';
+      ctx.beginPath();
+      for (var i = 0; i < calls.length; i++) {
+        var px = bx + 8 + calls[i].x01 * (bw - 16);
+        var py = by + 10 + (calls[i].t / tMax) * (bh - 20);
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      for (var j = 0; j < calls.length; j++) {
+        var qx = bx + 8 + calls[j].x01 * (bw - 16);
+        var qy = by + 10 + (calls[j].t / tMax) * (bh - 20);
+        ctx.fillStyle = calls[j].on ? COL.flame : COL.gold;
+        ctx.beginPath(); ctx.arc(qx, qy, calls[j].on ? 2.6 : 1.9, 0, 6.2832); ctx.fill();
+      }
+    }
+    var yy = by + bh + MINWH * 0.05;
+    ctx.fillStyle = COL.ivory;
+    ctx.font = "400 13px 'JetBrains Mono', monospace";
+    ctx.fillText(deathLy.toFixed(10) + ' ly to mommy', cx, yy);
+    yy += 20;
+    if (bestLy != null) {
+      ctx.fillStyle = COL.dim;
+      ctx.font = "300 9.5px 'JetBrains Mono', monospace";
+      ctx.fillText('closest so far · ' + bestLy.toFixed(10), cx, yy);
+      yy += 16;
+    }
+    ctx.fillStyle = COL.dim;
+    ctx.font = "300 9.5px 'JetBrains Mono', monospace";
+    ctx.fillText('dealt by the universe · byte ' + deathByte + ' · ' + deathSrc, cx, yy);
+    ctx.globalAlpha = 1;
+  }
+  if (cardT > 0.6) {
+    var ea = 0.6 + 0.4 * Math.sin(tNow * 1.4);
+    ctx.globalAlpha = clamp((cardT - 0.6) / 0.4, 0, 1) * ea;
+    ctx.fillStyle = COL.ember;
+    ctx.font = 'italic 500 ' + Math.round(MINWH * 0.055) + "px 'EB Garamond', serif";
+    ctx.fillText('again', cx, H * 0.88);
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* ---------- the title + the swallow (the app-launch zoom IS the swallow) ---------- */
+var discR = 0;
+function drawDisc (cx, cy, r, glintOn) {
+  ctx.fillStyle = COL.ivory;
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, 6.2832); ctx.fill();
+  ctx.fillStyle = '#0a0a0c';
+  ctx.beginPath(); ctx.arc(cx, cy, r * 0.62, 0, 6.2832); ctx.fill();
+  if (glintOn) {
+    ctx.fillStyle = 'rgba(236,231,216,0.85)';
+    ctx.beginPath();
+    ctx.ellipse(cx + r * 0.2, cy - r * 0.22, r * 0.09, r * 0.06, -0.6, 0, 6.2832);
+    ctx.fill();
+  }
+}
+function drawTitle () {
+  var breath = 1 + 0.02 * Math.sin(tNow * Math.PI * 2 * 2.2);
+  discR = MINWH * 0.13;
+  drawDisc(W / 2, H * 0.36, discR * breath, true);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = COL.ivory;
+  ctx.font = 'italic 500 ' + Math.round(MINWH * 0.11) + "px 'EB Garamond', serif";
+  ctx.fillText('mommy?', W / 2, H * 0.36 + discR + MINWH * 0.14);
+  ctx.fillStyle = COL.dim;
+  ctx.font = "300 10px 'JetBrains Mono', monospace";
+  ctx.fillText('a stupid little game from a project with no purpose', W / 2, H * 0.36 + discR + MINWH * 0.14 + 26);
+  if (bestLy != null) {
+    ctx.fillStyle = COL.mono;
+    ctx.font = "300 10px 'JetBrains Mono', monospace";
+    ctx.fillText('closest so far · ' + bestLy.toFixed(10) + ' ly', W / 2, H * 0.36 + discR + MINWH * 0.14 + 46);
+  }
+  var blink = (Math.floor(tNow * 1.6) % 2) === 0;
+  ctx.fillStyle = blink ? COL.ivory : COL.dim;
+  ctx.font = 'italic 400 ' + Math.round(MINWH * 0.042) + "px 'EB Garamond', serif";
+  ctx.fillText('tap', W / 2, H * 0.78);
+}
+function drawSwallow () {
+  var dur = REDUCED ? 0.35 : 1.05;
+  var k = clamp(swallowT / dur, 0, 1);
+  if (REDUCED) {
+    ctx.globalAlpha = 1 - k;
+    drawTitle();
+    ctx.globalAlpha = 1;
+    return;
+  }
+  var diag = Math.sqrt(W * W + H * H);
+  var need = (diag * 0.62) / (discR * 0.62);
+  var s = 1 + (k * k) * need;
+  drawDisc(W / 2, H * 0.36 + (H * 0.14) * k, discR * s, k < 0.35);
+  /* say-ahh red — the one red in the whole game */
+  var redA = 0;
+  if (k > 0.5) redA = Math.sin(clamp((k - 0.5) / 0.5, 0, 1) * Math.PI) * 0.85;
+  if (redA > 0.01) {
+    var g = ctx.createRadialGradient(W / 2, H * 0.62, 10, W / 2, H * 0.62, diag * 0.7);
+    g.addColorStop(0, 'rgba(142,27,27,' + (redA).toFixed(3) + ')');
+    g.addColorStop(0.6, 'rgba(74,13,13,' + (redA * 0.8).toFixed(3) + ')');
+    g.addColorStop(1, 'rgba(0,0,0,' + (redA * 0.9).toFixed(3) + ')');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(60,10,10,' + (redA * 0.7).toFixed(3) + ')';
+    ctx.beginPath(); ctx.ellipse(W / 2, H * 1.05, W * 0.8, H * 0.35, 0, Math.PI, 0); ctx.fill();  // the tongue sea
+  }
+  if (k > 0.9) {
+    ctx.fillStyle = 'rgba(0,0,0,' + (((k - 0.9) / 0.1)).toFixed(3) + ')';
+    ctx.fillRect(0, 0, W, H);
+  }
+}
+
+/* ---------- loop ---------- */
+function frame (ts) {
+  requestAnimationFrame(frame);
+  if (document.hidden) { lastTs = ts; return; }
+  var dt = lastTs ? (ts - lastTs) / 1000 : 0.016;
+  lastTs = ts;
+  if (dt > 0.05) dt = 0.05;
+  update(dt);
+  draw();
+}
+document.addEventListener('visibilitychange', function () {
+  if (document.hidden && actx) { try { actx.suspend(); } catch (e) {} }
+  else if (actx) { try { actx.resume(); } catch (e) {} }
+});
+
+/* ---------- boot ---------- */
+resize();
+function boot () { state = 'TITLE'; tState = 0; }
+var booted = false;
+function bootOnce () { if (!booted) { booted = true; boot(); } }
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(function () { setTimeout(bootOnce, 120); });
+  setTimeout(bootOnce, 1600);                                     // honest fallback — the game never waits forever
+} else {
+  setTimeout(bootOnce, 400);
+}
+requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>

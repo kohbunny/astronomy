@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<!--
+  21 sep 2026 · THE MORTALITY PASS, pass one · this room is CUT to THE
+  ONE-PAGE LAW. nothing else in the room was touched.
+  · THE LINE: mortal.js and its guard are the first scripts the page runs.
+  · THE READS: ?enter=yolk is read from MORTAL.search in BOTH places — the head
+    script that blacks the page before <body> exists (mortal.js's line now
+    runs before it, so MORTAL is standing when it asks) and the belt's own
+    catch.
+  · THE DOOR: the ‹ (#back → phone.html?door=egg) goes through MORTAL.go
+    behind its own black sheet. the forward door is still shut, as the
+    file says: a tap on the question answers with the words.
+  · read and found clean: no history.*, no # writes, no form, no iframe, no
+    referrer, no window.open, no side script.
+  the room is named in mortal.js's CUT list; deploy the two together.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mortal.js — THE ONE-PAGE LAW (the mortality pass, pass one). the first
+     script this page runs: it keeps the page's true address and rewrites the
+     one safari holds to the card's own, so the tab can still close itself at
+     the end. after this line ask MORTAL.search / MORTAL.href / MORTAL.hash,
+     never location's; every door is MORTAL.go(url) — a replace into a cut
+     room, never a push. IF IT IS KNOT BESIDE THIS FILE, NOTHING BREAKS: the
+     guard stands in, and the doors open with a push as they always did. -->
+<script src="mortal.js"></script>
+<script>
+window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.search, hash:location.hash,
+  path:location.pathname, go:function(u){ location.href=u; } };
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>the mommy game</title>
+<!-- ================= mommygame.html · THE STORE, REHOUSED =================
+
+     (23 aug, his word). the egg room moved OUT of the phone and this page
+     is where it lives now: the game's own front, standing beside
+     phone.html the way deadstar.html and songbook.html do.
+
+     what it holds, in order — the store's three films, letter for letter:
+
+       1 · evestore.mp4      — the storefront, on loop, silent, until a tap.
+       2 · storeapproach.MP4 — the approach, once, WITH SOUND.
+       3 · the question — `play the mommy game?` — and under it, new at
+           the move, its answer: `coming soon.` — held, breathing, on a
+           loop, over storeinside.MP4, which loops with its own sound.
+
+     THE FORWARD DOOR IS SHUT. the answering tap used to change the
+     address to cyclopsv7.html; that door and the games behind it are
+     struck — he keeps copies — and a tap on the question now answers
+     with the words themselves: `coming soon.` takes one brighter
+     breath. nobody moves forward because there is nowhere forward yet.
+
+     THE SEAM (the bridge's far half — recut 15 sep). the phone's egg
+     tile cracks (you hear it), the other tiles go out, and the shell
+     floats to the centre of the page smaller and smaller until it is
+     gone; the black belt rises and the address changes to ?enter=yolk
+     (the flag's name kept, his word). THIS page's first painted frame
+     is that same black, set in the head before anything can flash, and
+     the black HOLDS until the storefront has a frame under it — then it
+     lifts, a slow fade, and the storefront is simply standing there.
+     never a white flash, never a black frame between. the yolk's yellow
+     that used to pour across the address is struck on both sides.
+     arriving without the flag paints plain black and skips the hold.
+
+     THE SOUND LAW, carried whole from the store: film 2 plays with
+     sound on a tap, which is fine; film 3 plays with sound when film 2
+     ENDS, which is knot a tap — so the tap that starts film 2 also
+     calls play() on film 3 and pauses it in the same breath, and the
+     permission sticks to the element. a refused unmuted play() falls to
+     muted rather than to silence-and-stillness. iOS lets only ONE film
+     with sound live at a time, so the blessing comes FIRST, before
+     film 2 starts (22 aug, his report, honoured here too).
+
+     THE RETRY LAW (23 aug, his find: the black storefront). the cdn has
+     been seen to answer 503 on a cold cache, and one refused answer
+     used to be forever. no more: every film carries its own patient
+     ladder of fresh asks — load() again at rising waits — and every
+     true gesture re-offers the standing film its play() besides, which
+     is the one key low-power mode answers to. the storefront does knot
+     let go of the glass until the approach is truly moving, and the
+     dark does knot lift until the inside is: never a black frame
+     between, even when the wire stumbles. the yolk itself waits one
+     extra breath on arrival if the storefront has no frame yet.
+
+     WHAT THIS PAGE DOES KNOT NEED: the CORS confession. the phone drew
+     the films into a webgl texture and a tainted canvas goes black; here
+     the films are plain <video> in their own document, read by nobody,
+     so crossOrigin stays home and the cdn owes nothing extra.
+
+     the way back is the chevron, the rooms' own manner: the black sheet
+     falls first, then phone.html?door=egg — and the door flag lands the
+     grid on page two, the shelf this door's tile lives on. no film ever
+     strands anyone: a dead film 1 is a black storefront that still takes
+     the tap; a dead film 2 hands straight to the question; a dead film 3
+     is the question over the dark, which is still the truth. -->
+<script>
+/* the first frame's law (15 sep): the phone's black belt must still be
+   standing when this page paints. the root is black in the stylesheet
+   besides; this runs before <body> exists so no default white can show
+   for one frame on a slow phone. */
+try{ if(/[?&]enter=yolk(?:&|$)/.test(MORTAL.search))
+  document.documentElement.style.background='#000'; }catch(_){}
+</script>
+<style>
+  html{ background:#000; }
+  html,body{ margin:0; padding:0; height:100%; }
+  body{ background:transparent; overflow:hidden;
+        -webkit-tap-highlight-color:transparent;
+        font-family:ui-monospace,Menlo,Consolas,monospace;
+        -webkit-user-select:none; user-select:none; }
+  /* the glass: every film covers it whole, the store's introFrame law —
+     drawn to cover, centred, never letterboxed */
+  #stage{ position:fixed; inset:0; background:#000; }
+  video{ position:absolute; inset:0; width:100%; height:100%;
+         object-fit:cover; opacity:0; transition:opacity .55s ease;
+         pointer-events:none; background:#000; }
+  video.on{ opacity:1; }
+  /* the dark that stands between film 2's last frame and film 3's first
+     — the store faded through black here and so does this page */
+  #dark{ position:absolute; inset:0; background:#000; opacity:0;
+         transition:opacity .6s ease; pointer-events:none; }
+  #dark.on{ opacity:1; }
+  /* the question, at the shell's old centre — y 396 of the phone's 780,
+     which is 50.8% of any glass. the shadow is the store's own. */
+  #ask{ position:absolute; left:0; right:0; top:50.8%;
+        transform:translateY(-50%); text-align:center;
+        pointer-events:none; }
+  #q{ font-size:clamp(17px,5.3vw,21px); font-weight:500;
+      letter-spacing:.01em; color:rgba(255,255,255,.94); opacity:0;
+      transition:opacity .8s ease;
+      text-shadow:0 0 14px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.8); }
+  #soon{ font-size:clamp(13px,4vw,16px); font-weight:400; margin-top:15px;
+         color:rgba(255,255,255,.86); opacity:0;
+         transition:opacity .8s ease, color .3s ease;
+         text-shadow:0 0 12px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.8); }
+  #ask.in #q, #ask.in2 #soon{ opacity:1; }
+  /* held on a loop: once both lines stand, they breathe — a slow rise
+     and fall, forever, the ask that never closes */
+  #ask.hold{ animation:breathe 4.6s ease-in-out infinite alternate; }
+  @keyframes breathe{ from{ opacity:.72; } to{ opacity:1; } }
+  /* the refusal's one brighter breath — the tap's answer, since the
+     door forward is shut */
+  #soon.now{ color:rgba(255,235,196,1); }
+  /* the chevron — the rooms' own way back, serif, the phone's corner */
+  #back{ position:fixed; left:0; top:34px; width:56px; height:52px;
+         display:flex; align-items:center; justify-content:center;
+         font-family:Georgia,serif; font-size:26px; line-height:1;
+         color:rgba(255,255,255,.8); cursor:pointer; z-index:50;
+         text-shadow:0 0 8px rgba(0,0,0,.8);
+         padding-top:env(safe-area-inset-top); }
+  /* the belt, caught — black over everything until the storefront stands */
+  #pour{ position:fixed; inset:0; width:100%; height:100%;
+         pointer-events:none; z-index:40; }
+  /* the sheet — a page load that begins on a lit screen shows the white
+     flash of a document being replaced; the black rises first */
+  #sheet{ position:fixed; inset:0; background:#000; opacity:0;
+          transition:opacity .42s ease; pointer-events:none; z-index:60; }
+  @media (prefers-reduced-motion:reduce){
+    #ask.hold{ animation:none; opacity:1; }
+    video{ transition:none; }
+  }
+</style>
+<!-- 1 oct 2026, 03:29 los angeles · THE LITTLE PHONE AT 80% (his word, 02:19, on music.html: `about 80% of current size
+     and it should sit more to the top left … it should work for most iphone screens too`; carried here at 03:29). the way
+     back wears class lp80: 19 x 38, 10 from the left and 6 under the top's safe line — env() bare, or the shell's own inset
+     when framed (MORTAL.inset / apwnp:inset → --lpt, because env() reads zero inside the phone's frame). the door, the
+     click and mortal.js's part in it are unchanged. -->
+<style>
+  :root{ --lpt:0px; }
+  .lp80{ position:fixed !important; left:calc(env(safe-area-inset-left,0px) + 6px) !important;
+    top:calc(max(env(safe-area-inset-top,0px), var(--lpt)) + 2px) !important; right:auto !important; bottom:auto !important;
+    margin:0 !important; padding:4px 10px 10px 4px !important; line-height:0 !important; display:block !important;
+    background:transparent; border:0; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .lp80 > svg, .lp80 > canvas{ width:19px !important; height:38px !important; display:block; }
+  .lp80:active > svg, .lp80:active > canvas{ opacity:0.6; }
+  /* the in-flow variant, for a room whose way back stands in its own bar (the paper's topbar, metube's bar) */
+  .lpflow{ display:inline-block; line-height:0; padding:2px 6px 2px 0; margin:0; background:transparent; border:0; border-radius:0; width:auto; height:auto; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .lpflow > svg{ width:19px !important; height:38px !important; display:block; }
+  .lpflow:active > svg{ opacity:0.6; }
+  #back.lp80{ z-index:50; text-shadow:none; }
+</style>
+<script>(function(){ function set(i){ try{ if(i&&+i.top>0) document.documentElement.style.setProperty('--lpt',(+i.top)+'px'); }catch(_){} }
+  try{ set(window.MORTAL&&MORTAL.inset); }catch(_){}
+  try{ window.addEventListener('apwnp:inset',function(e){ set((e&&e.detail)||(window.MORTAL&&MORTAL.inset)); },false); }catch(_){} })();</script>
+</head>
+<body>
+<div id="stage">
+  <video id="v0" playsinline webkit-playsinline muted loop preload="auto"></video>
+  <video id="v1" playsinline webkit-playsinline preload="none"></video>
+  <video id="v2" playsinline webkit-playsinline preload="none"></video>
+  <div id="dark"></div>
+  <div id="ask">
+    <div id="q">play the mommy game?</div>
+    <div id="soon">coming soon.</div>
+  </div>
+</div>
+<div id="back" class="lp80" role="button" aria-label="back to the phone"><svg viewBox="0 0 30 60" width="19" height="38" aria-hidden="true" focusable="false">
+  <rect x="0.5" y="0.5" width="29" height="59" rx="6.5" fill="#0a0a0c" stroke="rgba(226,240,255,0.55)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+  <rect x="2.2" y="2.2" width="25.6" height="55.6" rx="5.2" fill="#000"/>
+  <rect x="11" y="4.2" width="8" height="2.2" rx="1.1" fill="#1a1a1e"/>
+  <rect x="2.56" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#4a8fe8"/>
+  <rect x="2.56" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#e8433c"/><rect x="9.42" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#2c3038"/><rect x="23.14" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/>
+  <rect x="2.56" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#c93a8d"/><rect x="9.42" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/><rect x="23.14" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#2e2e31"/>
+  <rect x="2.56" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#15171d"/><rect x="9.42" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#101013"/><rect x="16.28" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#37312c"/><rect x="23.14" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#1c1c20"/>
+  <rect x="2.8" y="50.2" width="24.4" height="7.4" rx="2.6" fill="rgba(255,255,255,0.09)"/>
+  <rect x="2.56" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3b6fd8"/><rect x="16.28" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/>
+  <rect x="12.4" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.5)"/><rect x="14.5" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/><rect x="16.6" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/>
+</svg></div>
+<canvas id="pour"></canvas>
+<div id="sheet"></div>
+<script>
+(function(){
+'use strict';
+var BASE='https://kohmedia.b-cdn.net';
+var $=function(id){ return document.getElementById(id); };
+var v0=$('v0'), v1=$('v1'), v2=$('v2');
+var ask=$('ask'), soon=$('soon'), dark=$('dark');
+var RM=false;
+try{ RM=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(_){}
+
+/* ---- the films, asked for plainly — no crossOrigin, see the head ---- */
+v0.src=BASE+'/evestore.mp4';
+v1.src=BASE+'/storeapproach.MP4';
+v2.src=BASE+'/storeinside.MP4';
+v0.muted=true;                     // the property as well as the attribute
+
+/* ---- the stage machine — the store's own three, one page over ----
+   st 0 · the storefront, looping, silent, until a tap
+   st 1 · the approach, once, with sound
+   st 2 · the question, held on a loop over the inside          */
+var st=0, askT=0, v2went=false, held=false;
+
+/* the play, with intent remembered: `_un` is whether this film WANTS
+   sound. a refused unmuted play falls to muted rather than stillness —
+   introMuteFall's law, carried — and the intent stays written so a
+   later, better-blessed ask (a gesture, a return) can try for the
+   sound again. */
+function vPlay(v,unmuted){
+  if(unmuted!==undefined) v._un=!!unmuted;
+  try{
+    v.muted=!v._un;
+    var pr=v.play();
+    if(pr&&pr.catch) pr.catch(function(){
+      if(v._un){ try{ v.muted=true; var q=v.play();
+        if(q&&q.catch) q.catch(function(){}); }catch(_){}}
+    });
+  }catch(_){}
+}
+/* THE RETRY LAW (23 aug, the black-storefront report — his find). the
+   cdn has been SEEN to answer 503 on a cold cache, and one refused
+   answer used to be forever: the film erred once and the glass stayed
+   black. a film that fails is knot a dead film — it is asked again,
+   patiently, on its own ladder of waits; only the ladder's end is
+   `dead`, and even dead films leave the room standing (the tap still
+   works, the question is still the truth). load() re-runs the whole
+   resource selection, so a fresh ask is a truly fresh ask. */
+function arm(v,ladder,onDead){
+  v._tries=0;
+  v.addEventListener('error',function(){
+    if(v._tries<ladder.length){
+      var w=ladder[v._tries++];
+      setTimeout(function(){
+        try{ v.load(); }catch(_){}
+        if(v._live) vPlay(v);
+      },w);
+    } else if(onDead) onDead();
+  });
+}
+
+/* ---- film 1 — the storefront wakes on its own: muted autoplay is the
+   one play the page is allowed without a hand on it. `.on` from the
+   first breath — a video with no frame yet is its own black, and the
+   first frame simply arrives; the yolk covers the wait besides. the
+   retry ladder is long and patient: a storefront has nowhere to be. */
+v0._live=true; v0._un=false;
+arm(v0,[800,2000,5000,12000,25000]);
+v0.classList.add('on');
+vPlay(v0);
+function wake0(){ if(st===0&&v0.paused) vPlay(v0); }
+v0.addEventListener('loadeddata',wake0);
+v0.addEventListener('canplay',wake0);
+/* the approach's moov rides at the END of its 22 mb — ask for the
+   metadata early, once the storefront is truly moving, so the tap
+   does knot pay for it. one ask at a time is also kinder to the cdn
+   whose 503 started all this. */
+v0.addEventListener('playing',function(){
+  try{ if(v1.preload==='none') v1.preload='metadata'; }catch(_){}
+},{once:true});
+setTimeout(function(){ try{ if(v1.preload==='none') v1.preload='metadata'; }catch(_){} },2500);
+
+/* every true gesture re-offers the current film its play — the one key
+   that opens low-power mode and every other refused-autoplay door. it
+   runs at capture, a breath before the click's own answer. */
+function nudge(){
+  var v=(st===0)?v0:(st===1&&!v1.ended)?v1:(st===2&&v2went)?v2:null;
+  if(v&&v.paused) vPlay(v);
+}
+document.addEventListener('pointerdown',nudge,true);
+document.addEventListener('touchstart',nudge,true);
+
+function go1(){
+  if(st!==0) return; st=1;
+  v0._live=false; v1._live=true;
+  /* the blessing FIRST — see the head. film 3 is played unmuted and
+     paused in the same breath, inside this tap, before film 2 starts
+     into a quiet session. */
+  try{ v2.preload='auto'; v2.pause(); v2.muted=false;
+    var b=v2.play(); if(b&&b.catch) b.catch(function(){});
+    v2.pause(); v2.currentTime=0; }catch(_){}
+  try{ v1.preload='auto'; v1.currentTime=0; }catch(_){}
+  vPlay(v1,true);
+  v1.classList.add('on');
+  /* THE HANDOFF LAW: the storefront does knot let go of the glass on a
+     timer — it holds, looping, until the approach is TRULY MOVING.
+     never a black frame between, the store's own rule, kept even when
+     the cdn stumbles and the retries are still climbing their ladder. */
+  v1.addEventListener('playing',function(){
+    setTimeout(function(){ try{ v0.pause(); }catch(_){}
+      v0.classList.remove('on'); },250);
+  },{once:true});
+}
+v1.addEventListener('ended',function(){ if(st===1) go2(); });
+/* the approach's own ladder is short — two fresh asks, ~2.5 s, the
+   storefront looping beneath the whole while — and only then does a
+   dead film 2 hand straight to the question, the old law. */
+arm(v1,[700,1800],function(){ if(st===1) go2(); });
+
+function go2(){
+  if(st!==1&&st!==0) return; st=2; askT=performance.now();
+  v1._live=false; v2._live=true;
+  dark.classList.add('on');                          // the black under the ask
+  setTimeout(function(){ try{ v0.pause(); }catch(_){}
+    v0.classList.remove('on'); },650);               // if film 2 died mid-hold
+  setTimeout(function(){ ask.classList.add('in'); },300);      // the question
+  setTimeout(function(){
+    /* film 3, on loop, with its own sound — blessed at the tap */
+    if(st!==2||v2went) return; v2went=true;
+    try{ v2.loop=true; v2.currentTime=0; }catch(_){}
+    vPlay(v2,true);
+    v2.classList.add('on');
+  },1200);
+  /* the dark lifts only when the inside is TRULY MOVING — the handoff
+     law again; a film 3 still on its retry ladder keeps the question
+     over the dark, which is still the truth. */
+  v2.addEventListener('playing',function(){
+    if(st!==2) return;
+    setTimeout(function(){ try{ v1.pause(); }catch(_){}
+      v1.classList.remove('on'); dark.classList.remove('on'); },550);
+  });
+  setTimeout(function(){ ask.classList.add('in2'); },1700);    // the answer
+  setTimeout(function(){ held=true; ask.classList.add('hold'); },2700);
+}
+/* a dead film 3 is the question over the dark — still the truth */
+arm(v2,[800,2000,5000],function(){ dark.classList.add('on'); });
+
+/* ---- the tap ----
+   stage 0 answers by opening; stage 2 answers WITH THE ANSWER: the
+   forward door is shut, so `coming soon.` takes one brighter breath and
+   the room stays. nothing on this glass moves the address but the
+   chevron. (the tap is also a gesture, and nudge has already re-offered
+   a refused film its play — low power mode's one key.) */
+document.addEventListener('click',function(e){
+  if(e.target&&e.target.closest&&e.target.closest('#back')) return;   /* 1 oct: the little phone's svg is the target now */
+  if(st===0) go1();
+  else if(st===2&&held){
+    soon.classList.add('now');
+    setTimeout(function(){ soon.classList.remove('now'); },420);
+  }
+});
+
+/* ---- the way back — the sheet first, then the address ---- */
+$('back').addEventListener('click',function(){
+  try{ v0.pause(); v1.pause(); v2.pause(); }catch(_){}
+  $('sheet').style.opacity='1';
+  setTimeout(function(){ try{ MORTAL.go('phone.html?door=egg'); }catch(_){} },460);
+});
+
+/* ---- the room keeps its own house: films rest when the page is knot
+   being looked at, and the right one stands back up on return, with
+   the sound intent it had written ---- */
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){ try{ v0.pause(); v1.pause(); v2.pause(); }catch(_){} }
+  else nudge();
+});
+
+/* ---- the catch (the seam's far half — recut 15 sep) ----
+   ?enter=yolk: the glass is already black (the head saw to it). the
+   canvas holds that black over the storefront and lets it LIFT once
+   film 1 has a frame — a slow fade, the phone's own belt in reverse —
+   and the storefront is simply standing underneath when it has gone.
+   without the flag the canvas leaves at once. */
+(function(){
+  var cv=$('pour');
+  var flagged=/[?&]enter=yolk(?:&|$)/.test(MORTAL.search);
+  if(!flagged){ cv.parentNode.removeChild(cv); return; }
+  var cx=cv.getContext('2d');
+  var t0=0, DUR=RM?0.30:0.95;
+  function fit(){
+    var d=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(innerWidth*d); cv.height=Math.round(innerHeight*d);
+    cx.setTransform(d,0,0,d,0,0);
+  }
+  fit();
+  function es(v){ v=v<0?0:v>1?1:v; return v*v*(3-2*v); }
+  function belt(p){
+    var W=innerWidth, H=innerHeight;
+    cx.clearRect(0,0,W,H);
+    cx.fillStyle='rgba(0,0,0,'+(1-p).toFixed(3)+')';
+    cx.fillRect(0,0,W,H);
+  }
+  belt(0);              // the first painted frame IS the belt — no flash
+  /* the black HOLDS until the storefront has a frame under it — never a
+     black frame between, even across the address. a second and a half
+     is all the patience it carries: a film still climbing its retry
+     ladder gets the black it has. */
+  var go=false;
+  function letgo(){ go=true; }
+  try{ var vv=document.getElementById('v0');
+    if(vv&&vv.readyState>=2) letgo();
+    else if(vv) vv.addEventListener('loadeddata',letgo,{once:true});
+    else letgo(); }catch(_){ letgo(); }
+  setTimeout(letgo,1500);
+  function frame(ts){
+    if(!go){ belt(0); requestAnimationFrame(frame); return; }
+    if(!t0) t0=ts;
+    var p=es((ts-t0)/1000/DUR);
+    if(p<1){
+      belt(p);
+      requestAnimationFrame(frame);
+    }else{
+      cv.parentNode.removeChild(cv);
+      window.removeEventListener('resize',fit);
+    }
+  }
+  window.addEventListener('resize',fit);
+  requestAnimationFrame(frame);
+})();
+})();
+</script>
+</body>
+</html>

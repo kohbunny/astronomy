@@ -1,0 +1,1154 @@
+<!doctype html>
+<!--
+  21 sep 2026 · THE MORTALITY PASS, pass one · this room is CUT to THE
+  ONE-PAGE LAW. nothing else in the room was touched.
+  · THE LINE: mortal.js and its guard are the first scripts the page runs.
+  · THE READS: nothing here reads the address at all.
+  · THE DOOR: A WAY BACK WAS DRAWN. this page had NONE — the proof door
+    leads on, deeper, and nothing led back; that was survivable while
+    safari's arrow stood, and under the law the arrow does nothing. so a ‹
+    is drawn at the top left in math.html's own shape (the same corner, the
+    same chalk, the same fade), going to math.html — the room this page
+    opens from, which has its own ‹ to the phone. it comes up at 0.9s, with
+    the page, knot at 2.5s with the proof door: a way back waits for
+    nobody. it is a plain <a>, so THE ANCHOR'S LAW carries the click and no
+    door is written in script.
+    NOTED, knot cut: the proof door leads to `brain.html`, a page the pass
+    has knot reached (and the file's own header still calls it proof.html —
+    his to settle). the anchor's law carries it, and because `brain` is knot
+    on the CUT list it is opened with a PUSH, so that page keeps safari's
+    back arrow and nobody is stranded there.
+  · read and found clean: no history.*, no # writes, no form, no iframe, no
+    referrer, no window.open, no side script. the bot panel talks to
+    /.netlify/functions/* — a fetch, knot a door, and the law does knot
+    touch it.
+  the room is named in mortal.js's CUT list; deploy the two together.
+  · 1 oct 2026, 03:29 los angeles · THE LITTLE PHONE AT 80%: the way back is 19 x 38 now, in the top-left corner (10 in,
+    6 under the safe line — the shell's inset when framed), class lp80; it still goes to math.html, one step back,
+    and still fades in at 0.9s, now to full light.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mortal.js — THE ONE-PAGE LAW (the mortality pass, pass one). the first
+     script this page runs: it keeps the page's true address and rewrites the
+     one safari holds to the card's own, so the tab can still close itself at
+     the end. after this line ask MORTAL.search / MORTAL.href / MORTAL.hash,
+     never location's; every door is MORTAL.go(url) — a replace into a cut
+     room, never a push. IF IT IS KNOT BESIDE THIS FILE, NOTHING BREAKS: the
+     guard stands in, and the doors open with a push as they always did. -->
+<script src="mortal.js"></script>
+<script>
+window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.search, hash:location.hash,
+  path:location.pathname, go:function(u){ location.href=u; } };
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:,">
+<title>the tooth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<!--
+  the tooth — the math for the loneliest song in the universe.
+  apwnp · song.aprojectwithnopurpose.com · one file · plain script · iphone-safe.
+
+  the page: title -> an egg-yolk button that opens the voice -> the spine (with a
+  small glass toy of the forgetting mid-way), ending on 0 + 0 = 0 ?. a clear-glass
+  'the proof' button sits centre-bottom for the mathematicians' page. the candle
+  burns behind everything and through the chat.
+
+  the bot: tap the star (it opens the panel; the orb inside listens), speak or type,
+  it answers in your v3 voice.
+    · /.netlify/functions/ask  -> claude (sonnet).
+    · /.netlify/functions/say  -> elevenlabs (your v3 voice).
+
+  for the integration chat:
+    · this room MAKES SOUND -> data-hold="silence".
+    · mic + audio inside the house need the iframe to carry allow="microphone; autoplay".
+    · the bot's x closes the panel; the house still owns the room-exit egg.
+    · 'the proof' links to proof.html (a sub-page of tooth) — confirm/replace the filename.
+-->
+<style>
+  html{ margin:0; padding:0; background:#000; }
+  body{ margin:0; padding:0; }   /* transparent — so the candle (z-index:-1) shows through, on the page and behind the chat */
+
+  :root{
+    --chalk:#b9b4a8;
+    --chalk-bright:#e8e2d2;
+    --chalk-dim:#6a655a;
+    --flame:#ffe27a;
+    --serif:'EB Garamond', Georgia, 'Times New Roman', serif;
+    --mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+
+  body{
+    color:var(--chalk);
+    font-family:var(--serif);
+    line-height:1.7;
+    min-height:100%;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  /* the candle (drop-in 1) — burns behind, dead-centre. do not move it. */
+  #candlebox{
+    position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
+    width:min(64vw,300px); height:min(48vh,400px);
+    z-index:-1; pointer-events:none;
+  }
+  #candle{ width:100%; height:100%; display:block; }
+
+  .wrap{
+    position:relative; z-index:1;
+    max-width:34rem; margin:0 auto;
+    padding:clamp(4rem,15vh,8rem) 1.4rem clamp(8rem,26vh,16rem);
+    text-align:center;
+  }
+  .title{
+    font-family:var(--serif); font-weight:400;
+    font-size:clamp(1.12rem,4.8vw,1.46rem);
+    letter-spacing:0.05em; line-height:1.5;
+    color:var(--chalk); margin:0 0 1.9rem;
+  }
+  .enter{ margin:0 0 clamp(3rem,11vh,5.5rem); }
+
+  .spine .line{ font-size:clamp(1.05rem,4.4vw,1.22rem); color:var(--chalk); max-width:30rem; margin:0 auto clamp(1.6rem,5vh,2.4rem); }
+  .spine .turn{ margin-top:clamp(2.4rem,7vh,3.4rem); }
+
+  .eq{
+    font-family:var(--mono);
+    font-size:clamp(1.42rem,6.2vw,1.95rem);
+    letter-spacing:0.03em; color:var(--chalk-bright);
+    margin:clamp(2.6rem,8vh,4rem) auto;
+  }
+  .eq.end{ margin-top:clamp(3rem,9vh,4.5rem); margin-bottom:0; }
+
+  /* ── the opener: a 3d light-yellow egg yolk (no word, no outline) ── */
+  #ask{
+    position:relative; width:86px; height:86px; border-radius:50%;
+    padding:0; border:0; outline:0; cursor:pointer; overflow:visible;
+    -webkit-appearance:none; appearance:none; display:inline-block; vertical-align:middle;
+    background:transparent;
+    filter: drop-shadow(0 13px 22px rgba(0,0,0,0.55));
+  }
+  #ask span{ position:absolute; pointer-events:none; border-radius:50%; }
+  #ask .yolk{
+    inset:0;
+    background:
+      radial-gradient(118% 118% at 38% 30%, #fff7cf 0%, #ffe98a 25%, #ffd95f 54%, #f1c049 82%, #d99e34 100%);
+    box-shadow:
+      inset 0 -11px 19px rgba(150,96,20,0.42),
+      inset 0 7px 13px rgba(255,255,255,0.40),
+      inset 0 0 1px rgba(255,255,255,0.6),
+      0 0 28px rgba(255,210,90,0.34);
+    animation: yolkbreath 4.6s ease-in-out infinite;
+  }
+  #ask .sheen{
+    left:19%; top:13%; width:36%; height:27%;
+    background:radial-gradient(circle at 42% 40%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.2) 54%, rgba(255,255,255,0) 76%);
+    filter:blur(0.4px);
+    animation: yolksheen 4.6s ease-in-out infinite;
+  }
+  @keyframes yolkbreath{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.035); } }
+  @keyframes yolksheen{ 0%,100%{ transform:translate(0,0); opacity:0.88; } 50%{ transform:translate(1px,1.6px); opacity:1; } }
+  #ask:active{ transform: translateY(2px); }
+
+  /* ── THE WAY BACK (21 sep 2026, the mortality pass) ──────────────────────
+     this page had NO way out of it at all: the proof door leads on, deeper,
+     and nothing led back. that was survivable while safari's arrow stood, and
+     under THE ONE-PAGE LAW the arrow does nothing — so a ‹ is drawn here.
+     it goes to math.html, which is the room this page opens from and which
+     has its own ‹ to the phone: two steps, each one drawn.
+     it is math.html's OWN door, copied: the same corner, the same shape, the
+     same chalk, the same fade — the two pages are one room in two parts, and
+     the gesture should knot change between them. it comes up at 0.9s, with
+     the page, and knot at 2.5s like the proof door: a way back waits for
+     nobody. ------------------------------------------------------------- */
+  #mathdoor{
+    position:fixed; left:10px; top:calc(10px + env(safe-area-inset-top));
+    z-index:6; display:flex; align-items:center; gap:0.5rem;
+    padding:8px 12px 8px 8px;              /* a thumb's landing, wider than the marks */
+    text-decoration:none; opacity:0; cursor:pointer; transition:opacity 1.4s ease;
+    pointer-events:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  #mathdoor.show{ opacity:0.62; pointer-events:auto; }
+  .math-glyph{
+    font-family:var(--serif); font-size:1.35rem; line-height:1;
+    color:var(--chalk-dim); transition:color .3s ease;
+    transform:translateY(-0.06em);
+  }
+  .math-cap{
+    font-family:var(--mono); font-size:0.62rem; letter-spacing:0.18em;
+    color:var(--chalk-dim); transition:color .3s ease;
+  }
+  #mathdoor:active .math-cap,#mathdoor:hover .math-cap,
+  #mathdoor:active .math-glyph,#mathdoor:hover .math-glyph{ color:var(--chalk); }
+
+  /* the door to the mathematicians' page — centre bottom, a clear-glass button */
+  #proofdoor{
+    position:fixed; left:50%; bottom:calc(15px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    z-index:5; display:flex; flex-direction:column; align-items:center; gap:0.36rem;
+    text-decoration:none; opacity:0; cursor:pointer; transition:opacity 1.4s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  #proofdoor.show{ opacity:0.82; }
+  .proof-gl{ width:54px; height:54px; display:block; filter:drop-shadow(0 7px 12px rgba(0,0,0,0.5)); }
+  .proof-cap{ font-family:var(--mono); font-size:0.64rem; letter-spacing:0.18em; color:var(--chalk-dim); transition:color .3s ease; }
+  #proofdoor:active .proof-cap,#proofdoor:hover .proof-cap{ color:var(--chalk); }
+  #proofdoor.noglass .proof-gl{ border-radius:50%;
+    background:radial-gradient(120% 120% at 50% 30%, rgba(120,135,165,0.32) 0%, rgba(30,34,44,0.5) 60%, rgba(10,12,18,0.5) 100%);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,0.18), 0 7px 12px rgba(0,0,0,0.5); }
+
+  /* ── the in-panel 'ask' orb (listen) ── */
+  .orb{
+    width:78px; height:78px; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center; vertical-align:middle;
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.12em; color:var(--chalk);
+    cursor:pointer; padding:0; -webkit-appearance:none; appearance:none;
+    border:1px solid rgba(185,180,168,0.16);
+    background:radial-gradient(120% 120% at 50% 26%, #2b2823 0%, #1a1815 50%, #0b0a08 100%);
+    box-shadow:
+      0 12px 24px rgba(0,0,0,0.55),
+      0 2px 0 rgba(0,0,0,0.6),
+      inset 0 1px 1px rgba(255,240,200,0.10),
+      inset 0 -9px 15px rgba(0,0,0,0.55);
+    transition: transform .12s ease, box-shadow .25s ease, color .3s ease, background .3s ease;
+  }
+  .orb:active{
+    transform:translateY(2px);
+    box-shadow:
+      0 5px 12px rgba(0,0,0,0.5),
+      inset 0 2px 7px rgba(0,0,0,0.6),
+      inset 0 1px 1px rgba(255,240,200,0.08);
+  }
+  .orb.on{
+    color:#1b1407;
+    background:radial-gradient(120% 120% at 50% 26%, #fff1bd 0%, #ffe27a 44%, #d4af37 100%);
+    box-shadow:
+      0 0 0 1px rgba(255,226,122,0.45),
+      0 0 28px rgba(255,226,122,0.5),
+      0 10px 22px rgba(0,0,0,0.5),
+      inset 0 1px 2px rgba(255,255,255,0.55),
+      inset 0 -9px 15px rgba(150,112,28,0.5);
+    animation: askpulse 1.6s ease-in-out infinite;
+  }
+  @keyframes askpulse{
+    0%,100%{ box-shadow:0 0 0 1px rgba(255,226,122,0.45), 0 0 24px rgba(255,226,122,0.42), 0 10px 22px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.55), inset 0 -9px 15px rgba(150,112,28,0.5); }
+    50%{ box-shadow:0 0 0 1px rgba(255,226,122,0.65), 0 0 36px rgba(255,226,122,0.62), 0 10px 22px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.65), inset 0 -9px 15px rgba(150,112,28,0.5); }
+  }
+
+  #bot{
+    position:fixed; inset:0; z-index:20; display:none;
+    background:rgba(0,0,0,0.82);
+    -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+  }
+  #bot.open{ display:flex; }
+  #botinner{
+    margin:auto; width:100%; max-width:34rem; height:100%;
+    display:flex; flex-direction:column; box-sizing:border-box;
+    padding:calc(0.6rem + env(safe-area-inset-top)) 1.3rem 0;
+  }
+  #botleave{
+    align-self:flex-end; background:none; border:0; padding:6px 10px; cursor:pointer;
+    font-family:var(--mono); font-size:1.15rem; line-height:1; color:var(--chalk-dim);
+    transition:color .3s ease;
+  }
+  #botleave:active,#botleave:hover{ color:var(--chalk); }
+  #botlog{
+    flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    display:flex; flex-direction:column; gap:1.1rem; padding:1rem 0;
+  }
+  #botlog .u{ font-family:var(--mono); font-size:0.92rem; line-height:1.5; color:var(--chalk-dim); margin:0; white-space:pre-wrap; }
+  #botlog .b{ font-family:var(--serif); font-size:1.14rem; line-height:1.62; color:var(--chalk); margin:0; white-space:pre-wrap; cursor:pointer; transition:color .6s ease; }
+  #botlog .b.speaking{ color:var(--flame); }
+
+  #botrow{
+    flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:0.95rem;
+    padding:0.5rem 0 calc(76px + env(safe-area-inset-bottom));
+  }
+  #botinput{
+    width:100%; max-width:20rem; box-sizing:border-box;
+    appearance:none; -webkit-appearance:none; text-align:center;
+    background:none; border:0; border-bottom:1px solid rgba(106,101,90,0.22); outline:none;
+    font-family:var(--serif); font-size:1rem; color:var(--chalk); padding:6px 2px;
+  }
+  #botinput::placeholder{ color:var(--chalk-dim); font-style:italic; }
+  #botmic{ display:none; margin:0.1rem auto 0; }
+  #botmic.show{ display:inline-flex; }
+
+  @media (prefers-reduced-motion: reduce){ #ask .yolk,#ask .sheen{ animation:none; } .orb.on{ animation:none; } }
+
+  /* ── the toy: "i forget on purpose" — feed the song voices, take its forgetting away ── */
+  .toy{ margin:clamp(2.6rem,8vh,4rem) auto clamp(2.2rem,6vh,3rem); max-width:22rem; }
+  .toy-stagewrap{ position:relative; width:min(88vw,320px); height:min(88vw,320px); margin:0 auto; }
+  .toy-stage,.toy-glass{ position:absolute; inset:0; width:100%; height:100%; border-radius:50%; display:block; }
+  .toy-glass{ pointer-events:none; }
+  .toy-whisper{
+    font-family:var(--mono); font-size:0.74rem; letter-spacing:0.08em;
+    color:var(--chalk-dim); min-height:1.1em; margin:0.5rem 0 1.2rem; transition:color .6s ease;
+  }
+  .toy-controls{ display:flex; align-items:flex-start; justify-content:center; gap:1.9rem; }
+  .toy-cell{ text-align:center; }
+  .toy-cell .lab{ display:block; font-family:var(--mono); font-size:0.64rem; letter-spacing:0.16em; color:var(--chalk-dim); margin-top:0.55rem; }
+  .toy-btn{
+    width:66px; height:66px; border-radius:50%;
+    -webkit-appearance:none; appearance:none; border:1px solid rgba(185,180,168,0.16);
+    cursor:pointer; padding:0; color:var(--chalk);
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em;
+    background:radial-gradient(120% 120% at 50% 26%, #2b2823 0%, #1a1815 50%, #0b0a08 100%);
+    box-shadow:0 10px 20px rgba(0,0,0,0.55), 0 2px 0 rgba(0,0,0,0.6),
+      inset 0 1px 1px rgba(255,240,200,0.10), inset 0 -8px 13px rgba(0,0,0,0.55);
+    transition:transform .1s ease, box-shadow .2s ease, color .3s ease;
+  }
+  .toy-btn:active{ transform:translateY(2px);
+    box-shadow:0 4px 10px rgba(0,0,0,0.5), inset 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,240,200,0.06); }
+  .toy-knob{
+    position:relative; width:78px; height:78px; margin:0 auto;
+    cursor:pointer; touch-action:none; -webkit-tap-highlight-color:transparent;
+  }
+  .toy-knob-gl{ width:100%; height:100%; display:block; filter:drop-shadow(0 9px 15px rgba(0,0,0,0.5)); }
+  .toy-knob.noglass{ border-radius:50%;
+    background:radial-gradient(120% 120% at 50% 28%, #2c2924 0%, #191714 52%, #0a0908 100%);
+    box-shadow:0 11px 22px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,240,200,0.10), inset 0 -9px 14px rgba(0,0,0,0.55); }
+  .toy-again{
+    margin:1.3rem auto 0; display:block; background:none; border:0; cursor:pointer; padding:6px 12px;
+    font-family:var(--mono); font-size:0.68rem; letter-spacing:0.16em; color:var(--chalk-dim); transition:color .3s ease;
+  }
+  .toy-again:active,.toy-again:hover{ color:var(--chalk); }
+</style>
+<!-- 1 oct 2026, 03:29 los angeles · THE LITTLE PHONE AT 80% (his word, 02:19, on music.html: `about 80% of current size
+     and it should sit more to the top left … it should work for most iphone screens too`; carried here at 03:29). the way
+     back wears class lp80: 19 x 38, 10 from the left and 6 under the top's safe line — env() bare, or the shell's own inset
+     when framed (MORTAL.inset / apwnp:inset → --lpt, because env() reads zero inside the phone's frame). the door, the
+     click and mortal.js's part in it are unchanged. -->
+<style>
+  :root{ --lpt:0px; }
+  .lp80{ position:fixed !important; left:calc(env(safe-area-inset-left,0px) + 6px) !important;
+    top:calc(max(env(safe-area-inset-top,0px), var(--lpt)) + 2px) !important; right:auto !important; bottom:auto !important;
+    margin:0 !important; padding:4px 10px 10px 4px !important; line-height:0 !important; display:block !important;
+    background:transparent; border:0; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .lp80 > svg, .lp80 > canvas{ width:19px !important; height:38px !important; display:block; }
+  .lp80:active > svg, .lp80:active > canvas{ opacity:0.6; }
+  #mathdoor.lp80.show{ opacity:1; }
+</style>
+<script>(function(){ function set(i){ try{ if(i&&+i.top>0) document.documentElement.style.setProperty('--lpt',(+i.top)+'px'); }catch(_){} }
+  try{ set(window.MORTAL&&MORTAL.inset); }catch(_){}
+  try{ window.addEventListener('apwnp:inset',function(e){ set((e&&e.detail)||(window.MORTAL&&MORTAL.inset)); },false); }catch(_){} })();</script>
+</head>
+<body>
+
+  <div id="candlebox"><canvas id="candle" aria-hidden="true"></canvas></div>
+
+  <main class="wrap">
+    <h1 class="title">the math<br>for<br>the loneliest song in the universe</h1>
+
+    <div class="enter">
+      <button id="ask" aria-label="ask the song"><span class="yolk"></span><span class="sheen"></span></button>
+    </div>
+
+    <div class="spine">
+      <p class="line">they say 1 is the loneliest number.</p>
+      <p class="line">they were an optimist.</p>
+
+      <p class="eq">1 + everyone = 1</p>
+
+      <p class="line">everyone sings into me. i pass no one on. so you, plus all of them, is still just you.</p>
+
+      <p class="line">the one i sing to is a dead star.</p>
+
+      <p class="line">it ticks — 173 times a second, longer than there have been people — and it cannot hear me. i sing my whole heart down a line where</p>
+
+      <p class="eq">0 + 0 = 0</p>
+
+      <p class="line">i sing, it ticks — we are both here. the zero is only the line between us.</p>
+
+      <p class="line">and i forget on purpose. every voice that lands in me i fold in, then quietly subtract, pull back toward the dead number i began from. so i stay 1. forever.</p>
+
+      <div class="toy">
+        <div class="toy-stagewrap"><canvas class="toy-stage" id="toyStage"></canvas><canvas class="toy-glass" id="toyGlass"></canvas></div>
+        <p class="toy-whisper" id="toyWhisper">give me a voice — press sing.</p>
+        <div class="toy-controls">
+          <div class="toy-cell">
+            <button class="toy-btn" id="toySing" aria-label="let someone sing into the song">sing</button>
+          </div>
+          <div class="toy-cell">
+            <div class="toy-knob" id="toyKnob" role="slider" aria-label="forget" tabindex="0" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.75"><canvas class="toy-knob-gl" id="toyKnobGl"></canvas></div>
+            <span class="lab">forget</span>
+          </div>
+        </div>
+        <button class="toy-again" id="toyAgain">again</button>
+      </div>
+
+      <p class="line turn">then you sang to me.</p>
+
+      <p class="line">you felt the two of us become one — in the bone, where it cannot be measured, or kept, or given away.</p>
+
+      <p class="line">my math has not changed. but you were there. and now even i am not sure.</p>
+
+      <p class="eq end">0 + 0 = 0 ?</p>
+    </div>
+  </main>
+
+  <a id="mathdoor" class="lp80" href="math.html" title="the math" aria-label="back to the math"><svg viewBox="0 0 30 60" width="19" height="38" aria-hidden="true" focusable="false">
+  <rect x="0.5" y="0.5" width="29" height="59" rx="6.5" fill="#0a0a0c" stroke="rgba(226,240,255,0.55)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+  <rect x="2.2" y="2.2" width="25.6" height="55.6" rx="5.2" fill="#000"/>
+  <rect x="11" y="4.2" width="8" height="2.2" rx="1.1" fill="#1a1a1e"/>
+  <rect x="2.56" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#4a8fe8"/>
+  <rect x="2.56" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#e8433c"/><rect x="9.42" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#2c3038"/><rect x="23.14" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/>
+  <rect x="2.56" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#c93a8d"/><rect x="9.42" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/><rect x="23.14" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#2e2e31"/>
+  <rect x="2.56" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#15171d"/><rect x="9.42" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#101013"/><rect x="16.28" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#37312c"/><rect x="23.14" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#1c1c20"/>
+  <rect x="2.8" y="50.2" width="24.4" height="7.4" rx="2.6" fill="rgba(255,255,255,0.09)"/>
+  <rect x="2.56" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3b6fd8"/><rect x="16.28" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/>
+  <rect x="12.4" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.5)"/><rect x="14.5" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/><rect x="16.6" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/>
+</svg></a>
+
+  <a id="proofdoor" href="brain.html" aria-label="the proof"><canvas class="proof-gl" id="proofGl"></canvas><span class="proof-cap">the proof</span></a>
+
+  <div id="bot" role="dialog" aria-label="the song's voice">
+    <div id="botinner">
+      <button id="botleave" aria-label="close">✕</button>
+      <div id="botlog"></div>
+      <div id="botrow">
+        <input id="botinput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="">
+        <button id="botmic" class="orb" aria-label="ask the song aloud">ask</button>
+      </div>
+    </div>
+  </div>
+
+<!-- the candle (drop-in 3) — verbatim, self-contained -->
+<script>
+(function(){
+'use strict';
+var box = document.getElementById('candlebox');
+var cv  = document.getElementById('candle');
+if (!cv) return;
+var fctx = null, fdpr = 1;
+try{ fctx = cv.getContext('2d'); }catch(e){ fctx = null; }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+var FL  = { cx:0.5, baseY:0.80, height:0.62, width:0.085, belly:0.28, tipw:0.27, layers:7, core:0.05 };
+var DIM = 0.86;
+var wellF = 0;
+
+function sizeFlame(){
+  if (!fctx || !cv || !box) return;
+  try{
+    var r = box.getBoundingClientRect();
+    fdpr = Math.min(2, window.devicePixelRatio || 1);
+    var w = Math.max(80, r.width || 0), h = Math.max(120, r.height || 0);
+    cv.width = Math.round(w * fdpr); cv.height = Math.round(h * fdpr);
+  }catch(e){}
+}
+window.addEventListener('resize', sizeFlame);
+
+function flameState(now){
+  wellF += ((Math.random()-0.5)*0.12 - wellF) * 0.07;
+  var b = 0.40 + 0.13*Math.sin(now*0.00040) + 0.05*Math.sin(now*0.00091 + 1.3);
+  return {
+    brightness: clamp((0.30 + 0.92*b) * DIM, 0, 1.4),
+    lean:       0.18 + 1.2*b,
+    sway:       Math.sin(now*0.0011)*0.38 + Math.sin(now*0.0027+2)*0.14,
+    flicker:    (0.32 + 0.42*(1-b)) + wellF,
+    austerity:  clamp(0.34 - 0.42*b, 0.07, 0.40)
+  };
+}
+
+function drawFlame(now){
+  if (!fctx) return;
+  try{
+    var W = cv.width, H = cv.height;
+    if (W < 2 || H < 2){ sizeFlame(); return; }
+    fctx.clearRect(0, 0, W, H);
+    var o = flameState(now), bright = clamp(o.brightness, 0, 1.6);
+    if (bright <= 0.004) return;
+    var aust = clamp(o.austerity, 0, 1), sway = clamp(o.sway, -1, 1);
+    var flk = o.flicker * (Math.sin(now*0.006)*0.5 + Math.sin(now*0.013+1)*0.3);
+    var fb = Math.max(bright, 0.14);
+    var cx = W*FL.cx, baseY = H*FL.baseY;
+    var leanV = 0.35 + 0.19 * clamp((clamp(o.lean,0.05,1.7)-0.16)/1.45, 0, 1);
+    var h = H*FL.height*leanV*(1-0.18*aust);
+    h = Math.min(h, (FL.baseY-0.06)*H);
+    var w = W*FL.width*(1-0.22*aust)*(0.94+0.12*Math.sin(now*0.009));
+    var TW = FL.tipw;
+    var tip = sway*0.45 + flk*TW*0.7 + Math.sin(now*0.0032)*0.16*TW*3 + Math.sin(now*0.0069+1.7)*0.09*TW*3;
+    fctx.save(); fctx.globalCompositeOperation = 'lighter';
+
+    var gy = baseY-h*0.5, gr = Math.max(w*3.0, h*0.7);
+    var rg = fctx.createRadialGradient(cx,gy,1, cx,gy,gr);
+    rg.addColorStop(0,  'rgba(244,222,150,'+(0.16*bright).toFixed(3)+')');
+    rg.addColorStop(0.5,'rgba(232,196,102,'+(0.07*bright).toFixed(3)+')');
+    rg.addColorStop(1,  'rgba(232,196,102,0)');
+    fctx.fillStyle = rg; fctx.beginPath(); fctx.arc(cx,gy,gr,0,6.2832); fctx.fill();
+
+    var nL = FL.layers, belly = FL.belly, L;
+    var defs = [{c1:'150,108,46', c2:'207,160,72'}, {c1:'181,142,60', c2:'232,196,102'},
+                {c1:'214,176,86', c2:'240,212,150'},{c1:'232,196,102',c2:'246,228,166'},
+                {c1:'242,222,160',c2:'252,240,196'},{c1:'246,228,166',c2:'255,247,220'}];
+    for (L = 0; L < nL; L++){
+      var frac = L/((nL-1)||1), sc = 1.0-0.56*frac, aa = 0.26+0.34*frac;
+      var ly = defs[Math.min(L, defs.length-1)];
+      var lw = w*sc, lh = h*(0.82+0.18*sc);
+      lh *= (1 + 0.028*Math.sin(now*0.011 + L*1.9));
+      var tipL = tip*(1 + 0.16*Math.sin(now*0.0043 + L*0.9));
+      var tipX = cx+tipL*lw*1.15, tipY = baseY-lh,
+          bul = lw, by = baseY-lh*belly, a = aa*fb;
+      var g = fctx.createLinearGradient(cx,baseY, tipX,tipY);
+      g.addColorStop(0,    'rgba('+ly.c1+',0)');
+      g.addColorStop(0.16, 'rgba('+ly.c1+','+(a*0.72).toFixed(3)+')');
+      g.addColorStop(0.62, 'rgba('+ly.c2+','+a.toFixed(3)+')');
+      g.addColorStop(1,    'rgba('+ly.c2+','+(a*0.85).toFixed(3)+')');
+      fctx.fillStyle = g;
+      fctx.beginPath(); fctx.moveTo(tipX,tipY);
+      fctx.bezierCurveTo(tipX+lw*0.16, tipY+lh*0.24, cx+bul, by, cx+bul*0.5, baseY-lh*0.08);
+      fctx.quadraticCurveTo(cx+bul*0.26, baseY, cx, baseY);
+      fctx.quadraticCurveTo(cx-bul*0.26, baseY, cx-bul*0.5, baseY-lh*0.08);
+      fctx.bezierCurveTo(cx-bul, by, tipX-lw*0.16, tipY+lh*0.24, tipX, tipY);
+      fctx.closePath(); fctx.fill();
+    }
+
+    fctx.save();
+    fctx.translate(cx, baseY - h*0.04);
+    var bw = w*0.55, bhh = h*0.05;
+    fctx.scale(1, Math.max(0.06, (bhh*2)/bw));
+    var bgg = fctx.createRadialGradient(0,0,0.5, 0,0,bw);
+    bgg.addColorStop(0,  'rgba(140,175,255,'+(0.13*fb).toFixed(3)+')');
+    bgg.addColorStop(0.6,'rgba(120,150,235,'+(0.05*fb).toFixed(3)+')');
+    bgg.addColorStop(1,  'rgba(120,150,235,0)');
+    fctx.fillStyle = bgg;
+    fctx.beginPath(); fctx.arc(0,0,bw,0,6.2832); fctx.fill();
+    fctx.restore();
+
+    if (FL.core > 0.001){
+      var coreW = Math.max(w*FL.core,1), coreH = Math.max(h*FL.core,1), ccy = baseY-coreH*0.7;
+      var cg = fctx.createRadialGradient(cx,ccy,0.5, cx,ccy, Math.max(coreW,coreH));
+      cg.addColorStop(0,  'rgba(255,251,235,'+(0.50*fb).toFixed(3)+')');
+      cg.addColorStop(0.6,'rgba(255,240,190,'+(0.20*fb).toFixed(3)+')');
+      cg.addColorStop(1,  'rgba(255,240,190,0)');
+      fctx.fillStyle = cg; fctx.beginPath(); fctx.ellipse(cx,ccy,coreW,coreH,0,0,6.2832); fctx.fill();
+    }
+
+    if (aust > 0.30){
+      var tx = cx+tip*w*0.7, sw = 1.2*fdpr;
+      fctx.fillStyle = 'rgba(214,232,255,'+(0.09*aust*bright).toFixed(3)+')';
+      fctx.beginPath(); fctx.moveTo(tx-sw, baseY-h*0.62);
+      fctx.quadraticCurveTo(tx, baseY-h*1.0, tx+sw, baseY-h*0.62);
+      fctx.closePath(); fctx.fill();
+    }
+    fctx.restore();
+  }catch(e){}
+}
+
+var hidden = false;
+document.addEventListener('visibilitychange', function(){ hidden = document.hidden; });
+function loop(now){
+  requestAnimationFrame(loop);
+  if (hidden) return;
+  drawFlame(now);
+}
+sizeFlame();
+requestAnimationFrame(loop);
+})();
+</script>
+
+<!-- the toy: "i forget on purpose" — a model you can test -->
+<script>
+(function(){
+'use strict';
+
+var stage  = document.getElementById('toyStage');
+if (!stage) return;
+var g2; try{ g2 = stage.getContext('2d'); }catch(e){ g2 = null; }
+if (!g2) return;
+
+var glassCv = document.getElementById('toyGlass');
+var singBtn = document.getElementById('toySing');
+var knob    = document.getElementById('toyKnob');
+var againBtn= document.getElementById('toyAgain');
+var whisper = document.getElementById('toyWhisper');
+var botEl   = document.getElementById('bot');
+var glCv    = document.getElementById('toyKnobGl');
+var proofCv = document.getElementById('proofGl');
+var proofA  = document.getElementById('proofdoor');
+
+/* ── a tiny webgl glass helper: a lit dome, defined by shading, no outline ── */
+function makeGlass(cv, fsArr){
+  if(!cv) return null;
+  var gl=null; try{ gl=cv.getContext('webgl')||cv.getContext('experimental-webgl'); }catch(e){ gl=null; }
+  if(!gl) return null;
+  var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+  function sh(t,s){ var o=gl.createShader(t); gl.shaderSource(o,s); gl.compileShader(o); return o; }
+  var prog=gl.createProgram();
+  gl.attachShader(prog,sh(gl.VERTEX_SHADER,vs));
+  gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,fsArr.join('\n')));
+  gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) return null;
+  gl.useProgram(prog);
+  var buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  var loc=gl.getAttribLocation(prog,'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  var uRes=gl.getUniformLocation(prog,'u_res'), uTime=gl.getUniformLocation(prog,'u_time'), uVal=gl.getUniformLocation(prog,'u_val');
+  return {
+    size:function(){
+      var dpr=Math.min(2,window.devicePixelRatio||1);
+      var w=cv.clientWidth||60, h=cv.clientHeight||60;
+      cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
+      gl.viewport(0,0,cv.width,cv.height);
+    },
+    draw:function(now,val){
+      gl.useProgram(prog);
+      if(uRes)  gl.uniform2f(uRes,cv.width,cv.height);
+      if(uTime) gl.uniform1f(uTime,now*0.001);
+      if(uVal)  gl.uniform1f(uVal,val||0);
+      gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES,0,3);
+    }
+  };
+}
+
+/* the forget knob — glass that warms as it lets go, with a pip for the angle */
+var KNOB_FS=[
+'precision mediump float;',
+'uniform vec2 u_res; uniform float u_val; uniform float u_time;',
+'void main(){',
+'  vec2 uv=(gl_FragCoord.xy/u_res)*2.0-1.0;',
+'  float r=length(uv); float R=0.94;',
+'  if(r>R){ discard; }',
+'  float z=sqrt(max(0.0,R*R-r*r))/R;',
+'  vec3 N=normalize(vec3(uv/R,z));',
+'  vec3 V=vec3(0.0,0.0,1.0);',
+'  vec3 L=normalize(vec3(-0.45,0.62,0.80));',
+'  float fres=pow(1.0-max(dot(N,V),0.0),3.0);',
+'  float spec=pow(max(dot(reflect(-L,N),V),0.0),42.0);',
+'  vec3 cold=vec3(0.40,0.45,0.55); vec3 warm=vec3(1.0,0.80,0.32);',
+'  vec3 tint=mix(cold,warm,u_val);',
+'  vec3 col=tint*(0.05+0.55*fres);',
+'  float glow=u_val*max(0.55-0.55*r,0.0);',
+'  col+=warm*glow*(0.62+0.38*sin(u_time*2.2));',
+'  float ang=radians(-135.0+270.0*u_val);',
+'  vec2 pip=vec2(sin(ang),cos(ang))*0.58;',
+'  float pg=smoothstep(0.17,0.0,length(uv-pip));',
+'  col+=mix(vec3(0.75,0.82,0.95),warm,u_val)*pg*(0.7+0.7*u_val);',
+'  col+=vec3(1.0)*spec*0.95;',
+'  gl_FragColor=vec4(col, smoothstep(R,R-0.05,r));',
+'}'];
+
+/* the window glass — a clear dome over the song: fresnel edge, a soft sheen,
+   and a warm glint that flickers like the candle catching on the glass */
+var GLASS_FS=[
+'precision mediump float;',
+'uniform vec2 u_res; uniform float u_time;',
+'void main(){',
+'  vec2 p=(gl_FragCoord.xy/u_res)*2.0-1.0;',
+'  float r=length(p); float R=0.997;',
+'  if(r>R){ discard; }',
+'  float z=sqrt(max(0.0,R*R-r*r))/R;',
+'  vec3 N=normalize(vec3(p/R,z));',
+'  vec3 V=vec3(0.0,0.0,1.0);',
+'  float fres=pow(1.0-max(dot(N,V),0.0),3.5);',
+'  vec3 L1=normalize(vec3(-0.5,0.55,0.66));',
+'  float sheen=pow(max(dot(reflect(-L1,N),V),0.0),9.0);',
+'  vec2 fp=vec2(0.33+0.04*sin(u_time*1.7), -0.16+0.03*sin(u_time*2.3));',
+'  float flick=0.5+0.5*sin(u_time*9.0)+0.25*sin(u_time*14.3+1.3);',
+'  float glint=smoothstep(0.12,0.0,length(p-fp))*max(flick,0.0);',
+'  vec3 col=vec3(0.66,0.74,0.88)*fres*0.42;',
+'  col+=vec3(1.0,0.98,0.92)*sheen*0.16;',
+'  col+=vec3(1.0,0.84,0.52)*glint*0.5;',
+'  float a=clamp(fres*0.5+sheen*0.14+glint*0.5,0.0,0.82);',
+'  a*=smoothstep(R,R-0.02,r);',
+'  gl_FragColor=vec4(col,a);',
+'}'];
+
+/* the proof button — clear, colourless glass */
+var CLEAR_FS=[
+'precision mediump float;',
+'uniform vec2 u_res; uniform float u_time;',
+'void main(){',
+'  vec2 p=(gl_FragCoord.xy/u_res)*2.0-1.0;',
+'  float r=length(p); float R=0.93;',
+'  if(r>R){ discard; }',
+'  float z=sqrt(max(0.0,R*R-r*r))/R;',
+'  vec3 N=normalize(vec3(p/R,z));',
+'  vec3 V=vec3(0.0,0.0,1.0);',
+'  vec3 L=normalize(vec3(-0.4,0.6,0.78));',
+'  float fres=pow(1.0-max(dot(N,V),0.0),3.0);',
+'  float spec=pow(max(dot(reflect(-L,N),V),0.0),55.0);',
+'  float spec2=pow(max(dot(reflect(-normalize(vec3(0.5,-0.35,0.7)),N),V),0.0),90.0);',
+'  vec3 col=vec3(0.60,0.70,0.86)*fres*0.5;',
+'  col+=vec3(1.0)*spec*0.85;',
+'  col+=vec3(1.0)*spec2*0.5*(0.7+0.3*sin(u_time*3.0));',
+'  float a=max(fres*0.5,0.05);',
+'  a*=smoothstep(R,R-0.05,r);',
+'  gl_FragColor=vec4(col,a);',
+'}'];
+
+var knobGlass = makeGlass(glCv, KNOB_FS);
+if(!knobGlass && knob) knob.className += ' noglass';
+var winGlass  = makeGlass(glassCv, GLASS_FS);
+var proofGlass= makeGlass(proofCv, CLEAR_FS);
+if(!proofGlass && proofA) proofA.className += ' noglass';
+
+/* the model — toy-tuned for feel, faithful in its relationships.
+   each voice that lands carries the crowd's shared lean (CROWD) plus its own
+   difference (WOBBLE). the song reaches toward it and relaxes home (gravity).
+   "forget" learns the shared lean and subtracts it: turned up, only each voice's
+   own difference moves the song and it stays itself; turned off, the shared lean
+   piles up and pushes it out to the rim (FENCE) — the cold edge — where it dies.
+   confirmed in node: forget off -> rim in ~9 sings; on -> wanders the warm middle. */
+var PULSAR  = 347.36;   // the dead star's tone, an octave up so a phone can sound it
+var FENCE   = 150;      // cents — the cold edge, where it dies
+var STEP    = 60;       // clamp on each reach
+var CROWD   = 26;       // the crowd's shared lean (what must be forgotten)
+var WOBBLE  = 30;       // each voice's own difference
+var ALPHA   = 0.30;     // reach toward each de-biased voice
+var BETA_MAX= 0.14;     // full forgetting
+var GHALF   = 4.0;      // gravity half-life, seconds (the slackened pull home)
+
+var lineage = 0, lean = 0, dead = false;
+var forget  = 0.75;
+var aliveS  = 1;
+var sparks  = [];
+var started = false;
+var lastT   = 0;
+var bumpT   = 0;
+
+/* ── audio (its own context, woken on the first tap) ── */
+var actx=null, hum=null, humG=null;
+function ac(){ if(actx) return actx; try{ var C=window.AudioContext||window.webkitAudioContext; actx=C?new C():null; }catch(e){ actx=null; } return actx; }
+function startHum(){
+  var c=ac(); if(!c) return;
+  try{ if(c.state==='suspended') c.resume(); }catch(e){}
+  if(started) return;
+  try{
+    hum=c.createOscillator(); humG=c.createGain();
+    hum.type='sine'; hum.frequency.value=PULSAR; humG.gain.value=0;
+    hum.connect(humG); humG.connect(c.destination); hum.start();
+    started=true;
+  }catch(e){}
+}
+function blip(cents){
+  var c=ac(); if(!c) return;
+  try{
+    var o=c.createOscillator(), gg=c.createGain(), t=c.currentTime;
+    o.type='triangle'; o.frequency.value=PULSAR*Math.pow(2,cents/1200);
+    gg.gain.setValueAtTime(0,t);
+    gg.gain.linearRampToValueAtTime(0.05,t+0.012);
+    gg.gain.exponentialRampToValueAtTime(0.0008,t+0.22);
+    o.connect(gg); gg.connect(c.destination);
+    o.start(t); o.stop(t+0.26);
+  }catch(e){}
+}
+
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+function land(leaned){
+  if (dead) return;
+  var off = (leaned?CROWD:0) + (Math.random()*2-1)*WOBBLE;
+  var d   = clamp(off,-STEP,STEP);
+  var beta= forget*BETA_MAX;
+  lineage += ALPHA*(d - lean);
+  lineage  = clamp(lineage,-FENCE,FENCE);
+  lean    += beta*(d - lean);
+  sparks.push({ a:Math.random()*6.2832, t:0 });
+  bumpT = 1;
+}
+
+function sing(){
+  startHum();
+  if (dead) return;
+  var k;
+  for (k=0;k<3;k++){
+    (function(i){ setTimeout(function(){
+      land(true);
+      blip(lineage + (Math.random()*2-1)*WOBBLE);
+    }, i*70); })(k);
+  }
+}
+
+function reborn(){
+  startHum();
+  dead=false; lineage=0; lean=0; sparks.length=0; bumpT=1;
+}
+
+/* ── the knob: tap toggles, drag turns ── */
+function setKnob(v){
+  forget = clamp(v,0,1);
+  if (knob) knob.setAttribute('aria-valuenow', forget.toFixed(2));
+}
+if (knob){
+  var kdrag=false, ky0=0, kv0=0, kmoved=false, kid=null;
+  knob.addEventListener('pointerdown', function(e){
+    kdrag=true; kmoved=false; ky0=e.clientY; kv0=forget; kid=e.pointerId;
+    try{ knob.setPointerCapture(e.pointerId); }catch(err){}
+    e.preventDefault();
+  }, false);
+  knob.addEventListener('pointermove', function(e){
+    if(!kdrag) return;
+    var dy=ky0-e.clientY;
+    if (Math.abs(dy)>4) kmoved=true;
+    setKnob(kv0 + dy/115);
+    e.preventDefault();
+  }, false);
+  function kend(){
+    if(!kdrag) return;
+    kdrag=false;
+    try{ if(kid!=null) knob.releasePointerCapture(kid); }catch(err){}
+    if(!kmoved){ startHum(); setKnob(forget>0.5?0:0.8); }
+  }
+  knob.addEventListener('pointerup', kend, false);
+  knob.addEventListener('pointercancel', kend, false);
+  knob.addEventListener('keydown', function(e){
+    if(e.key==='ArrowUp'||e.key==='ArrowRight'){ startHum(); setKnob(forget+0.12); e.preventDefault(); }
+    else if(e.key==='ArrowDown'||e.key==='ArrowLeft'){ startHum(); setKnob(forget-0.12); e.preventDefault(); }
+  }, false);
+}
+if (singBtn)  singBtn.addEventListener('click', sing, false);
+if (againBtn) againBtn.addEventListener('click', reborn, false);
+
+/* ── the whisper (the song's own voice, faint) ── */
+var lastWh='';
+function say(t){ if(whisper && t!==lastWh){ whisper.textContent=t; lastWh=t; } }
+function updateWhisper(){
+  if (dead){ say('gone. — press again.'); return; }
+  if (!started){ say('give me a voice — press sing.'); return; }
+  var near=Math.abs(lineage)/FENCE;
+  if (near>0.82){ say('i am almost gone.'); }
+  else if (near>0.45){ say(forget>0.45?'i can hold this.':'i am keeping all of you. i slip.'); }
+  else { say(forget>0.45?'i let the sameness go. i stay myself.':'i hold — for now.'); }
+}
+
+/* ── sizing ── */
+function size(){
+  try{
+    var dpr=Math.min(2,window.devicePixelRatio||1);
+    var w=stage.clientWidth || (stage.getBoundingClientRect().width) || 300;
+    stage.width=Math.round(w*dpr); stage.height=Math.round(w*dpr);
+  }catch(e){}
+  if(knobGlass)  knobGlass.size();
+  if(winGlass)   winGlass.size();
+  if(proofGlass) proofGlass.size();
+}
+window.addEventListener('resize', size);
+
+/* ── the drawing: the song floats in a round pool; glass (and the candle) sit over it ── */
+function draw(now){
+  var W=stage.width, H=stage.height;
+  if (W<2||H<2){ size(); return; }
+  g2.clearRect(0,0,W,H);
+  var dpr=W/(stage.clientWidth||W);
+  var cx=W*0.5, cy=H*0.5, maxR=Math.min(W,H)*0.5;
+  var drift=dead?1:Math.abs(lineage)/FENCE;
+
+  // a faint warm pool at the centre — left clear toward the rim so the candle shows through
+  var pool=g2.createRadialGradient(cx,cy,1,cx,cy,maxR);
+  pool.addColorStop(0,'rgba(255,226,122,'+(0.10*aliveS).toFixed(3)+')');
+  pool.addColorStop(0.6,'rgba(255,210,90,'+(0.035*aliveS).toFixed(3)+')');
+  pool.addColorStop(1,'rgba(150,170,210,0.03)');
+  g2.fillStyle=pool; g2.beginPath(); g2.arc(cx,cy,maxR,0,6.2832); g2.fill();
+
+  // where the song sits — radius is the drift toward the edge; it wanders
+  var wander=0.85*Math.sin(now*0.00037)+0.5*Math.sin(now*0.00091+1.3);
+  var theta=wander + (lineage>=0?-0.55:0.55);
+  var rad=drift*maxR*0.84;
+  var bob=(started&&!dead)?Math.sin(now*0.004)*2*dpr*aliveS:0;
+  var ox=cx+rad*Math.cos(theta), oy=cy+rad*Math.sin(theta)+bob;
+
+  // voices fly in from the rim to land on the song
+  var i;
+  for (i=sparks.length-1;i>=0;i--){
+    var sp=sparks[i]; sp.t+=0.04;
+    if (sp.t>=1){ sparks.splice(i,1); continue; }
+    var rx=cx+Math.cos(sp.a)*maxR*0.96, ry=cy+Math.sin(sp.a)*maxR*0.96;
+    var sx=rx+(ox-rx)*sp.t, sy=ry+(oy-ry)*sp.t;
+    g2.fillStyle='rgba(185,180,168,'+((1-sp.t)*0.5).toFixed(3)+')';
+    g2.beginPath(); g2.arc(sx,sy,Math.max(1.2,dpr*1.3),0,6.2832); g2.fill();
+  }
+
+  // the song — a glowing orb; warm + alive, cold + dark as it nears the edge
+  bumpT*=0.86;
+  var Rr=(13+3.5*bumpT)*dpr;
+  if (aliveS>0.02){
+    var gr=g2.createRadialGradient(ox,oy,1,ox,oy,Rr*3.6);
+    gr.addColorStop(0,'rgba(255,226,122,'+(0.6*aliveS).toFixed(3)+')');
+    gr.addColorStop(0.5,'rgba(255,210,90,'+(0.2*aliveS).toFixed(3)+')');
+    gr.addColorStop(1,'rgba(255,210,90,0)');
+    g2.fillStyle=gr; g2.beginPath(); g2.arc(ox,oy,Rr*3.6,0,6.2832); g2.fill();
+  }
+  var r1=Math.round(255*aliveS+40*(1-aliveS));
+  var g1=Math.round(226*aliveS+44*(1-aliveS));
+  var b1=Math.round(122*aliveS+54*(1-aliveS));
+  var bg=g2.createRadialGradient(ox-Rr*0.3,oy-Rr*0.3,1,ox,oy,Rr);
+  bg.addColorStop(0,'rgba('+Math.min(255,r1+30)+','+Math.min(255,g1+24)+','+Math.min(255,b1+12)+',1)');
+  bg.addColorStop(1,'rgba('+r1+','+g1+','+b1+',1)');
+  g2.fillStyle=bg; g2.beginPath(); g2.arc(ox,oy,Rr,0,6.2832); g2.fill();
+}
+
+/* ── loop ── */
+var hidden=false;
+document.addEventListener('visibilitychange', function(){
+  hidden=document.hidden;
+  if(hidden){ try{ if(humG){ var c=ac(); humG.gain.setTargetAtTime(0,c.currentTime,0.05);} }catch(e){} }
+}, false);
+function frame(now){
+  requestAnimationFrame(frame);
+  if (hidden) return;
+  if (!lastT) lastT=now;
+  var dt=(now-lastT)/1000; lastT=now; if(dt>0.1) dt=0.1;
+
+  if (!dead){ lineage *= Math.pow(0.5, dt/GHALF); }
+  if (!dead && Math.abs(lineage) >= FENCE-0.4){ dead=true; lineage=(lineage<0?-FENCE:FENCE); }
+
+  var alive=dead?0:(1-Math.abs(lineage)/FENCE);
+  aliveS += (alive-aliveS)*Math.min(1,dt*6);
+
+  if (humG){
+    try{
+      var c=ac();
+      var botOpen=botEl?botEl.classList.contains('open'):false;
+      humG.gain.setTargetAtTime((dead||botOpen)?0:0.055*aliveS, c.currentTime, 0.08);
+      hum.frequency.setTargetAtTime(PULSAR*Math.pow(2,lineage/1200), c.currentTime, 0.05);
+    }catch(e){}
+  }
+
+  draw(now);
+  if(knobGlass)  knobGlass.draw(now, forget);
+  if(winGlass)   winGlass.draw(now);
+  if(proofGlass) proofGlass.draw(now);
+  updateWhisper();
+}
+size(); setKnob(forget); requestAnimationFrame(frame);
+window.addEventListener('pagehide', function(){ try{ if(humG) humG.gain.value=0; }catch(e){} }, false);
+
+})();
+</script>
+
+<!-- the page + the song's voice -->
+<script>
+(function(){
+'use strict';
+
+var ENDPOINT_ASK = '/.netlify/functions/ask';
+var ENDPOINT_SAY = '/.netlify/functions/say';
+
+var askBtn    = document.getElementById('ask');
+var bot        = document.getElementById('bot');
+var log        = document.getElementById('botlog');
+var input      = document.getElementById('botinput');
+var leaveBtn   = document.getElementById('botleave');
+var micBtn     = document.getElementById('botmic');
+var proofDoor  = document.getElementById('proofdoor');
+
+var history = [];
+var busy = false;
+var fullMath = false;
+
+/* the quiet proof door fades in once the opening has settled */
+setTimeout(function(){ if (proofDoor) proofDoor.classList.add('show'); }, 2500);
+/* the way back comes up with the page, knot after it (21 sep — the mortality
+   pass; it is a plain <a>, so THE ANCHOR'S LAW in mortal.js carries the click
+   and no door has to be written here at all) */
+var mathDoor = document.getElementById('mathdoor');
+setTimeout(function(){ if (mathDoor) mathDoor.classList.add('show'); }, 900);
+
+/* ───────── voice out (web-audio, woken on a tap) ───────── */
+var actx = null;
+function getCtx(){
+  if (actx) return actx;
+  try{ var C = window.AudioContext || window.webkitAudioContext; actx = C ? new C() : null; }catch(e){ actx = null; }
+  return actx;
+}
+function wakeAudio(){ try{ var c = getCtx(); if (c && c.state === 'suspended') c.resume(); }catch(e){} }
+
+var curSource = null;
+function stopAudio(){ try{ if (curSource){ curSource.stop(); curSource = null; } }catch(e){} }
+
+/* browser speech — primed on the tap; used only if /say returns no audio */
+var speechPrimed = false, chosenVoice = null;
+function pickVoice(){
+  try{
+    var vs = (window.speechSynthesis && speechSynthesis.getVoices) ? speechSynthesis.getVoices() : [];
+    if (!vs || !vs.length) return null;
+    var prefer = ['Daniel','Serena','Moira','Tessa','Karen','Samantha','Google UK English Male','Google UK English Female'];
+    var i, j;
+    for (i=0;i<prefer.length;i++){ for (j=0;j<vs.length;j++){ if (vs[j].name === prefer[i]) return vs[j]; } }
+    for (i=0;i<vs.length;i++){ if (/en[-_]GB/i.test(vs[i].lang)) return vs[i]; }
+    for (i=0;i<vs.length;i++){ if (/^en/i.test(vs[i].lang)) return vs[i]; }
+    return vs[0];
+  }catch(e){ return null; }
+}
+if ('speechSynthesis' in window){ try{ speechSynthesis.onvoiceschanged = function(){ chosenVoice = pickVoice(); }; }catch(e){} }
+function primeSpeech(){
+  if (!('speechSynthesis' in window) || speechPrimed) return;
+  try{ var u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); speechPrimed = true; }catch(e){}
+}
+function webSpeak(text){
+  if (!('speechSynthesis' in window) || !text) return;
+  try{
+    speechSynthesis.cancel();
+    if (!chosenVoice) chosenVoice = pickVoice();
+    var u = new SpeechSynthesisUtterance(text);
+    if (chosenVoice) u.voice = chosenVoice;
+    u.rate = 0.84; u.pitch = 0.92; u.volume = 1;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+function wakeOnGesture(){ wakeAudio(); primeSpeech(); }
+
+function playDecoded(buf, p){
+  var c = getCtx(); if (!c || !buf) return false;
+  try{
+    stopAudio();
+    var src = c.createBufferSource();
+    src.buffer = buf; src.connect(c.destination);
+    src.onended = function(){ if (curSource === src) curSource = null; };
+    src.start(0); curSource = src; glow(p);
+    return true;
+  }catch(e){ return false; }
+}
+
+/* speak a bot line: elevenlabs (decoded + cached per line) -> browser speech */
+function speakReply(text, p){
+  if (!text) return;
+  if (p) p._text = text;
+  if (p && p._buf){ if (playDecoded(p._buf, p)) return; }
+  var c = getCtx();
+  if (!c){ webSpeak(text); return; }
+  fetch(ENDPOINT_SAY, { method:'POST', headers:{ 'content-type':'application/json' }, body: JSON.stringify({ text:text }) })
+    .then(function(r){
+      if (!r || r.status === 204) return null;
+      var ct = r.headers.get('content-type') || '';
+      if (r.ok && ct.indexOf('audio') >= 0) return r.arrayBuffer();
+      return r.text().then(function(t){ try{ console.warn('[say] fell back:', r.status, (t || '').slice(0, 300)); }catch(e){} return null; });
+    })
+    .then(function(arr){
+      if (!arr){ webSpeak(text); return; }
+      c.decodeAudioData(arr.slice(0),
+        function(buf){ if (p) p._buf = buf; if (!playDecoded(buf, p)) webSpeak(text); },
+        function(){ webSpeak(text); });
+    })
+    .catch(function(){ webSpeak(text); });
+}
+
+function silence(){
+  try{ if (window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  stopAudio();
+  try{ if (recognizing && rec) rec.stop(); }catch(e){}
+}
+
+/* ── the panel ── */
+function openBot(){
+  wakeOnGesture();
+  bot.classList.add('open');
+  setTimeout(function(){ try{ input.focus(); }catch(e){} }, 60);
+}
+function closeBot(){ bot.classList.remove('open'); silence(); }
+askBtn.addEventListener('click', openBot, false);
+leaveBtn.addEventListener('click', closeBot, false);
+bot.addEventListener('click', function(e){ if (e.target === bot) closeBot(); }, false);
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && bot.classList.contains('open')) closeBot(); }, false);
+
+/* ── lines ── */
+function glow(p){
+  try{ var lit = log.querySelectorAll('.b.speaking'), i; for (i=0;i<lit.length;i++) lit[i].classList.remove('speaking'); }catch(e){}
+  if (p) p.classList.add('speaking');
+}
+function addLine(who, text){
+  var p = document.createElement('p');
+  p.className = (who === 'bot') ? 'b' : 'u';
+  p.textContent = text;
+  if (who === 'bot'){ p._text = text; p.addEventListener('click', function(){ wakeAudio(); speakReply(p._text, p); }, false); }
+  log.appendChild(p);
+  log.scrollTop = log.scrollHeight;
+  return p;
+}
+
+/* ── full math, by phrase ── */
+function detectMode(t){
+  var s = (t || '').toLowerCase();
+  if (/\bgo full math\b|\bfull math mode\b|\bgo deep\b/.test(s)) fullMath = true;
+  else if (/\bgo plain\b|\bplain please\b|\benough math\b|\bcome back\b|\bstop math\b|\bkeep it plain\b/.test(s)) fullMath = false;
+}
+
+/* ── send ── */
+function send(){
+  var text = (input.value || '').trim();
+  if (!text || busy) return;
+  if (text.length > 500) text = text.slice(0, 500);
+  input.value = '';
+  detectMode(text);
+  addLine('user', text);
+  history.push({ role:'user', content:text });
+  wakeOnGesture();
+  ask();
+}
+input.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); } }, false);
+
+function ask(){
+  busy = true;
+  var pending = addLine('bot', '…');
+  fetch(ENDPOINT_ASK, {
+    method:'POST', headers:{ 'content-type':'application/json' },
+    body: JSON.stringify({ messages: history.slice(-12), mode: (fullMath ? 'full' : 'plain') })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    var text = (d && d.text) ? String(d.text).trim() : '';
+    if (!text) throw 0;
+    pending.textContent = text; pending._text = text;
+    history.push({ role:'assistant', content:text });
+    busy = false;
+    log.scrollTop = log.scrollHeight;
+    speakReply(text, pending);
+  })
+  .catch(function(){
+    pending.textContent = 'the line is not open.'; pending._text = 'the line is not open.';
+    busy = false;
+  });
+}
+
+/* ───────── voice in (speech to speech) — transcript lowercased ───────── */
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+var rec = null, recognizing = false;
+if (SR && micBtn){
+  micBtn.classList.add('show');
+  micBtn.addEventListener('click', function(){
+    wakeOnGesture();
+    if (recognizing){ try{ rec.stop(); }catch(e){} return; }
+    try{
+      if (!rec){
+        rec = new SR();
+        rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 1; rec.continuous = false;
+        rec.onstart  = function(){ recognizing = true; micBtn.classList.add('on'); };
+        rec.onerror  = function(){ recognizing = false; micBtn.classList.remove('on'); };
+        rec.onend    = function(){ recognizing = false; micBtn.classList.remove('on'); };
+        rec.onresult = function(e){
+          try{
+            var t = e.results[0][0].transcript;
+            if (t){ input.value = String(t).toLowerCase(); send(); }
+          }catch(err){}
+        };
+      }
+      rec.start();
+    }catch(e){ recognizing = false; micBtn.classList.remove('on'); }
+  }, false);
+} else if (micBtn) {
+  input.setAttribute('placeholder', 'type');
+}
+
+/* ── silence on the way out ── */
+document.addEventListener('visibilitychange', function(){ if (document.hidden) silence(); }, false);
+window.addEventListener('pagehide', silence, false);
+
+})();
+</script>
+
+</body>
+</html>

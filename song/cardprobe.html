@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>card probe</title>
+<!--
+  cardprobe.html · 21 sep 2026 · A LAB BENCH, KNOT A ROOM OF THE HOUSE.
+  it does knot load mortal.js and is knot under the mortality pass. it is opened by
+  typing its address, it never writes history, and it is deleted from the site when
+  the probe is done. what it does: raises the real share sheet holding test contact
+  cards, each row of which tries a different way of hiding an address behind a name.
+  a row that works opens this same page with ?hit=<row>, and the page says so.
+-->
+<style>
+  :root{ color-scheme:dark; }
+  html,body{ margin:0; background:#000; color:#fff; }
+  body{ font:17px/1.45 -apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding:calc(env(safe-area-inset-top,0px) + 24px) 20px calc(env(safe-area-inset-bottom,0px) + 40px);
+        max-width:560px; margin:0 auto; -webkit-text-size-adjust:100%; }
+  h1{ font-size:22px; font-weight:600; margin:0 0 6px; }
+  p{ margin:0 0 14px; }
+  .dim{ color:#8e8e93; }
+  ol,ul{ padding-left:22px; margin:0 0 18px; }
+  li{ margin:0 0 8px; }
+  code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:15px; color:#c7c7cc; word-break:break-all; }
+  button{ -webkit-appearance:none; appearance:none; border:0; border-radius:14px; background:#1c1c1e; color:#fff;
+          font:inherit; padding:16px 18px; width:100%; text-align:left; margin:0 0 10px; }
+  button.big{ background:#fff; color:#000; font-weight:600; font-size:19px; text-align:center; padding:18px; margin:6px 0 14px; }
+  button:active{ opacity:.6; }
+  button:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+  .row{ display:grid; grid-template-columns:2.2em 1fr; gap:0 10px; padding:12px 0; border-top:1px solid #2c2c2e; }
+  .row b{ font-weight:600; }
+  .row span{ display:block; }
+  .rows{ margin:0 0 18px; border-bottom:1px solid #2c2c2e; }
+  .small{ display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin:0 0 14px; }
+  .small button{ width:auto; text-align:center; padding:14px 0; margin:0; }
+  #say{ min-height:1.4em; color:#8e8e93; margin:0 0 20px; }
+  details{ margin:0 0 20px; }
+  summary{ color:#8e8e93; cursor:pointer; }
+  pre{ white-space:pre-wrap; word-break:break-all; font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; color:#c7c7cc;
+       background:#1c1c1e; padding:12px; border-radius:10px; }
+  #answer{ display:none; }
+  #answer h1{ font-size:34px; line-height:1.15; margin:24px 0 18px; }
+  #answer .fact{ padding:14px 0; border-top:1px solid #2c2c2e; }
+  #answer .fact:last-of-type{ border-bottom:1px solid #2c2c2e; margin-bottom:24px; }
+  a{ color:#fff; }
+</style>
+</head>
+<body>
+
+<main id="bench">
+  <h1>card probe</h1>
+  <p class="dim">a contact card can show a name and hide an address behind it — maybe. each row of this card tries one way. a row that works opens this page again, and the page says which row it was and whether the genes came through the #.</p>
+
+  <button class="big" id="all" type="button">raise the sheet with the whole card</button>
+  <p id="say"></p>
+
+  <p><b>what to do</b></p>
+  <ol>
+    <li>tap the button. in the sheet, send the card to yourself — Messages to your own number, Mail, or Notes all work.</li>
+    <li>open the card where it landed. look at what each row prints, then tap every row that will take a tap.</li>
+    <li>a tap that lands here shows the row's letter. a tap that does nothing, or opens something else, is also an answer.</li>
+    <li>then <i>create new contact</i>, open it from Contacts, and tap the rows once more — the preview and the saved contact do knot always agree.</li>
+    <li>tell 👁️ what each row printed and what each tap did. screenshots of the card are perfect.</li>
+  </ol>
+
+  <p><b>the rows</b></p>
+  <div class="rows" id="rows"></div>
+
+  <p class="dim">if Contacts refuses the whole card, or a row is missing from it, try the rows one at a time — each of these raises the sheet with a card carrying that one row.</p>
+  <div class="small" id="small"></div>
+
+  <details><summary>the card's text, as sent</summary><pre id="raw"></pre></details>
+
+  <p class="dim">delete the probe contacts from your phone when you are done, and this page from the site.</p>
+</main>
+
+<main id="answer">
+  <h1 id="ans-head"></h1>
+  <div class="fact" id="ans-row"></div>
+  <div class="fact" id="ans-genes"></div>
+  <div class="fact" id="ans-tab"></div>
+  <div class="fact" id="ans-href"></div>
+  <p><a id="ans-back" href="cardprobe.html">back to the bench</a></p>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var GENES='0437471517368790.1';                                     /* the founder's genes and a generation, as a child's card would carry them */
+  var HERE=location.origin+location.pathname;                         /* this page's own address, wherever it is served from */
+  var BARE=HERE.replace(/^https?:\/\//,'');
+  function hit(id){ return HERE+'?hit='+id+'#'+GENES; }
+  function bare(id){ return BARE+'?hit='+id+'#'+GENES; }
+
+  /* each row: what it prints on the bench, and the vcard lines it adds. n is the item number for grouped lines. */
+  var ROWS=[
+    { id:'A', what:'a plain homepage — the child card exactly as it is today. the control: it must print the address and a tap must land here.',
+      lines:function(n){ return ['item'+n+'.URL;type=pref:'+hit('A'),'item'+n+'.X-ABLabel:_$!<HomePage>!$_']; } },
+    { id:'B', what:'the same address bare, no https, under a made-up label ("answer"). does ios print it shorter, and does it still open?',
+      lines:function(n){ return ['item'+n+'.URL:'+bare('B'),'item'+n+'.X-ABLabel:answer']; } },
+    { id:'C', what:'a social profile on a made-up service ("nobody"), user "home", our address hidden behind it. the hope.',
+      lines:function(){ return ['X-SOCIALPROFILE;type=nobody;x-user=home:'+hit('C')]; } },
+    { id:'D', what:'a twitter profile, user "nobodyhome", our address hidden behind it. does a tap open our address, or rebuild twitter\'s from the name?',
+      lines:function(){ return ['X-SOCIALPROFILE;type=twitter;x-user=nobodyhome:'+hit('D')]; } },
+    { id:'E', what:'an instant-message handle on a made-up service ("nobody"), our address as the handle itself. the other hope.',
+      lines:function(n){ return ['item'+n+'.IMPP;X-SERVICE-TYPE=nobody;type=pref:'+hit('E')]; } },
+    { id:'F', what:'a skype handle, our address as the handle. does ios open the handle as written, whatever the service says?',
+      lines:function(n){ return ['item'+n+'.IMPP;X-SERVICE-TYPE=Skype:'+hit('F')]; } },
+    { id:'G', what:'a social profile on a made-up service with no address at all — apple\'s own shape for a custom profile. only asks: does such a row print at all?',
+      lines:function(){ return ['X-SOCIALPROFILE;type=nobody;x-user=home:x-apple:home']; } }
+  ];
+  var BY={}; ROWS.forEach(function(r){ BY[r.id]=r; });
+
+  /* a vcard line longer than 75 octets is folded: a line break and one space. readers unfold it. */
+  function fold(s){ var o=[], i=0, n=74; while(i<s.length){ o.push((i?' ':'')+s.substr(i,i?n-1:n)); i+=i?n-1:n; } return o.join('\r\n'); }
+  function card(name,rows){
+    var out=['BEGIN:VCARD','VERSION:3.0','N:;'+name+';;;','FN:'+name], n=1;
+    rows.forEach(function(r){ r.lines(n).forEach(function(l){ out.push(fold(l)); }); n++; });
+    out.push('END:VCARD');
+    return out.join('\r\n')+'\r\n';
+  }
+
+  var sayEl=document.getElementById('say');
+  function say(w){ sayEl.textContent=w; }
+  function share(text,filename){
+    var file=null; try{ file=new File([text],filename,{ type:'text/vcard' }); }catch(_){ file=null; }
+    var can=false; try{ can=!!(file&&navigator.canShare&&navigator.canShare({ files:[file] })); }catch(_){ can=false; }
+    if(!can){ say('this browser will knot raise the sheet with a card. open this page in safari on the iphone.'); return; }
+    say('the sheet is up.');
+    try{
+      navigator.share({ files:[file] }).then(
+        function(){ say('the sheet closed. now open the card where you sent it.'); },
+        function(e){ say(e&&e.name==='AbortError'?'the sheet was dismissed.':'the sheet refused: '+((e&&e.name)||'error')); });
+    }catch(e){ say('share() threw: '+((e&&e.name)||'error')); }
+  }
+
+  /* ---- the answer: this page opened by a tap on a row ---- */
+  var m=/[?&]hit=([A-Za-z0-9]+)/.exec(location.search);
+  if(m){
+    var id=m[1].toUpperCase(), r=BY[id], genes=(location.hash||'').replace(/^#/,'');
+    document.getElementById('bench').style.display='none';
+    document.getElementById('answer').style.display='block';
+    document.getElementById('ans-head').textContent='row '+id+' opened this page.';
+    document.getElementById('ans-row').textContent=r?r.what:'(a row this page does knot know)';
+    document.getElementById('ans-genes').textContent=genes===GENES?'the genes came through the #: '+genes
+      :(genes?'something came through the #, but knot the genes: '+genes:'nothing came through the # — the genes were lost on the way.');
+    document.getElementById('ans-tab').textContent='this tab holds '+history.length+' page'+(history.length===1?'':'s')+'.';
+    document.getElementById('ans-href').textContent='opened as: '+location.href;
+    document.getElementById('ans-back').href=HERE;
+    document.title='card probe · row '+id;
+    return;
+  }
+
+  /* ---- the bench ---- */
+  var rowsEl=document.getElementById('rows'), smallEl=document.getElementById('small');
+  ROWS.forEach(function(r){
+    var d=document.createElement('div'); d.className='row';
+    var b=document.createElement('b'); b.textContent=r.id;
+    var s=document.createElement('span'); s.textContent=r.what;
+    d.appendChild(b); d.appendChild(s); rowsEl.appendChild(d);
+    var k=document.createElement('button'); k.type='button'; k.textContent=r.id;
+    k.addEventListener('click',function(){ share(card('UNKNOWN '+r.id,[r]),'unknown-'+r.id.toLowerCase()+'.vcf'); });
+    smallEl.appendChild(k);
+  });
+  var whole=card('UNKNOWN PROBE',ROWS);
+  document.getElementById('raw').textContent=whole;
+  document.getElementById('all').addEventListener('click',function(){ share(whole,'unknown-probe.vcf'); });
+})();
+</script>
+</body>
+</html>

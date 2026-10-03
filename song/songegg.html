@@ -1,0 +1,1172 @@
+<!doctype html>
+<!-- songegg.html — THE EGG'S STUDY, hung in the visitor's OWN room. the
+     corridor's egg door lands here. the phone's camera looks through: the
+     room floats in the actual space around you (8th wall world tracking,
+     the unisong-ar way), and when the engine or the lens is denied it falls
+     back — quietly, never dying black — to the proven orientation magic
+     window (?flat=1 forces it; ?nocam seals it in true black).
+     at the centre: a round OLD WOOD table, worn and ringed and weathered,
+     resting on a pool of liquid golden egg-yolk that quivers and shines
+     wet; the table wobbles a little WITH the yolk, as a thing floating on
+     liquid must. on the table: the kitchen's own cybernetics body (the
+     same two photographs, the same six LEDs, the same cold glints), and
+     over it an INVISIBLE warm spotlight, quite small, so the desk is the
+     lit thing in the visitor's room. pasted all around, 360 degrees, at a
+     couple of heights: light yellow post-it notes — concepts, ideas,
+     notebook lines about the egg robot — that BRIGHTEN when looked near
+     and ENLARGE a little when tapped.
+     the way home is unchanged: first touch of the body opens it in glints;
+     touched open, it carries you back up the corridor. escape or enter on
+     a keyboard does the same. ES5, three.js r128 beside this file (CDN
+     r128 fallback), one AudioContext on the 173.68 Hz grid, iOS-safe,
+     knot a single network asset needed for the room to STAND (photos and
+     the engine travel when they can; the room holds without them).
+     see batch-egg-room.md for the knobs and the honest knot-verified list. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<title>song</title>
+<style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden;
+    -webkit-user-select:none;user-select:none;touch-action:none;
+    -webkit-tap-highlight-color:transparent}
+  /* the visitor's own room, seen through the lens — behind everything */
+  #cam{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+    opacity:0;transition:opacity 2.2s ease}
+  #cam.on{opacity:1}
+  #gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:2}
+  /* the hint — one dim line in the house voice, italic serif, warm and low */
+  #hint{position:fixed;left:0;right:0;bottom:5.2vh;text-align:center;
+    color:#6b6248;font:italic 300 clamp(11px,2.8vw,13px)/1.5 Georgia,'Times New Roman',serif;
+    letter-spacing:.02em;opacity:0;transition:opacity 1.6s ease;
+    pointer-events:none;z-index:20;text-shadow:0 1px 3px rgba(0,0,0,0.6)}
+  #hint.on{opacity:.9}
+  @media (prefers-reduced-motion:reduce){ #hint,#cam{transition:none} }
+</style>
+<!-- three.min.js must sit beside this file (the same copy the kitchen uses) -->
+<script src="three.min.js"></script>
+<script>if(!window.THREE)document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');</script>
+<!-- This product includes the XR Engine software developed by Niantic Spatial, Inc.
+     Copyright (c) 2026 Niantic Spatial, Inc. All rights reserved. -->
+<script>if(!/[?&](flat=1|nocam)\b/.test(location.search))document.write('<script src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js" data-preload-chunks="slam" async crossorigin="anonymous"><\/script>');</script>
+</head>
+<body>
+<video id="cam" playsinline webkit-playsinline muted></video>
+<canvas id="gl"></canvas>
+<div id="hint"></div>
+<script>
+/* ==========================================================================
+   the egg's study, in your room.
+
+   the law of this room: the world's own light is the room's light now.
+   the candle is retired; in its place a small invisible WARM SPOTLIGHT
+   hangs over the round table, so the desk is the one warmly lit thing
+   wherever the visitor happens to be standing. the yolk under the table
+   is liquid — it quivers, its wet sheen slides — and the table rides the
+   quiver, wobbling a little, as a raft does.
+
+   the way home: the FIRST touch of the body on the table cracks it open
+   in glints (as it does in the kitchen); every touch after that, while it
+   stands open, carries you back up the corridor to kitchen.html. escape
+   or enter on a keyboard does the same, so nobody is ever trapped here.
+   ========================================================================== */
+(function(){
+'use strict';
+var THREE=window.THREE;
+if(!THREE){ document.body.style.color='#7d92c0';
+  document.body.innerHTML='<p style="font-family:monospace;padding:2em">three.min.js not found &#8212; place it beside songegg.html</p>'; return; }
+var TAU=Math.PI*2;
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function sstep(t){ t=clamp(t,0,1); return t*t*(3-2*t); }
+function wrapPi(a){ while(a>Math.PI)a-=TAU; while(a<-Math.PI)a+=TAU; return a; }
+function mulberry(seed){ return function(){ seed|=0; seed=(seed+0x6D2B79F5)|0;
+  var t=Math.imul(seed^(seed>>>15), 1|seed);
+  t=(t+Math.imul(t^(t>>>7), 61|t))^t;
+  return ((t^(t>>>14))>>>0)/4294967296; }; }
+var RM=false; try{ RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+/* ---- the flags — every one works in every mode ---------------------------- */
+var qs={}; location.search.replace(/[?&]([^=&]+)=?([^&]*)/g, function(_,k,v){ qs[k]=decodeURIComponent(v||'1'); });
+var NOCAM=('nocam' in qs), FLAT=(qs.flat==='1'), AUTO=('auto' in qs), GO=(qs.go==='1');
+var AR=!FLAT && !NOCAM;                                    /* the engine path: the room in YOUR room */
+var AR_LIVE=false, AR_DEAD=false, arStartT=0;
+var AR_SCALE=1;                                            /* life-size — the scene is already in metres */
+var AR_POS={x:0, y:0, z:-2.35};                            /* [TUNE] where the table stands when the room arrives — a couple of steps ahead, floor meeting floor */
+var EYE=1.5;                                               /* where the eye is seated at start */
+if(+qs.s) AR_SCALE=+qs.s;                                  /* ?s=0.8&ay=0.2&eye=1.4 — live knobs, no redeploy */
+if(qs.ay!==undefined&&qs.ay!=='') AR_POS.y=+qs.ay;
+if(qs.az2!==undefined&&qs.az2!=='') AR_POS.z=+qs.az2;
+if(qs.eye!==undefined&&qs.eye!=='') EYE=+qs.eye;
+
+/* ---- assets — the SAME photographs the kitchen keeps of the body --------- */
+var ASSETS={
+  comp01:'https://kohmedia.b-cdn.net/eggcomp01.png',       /* the organs, at rest   */
+  comp02:'https://kohmedia.b-cdn.net/eggcomp02.png'        /* the organs, opened    */
+};
+var LINKS={ home:'kitchen.html' };
+
+/* ---- letting go: one AudioContext, closed on every way out --------------- */
+var AC=null;
+function ensureAC(){
+  if(AC) { try{ if(AC.state==='suspended') AC.resume(); }catch(e){} return; }
+  var Ctor=window.AudioContext||window.webkitAudioContext;
+  if(!Ctor) return;
+  try{ AC=new Ctor(); }catch(e){ AC=null; }
+}
+var camEl=document.getElementById('cam');
+function stopAllMedia(){
+  try{ if(AC && AC.state!=='closed') AC.close(); }catch(e){}
+  try{ if(camEl && camEl.srcObject){ var trs=camEl.srcObject.getTracks(), ti;
+    for(ti=0;ti<trs.length;ti++) trs[ti].stop(); } }catch(e){}
+  try{ if(window.XR8 && XR8.stop) XR8.stop(); }catch(e){}
+}
+function goDoor(url){ stopAllMedia(); location.href=url; }
+function home(){
+  /* the way back up the corridor — knot a new page, the room you left */
+  var back=LINKS.home;
+  try{ if(document.referrer && /kitchen\.html/.test(document.referrer)) back=document.referrer; }catch(e){}
+  goDoor(back);
+}
+window.addEventListener('pagehide', stopAllMedia);
+
+/* ---- renderer / scene ----------------------------------------------------
+   in the engine path the ENGINE owns #gl and paints the camera and the
+   adopted room together; our renderer is born detached and only steps in
+   if the engine falls. in the flat/window path our renderer holds #gl,
+   its glass clear, the lens video breathing behind it. */
+var glc=document.getElementById('gl');
+var renderer=new THREE.WebGLRenderer({ canvas:(AR?document.createElement('canvas'):glc),
+  antialias:true, alpha:true });
+renderer.setClearColor(0x000000, 0);                       /* clear glass — the world (or the black) shows through */
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.04;                         /* [TUNE] the whole room's breath, a hair below full */
+var scene=new THREE.Scene();                               /* no background, no fog — the visitor's room is the background */
+var camera=new THREE.PerspectiveCamera(60, 1, 0.05, 60);
+function onResize(){
+  var w=window.innerWidth, h=window.innerHeight;
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h; camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', onResize); onResize();
+
+/* ---- the light: a small invisible warm spotlight over the table ----------
+   no candle any more — the visitor's room brings its own day. what the
+   desk keeps is one narrow warm cone from nowhere, quite small, pooled on
+   the table top, and a soft even wash so the notes can be read from any
+   side. a second, cooler-warm point circles low and slow: it is knot a
+   lamp but the yolk's own wet gleam, walking. */
+var hemi=new THREE.HemisphereLight(0xfff4e0, 0x2a2118, 0.62);   /* [TUNE] the even wash — lower and the room goes moodier, the notes dimmer */
+scene.add(hemi);
+var SPOT={ x:0.22, y:2.30, z:0.16 };                       /* [TUNE] where the unseen lamp hangs — just off the table's shoulder */
+var spot=new THREE.SpotLight(0xffd9a0, 1.55, 5.0, 0.40, 0.65, 2);   /* [TUNE] the cone's warmth / reach / narrowness / softness of edge */
+spot.position.set(SPOT.x, SPOT.y, SPOT.z);
+scene.add(spot);
+spot.target.position.set(0, 0.84, 0);                      /* the little lamp follows the smaller table down */
+scene.add(spot.target);
+var wet=new THREE.PointLight(0xfff3cf, 1.15, 3.4, 2);      /* [TUNE] the yolk's gleam — brighter and the yolk reads wetter */
+wet.position.set(0.48, 0.80, 0.48);
+scene.add(wet);
+
+/* ---- the liquid egg-yolk the table sits on -------------------------------
+   the signature thing: a low golden dome, photoreal by paint and motion —
+   a radial skin from pale-gold heart to deep orange rim with an off-centre
+   hot gleam, a matching bump so the surface undulates, low roughness so
+   the spotlight and the walking gleam slide wet across it, a fine jelly
+   overshell for depth, a thin pool spreading past its rim, and a faint
+   meniscus ring where the pedestal stands in it. and it QUIVERS: the
+   dome's own vertices ripple on two slow tides — a quiver, knot a wobble. */
+var YOLK={ r:0.74, squash:0.36, poolR:1.04 };              /* [TUNE] how big the yolk is, how low it lies, how far it pools under the table (terence: about 80% of the first pour) */
+function makeYolkMap(){
+  var c=document.createElement('canvas'); c.width=512; c.height=512;
+  var q=c.getContext('2d'), R=mulberry(90210), i;
+  var g=q.createRadialGradient(256,256,10,256,256,256);
+  g.addColorStop(0.00,'#ffdf86');                          /* [TUNE] the heart — paler is fresher, deeper is richer */
+  g.addColorStop(0.42,'#f7b93c');
+  g.addColorStop(0.78,'#e0871c');
+  g.addColorStop(1.00,'#b95f0e');                          /* [TUNE] the rim — how orange the yolk runs at its edge */
+  q.fillStyle=g; q.fillRect(0,0,512,512);
+  /* the off-centre hot gleam — the window the kitchen never had */
+  var hg=q.createRadialGradient(330,190,4,330,190,120);
+  hg.addColorStop(0,'rgba(255,248,220,0.85)');
+  hg.addColorStop(0.35,'rgba(255,226,150,0.30)');
+  hg.addColorStop(1,'rgba(255,210,120,0)');
+  q.fillStyle=hg; q.beginPath(); q.arc(330,190,120,0,TAU); q.fill();
+  /* faint mottling — a yolk is knot one colour anywhere */
+  for(i=0;i<46;i++){
+    var mx=R()*512, my=R()*512, mr=12+R()*44;
+    var mg=q.createRadialGradient(mx,my,1,mx,my,mr);
+    var warm=(R()<0.5);
+    mg.addColorStop(0, warm?'rgba(255,214,120,'+(0.04+R()*0.07)+')':'rgba(190,110,20,'+(0.04+R()*0.07)+')');
+    mg.addColorStop(1,'rgba(0,0,0,0)');
+    q.fillStyle=mg; q.beginPath(); q.arc(mx,my,mr,0,TAU); q.fill();
+  }
+  /* the finest speckle, so the sheen has something to slide over */
+  for(i=0;i<1600;i++){ q.fillStyle='rgba(255,240,200,'+(R()*0.05)+')';
+    q.fillRect(R()*512, R()*512, 1.5, 1.5); }
+  return new THREE.CanvasTexture(c);
+}
+var yolk={ mesh:null, jelly:null, pool:null, ring:null, base:null };
+function buildYolk(){
+  var tex=makeYolkMap();
+  var mat=new THREE.MeshStandardMaterial({ map:tex, bumpMap:tex, bumpScale:0.018,
+    roughness:0.19, metalness:0.0 });                      /* [TUNE] how wet the yolk looks — lower roughness and the gleam sharpens to glass */
+  /* the dome — the top of a squashed sphere; its skirt dips under the floor
+     so the rim meets the pool without a seam */
+  var geo=new THREE.SphereGeometry(1, 40, 22, 0, TAU, 0, Math.PI*0.55);
+  var dome=new THREE.Mesh(geo, mat);
+  dome.scale.set(YOLK.r, YOLK.r*YOLK.squash, YOLK.r);
+  dome.position.y=0;
+  scene.add(dome);
+  /* remember the still shape, so the quiver always breathes AROUND it */
+  var p=geo.attributes.position, n=p.count, arr=new Float32Array(n*3), i;
+  for(i=0;i<n;i++){ arr[i*3]=p.getX(i); arr[i*3+1]=p.getY(i); arr[i*3+2]=p.getZ(i); }
+  yolk.base=arr;
+  /* the jelly overshell — one translucent breath larger, additive, so the
+     dome keeps a depth the skin alone cannot say (one plain material —
+     r128 shares a single uv transform per material, so no texture here) */
+  var jmat=new THREE.MeshBasicMaterial({ color:0xffce6e, transparent:true,
+    opacity:0.10, blending:THREE.AdditiveBlending, depthWrite:false });
+  var jelly=new THREE.Mesh(geo, jmat);                     /* the same rippling geometry — the jelly quivers with the skin */
+  jelly.scale.set(YOLK.r*1.035, YOLK.r*YOLK.squash*1.05, YOLK.r*1.035);
+  scene.add(jelly);
+  /* the pool — the yolk's spread under the table, thin gold going to nothing */
+  var pc=document.createElement('canvas'); pc.width=pc.height=256;
+  var pq=pc.getContext('2d');
+  var pg=pq.createRadialGradient(128,128,30,128,128,127);
+  pg.addColorStop(0,'rgba(233,150,30,0.55)');
+  pg.addColorStop(0.62,'rgba(214,120,20,0.28)');
+  pg.addColorStop(1,'rgba(180,90,10,0)');
+  pq.fillStyle=pg; pq.fillRect(0,0,256,256);
+  var pool=new THREE.Mesh(new THREE.CircleGeometry(YOLK.poolR, 48),
+    new THREE.MeshBasicMaterial({ map:new THREE.CanvasTexture(pc), transparent:true,
+      opacity:0.85, depthWrite:false }));
+  pool.rotation.x=-Math.PI/2; pool.position.y=0.004;
+  scene.add(pool);
+  /* the meniscus — a faint bright ring where the pedestal stands in liquid;
+     it is what says SITTING ON, knot floating above */
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(0.245, 0.014, 8, 40),
+    new THREE.MeshBasicMaterial({ color:0xffe9a8, transparent:true, opacity:0.28,
+      blending:THREE.AdditiveBlending, depthWrite:false }));
+  ring.rotation.x=Math.PI/2;
+  ring.position.y=YOLK.r*YOLK.squash*0.90;                 /* just where the wood enters the gold */
+  scene.add(ring);
+  yolk.mesh=dome; yolk.jelly=jelly; yolk.pool=pool; yolk.ring=ring;
+}
+buildYolk();
+
+/* ---- the round old-wood table, riding the yolk ---------------------------
+   a circle top now, old and WEATHERED: grey-worn, ringed by years of cups,
+   scratched, its rim rubbed pale by hands, a couple of honest knots. one
+   turned pedestal goes down and stands in the yolk. the table's origin is
+   the centre of its own TOP, so the body on it and the wobble ride as one. */
+var TABLE={ y:0.84, r:0.50, t:0.04, pedH:0.56 };           /* [TUNE] the table's stand — about 80% of the first build, and it steps down with its own size */
+function makeOldWoodMaps(){
+  /* the wood, second pass — terence: a LIGHTER BROWN, and less computer,
+     more photograph. so: a bigger canvas, and the way real slabs are made:
+     growth rings around an off-centre heart (a tree's heart is knot the
+     middle of the board), each ring wandering on its own small weather,
+     fine grain streaks riding the rings, pores, low slow patches of warm
+     and cool, and only then the life on top — cup rings, scratches, the
+     rim rubbed pale by hands. the same drawing feeds a bump map (so the
+     lamp catches real relief) and a roughness map (so the worn places
+     shine a little where the rest stays dry). */
+  var S=1024, c=document.createElement('canvas'); c.width=c.height=S;
+  var q=c.getContext('2d');
+  var bcv=document.createElement('canvas'); bcv.width=bcv.height=S;
+  var bq=bcv.getContext('2d');
+  var rcv=document.createElement('canvas'); rcv.width=rcv.height=S;
+  var rq=rcv.getContext('2d');
+  var R=mulberry(31251), i, s, a2;
+  q.fillStyle='#a07c54'; q.fillRect(0,0,S,S);              /* [TUNE] the wood's brown — lighter now; darker here and the whole table ages */
+  bq.fillStyle='#808080'; bq.fillRect(0,0,S,S);
+  rq.fillStyle='#d4d4d4'; rq.fillRect(0,0,S,S);            /* mostly dry (rough); the worn places will come up smoother */
+  /* slow weather: big soft patches of warmer and cooler brown, so no two
+     hand-widths of the top are the same colour */
+  for(i=0;i<9;i++){
+    var px2=R()*S, py2=R()*S, pr2=S*(0.16+R()*0.24);
+    var warm=R()<0.5;
+    var pg=q.createRadialGradient(px2,py2,2,px2,py2,pr2);
+    pg.addColorStop(0, warm?'rgba(190,146,92,0.16)':'rgba(112,84,58,0.15)');
+    pg.addColorStop(1,'rgba(0,0,0,0)');
+    q.fillStyle=pg; q.beginPath(); q.arc(px2,py2,pr2,0,TAU); q.fill();
+  }
+  /* the growth rings, around an off-centre heart. each ring is its own
+     closed wandering circle; darker latewood, lighter earlywood, in an
+     uneven rhythm the way real years are uneven */
+  var hx=S*0.42, hy=S*0.55;                                /* the heart of the tree, off to one side */
+  var ph1=R()*TAU, ph2=R()*TAU;
+  var ringR=10;
+  while(ringR<S*0.85){
+    var late=R()<0.42;                                     /* a hard year: a darker, thinner ring */
+    var alpha=late?(0.16+R()*0.16):(0.05+R()*0.07);
+    var colr=late?'rgba(94,66,40,':'rgba(196,158,108,';
+    var w1=1.5+R()*4.5, w2=3.5+R()*7.0;
+    q.strokeStyle=colr+alpha+')';
+    q.lineWidth=late?(1.2+R()*2.2):(2.0+R()*3.6);
+    bq.strokeStyle=late?('rgba(52,52,52,'+(0.18+R()*0.16)+')'):('rgba(206,206,206,'+(0.07+R()*0.08)+')');
+    bq.lineWidth=q.lineWidth;
+    q.beginPath(); bq.beginPath();
+    var st=0.05, first=true;
+    for(a2=0;a2<=TAU+st;a2+=st){
+      var wob=Math.sin(a2*3+ph1+ringR*0.11)*w1 + Math.sin(a2*7+ph2+ringR*0.05)*w2*0.4 + Math.sin(a2*13+ringR)*1.2;
+      var rr2=ringR+wob;
+      var x2=hx+Math.cos(a2)*rr2, y2=hy+Math.sin(a2)*rr2;
+      if(first){ q.moveTo(x2,y2); bq.moveTo(x2,y2); first=false; }
+      else { q.lineTo(x2,y2); bq.lineTo(x2,y2); }
+    }
+    q.stroke(); bq.stroke();
+    ringR+=4+R()*11;                                       /* uneven years */
+  }
+  /* fine grain: short streaks riding ALONG the rings, the comb of the wood */
+  for(i=0;i<900;i++){
+    var gr=20+R()*(S*0.8), ga=R()*TAU, gl=(0.05+R()*0.16);
+    var dk=R()<0.6;
+    q.strokeStyle=dk?('rgba(88,62,38,'+(0.05+R()*0.09)+')'):('rgba(206,170,120,'+(0.04+R()*0.07)+')');
+    q.lineWidth=0.6+R()*0.9;
+    q.beginPath();
+    var steps=8, k2;
+    for(k2=0;k2<=steps;k2++){
+      var aa=ga+gl*(k2/steps);
+      var rr3=gr+Math.sin(aa*5+gr)*2.0;
+      var gx=hx+Math.cos(aa)*rr3, gy=hy+Math.sin(aa)*rr3;
+      if(k2===0) q.moveTo(gx,gy); else q.lineTo(gx,gy);
+    }
+    q.stroke();
+  }
+  /* pores — thousands of tiny dark flecks stretched along the grain */
+  for(i=0;i<3400;i++){
+    var por=R()*S*0.9, poa=R()*TAU;
+    var pxx=hx+Math.cos(poa)*por, pyy=hy+Math.sin(poa)*por;
+    if(pxx<0||pxx>S||pyy<0||pyy>S) continue;
+    q.save(); q.translate(pxx,pyy); q.rotate(poa+Math.PI/2);
+    q.fillStyle='rgba(70,48,30,'+(0.05+R()*0.11)+')';
+    q.fillRect(-0.6,-(1+R()*3.2), 1.2, 2+R()*6.4);
+    q.restore();
+  }
+  /* two or three old knots, where a branch once was */
+  for(i=0;i<3;i++){
+    var kx=S*(0.18+R()*0.64), ky=S*(0.18+R()*0.64), kr=7+R()*13;
+    var g=q.createRadialGradient(kx,ky,1,kx,ky,kr*2.4);
+    g.addColorStop(0,'rgba(54,34,20,0.8)'); g.addColorStop(0.45,'rgba(96,66,40,0.35)'); g.addColorStop(1,'rgba(0,0,0,0)');
+    q.fillStyle=g; q.beginPath(); q.arc(kx,ky,kr*2.4,0,TAU); q.fill();
+    var bg=bq.createRadialGradient(kx,ky,1,kx,ky,kr*1.6);
+    bg.addColorStop(0,'rgba(40,40,40,0.7)'); bg.addColorStop(1,'rgba(0,0,0,0)');
+    bq.fillStyle=bg; bq.beginPath(); bq.arc(kx,ky,kr*1.6,0,TAU); bq.fill();
+  }
+  /* the life on top: rings old cups left, years of them */
+  for(i=0;i<6;i++){
+    var cx2=S*0.15+R()*S*0.7, cy2=S*0.15+R()*S*0.7, cr2=44+R()*80;
+    q.strokeStyle='rgba(64,42,24,'+(0.08+R()*0.11)+')';
+    q.lineWidth=3+R()*4;
+    q.beginPath(); q.arc(cx2,cy2,cr2, R()*TAU, R()*TAU+TAU*(0.55+R()*0.45)); q.stroke();
+  }
+  /* scratches — pale hairlines across the grain, and the bump remembers them */
+  for(i=0;i<30;i++){
+    var sx=R()*S, sy=R()*S, sa=R()*TAU, sl=60+R()*240;
+    q.strokeStyle='rgba(224,200,162,'+(0.06+R()*0.10)+')';
+    q.lineWidth=1+R()*1.3;
+    q.beginPath(); q.moveTo(sx,sy);
+    q.lineTo(sx+Math.cos(sa)*sl, sy+Math.sin(sa)*sl); q.stroke();
+    bq.strokeStyle='rgba(226,226,226,'+(0.10+R()*0.12)+')';
+    bq.lineWidth=1+R()*1.2;
+    bq.beginPath(); bq.moveTo(sx,sy);
+    bq.lineTo(sx+Math.cos(sa)*sl, sy+Math.sin(sa)*sl); bq.stroke();
+    rq.strokeStyle='rgba(150,150,150,'+(0.14+R()*0.14)+')';   /* a scratch shines a little */
+    rq.lineWidth=1+R()*1.4;
+    rq.beginPath(); rq.moveTo(sx,sy);
+    rq.lineTo(sx+Math.cos(sa)*sl, sy+Math.sin(sa)*sl); rq.stroke();
+  }
+  /* worn pale toward the rim, where hands and years rubbed it \u2014 and rubbed
+     wood goes a touch smoother, so the rim catches the lamp */
+  var wg=q.createRadialGradient(S/2,S/2,S*0.30,S/2,S/2,S*0.505);
+  wg.addColorStop(0,'rgba(0,0,0,0)');
+  wg.addColorStop(0.85,'rgba(226,202,164,0.10)');
+  wg.addColorStop(1,'rgba(234,212,176,0.24)');
+  q.fillStyle=wg; q.fillRect(0,0,S,S);
+  var wr=rq.createRadialGradient(S/2,S/2,S*0.30,S/2,S/2,S*0.505);
+  wr.addColorStop(0,'rgba(0,0,0,0)');
+  wr.addColorStop(0.85,'rgba(148,148,148,0.30)');
+  wr.addColorStop(1,'rgba(120,120,120,0.55)');
+  rq.fillStyle=wr; rq.fillRect(0,0,S,S);
+  /* the last quiet speckle, so no flat pixel survives */
+  for(i=0;i<5200;i++){ q.fillStyle=(R()<0.5)?'rgba(58,38,22,'+(R()*0.06)+')':'rgba(226,200,164,'+(R()*0.05)+')';
+    q.fillRect(R()*S, R()*S, 2, 2); }
+  for(i=0;i<2600;i++){ bq.fillStyle=(R()<0.5)?'rgba(60,60,60,'+(R()*0.10)+')':'rgba(200,200,200,'+(R()*0.08)+')';
+    bq.fillRect(R()*S, R()*S, 2, 2); }
+  var mk=function(cv){ var t=new THREE.CanvasTexture(cv); t.anisotropy=8; return t; };
+  return { map:mk(c), bump:mk(bcv), rough:mk(rcv) };
+}
+var tableG=new THREE.Group();
+function buildTable(){
+  var tex=makeOldWoodMaps();
+  var wood=new THREE.MeshStandardMaterial({ map:tex.map, bumpMap:tex.bump, bumpScale:0.030,
+    roughnessMap:tex.rough, roughness:1.0, metalness:0.0 });   /* [TUNE] how dry the wood reads — the worn rim and the scratches shine on their own now */
+  var top=new THREE.Mesh(new THREE.CylinderGeometry(TABLE.r, TABLE.r*0.985, TABLE.t, 44), wood);
+  top.position.y=-TABLE.t/2;
+  tableG.add(top);
+  /* a slim worn skirt under the rim */
+  var skirt=new THREE.Mesh(new THREE.CylinderGeometry(TABLE.r*0.86, TABLE.r*0.86, 0.055, 40, 1, true), wood);
+  skirt.position.y=-TABLE.t-0.028;
+  tableG.add(skirt);
+  /* the turned pedestal — one old spindle down into the yolk */
+  var prof=[], pj;
+  var P=[ [0.30,0.00],[0.29,0.03],[0.16,0.06],[0.105,0.12],[0.125,0.17],
+          [0.085,0.24],[0.075,0.40],[0.095,0.50],[0.075,0.58],[0.115,0.64],[0.145,0.68],[0.155,0.70] ];
+  for(pj=0;pj<P.length;pj++) prof.push(new THREE.Vector2(P[pj][0]*0.8, P[pj][1]*0.8));   /* the spindle keeps the table's own 80% */
+  var ped=new THREE.Mesh(new THREE.LatheGeometry(prof, 26), wood);
+  ped.position.y=-TABLE.t-TABLE.pedH;                      /* the foot stands down inside the gold */
+  tableG.add(ped);
+  tableG.position.set(0, TABLE.y, 0);
+  scene.add(tableG);
+}
+buildTable();
+
+/* ---- the cybernetics parts: the body from the kitchen, enshrined ---------
+   the SAME object that opens left of the candle in the kitchen — the same
+   two photographs (at rest / opened), the same crops, the same six LEDs
+   breathing their blink, the same cold glints thrown when it opens. it
+   stands at the round table's centre, under the small warm spotlight.
+   the photographs are unlit things, so each frame they are hand-tinted
+   warm to sit inside the cone. if the pictures are slow on the road, the
+   LEDs and a few honest little parts hold the table until they arrive. */
+var PARTS={
+  closedH:0.44, openH:1.00,
+  uv1:{u0:0.1818,u1:0.7060,v0:0.2353,v1:0.7647,as:758/1847},
+  uv2:{u0:0.1687,u1:0.7158,v0:0.0258,v1:0.9814,as:791/3334},
+  leds:[ {p:[ 0.030,0.070,0.014], c:0xff4646, T:1.35},
+         {p:[-0.040,0.135,0.014], c:0x6fa8ff, T:0.62},
+         {p:[ 0.012,0.205,0.014], c:0xffb84a, T:2.10},
+         {p:[-0.022,0.265,0.014], c:0xff5a5a, T:0.94},
+         {p:[ 0.044,0.315,0.014], c:0x7fd4ff, T:1.70},
+         {p:[-0.048,0.060,0.014], c:0xd6ffe8, T:0.47} ],
+  ledsOpen:[ [ 0.045,0.14,0.014], [-0.055,0.34,0.014], [ 0.018,0.55,0.014],
+             [-0.032,0.70,0.014], [ 0.060,0.82,0.014], [-0.065,0.10,0.014] ]
+};
+var parts={ grp:null, closed:null, open:null, ledSprites:[], state:0, anim:0,
+  sparkGrp:null, sparks:[], sparkTex:null };
+function croppedPlane(uvr){
+  var geo=new THREE.PlaneGeometry(1,1);
+  var uv=geo.attributes.uv, k;
+  for(k=0;k<uv.count;k++){
+    uv.setXY(k, lerp(uvr.u0,uvr.u1,uv.getX(k)), lerp(uvr.v0,uvr.v1,uv.getY(k)));
+  }
+  return geo;
+}
+function buildParts(){
+  var grp=new THREE.Group();
+  var loader=new THREE.TextureLoader();
+  loader.crossOrigin='anonymous';
+  function photoMat(url, showOnLoad){
+    var m=new THREE.MeshBasicMaterial({ transparent:true, depthWrite:false,
+      side:THREE.DoubleSide, color:0xd8d8dc, opacity:0 });   /* invisible until the photo lands — no white fill flashing on load */
+    m.userData.loaded=false;
+    loader.load(url, function(t){
+      m.map=t; m.userData.loaded=true;
+      m.opacity=showOnLoad?1:0;                            /* the 'closed' photo shows on arrival; the 'open' one waits to be touched */
+      m.needsUpdate=true;
+    });
+    return m;
+  }
+  var cw=PARTS.closedH*PARTS.uv1.as;
+  var closed=new THREE.Mesh(croppedPlane(PARTS.uv1), photoMat(ASSETS.comp01, true));
+  closed.scale.set(cw, PARTS.closedH, 1);
+  closed.position.set(0, PARTS.closedH/2, 0);
+  grp.add(closed);
+  var ow=PARTS.openH*PARTS.uv2.as;
+  var open=new THREE.Mesh(croppedPlane(PARTS.uv2), photoMat(ASSETS.comp02, false));
+  open.scale.set(ow, PARTS.openH, 1);
+  open.position.set(0, PARTS.openH/2, 0);
+  grp.add(open);
+  /* the LEDs, breathing their blink — the body's own light, owing the
+     spotlight nothing: even unlit, these alone keep the table's place */
+  var k;
+  for(k=0;k<PARTS.leds.length;k++){
+    var L=PARTS.leds[k];
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({
+      map:(function(){ var c=document.createElement('canvas'); c.width=c.height=32;
+        var q=c.getContext('2d');
+        var g2=q.createRadialGradient(16,16,1,16,16,15);
+        g2.addColorStop(0,'rgba(255,255,255,1)');
+        g2.addColorStop(0.35,'rgba(255,255,255,0.5)');
+        g2.addColorStop(1,'rgba(0,0,0,0)');
+        q.fillStyle=g2; q.fillRect(0,0,32,32);
+        return new THREE.CanvasTexture(c); })(),
+      color:L.c, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending }));
+    sp.scale.set(0.016,0.016,1);
+    sp.position.set(L.p[0], L.p[1], L.p[2]);
+    grp.add(sp);
+    parts.ledSprites.push(sp);
+  }
+  /* the glints — the same cold electric-white sparks the kitchen throws
+     when the body opens, resting invisible until they are called */
+  var sc2=document.createElement('canvas'); sc2.width=sc2.height=32;
+  (function(){ var q=sc2.getContext('2d');
+    var g3=q.createRadialGradient(16,16,0,16,16,16);
+    g3.addColorStop(0,'rgba(255,255,255,1)');
+    g3.addColorStop(0.30,'rgba(210,235,255,0.85)');
+    g3.addColorStop(0.65,'rgba(150,200,255,0.28)');
+    g3.addColorStop(1,'rgba(120,170,255,0)');
+    q.fillStyle=g3; q.fillRect(0,0,32,32); })();
+  parts.sparkTex=new THREE.CanvasTexture(sc2);
+  var sparkGrp=new THREE.Group();
+  var sN;
+  for(sN=0;sN<34;sN++){
+    var ssp=new THREE.Sprite(new THREE.SpriteMaterial({
+      map:parts.sparkTex, color:0xffffff, transparent:true, depthWrite:false,
+      depthTest:false, blending:THREE.AdditiveBlending, opacity:0 }));
+    ssp.scale.set(0.02,0.02,1);
+    ssp.visible=false;
+    sparkGrp.add(ssp);
+    parts.sparks.push({ sp:ssp, life:0, max:1, x:0,y:0, vx:0,vy:0, sz:0.02, tw:0 });
+  }
+  grp.add(sparkGrp);
+  parts.sparkGrp=sparkGrp;
+  /* a few honest little parts at the body's foot — cheap to make, anyone
+     could: a brass screw, a curl of copper wire, a small watch-glass */
+  var brass=new THREE.MeshStandardMaterial({ color:0x9a7c3c, roughness:0.42, metalness:0.85 });
+  var copper=new THREE.MeshStandardMaterial({ color:0x8a5432, roughness:0.5, metalness:0.8 });
+  var glass=new THREE.MeshStandardMaterial({ color:0xbcc4c2, roughness:0.16, metalness:0.4,
+    transparent:true, opacity:0.55 });
+  var screw=new THREE.Mesh(new THREE.CylinderGeometry(0.004,0.004,0.026,8), brass);
+  screw.rotation.z=Math.PI/2; screw.rotation.y=0.5;
+  screw.position.set(0.16,0.004,0.12);
+  grp.add(screw);
+  var shead=new THREE.Mesh(new THREE.CylinderGeometry(0.0075,0.0075,0.004,10), brass);
+  shead.rotation.z=Math.PI/2; shead.rotation.y=0.5;
+  shead.position.set(0.148,0.004,0.106);
+  grp.add(shead);
+  var curl=new THREE.Mesh(new THREE.TorusGeometry(0.020,0.0016,6,24,4.6), copper);
+  curl.rotation.x=-Math.PI/2+0.18; curl.rotation.z=1.1;
+  curl.position.set(-0.17,0.004,0.10);
+  grp.add(curl);
+  var curl2=new THREE.Mesh(new THREE.TorusGeometry(0.013,0.0016,6,20,5.2), copper);
+  curl2.rotation.x=-Math.PI/2-0.12; curl2.rotation.z=2.6;
+  curl2.position.set(-0.155,0.007,0.115);
+  grp.add(curl2);
+  var lens=new THREE.Mesh(new THREE.CylinderGeometry(0.021,0.021,0.003,20), glass);
+  lens.position.set(0.05,0.0025,0.20);
+  grp.add(lens);
+  /* the touch pillow — a broad quiet target around the body, so a thumb
+     across a room does knot have to hit a photograph edge-on */
+  var pillow=new THREE.Mesh(new THREE.BoxGeometry(0.72,1.16,0.56),
+    new THREE.MeshBasicMaterial({ transparent:true, opacity:0, depthWrite:false, depthTest:false }));
+  pillow.position.y=0.55;
+  grp.add(pillow);
+  grp.position.set(0,0,0);                                 /* the table's own top centre — they wobble as one */
+  tableG.add(grp);
+  parts.grp=grp; parts.closed=closed; parts.open=open;
+  return grp;
+}
+buildParts();
+
+/* ---- the post-it notes, pasted 360 degrees around the room ---------------
+   light yellow squares, hand-lettered lowercase, each tilted a few degrees
+   as a real hand pastes them — clustered, gapped, at two or three heights,
+   all facing in toward the table. they BRIGHTEN when the visitor's gaze
+   comes near, and a tap makes one step forward and ENLARGE a little (a
+   second tap sends it back to the wall). placeholder words for now, in the
+   house voice, so the feel of the wall can be judged. */
+var NOTE_TEXTS=[
+  'the egg robot dreams in cold blue when it speaks',
+  'cheap to make. anyone could.',
+  'does the yolk remember being an egg?',
+  'cybernetics: the body is knot the wires, the body is the turning',
+  'idea \u2014 the notes could be read aloud in the egg\u2019s voice',
+  'concept: every room is inside the egg. even this one.',
+  'notebook: the candle was a lie we loved. the yolk is the truth.',
+  'what if the table is the last dry thing in a world of yolk',
+  'the LEDs blink on their own time. do knot sync them.',
+  '173.68 hz \u2014 the note the skull hears that the air cannot hold',
+  'sketch: a knocker of gold on a shell of bone',
+  'the way home is always the body, opening, twice',
+  'notebook: give it six lights and it will look alive. give it one and it will look lonely. we gave it six.',
+  'wiring note \u2014 the door should knock back, someday',
+  'measure twice. the yolk forgives knothing.',
+  'the room should breathe at the pace of a held breath',
+  'q: where does the yolk end?  a: it does knot',
+  'first law of the house \u2014 never trap the viewer'
+];
+var NOTES={ radius:2.70, size:0.30, bands:[1.10, 1.55, 2.00] };   /* [TUNE] how far the wall stands, how big a note is (terence: bigger), the heights they hang at */
+var notes=[];
+function makeNoteTexture(text, seed){
+  var c=document.createElement('canvas'); c.width=256; c.height=256;
+  var q=c.getContext('2d'), R=mulberry(seed);
+  q.clearRect(0,0,256,256);
+  /* the paper's own shadow, soft under its lower edge */
+  q.fillStyle='rgba(0,0,0,0.30)';
+  q.beginPath();
+  q.moveTo(26,238); q.lineTo(232,240); q.lineTo(228,222); q.lineTo(30,224);
+  q.closePath(); q.fill();
+  /* the note — light yellow, one warm family, each a hair its own */
+  var hue=52+R()*6, lig=82+R()*6;
+  q.fillStyle='hsl('+hue+', 78%, '+lig+'%)';
+  q.save();
+  q.translate(128,124); q.rotate((R()-0.5)*0.03);
+  q.fillRect(-104,-104,208,208);
+  /* the faint gum-band at the top, where a post-it holds itself */
+  q.fillStyle='rgba(0,0,0,0.045)';
+  q.fillRect(-104,-104,208,26);
+  /* a slightly peeled lower corner — a curl of lighter paper */
+  q.fillStyle='hsl('+hue+', 60%, '+(lig+8)+'%)';
+  q.beginPath(); q.moveTo(104,104); q.lineTo(104,76); q.lineTo(72,104);
+  q.closePath(); q.fill();
+  q.fillStyle='rgba(0,0,0,0.10)';
+  q.beginPath(); q.moveTo(104,104); q.lineTo(104,88); q.lineTo(86,104);
+  q.closePath(); q.fill();
+  /* the words — a casual hand, lowercase, wrapped to the paper */
+  q.fillStyle='rgba(46,38,20,0.92)';
+  var fs=26;
+  q.font='400 '+fs+'px "Comic Sans MS","Marker Felt","Segoe Print","Bradley Hand",cursive';
+  var words=text.split(' '), lines=[], line='', wi;
+  for(wi=0;wi<words.length;wi++){
+    var t2=line?(line+' '+words[wi]):words[wi];
+    if(q.measureText(t2).width>176 && line){ lines.push(line); line=words[wi]; }
+    else line=t2;
+  }
+  if(line) lines.push(line);
+  while(lines.length>6 && fs>15){                           /* a long thought asks smaller letters */
+    fs-=3; q.font='400 '+fs+'px "Comic Sans MS","Marker Felt","Segoe Print","Bradley Hand",cursive';
+    lines=[]; line='';
+    for(wi=0;wi<words.length;wi++){
+      var t3=line?(line+' '+words[wi]):words[wi];
+      if(q.measureText(t3).width>176 && line){ lines.push(line); line=words[wi]; }
+      else line=t3;
+    }
+    if(line) lines.push(line);
+  }
+  var lh=fs*1.22, y0=-(lines.length-1)*lh/2 - 8, li;
+  q.textAlign='center';
+  for(li=0;li<lines.length;li++) q.fillText(lines[li], 0, y0+li*lh);
+  q.restore();
+  var tex=new THREE.CanvasTexture(c);
+  tex.anisotropy=4;
+  return tex;
+}
+function buildNotes(){
+  var R=mulberry(41414);
+  /* the WHOLE circle — every note owns its slice of the turn and wanders a
+     little inside it, so the wall is pasted loosely by hand but never
+     leaves a bare stretch: turn any way, even straight behind, and paper
+     is waiting */
+  var i;
+  for(i=0;i<NOTE_TEXTS.length;i++){
+    var ang=(i/NOTE_TEXTS.length)*TAU + (R()-0.5)*0.30;
+    var band=NOTES.bands[(R()*NOTES.bands.length)|0];
+    var y=band+(R()-0.5)*0.16;
+    var rr=NOTES.radius+(R()-0.5)*0.12;
+    var px=Math.sin(ang)*rr, pz=Math.cos(ang)*rr;
+    var mat=new THREE.MeshBasicMaterial({ map:makeNoteTexture(NOTE_TEXTS[i], 700+i*37),
+      transparent:true, depthWrite:false, side:THREE.DoubleSide });
+    mat.color.setScalar(0.86);                             /* resting a shade dim, so a gaze can wake it */
+    var m=new THREE.Mesh(new THREE.PlaneGeometry(1,1), mat);
+    var sz=NOTES.size*(0.92+R()*0.24);
+    m.scale.set(sz,sz,1);
+    m.position.set(px,y,pz);
+    m.lookAt(0,y,0);                                       /* every note faces in toward the table */
+    m.rotation.z=(R()-0.5)*0.24;                           /* pasted by a hand, knot a machine */
+    /* a generous unseen pillow, so a thumb can find so small a paper */
+    var pil=new THREE.Mesh(new THREE.PlaneGeometry(2.3,2.3),
+      new THREE.MeshBasicMaterial({ transparent:true, opacity:0, depthWrite:false, depthTest:false, side:THREE.DoubleSide }));
+    m.add(pil);
+    scene.add(m);
+    var rec={ mesh:m, mat:mat, baseSize:sz, big:false, s:1, gaze:0,
+      basePos:new THREE.Vector3(px,y,pz),
+      inward:new THREE.Vector3(-px,0,-pz).normalize() };
+    (function(rc){
+      markTap(m2Wrap(rc.mesh), function(){ rc.big=!rc.big; playNoteTick(); });
+    })(rec);
+    notes.push(rec);
+  }
+}
+function m2Wrap(m){ return m; }                            /* markTap walks children; the pillow rides along */
+
+/* ---- the room's small voices — all of them grown from the pulsar grid ----
+   multiples of 173.68 Hz, one AudioContext, nothing before a touch. the
+   room-tone is a low warmth breathing slow; the build chirp is the body's
+   own word when it opens; the note tick is paper answering a finger. */
+var PULSE=173.68;
+var tone={ master:null, on:false };
+function startRoomTone(){
+  ensureAC(); if(!AC || tone.on) return;
+  tone.on=true;
+  try{
+    var lp=AC.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=640;
+    var m=AC.createGain(); m.gain.value=0.0;
+    m.connect(lp); lp.connect(AC.destination);
+    tone.master=m;
+    var f=[PULSE, PULSE*2, PULSE*3], g=[0.012,0.005,0.002], i;   /* [TUNE] the hum's warmth — lower and it is only a feeling in the floor that is knot there */
+    for(i=0;i<f.length;i++){
+      var o=AC.createOscillator(); o.type='sine'; o.frequency.value=f[i];
+      var og=AC.createGain(); og.gain.value=g[i];
+      o.connect(og); og.connect(m); o.start();
+    }
+  }catch(e){ tone.master=null; }
+}
+function playBuildChirp(){
+  ensureAC(); if(!AC) return;
+  try{
+    var f=[PULSE*4, PULSE*6, PULSE*9], i;                  /* a small machine waking, three steps up the grid */
+    for(i=0;i<f.length;i++){
+      var t0=AC.currentTime+i*0.07;
+      var o=AC.createOscillator(); o.type='triangle'; o.frequency.value=f[i];
+      var g=AC.createGain();
+      g.gain.setValueAtTime(0.0001,t0);
+      g.gain.exponentialRampToValueAtTime(0.05,t0+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.42);
+      o.connect(g); g.connect(AC.destination);
+      o.start(t0); o.stop(t0+0.5);
+    }
+  }catch(e){}
+}
+function playNoteTick(){
+  ensureAC(); if(!AC) return;
+  try{
+    var t0=AC.currentTime;
+    var o=AC.createOscillator(); o.type='triangle'; o.frequency.value=PULSE*8;
+    var g=AC.createGain();
+    g.gain.setValueAtTime(0.0001,t0);
+    g.gain.exponentialRampToValueAtTime(0.03,t0+0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+0.14);
+    o.connect(g); g.connect(AC.destination);
+    o.start(t0); o.stop(t0+0.2);
+  }catch(e){}
+}
+
+/* ---- touching the body ---------------------------------------------------
+   the first touch cracks it open in a shower of cold glints and sounds its
+   small voice — exactly as it does in the kitchen. every touch after that,
+   while it stands open, is the way HOME: back up the corridor to the
+   kitchen. the table answers as the body does; the whole altar is one door. */
+function burstSparks(n){
+  var lit=0, i;
+  for(i=0;i<parts.sparks.length && lit<n;i++){
+    var s=parts.sparks[i];
+    if(s.life>0) continue;
+    var ang=Math.random()*6.2832;
+    var spd=0.10+Math.random()*0.22;
+    s.x=(Math.random()-0.5)*0.10;                          /* born along the body's spine */
+    s.y=0.20+Math.random()*0.55;
+    s.vx=Math.cos(ang)*spd*0.5;
+    s.vy=Math.abs(Math.sin(ang))*spd + 0.10 + Math.random()*0.14;
+    s.sz=0.012+Math.random()*0.022;
+    s.max=0.5+Math.random()*0.7;
+    s.life=s.max;
+    s.tw=Math.random()*6.2832;
+    s.sp.visible=true;
+    lit++;
+  }
+}
+var hintEl=document.getElementById('hint');
+function setHint(txt){
+  hintEl.classList.remove('on');
+  setTimeout(function(){ hintEl.textContent=txt; hintEl.classList.add('on'); }, RM?0:900);
+}
+function tapParts(){
+  if(parts.state===0){                                     /* shut → open it, with light and sound */
+    parts.state=1;
+    playBuildChirp();
+    burstSparks(RM?8:20);
+    setHint('touch it again \u2014 it is the way home');
+  } else {                                                 /* already open → this touch carries you home */
+    burstSparks(10);                                       /* a last glint as it takes you */
+    home();
+  }
+}
+var tappables=[];
+function markTap(obj, action){
+  obj.traverse(function(o){ o.userData.tapAction=action; });
+  tappables.push(obj);
+}
+markTap(tableG, tapParts);                                 /* the table and everything on it — one altar, one door */
+buildNotes();                                              /* the notes mark their own taps as they hang */
+
+/* ---- orientation — the magic window (the fallback's eye) -----------------
+   when the engine does knot stand, the phone's turning is the look: the
+   room hangs where it hangs, and the body turns to see it. no gyro (a
+   desk, or a shy phone): one finger drags the gaze around the table.
+   pinch or wheel leans in and back. the visitor arrives facing the table. */
+var devQ=new THREE.Quaternion(), qScreen=new THREE.Quaternion(),
+    qFix=new THREE.Quaternion(-Math.sqrt(0.5),0,0,Math.sqrt(0.5));
+var eulO=new THREE.Euler(), zee=new THREE.Vector3(0,0,1), yUp=new THREE.Vector3(0,1,0);
+var gyroOn=false, yawOff=0, yawSeeded=false, fwdV=new THREE.Vector3();
+function onOrient(e){
+  if(e.alpha===null||e.alpha===undefined) return;
+  gyroOn=true;
+  var orient=(screen.orientation&&screen.orientation.angle)||window.orientation||0;
+  var DEG=Math.PI/180;
+  eulO.set(e.beta*DEG, e.alpha*DEG, -e.gamma*DEG, 'YXZ');
+  devQ.setFromEuler(eulO);
+  devQ.multiply(qFix);
+  devQ.multiply(qScreen.setFromAxisAngle(zee,-orient*DEG));
+  if(!yawSeeded){                                          /* seed ONCE so the first look lands on the table, then let it be */
+    fwdV.set(0,0,-1).applyQuaternion(devQ);
+    var th=Math.atan2(fwdV.x,fwdV.z);
+    yawOff=wrapPi(Math.PI-th);
+    yawSeeded=true;
+  }
+}
+window.addEventListener('deviceorientationabsolute', onOrient, true);
+window.addEventListener('deviceorientation', onOrient, true);
+function askGyro(){
+  try{
+    if(window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(function(s){
+        if(s==='granted'){
+          window.addEventListener('deviceorientation',onOrient,true);   /* the house way: listen inside the grant */
+          window.addEventListener('deviceorientationabsolute',onOrient,true);
+        }
+      },function(){});
+    }
+    if(window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission==='function')
+      DeviceMotionEvent.requestPermission().then(function(){},function(){});
+  }catch(e){}
+}
+
+/* ---- the eye (fallback path): a step back from the table -----------------
+   with gyro: you stand where you stand and TURN. without: drag orbits the
+   table like the old room did. pinch/wheel walks a little in and out. */
+var look={ yaw:0.0, pitch:0.08, dolly:2.45 };              /* [TUNE] where you arrive — a step or two back from the table */
+var FOCUS_Y=1.00;                                          /* the body's middle — the eye's home (down with the smaller table) */
+function placeCam(){
+  if(gyroOn){
+    camera.position.set(0, EYE, look.dolly);
+    camera.quaternion.setFromAxisAngle(yUp, yawOff).multiply(devQ);
+    return;
+  }
+  var yaw=look.yaw, pitch=clamp(look.pitch,-0.75,1.30);
+  camera.position.set(Math.sin(yaw)*look.dolly, EYE, Math.cos(yaw)*look.dolly);
+  camera.lookAt(0, FOCUS_Y+pitch*1.8, 0);                  /* [TUNE] how far up the wall a full raise of the chin carries the gaze */
+}
+
+/* ---- touches: look, lean, and tap ---------------------------------------- */
+var ptrs={}, lastPinch=0, tapDown=null, gestured=false;
+function liveCam(){
+  if(AR_LIVE){ try{ var s=XR8.Threejs.xrScene(); if(s&&s.camera) return s.camera; }catch(e){} }
+  return camera;
+}
+window.addEventListener('pointerdown', function(e){
+  ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
+  tapDown={x:e.clientX,y:e.clientY,t:performance.now(),id:e.pointerId};
+  if(!gestured){ gestured=true; startRoomTone(); askGyro(); }   /* the first touch of the world wakes the hum and the compass (iOS's law honored) */
+});
+window.addEventListener('pointermove', function(e){
+  if(!ptrs[e.pointerId]) return;
+  var ids=Object.keys(ptrs);
+  if(ids.length===1){
+    var p=ptrs[e.pointerId], dxp=e.clientX-p.x, dyp=e.clientY-p.y;
+    if(!AR_LIVE && !gyroOn){                               /* only the windowless eye is dragged; a live room is walked or turned */
+      look.yaw-=dxp*0.0022;
+      look.pitch+=dyp*0.0018;
+      look.pitch=clamp(look.pitch,-0.75,1.30);
+    }
+    p.x=e.clientX; p.y=e.clientY;
+  } else if(ids.length>=2){
+    ptrs[e.pointerId].x=e.clientX; ptrs[e.pointerId].y=e.clientY;
+    var a=ptrs[ids[0]], b=ptrs[ids[1]];
+    var d=Math.hypot(a.x-b.x, a.y-b.y);
+    if(lastPinch>0 && !AR_LIVE){ look.dolly*=lastPinch/d; look.dolly=clamp(look.dolly,1.45,3.6); }
+    lastPinch=d;
+  }
+});
+var ray=new THREE.Raycaster(), ndc=new THREE.Vector2();
+function tryTap(e){
+  if(!tapDown || e.pointerId!==tapDown.id) return;
+  var dt=performance.now()-tapDown.t;
+  var dd=Math.hypot(e.clientX-tapDown.x, e.clientY-tapDown.y);
+  tapDown=null;
+  if(dt>650 || dd>26) return;                              /* [TUNE] the tap's patience — a hand holding a phone in the world drifts, so the room forgives more than the kitchen does */
+  ndc.x=(e.clientX/window.innerWidth)*2-1;
+  ndc.y=-(e.clientY/window.innerHeight)*2+1;
+  ray.setFromCamera(ndc, liveCam());
+  var hits=ray.intersectObjects(tappables, true), k;
+  for(k=0;k<hits.length;k++){
+    var act=hits[k].object.userData.tapAction;
+    if(act){ act(); return; }
+  }
+}
+function ptrUp(e){ tryTap(e); delete ptrs[e.pointerId]; lastPinch=0; }
+window.addEventListener('pointerup', ptrUp);
+window.addEventListener('pointercancel', function(e){ delete ptrs[e.pointerId]; lastPinch=0; tapDown=null; });
+window.addEventListener('wheel', function(e){
+  if(!AR_LIVE){ look.dolly*=(1+e.deltaY*0.001); look.dolly=clamp(look.dolly,1.45,3.6); }
+}, {passive:true});
+document.addEventListener('keydown', function(e){         /* a stumble home even in the dark: keys never trap */
+  if(e.key==='Escape'||e.key==='Enter') home();
+});
+
+/* ---- no bridge, no veil: the room opens ITSELF on arrival ----------------
+   the knock in the corridor was the visitor's word; asking them to say it
+   twice was a bridge, and the bridge is gone. the engine (or the window)
+   boots the moment the page stands, so the lens asks for itself right
+   there. only the hum and the compass still wait for the first touch of
+   the world \u2014 iOS's one law, and the house's own: no sound before a
+   gesture. */
+var booted=false;
+function startCam(){
+  if(AR || NOCAM) return;                                  /* the engine opens the lens itself; nocam keeps the black */
+  try{
+    navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(st){
+      camEl.srcObject=st; camEl.classList.add('on');
+      var p=camEl.play(); if(p&&p.catch)p.catch(function(){});
+    },function(){});
+  }catch(e){}
+}
+function boot(){
+  if(booted) return; booted=true;
+  if(AR){ arBoot(); return; }
+  startCam();
+}
+setTimeout(boot, 30);                                      /* the room does knot wait to be asked twice */
+
+/* ============================================================================
+   the engine — 8th wall world tracking, the unisong way. the WHOLE room
+   (yolk, table, body, notes) is adopted as ONE object into the engine's
+   scene at life scale, so the visitor physically walks around the table
+   and turns to read the wall. every silent trap is handled: slam chunk ·
+   module wiring · allowedDevices ANY · projection seed · the 300x150
+   canvas · and a quiet fall back to the magic window if anything dies.
+   ========================================================================== */
+function arFallback(why){
+  if(!AR||AR_DEAD) return;
+  AR_DEAD=true; AR_LIVE=false; AR=false;
+  try{ if(window.XR8&&XR8.stop) XR8.stop(); }catch(e){}
+  try{ if(scene.parent) scene.parent.remove(scene); }catch(e){}
+  scene.position.set(0,0,0); scene.rotation.set(0,0,0); scene.scale.setScalar(1);
+  scene.updateMatrixWorld();
+  var c=renderer.domElement;               /* our renderer was born detached — seat it where #gl stood */
+  if(c!==glc){ c.style.cssText='position:fixed;inset:0;width:100%;height:100%;display:block;z-index:2;'; document.body.appendChild(c); glc.style.display='none'; }
+  onResize();
+  startCam();                                              /* the window still tries to hold the world behind the glass */
+  booted=true;
+}
+var arBootCalled=false;
+function arBoot(){
+  if(!AR||arBootCalled) return; arBootCalled=true;
+  arStartT=performance.now();
+  setTimeout(function(){ if(AR&&!AR_LIVE&&!AR_DEAD) arFallback('engine never stood'); },18000);
+  function ready(){
+    return !!(window.XR8
+      && XR8.XrController && typeof XR8.XrController.pipelineModule==='function'
+      && XR8.Threejs && typeof XR8.Threejs.pipelineModule==='function'
+      && XR8.GlTextureRenderer && typeof XR8.GlTextureRenderer.pipelineModule==='function');
+  }
+  function scenePipelineModule(){
+    return {
+      name:'songegg-room',
+      onStart:function(){
+        if(AR_DEAD){ try{ XR8.stop(); }catch(e){} return; }
+        var s=XR8.Threejs.xrScene();
+        if(!s||!s.scene){ arFallback('no xr scene'); return; }
+        s.scene.add(scene);                      /* the whole room, adopted as one object */
+        scene.scale.setScalar(AR_SCALE);         /* life-size: the table two steps ahead, the notes an arm past it */
+        scene.position.set(AR_POS.x,AR_POS.y,AR_POS.z);
+        scene.updateMatrixWorld();
+        s.camera.position.set(0,EYE,0);
+        XR8.XrController.updateCameraProjectionMatrix({ origin:s.camera.position, facing:s.camera.quaternion });
+        AR_LIVE=true; arStartT=performance.now();
+      },
+      onCameraStatusChange:function(e){
+        if(e&&(e.status==='failed'||e.status==='denied')) arFallback('camera '+e.status);
+      },
+      onException:function(e){
+        try{ console.error('[ar] engine exception',e); }catch(e2){}
+        if(!AR_LIVE) arFallback('exception');
+      }
+    };
+  }
+  /* the engine's three renderer is born 300x150 and never re-reads the size;
+     keep #gl truly full-screen — viewport + aspect only, NEVER setSize. */
+  var inFit=false;
+  function fitCanvas(){
+    if(inFit) return; inFit=true;
+    var dpr=Math.min(window.devicePixelRatio||1,3);
+    var w=Math.round(window.innerWidth), hh=Math.round(window.innerHeight);
+    glc.style.position='fixed'; glc.style.top='0'; glc.style.left='0';
+    glc.style.width='100%'; glc.style.height='100%';
+    if(glc.width!==Math.round(w*dpr)) glc.width=Math.round(w*dpr);
+    if(glc.height!==Math.round(hh*dpr)) glc.height=Math.round(hh*dpr);
+    try{
+      var s=(window.XR8&&XR8.Threejs&&XR8.Threejs.xrScene)?XR8.Threejs.xrScene():null;
+      if(s&&s.renderer&&s.renderer.setViewport) s.renderer.setViewport(0,0,glc.width,glc.height);
+      if(s&&s.camera&&Math.abs(s.camera.aspect-(glc.width/glc.height))>0.001){
+        s.camera.aspect=glc.width/glc.height; s.camera.updateProjectionMatrix();
+      }
+    }catch(e){}
+    inFit=false;
+  }
+  function fullWindowCanvasModule(){
+    return { name:'full-window-canvas',
+      onStart:function(){
+        fitCanvas();
+        window.addEventListener('resize',fitCanvas);
+        window.addEventListener('orientationchange',function(){ setTimeout(fitCanvas,120); });
+      },
+      onUpdate:function(){   /* reassert each frame: the engine resizes it once at camera start */
+        var dpr=Math.min(window.devicePixelRatio||1,3);
+        if(glc.width!==Math.round(window.innerWidth*dpr) || glc.height!==Math.round(window.innerHeight*dpr)) fitCanvas();
+      } };
+  }
+  function motionPermissionModule(){
+    return { name:'request-motion',
+      requiredPermissions:function(){
+        try{ return [XR8.XrPermissions.permissions().DEVICE_ORIENTATION]; }catch(e){ return []; }
+      } };
+  }
+  function startEngine(){
+    try{
+      try{ XR8.XrController.configure({disableWorldTracking:false}); }catch(e){}
+      XR8.addCameraPipelineModules([
+        XR8.GlTextureRenderer.pipelineModule(),
+        XR8.Threejs.pipelineModule(),
+        XR8.XrController.pipelineModule(),
+        fullWindowCanvasModule(),
+        motionPermissionModule(),
+        scenePipelineModule()
+      ]);
+      var dev=(XR8.XrConfig&&XR8.XrConfig.device)?XR8.XrConfig.device():null;
+      XR8.run({ canvas:glc, allowedDevices:(dev?dev.ANY:undefined) });   /* ANY — or the session managers may all decline, silently */
+    }catch(e){ try{ console.error('[ar] start failed',e); }catch(e2){} arFallback('start failed'); }
+  }
+  function waitWired(){
+    if(ready()){ startEngine(); return; }
+    var n=0,iv=setInterval(function(){
+      if(ready()){ clearInterval(iv); startEngine(); }
+      else if(++n>150){ clearInterval(iv); arFallback('modules never wired'); }
+    },100);
+  }
+  function ensureChunk(){
+    if(XR8.XrController){ waitWired(); return; }   /* the world-tracker ships as its own chunk */
+    try{
+      var p=XR8.loadChunk('slam');
+      if(p&&p.then){ p.then(waitWired,function(){ arFallback('slam chunk failed'); }); return; }
+      waitWired();
+    }catch(e){ waitWired(); }
+  }
+  if(window.XR8){ ensureChunk(); return; }
+  var n=0,iv=setInterval(function(){
+    if(window.XR8){ clearInterval(iv); ensureChunk(); }
+    else if(++n>120){ clearInterval(iv); arFallback('engine never loaded'); }
+  },100);
+}
+
+/* ---- the frame: yolk quiver, table wobble, gaze, glints ------------------ */
+var raf=window.requestAnimationFrame||function(f){ return setTimeout(function(){f(performance.now());},16); };
+var _lastFrameT=0;
+var camPos=new THREE.Vector3(), camFwd=new THREE.Vector3(), toNote=new THREE.Vector3(), camQ=new THREE.Quaternion();
+var QUIVER={ amp:0.014, w1:1.35, w2:2.05 };                /* [TUNE] how much the yolk quivers, and how slow its two tides run */
+function frame(t){
+  var tt=t*0.001;
+  var dtFrame=_lastFrameT? Math.min(0.05,(t-_lastFrameT)/1000) : 0.016;   /* wall-clock guard — a backgrounded phone returns without a leap */
+  _lastFrameT=t;
+  var jm=RM?0.3:1;                                         /* stilled for those who ask for less motion */
+  /* the little lamp breathes — barely; a steady room, knot a candle */
+  spot.intensity=1.55*(1+0.035*jm*Math.sin(tt*0.42));
+  /* the wet gleam walks a slow circle, so the yolk's sheen slides as it would */
+  wet.position.set(0.48*Math.cos(tt*0.11), 0.80+0.06*Math.sin(tt*0.07), 0.48*Math.sin(tt*0.11));
+  /* the yolk's quiver — two slow tides across the dome's own skin */
+  if(yolk.mesh){
+    var p=yolk.mesh.geometry.attributes.position, n=p.count, bi, bx,by,bz, dl;
+    var amp=QUIVER.amp*jm;
+    for(bi=0;bi<n;bi++){
+      bx=yolk.base[bi*3]; by=yolk.base[bi*3+1]; bz=yolk.base[bi*3+2];
+      dl=1 + amp*Math.sin(tt*QUIVER.w1 + bx*5.2 + bz*3.1)
+           + amp*0.6*Math.sin(tt*QUIVER.w2 + bz*6.4 - bx*2.2);
+      p.setXYZ(bi, bx*dl, by*dl, bz*dl);
+    }
+    p.needsUpdate=true;
+    yolk.ring.material.opacity=0.22+0.10*(0.5+0.5*Math.sin(tt*QUIVER.w1*0.9));   /* the meniscus breathes with the tide */
+  }
+  /* the table rides the SAME tides — a raft's wobble, a few millimetres,
+     never enough to spill the body */
+  var wob=jm;
+  tableG.position.y=TABLE.y + 0.010*wob*Math.sin(tt*QUIVER.w1*0.5) + 0.004*wob*Math.sin(tt*QUIVER.w2*0.5+2.0);
+  tableG.rotation.x=0.011*wob*Math.sin(tt*QUIVER.w1*0.5+0.7);      /* [TUNE] the wobble's size — smaller and the table only breathes */
+  tableG.rotation.z=0.009*wob*Math.sin(tt*QUIVER.w2*0.5+1.9);
+  tableG.rotation.y=0.008*wob*Math.sin(tt*0.07);
+  /* the body blinks and, touched, floats apart — the kitchen's own motion */
+  if(parts.grp){
+    parts.anim += ((parts.state?1:0)-parts.anim)*0.06;
+    var a=parts.anim, k2;
+    if(parts.closed.material.userData.loaded) parts.closed.material.opacity=1-a;
+    if(parts.open.material.userData.loaded)   parts.open.material.opacity=a;
+    parts.open.position.y=PARTS.openH/2*(0.55+0.45*a);
+    parts.open.scale.y=PARTS.openH*(0.55+0.45*a);
+    parts.open.scale.x=PARTS.openH*PARTS.uv2.as*(0.55+0.45*a);
+    parts.grp.position.y=0.02*a;                           /* open, it lifts a breath off the wood */
+    /* the photographs are unlit things — so the little lamp tints them by
+       hand: a steady warmth with the lamp's own faint breathing in it */
+    var pc=clamp(0.96+0.06*Math.sin(tt*0.42), 0.08, 1.2);
+    parts.closed.material.color.setRGB(1.00*pc, 0.95*pc, 0.87*pc);
+    parts.open.material.color.setRGB(1.00*pc, 0.95*pc, 0.87*pc);
+    for(k2=0;k2<parts.ledSprites.length;k2++){
+      var L=PARTS.leds[k2], LT=PARTS.ledsOpen[k2];
+      var sp=parts.ledSprites[k2];
+      sp.position.set(lerp(L.p[0],LT[0],a), lerp(L.p[1],LT[1],a), L.p[2]);
+      var ph=(tt/L.T)%1;
+      var on=ph<0.14 ? 1 : (ph<0.2? 0.4:0.08);
+      sp.material.opacity=on;
+    }
+    var sdt=Math.min(0.05, dtFrame), si3;
+    for(si3=0;si3<parts.sparks.length;si3++){
+      var gs=parts.sparks[si3];
+      if(gs.life<=0){ if(gs.sp.visible) gs.sp.visible=false; continue; }
+      gs.life-=sdt;
+      var u=1-(gs.life/gs.max);
+      gs.vy-=0.16*sdt;
+      gs.x+=gs.vx*sdt; gs.y+=gs.vy*sdt;
+      gs.vx*=0.985;
+      var tw=0.55+0.45*Math.sin(tt*22+gs.tw);
+      var op=(u<0.18? u/0.18 : (1-u)/0.82)*tw;
+      gs.sp.material.opacity=clamp(op,0,1);
+      gs.sp.position.set(gs.x, gs.y, 0.02);
+      var ssz=gs.sz*(0.7+0.6*tw);
+      gs.sp.scale.set(ssz,ssz,1);
+      if(gs.life<=0) gs.sp.visible=false;
+    }
+    if(parts.state===1 && a>0.6 && !RM && Math.random()<0.05) burstSparks(1);   /* live circuitry breathes stray glints */
+  }
+  /* the notes answer the gaze — the looked-near one wakes and brightens;
+     the tapped one steps off the wall and grows a little */
+  var lc=liveCam();
+  lc.getWorldPosition(camPos);
+  if(lc.getWorldQuaternion) lc.getWorldQuaternion(camQ); else camQ.copy(lc.quaternion);
+  camFwd.set(0,0,-1).applyQuaternion(camQ);
+  var ni;
+  for(ni=0;ni<notes.length;ni++){
+    var nb=notes[ni];
+    nb.mesh.getWorldPosition(toNote); toNote.sub(camPos).normalize();
+    var dot=toNote.dot(camFwd);
+    var g=sstep((dot-0.930)/0.055);                        /* [TUNE] how near the gaze must come before a note wakes */
+    nb.gaze+=(g-nb.gaze)*Math.min(1,dtFrame*6);
+    nb.s+=((nb.big?1.7:1)-nb.s)*Math.min(1,dtFrame*7);     /* [TUNE] how much a tapped note grows — more now: it should be unmissable */
+    nb.mat.color.setScalar(0.86+0.30*Math.max(nb.gaze, nb.big?1:0));   /* a tapped note wakes FULL bright, gaze or knot */
+    var ss=nb.baseSize*nb.s;
+    nb.mesh.scale.set(ss,ss,1);
+    nb.mesh.position.set(
+      nb.basePos.x+nb.inward.x*0.55*(nb.s-1),
+      nb.basePos.y,
+      nb.basePos.z+nb.inward.z*0.55*(nb.s-1));             /* [TUNE] how far a tapped note steps toward you */
+  }
+  /* the hum breathes slow with the little lamp — barely there */
+  if(tone.master){ tone.master.gain.value=0.5*(0.55+0.20*Math.sin(tt*0.21)); }
+  if(!AR_LIVE){ placeCam(); renderer.render(scene, camera); }   /* live, the engine paints the room itself */
+  raf(frame);
+}
+/* the hint arrives a little after the room does */
+setTimeout(function(){ setHint('turn \u2014 the notes are all around you. touch the body on the table'); }, 2600);
+/* a small window for the soak and the lab — the room's bones, readable */
+window.__songegg={ scene:scene, camera:camera, liveCam:liveCam, table:tableG,
+  yolk:yolk, parts:parts, notes:notes, look:look, spot:spot, wet:wet,
+  tap:tapParts, home:home, boot:boot, arFallback:arFallback, booted:function(){return booted;},
+  flags:{AR:function(){return AR;}, AR_LIVE:function(){return AR_LIVE;}, AR_DEAD:function(){return AR_DEAD;}} };
+raf(frame);
+})();
+</script>
+</body>
+</html>

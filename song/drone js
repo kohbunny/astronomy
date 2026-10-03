@@ -1,0 +1,248 @@
+/* press-drone.js — THE DRONE PASS's press (14 sep 2026). Claude's tool,
+   run at the press in headless chromium; Terence never runs it. it stands
+   phone.html up offline (three@0.185.1 vendored by npm pack, esri's tiles
+   answered from one fixture — the MOCKED SEA), walks the store, the
+   flight, the drop, the fridge and the rot, asserts on the module's own
+   state, and writes stills (png, composited on black) for the eye.
+
+   usage: node press-drone.js [--serve http://127.0.0.1:8765] [--out stills]
+   needs: playwright (global), chromium at /opt/pw-browsers, the vendored
+   three/package beside this file, tile.png beside this file, and a static
+   server for /home/claude (python3 -m http.server 8765). */
+const { chromium } = require('playwright');
+const fs = require('fs'), path = require('path');
+const args = process.argv.slice(2);
+const arg = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
+const SERVE = arg('--serve', 'http://127.0.0.1:8765');
+const OUT = arg('--out', path.join(__dirname, 'stills'));
+const THREE_DIR = path.join(__dirname, 'three', 'package');
+const TILE = fs.readFileSync(path.join(__dirname, 'tile.png'));
+fs.mkdirSync(OUT, { recursive: true });
+let checks = 0, fails = 0;
+function ok(c, msg) { checks++; if (!c) { fails++; console.log('  FAIL ' + msg); } else console.log('  ok   ' + msg); }
+async function still(page, name) {
+  const url = await page.evaluate(() => window.__phoneScreen ? window.__phoneScreen() : '');
+  if (!url) { console.log('  (no still: ' + name + ')'); return; }
+  const b = Buffer.from(url.split(',')[1], 'base64');
+  const p = path.join(OUT, name + '.raw.png'); fs.writeFileSync(p, b);
+  return p;
+}
+async function frames(page) { return page.evaluate(() => { try { return window.__phoneNoteState().frame; } catch (_) { return -1; } }); }
+async function waitFrames(page, n, cap) {
+  const f0 = await frames(page); const t0 = Date.now();
+  while (Date.now() - t0 < (cap || 60000)) { const f = await frames(page); if (f - f0 >= n) return f - f0; await page.waitForTimeout(80); }
+  return -1;
+}
+async function waitFor(page, fn, cap, label) {
+  const t0 = Date.now();
+  while (Date.now() - t0 < (cap || 30000)) { if (await page.evaluate(fn)) return true; await page.waitForTimeout(120); }
+  console.log('  (timed out: ' + (label || '') + ')'); return false;
+}
+(async () => {
+  const browser = await chromium.launch({ headless: true, args: ['--disable-accelerated-2d-canvas', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const context = await browser.newContext({ viewport: { width: 393, height: 852 }, deviceScaleFactor: 1, geolocation: { latitude: 35.6595, longitude: 139.7005 }, permissions: ['geolocation'] });
+  const page = await context.newPage();
+  let pageErrors = 0;
+  page.on('pageerror', e => { pageErrors++; console.log('  PAGEERROR ' + e.message); });
+  page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) console.log('  console.error ' + m.text().slice(0, 200)); });
+  /* the cdn, answered from the vendored package */
+  await page.route(/cdn\.jsdelivr\.net\/npm\/three@0\.185\.1\/(.*)/, async route => {
+    const m = /three@0\.185\.1\/(.*)$/.exec(route.request().url().split('?')[0]);
+    const f = path.join(THREE_DIR, m[1]);
+    if (fs.existsSync(f)) route.fulfill({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(f) });
+    else route.fulfill({ status: 404, body: '' });
+  });
+  /* esri, answered from one fixture; a count is kept */
+  let tiles = 0;
+  await page.route(/server\.arcgisonline\.com\//, route => { tiles++; const m=/tile\/(\d+)\/(\d+)\/(\d+)/.exec(route.request().url()); const f=m?path.join(__dirname,'tiles',m[1],m[2],m[3]+'.png'):''; route.fulfill({ status: 200, contentType: 'image/png', body: (f&&fs.existsSync(f))?fs.readFileSync(f):TILE }); });
+  /* kohmedia and the river: refused quietly */
+  await page.route(/kohmedia\.b-cdn\.net|supabase\.co|\.netlify\//, route => route.fulfill({ status: 404, body: '' }));
+
+  const open = async (q) => {
+    await page.goto(SERVE + '/phone.html?' + q, { waitUntil: 'load' });
+    const woke = await waitFor(page, () => !!window.__phoneWoke, 90000, 'wake');
+    ok(woke, 'the glass woke (' + q + ')');
+    await page.mouse.click(196, 426);   // the first tap wakes the audio and hands the phone its power
+    await waitFrames(page, 3, 30000);
+  };
+
+  console.log('§1 the home shelf: the fridge under the radio, page one');
+  await open('silver=0&cat=off&mute=1&fridge=fresh&fakegeo=35.6595,139.7005');
+  const app0 = await page.evaluate(() => window.__phoneApp());
+  ok(app0 === 'home', 'app is home: ' + app0);
+  await waitFrames(page, 2);
+  await still(page, '01-home-page-one');
+  const fr0 = await page.evaluate(() => window.__phoneFridge());
+  ok(fr0.n === 1 && fr0.items[0].k === 'applehalf' && fr0.items[0].res, 'the fridge opens with the half apple alone, born before you: ' + JSON.stringify(fr0.items[0]));
+  ok(fr0.items[0].rot > 0.3 && fr0.items[0].rot < 0.5, 'the half apple is already going (rot ' + fr0.items[0].rot + ')');
+
+  console.log('§2 the store: fifteen things, one chosen, the buy');
+  await page.evaluate(() => window.__phoneOpen('shop'));
+  await waitFrames(page, 2);
+  await still(page, '02-cart');
+  let st = await page.evaluate(() => window.__phoneAzState());
+  ok(st.goods.length === 15 && !st.flying, 'fifteen goods, no flight: ' + st.goods.join(' '));
+  /* choose the cortado (the third card) by tapping it, then buy */
+  const tapped = await page.evaluate(() => window.__phoneTap(180, 134 + 8 + 2 * 110 + 50));
+  await waitFrames(page, 1);
+  st = await page.evaluate(() => window.__phoneAzState());
+  ok(tapped && st.sel === 2, 'the third card chose the cortado (sel ' + st.sel + ')');
+  await still(page, '03-cart-chosen');
+  const bought = await page.evaluate(() => window.__phoneTap(180, 646 + 14 + 23));
+  await waitFrames(page, 1);
+  st = await page.evaluate(() => window.__phoneAzState());
+  ok(bought && st.flying && st.k === 'cortado', 'buy pressed: the flight is on with the cortado (' + st.phase + ')');
+
+  console.log('§3 the flight, held frame by frame');
+  const holds = [[0.5, 'pack'], [1.6, 'lift'], [3.2, 'lift'], [4.5, 'cruise'], [6.4, 'descend'], [8.0, 'descend'], [10.5, 'descend'], [12.1, 'descend'], [12.9, 'drop'], [13.8, 'drop'], [14.4, 'drop'], [15.2, 'climb'], [16.5, 'done']];
+  let n = 4;
+  for (const [T, want] of holds) {
+    await page.evaluate((T) => window.__phoneAzAt(T), T);
+    await waitFrames(page, 2, 20000);
+    st = await page.evaluate(() => window.__phoneAzState());
+    ok(st.phase === want, 'held at ' + T + ' s → ' + st.phase + (st.lat != null ? ' (place snapped ' + st.lat.toFixed(2) + ',' + st.lon.toFixed(2) + ')' : ''));
+    await still(page, String(n++).padStart(2, '0') + '-flight-' + want + '-' + T);
+  }
+  ok(st.dropped, 'the thing was delivered by the drop');
+  ok(tiles > 0, 'esri was asked for tiles (' + tiles + ')');
+  const fr1 = await page.evaluate(() => window.__phoneFridge());
+  ok(fr1.n === 2 && fr1.items.some(i => i.k === 'cortado' && !i.seen), 'the fridge holds the cortado, unseen: ' + JSON.stringify(fr1.items.map(i => i.k)));
+  ok(fr1.unseen === 1, 'one unseen → the badge would read 1');
+  const ns = await page.evaluate(() => window.__phoneNoteState());
+  ok(ns.queue.includes('fridge') || (ns.up && ns.up.id === 'fridge') || ns.stack.some(c => c.id === 'fridge'), 'the delivery raised a banner (queue ' + ns.queue.join(',') + ' up ' + (ns.up && ns.up.id) + ' stack ' + ns.stack.map(c => c.id).join(',') + ')');
+
+  console.log('§4 the card, and the way to the fridge');
+  await page.evaluate(() => window.__phoneAzAt(-1));
+  await waitFrames(page, 2);
+  const toFridge = await page.evaluate(() => window.__phoneTap(180, 447));
+  await waitFrames(page, 2);
+  const app1 = await page.evaluate(() => window.__phoneApp());
+  ok(toFridge && app1 === 'fridge', 'open the fridge → the fridge (' + app1 + ')');
+  st = await page.evaluate(() => window.__phoneAzState());
+  ok(!st.flying, 'the flight is over');
+  await still(page, '17-fridge-door-opening');
+  await waitFrames(page, 30, 60000);
+  await still(page, '18-fridge-landed');
+  const fr2 = await page.evaluate(() => window.__phoneFridge());
+  ok(fr2.unseen === 0 && fr2.land === 0, 'the cortado landed on its shelf and the badge cleared');
+
+  console.log('§5 the rot, aged by hand');
+  const ages = [[600, 'ten min: steam off'], [4000, 'an hour: skinned'], [86400, 'a day'], [180000, 'two days: gone']];
+  for (const [s, label] of ages) {
+    await page.evaluate((s) => { const f = window.__phoneFridge(); const i = f.items.findIndex(it => it.k === 'cortado'); window.__phoneFridgeAge(i, s); }, s);
+    await waitFrames(page, 2);
+    const f = await page.evaluate(() => window.__phoneFridge());
+    const it = f.items.find(it => it.k === 'cortado');
+    ok(it && it.age >= s - 2, 'cortado aged ' + s + ' s → rot ' + it.rot + ' · ' + it.word + ' (' + label + ')');
+    await still(page, '19-rot-cortado-' + s);
+  }
+
+  console.log('§6 the fridge full: every good delivered by hand, the oldest leaving');
+  for (const k of ['rose', 'apple', 'wine', 'birkin', 'gown', 'pizza', 'asahi', 'rumi', 'vultus', 'pill', 'fortune', 'discreet', 'lube', 'cookie']) {
+    await page.evaluate((k) => window.__phoneFridgeDeliver(k), k);
+  }
+  await page.evaluate(() => { window.__phoneOpen('home'); });
+  await waitFrames(page, 2);
+  await still(page, '20-home-badge');
+  await page.evaluate(() => { window.__phoneOpen('fridge'); });
+  await waitFrames(page, 60, 90000);
+  const fr3 = await page.evaluate(() => window.__phoneFridge());
+  ok(fr3.n === 9, 'nine seats, nine things (' + fr3.n + '): ' + fr3.items.map(i => i.k + '@' + i.seat).join(' '));
+  ok(!fr3.items.some(i => i.k === 'applehalf'), 'the half apple, the oldest, left to make room');
+  await still(page, '21-fridge-full');
+  /* age everything a day and a half */
+  await page.evaluate(() => { const f = window.__phoneFridge(); f.items.forEach((it, i) => window.__phoneFridgeAge(i, 129600)); });
+  await waitFrames(page, 2);
+  await still(page, '22-fridge-full-aged');
+  await page.evaluate(() => { const f = window.__phoneFridge(); f.items.forEach((it, i) => window.__phoneFridgeAge(i, 400000)); });
+  await waitFrames(page, 2);
+  await still(page, '23-fridge-full-gone');
+
+  console.log('§7 the card and the toss');
+  const fr4 = await page.evaluate(() => window.__phoneFridge());
+  const pizza = fr4.items.findIndex(i => i.k === 'pizza');
+  const seat = fr4.items[pizza].seat, seatsXY = [[100, 304], [180, 304], [260, 304], [100, 432], [180, 432], [260, 432], [100, 560], [180, 560], [260, 560]];
+  const tp = await page.evaluate(([x, y]) => window.__phoneTap(x, y - 30), seatsXY[seat]);
+  await waitFrames(page, 2);
+  let f5 = await page.evaluate(() => window.__phoneFridge());
+  ok(tp && f5.card >= 0, 'a tap on a thing opens its card (card ' + f5.card + ', ' + f5.items[f5.card].k + ')');
+  await still(page, '24-fridge-card');
+  await page.evaluate(() => window.__phoneFridgeToss(window.__phoneFridge().card >= 0 ? window.__phoneFridge().card : 0));
+  await waitFrames(page, 25, 60000);
+  f5 = await page.evaluate(() => window.__phoneFridge());
+  ok(f5.n === 8 && !f5.toss, 'thrown out: eight remain');
+
+  console.log('§8 the stone survives a reload; the sheet, the settings switch, the census');
+  await page.goto(SERVE + '/phone.html?silver=0&cat=off&mute=1&fakegeo=35.6595,139.7005', { waitUntil: 'load' });
+  await waitFor(page, () => !!window.__phoneWoke, 90000, 'wake 2');
+  await page.mouse.click(196, 426); await waitFrames(page, 2, 30000);
+  const f6 = await page.evaluate(() => window.__phoneFridge());
+  ok(f6.n === 8 && f6.stone, 'after a reload the fridge still holds eight (stone standing)');
+  await page.evaluate(() => window.__phoneStApp('fridge'));
+  await waitFrames(page, 2);
+  await still(page, '25-settings-fridge');
+  await page.evaluate(() => window.__phone && window.__phone.mod ? null : null);
+  await page.evaluate(() => window.__phoneOpen('stabout'));
+  await waitFrames(page, 2);
+  await still(page, '26-about-census');
+  await page.evaluate(() => window.__phoneOpen('stprivacy'));
+  await waitFrames(page, 2);
+  await still(page, '27-colophon');
+
+  console.log('§9 the real ask: no fakegeo, the context grants a place');
+  await page.goto(SERVE + '/phone.html?silver=0&cat=off&mute=1&fridge=fresh', { waitUntil: 'load' });
+  await waitFor(page, () => !!window.__phoneWoke, 90000, 'wake 3');
+  await page.mouse.click(196, 426); await waitFrames(page, 2, 30000);
+  await page.evaluate(() => window.__phoneAzBuy(9));   // the motorbike
+  await waitFor(page, () => window.__phoneAzState().geo === 'have', 20000, 'the fix');
+  st = await page.evaluate(() => window.__phoneAzState());
+  ok(st.geo === 'have', 'the place was granted through the real ask (geo ' + st.geo + ')');
+  await page.evaluate(() => window.__phoneAzAt(11.0));
+  await waitFrames(page, 2, 20000);
+  st = await page.evaluate(() => window.__phoneAzState());
+  ok(st.lat != null && Math.abs(st.lat - 35.6595) < 0.01, 'the descent snapped the granted place: ' + st.lat + ',' + st.lon);
+  await still(page, '28-flight-bike-descend');
+  await page.evaluate(() => window.__phoneAzAt(13.6));
+  await waitFrames(page, 2, 20000);
+  await still(page, '29-flight-bike-drop');
+  await page.evaluate(() => window.__phoneAzAt(17));
+  await waitFrames(page, 2, 20000);
+  await page.evaluate(() => window.__phoneAzAt(-1));
+  await page.evaluate(() => window.__phoneOpen('fridge'));
+  await waitFrames(page, 50, 90000);
+  await still(page, '30-fridge-bike');
+  const f7 = await page.evaluate(() => window.__phoneFridge());
+  ok(f7.items.some(i => i.k === 'vultus'), 'the motorbike is in the fridge');
+
+  console.log('§10 the drone denied: no geolocation at all → the coarse city, and no tiles → the dealt city');
+  await context.clearPermissions();
+  const ctx2 = await browser.newContext({ viewport: { width: 393, height: 852 }, deviceScaleFactor: 1 });
+  const p2 = await ctx2.newPage();
+  p2.on('pageerror', e => console.log('  PAGEERROR ' + e.message));
+  await p2.route(/cdn\.jsdelivr\.net\/npm\/three@0\.185\.1\/(.*)/, async route => {
+    const m = /three@0\.185\.1\/(.*)$/.exec(route.request().url().split('?')[0]);
+    const f = path.join(THREE_DIR, m[1]);
+    if (fs.existsSync(f)) route.fulfill({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(f) }); else route.fulfill({ status: 404, body: '' });
+  });
+  await p2.route(/server\.arcgisonline\.com\//, route => route.abort());
+  await p2.route(/kohmedia\.b-cdn\.net|supabase\.co|\.netlify\//, route => route.fulfill({ status: 404, body: '' }));
+  await p2.goto(SERVE + '/phone.html?silver=0&cat=off&mute=1&fridge=fresh', { waitUntil: 'load' });
+  await waitFor(p2, () => !!window.__phoneWoke, 90000, 'wake 4');
+  await p2.mouse.click(196, 426);
+  await p2.evaluate(() => window.__phoneAzBuy(0));
+  /* the ask is refused at once by a context with no permission; the flight should reach the descent on its own clock */
+  const t0 = Date.now();
+  let s2 = null;
+  while (Date.now() - t0 < 120000) { s2 = await p2.evaluate(() => window.__phoneAzState()); if (s2.lat != null) break; await p2.waitForTimeout(500); }
+  ok(s2 && s2.lat != null, 'with the ask refused the flight still found a place (' + s2.geo + ' → ' + s2.lat + ',' + s2.lon + ', waited ' + s2.wait + ' s)');
+  await p2.evaluate(() => window.__phoneAzAt(11.5));
+  await p2.waitForTimeout(1500);
+  const u2 = await p2.evaluate(() => window.__phoneScreen());
+  fs.writeFileSync(path.join(OUT, '31-flight-no-tiles.raw.png'), Buffer.from(u2.split(',')[1], 'base64'));
+  await ctx2.close();
+
+  ok(pageErrors === 0, 'no page errors across the walk (' + pageErrors + ')');
+  await browser.close();
+  console.log('\n' + checks + ' checks, ' + fails + ' failed');
+  process.exit(fails ? 1 : 0);
+})().catch(e => { console.log('press error', e); process.exit(2); });

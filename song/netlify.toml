@@ -1,0 +1,40 @@
+# the newest times · netlify.toml — the house's arrangement with its
+# landlord (the paper's sixty-fifth printing, 20 sept 2026)
+
+[functions]
+  # the house keeps three functions now, in netlify/functions:
+  #   ask.js                      — one function, six voices, and the
+  #                                 reading room of the night desk's drawer.
+  #   nightdesk.mjs               — THE BELL. the landlord runs it by the
+  #                                 clock, nightly (09:00 universal — two in
+  #                                 the morning, los angeles — and again at
+  #                                 11:00 for whatever was left undone). its
+  #                                 schedule is written inside the file
+  #                                 itself, so there is nothing to set here.
+  #   nightdesk-background.mjs    — THE NIGHT DESK, STAFFED (law 98). the
+  #                                 name ends in -background, which is how
+  #                                 the landlord knows to answer its bell
+  #                                 at once and let it work up to fifteen
+  #                                 minutes with nobody waiting on it.
+  directory = "netlify/functions"
+
+  # bundle with esbuild — the landlord's own recommendation; the three
+  # functions and their one dependency (@netlify/blobs, listed in
+  # package.json beside this file) ship small.
+  node_bundler = "esbuild"
+
+# the clock, checked against the landlord's current law (23 aug 2026,
+# and again 20 sept): a synchronous function runs SIXTY seconds, a
+# scheduled one THIRTY, a background one FIFTEEN MINUTES, and none of the
+# three is a setting — there is nothing to set here and nothing that
+# needs setting. the reader's device waits 22 seconds for the night
+# shift; it never waits for the night desk at all, because the night
+# desk files while the reader is asleep and the paper only ever reads
+# the drawer. the tide can come in after you have stopped watching it,
+# which is how tides work.
+#
+# the environment (set in the landlord's dashboard, knot here):
+#   ANTHROPIC_API_KEY   — as ever; the night desk uses the same key.
+#   DESK_WORD           — optional: any word of eight letters or more. it
+#                         arms the night desk's kill switch (see ask.js).
+#   NIGHT_DESK          — optional: the value `off` stands the desk down.

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<!--
+  bornHUB · the eleventh app · knot on the home screen
+  (it was youBORN for one day, 20 aug; renamed 21 aug, his word. the old
+  name still stands beside this file as youBORN.html, a tombstone holding
+  the door open for links already sent.)
+
+  ---- THE ONE-PAGE LAW · THIS ROOM WAS CUT ----------------------------
+  (21 sep 2026 · the mortality pass · the rooms, batch ten. the organ is
+  mortal.js, which must stand on this shelf too.)
+
+  safari lets a page close its own tab only while that tab has held ONE
+  page, so no page of this house may add a history entry. this room asked
+  the address for nothing at all and had exactly one door, so the cut is
+  two lines:
+  · THE LINE — mortal.js is the first script this file runs, with its
+    two-line guard under it. absent, nothing breaks.
+  · THE ONE DOOR — goHome's `location.href` is MORTAL.go, a replace into
+    a listed room. the black sheet still rises for its 460 ms first; the
+    leave is unchanged, only the way it lands.
+  · THE WAY BACK, read and found sound: the ‹ in the header is under the
+    GATE until the visitor answers it — but the gate's own second button
+    (`I am under Me - Exit`) is the same goHome, so there is a way out of
+    this room from the FIRST PAINT, before anything is entered. after the
+    gate, the ‹ stands in the header on every view; the player and the
+    category rails are states of this page, knot pages.
+  · THE PAIR — the day this file was listed in mortal.js, youBORN.html was
+    listed with it (`bornhub` and `youborn`), because the phone still opens
+    the OLD name: the walk is phone → youBORN → here. that tombstone
+    REPLACES rather than going through MORTAL.go, on purpose — a forwarding
+    address must never stand in a history. its own note says why.
+
+  nothing else changed. the plates, the gate, the ad and the mourning are
+  untouched.
+  · 1 oct 2026, 03:29 los angeles · THE LITTLE PHONE AT 80%: the way back is 19 x 38 now, in the top-left corner (10 in,
+    6 under the safe line — the shell's inset when framed), class lp80 (under the gate, z 40, as the ‹ was); the door and the click are unchanged.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mortal.js — THE ONE-PAGE LAW (the mortality pass, pass one). the first
+     script this page runs: it keeps the page's true address and rewrites the
+     one safari holds to the card's own, so the tab can still close itself at
+     the end. after this line ask MORTAL.search / MORTAL.href / MORTAL.hash,
+     never location's; every door is MORTAL.go(url) — a replace into a cut
+     room, never a push. IF IT IS KNOT BESIDE THIS FILE, NOTHING BREAKS: the
+     guard stands in, and the doors open with a push as they always did. -->
+<script src="mortal.js"></script>
+<script>
+window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.search, hash:location.hash,
+  path:location.pathname, go:function(u){ location.href=u; } };
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>bornHUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0A0A; --ink2:#141110; --ink3:#1C1917;
+  --line:#2A2320; --grid:#221C19;
+  --bone:#D9CFC4; --dust:#8A7E74; --faint:#5B534C;
+  --amber:#FFA31A; --blood:#A32B3B;
+  --disp:"Anton","Arial Narrow",Impact,sans-serif;
+  --mono:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:"EB Garamond",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#050404;color:var(--bone)}
+body{font-family:var(--mono);font-size:13px;-webkit-font-smoothing:antialiased;
+  display:flex;justify-content:center;min-height:100vh}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+#phone{width:100%;max-width:430px;background:var(--ink);min-height:100vh;
+  position:relative;overflow:hidden;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+
+#gate{position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;z-index:50;background:var(--ink);
+  overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#gate.hidden{display:none}
+.gate-in{min-height:100%;box-sizing:border-box;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:64px 26px 40px;gap:19px;text-align:center;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+    "Helvetica Neue",Arial,sans-serif}
+body.gated{overflow:hidden}
+.lang{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:7px;
+  background:var(--ink3);border-radius:999px;padding:7px 13px 7px 9px;
+  font-size:12px;letter-spacing:.02em;color:var(--bone)}
+.lang .globe{width:15px;height:15px;border-radius:50%;border:1px solid var(--dust);
+  position:relative;flex:0 0 auto}
+.lang .globe::before,.lang .globe::after{content:"";position:absolute;background:var(--dust)}
+.lang .globe::before{left:0;right:0;top:6px;height:1px}
+.lang .globe::after{top:0;bottom:0;left:6px;width:1px}
+.lang .caret{font-size:9px;color:var(--bone)}
+.gate-mark{font-family:var(--disp);font-size:40px;letter-spacing:-.02em;line-height:.9;
+  display:flex;align-items:center;gap:5px}
+.gate-mark i{font-style:normal;color:var(--bone)}
+.gate-mark em{font-style:normal;background:var(--amber);color:#0B0A0A;
+  padding:0 9px 3px;border-radius:7px}
+.gate-head{font-size:29px;line-height:1.12;font-weight:700;color:#fff;max-width:13ch}
+.gate-head b{font-weight:700;color:var(--amber)}
+#notice{border:1px solid var(--amber);color:#fff;font-weight:700;font-size:15px;
+  padding:13px 30px;letter-spacing:.01em;background:var(--ink3);font-family:inherit}
+#notice[aria-expanded="true"]{border-style:dashed}
+.gate-note{display:none;max-width:34ch;font-size:11px;line-height:1.7;color:var(--dust);
+  border:1px solid var(--line);padding:12px 14px;text-align:left}
+.gate-note.on{display:block}
+.gate-fine{font-size:13.5px;line-height:1.5;color:#b9b0a6;max-width:33ch}
+.gate-fine b{color:var(--bone);font-weight:400}
+.gate-q{font-family:inherit;font-size:29px;line-height:1.15;
+  color:var(--bone);margin-top:6px}
+.gate-btns{display:flex;flex-direction:column;gap:13px;width:100%;max-width:340px}
+.gate-btns button{border:2px solid var(--amber);background:var(--ink3);
+  padding:17px 6px;font-size:15px;font-weight:700;letter-spacing:.01em;color:#fff;
+  transition:.22s;font-family:inherit}
+.gate-btns button:hover{background:var(--amber);color:#0B0A0A}
+
+header{display:flex;align-items:center;gap:9px;padding:12px 12px 10px;
+  border-bottom:1px solid var(--line)}
+.mark{font-family:var(--disp);font-size:25px;letter-spacing:-.02em;line-height:1;
+  display:flex;align-items:center;gap:3px}
+.mark i{font-style:normal;color:var(--bone)}
+.mark em{font-style:normal;background:var(--amber);color:#0B0A0A;
+  padding:0 6px 1px;border-radius:4px;letter-spacing:-.01em}
+#home{font-size:25px;line-height:1;color:var(--dust);padding:0 7px 4px 2px;
+  font-family:var(--serif);transition:color .2s}
+#home:hover,#home:focus-visible{color:var(--amber)}
+.mark-sub{font-size:8.5px;letter-spacing:.22em;color:var(--faint);margin-left:auto;text-align:right;line-height:1.5}
+
+#adslot{padding:10px 12px 2px}
+.ad{position:relative;border:1px solid var(--line);overflow:hidden;
+  background:#0d0b09;height:72px;margin:0 20px}
+#adart{position:absolute;inset:0;width:100%;height:100%;opacity:.88;
+  pointer-events:none}
+.ad::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(11,10,10,.58) 0%,rgba(11,10,10,.16) 26%,
+    rgba(11,10,10,0) 55%,rgba(11,10,10,.22) 100%)}
+.ad-chip{position:absolute;top:4px;right:4px;background:#2f6f9e;color:#dff;
+  font-size:8px;letter-spacing:.1em;padding:1px 5px;z-index:3}
+.ad-vert{position:absolute;left:4px;top:0;bottom:0;display:flex;align-items:center;z-index:3}
+.ad-vert span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--disp);
+  font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.82)}
+.ad-line{position:absolute;right:6px;bottom:4px;font-size:8px;letter-spacing:.14em;
+  color:rgba(255,255,255,.78);z-index:3}
+#adkill{display:block;margin:6px 0 0 auto;background:var(--ink3);
+  font-size:9.5px;letter-spacing:.06em;color:var(--dust);padding:5px 9px}
+
+nav{display:flex;gap:7px;overflow-x:auto;padding:10px 14px;border-bottom:1px solid var(--line);
+  scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{white-space:nowrap;border:1px solid var(--line);padding:5px 11px;font-size:10px;
+  letter-spacing:.08em;color:var(--dust);border-radius:999px}
+nav button[aria-pressed="true"]{background:var(--amber);color:#0B0A0A;border-color:var(--amber)}
+
+main{padding:14px 0}
+.sect{display:flex;align-items:center;gap:8px;padding:0 14px;margin:2px 0 11px}
+#grid.off + #player, #player.on{margin-top:0}
+.sect h2{font-family:var(--disp);font-size:20px;letter-spacing:-.01em;line-height:1;
+  color:var(--bone);font-weight:400}
+.sect .flag{font-size:15px;line-height:1}
+.sect .n{margin-left:auto;font-size:9px;letter-spacing:.16em;color:var(--faint)}
+#grid{display:flex;flex-direction:column;gap:22px;padding:0 14px}
+.card{text-align:left;width:100%;display:block}
+
+.screen{position:relative;background:var(--ink2);overflow:hidden; aspect-ratio: 16/10;}
+.screen img {width: 100%; height: 100%; object-fit: cover;}
+.card:hover .screen img { filter: brightness(1.2); }
+
+.dur{position:absolute;right:4px;bottom:4px;background:rgba(5,4,4,.86);
+  font-size:9px;padding:1px 4px;color:var(--bone);letter-spacing:.05em;z-index:3}
+.ttl{font-family:var(--disp);font-size:16px;line-height:1.1;letter-spacing:.005em;
+  margin-top:9px;color:var(--bone)}
+.meta{font-size:10.5px;color:var(--faint);margin-top:5px;line-height:1.5}
+
+#player{display:none;padding:0 14px}
+#player.on{display:block}
+#grid.off{display:none}
+.sect.off{display:none}
+
+.stage{position:relative;aspect-ratio:16/10;background:var(--ink2);overflow:hidden;
+  display:flex;align-items:center;justify-content:center}
+.stage img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.pt{font-family:var(--disp);font-size:19px;line-height:1.06;margin-top:16px}
+.pstats{font-size:10px;color:var(--faint);margin-top:6px;letter-spacing:.04em}
+.acts{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.acts button{border:1px solid var(--line);padding:6px 10px;font-size:9.5px;letter-spacing:.14em;color:var(--dust)}
+.acts button:hover{border-color:var(--bone);color:var(--bone)}
+.acts button.mourn{border-color:var(--blood);color:var(--blood)}
+.acts button.mourn[aria-pressed="true"]{background:var(--blood);color:var(--ink)}
+.desc{font-family:var(--serif);font-size:14px;line-height:1.55;color:var(--dust);
+  margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.tags span{font-size:9px;letter-spacing:.1em;color:var(--faint);border:1px solid var(--line);padding:2px 6px}
+.back{font-size:10px;letter-spacing:.18em;color:var(--faint);margin-bottom:12px;display:block}
+.back:hover{color:var(--amber)}
+.rel{font-size:9px;letter-spacing:.22em;color:var(--faint);margin:22px 0 10px;
+  border-bottom:1px solid var(--line);padding-bottom:6px}
+.relrow{display:flex;flex-direction:column;gap:22px}
+
+footer{border-top:1px solid var(--line);padding:16px 14px 44px;margin-top:26px}
+footer summary{font-size:9px;letter-spacing:.22em;color:var(--faint);cursor:pointer;list-style:none}
+footer summary::-webkit-details-marker{display:none}
+footer summary::before{content:"+ ";color:var(--amber)}
+details[open] summary::before{content:"− "}
+.creds{font-size:10px;line-height:1.7;color:var(--faint);margin-top:12px}
+.creds b{color:var(--dust);font-weight:400}
+.colophon{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--faint);
+  margin-top:18px;line-height:1.5}
+</style>
+<!-- 1 oct 2026, 03:29 los angeles · THE LITTLE PHONE AT 80% (his word, 02:19, on music.html: `about 80% of current size
+     and it should sit more to the top left … it should work for most iphone screens too`; carried here at 03:29). the way
+     back wears class lp80: 19 x 38, 10 from the left and 6 under the top's safe line — env() bare, or the shell's own inset
+     when framed (MORTAL.inset / apwnp:inset → --lpt, because env() reads zero inside the phone's frame). the door, the
+     click and mortal.js's part in it are unchanged. -->
+<style>
+  :root{ --lpt:0px; }
+  .lp80{ position:fixed !important; left:calc(env(safe-area-inset-left,0px) + 6px) !important;
+    top:calc(max(env(safe-area-inset-top,0px), var(--lpt)) + 2px) !important; right:auto !important; bottom:auto !important;
+    margin:0 !important; padding:4px 10px 10px 4px !important; line-height:0 !important; display:block !important;
+    background:transparent; border:0; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .lp80 > svg, .lp80 > canvas{ width:19px !important; height:38px !important; display:block; }
+  .lp80:active > svg, .lp80:active > canvas{ opacity:0.6; }
+  #home.lp80{ z-index:40; }
+  header{ padding-left:40px; }   /* the mark steps right of the little phone */
+</style>
+<script>(function(){ function set(i){ try{ if(i&&+i.top>0) document.documentElement.style.setProperty('--lpt',(+i.top)+'px'); }catch(_){} }
+  try{ set(window.MORTAL&&MORTAL.inset); }catch(_){}
+  try{ window.addEventListener('apwnp:inset',function(e){ set((e&&e.detail)||(window.MORTAL&&MORTAL.inset)); },false); }catch(_){} })();</script>
+</head>
+<body class="gated">
+<div id="phone">
+
+  <div id="gate">
+    <div class="lang"><span class="globe"></span>English<span class="caret">▼</span></div>
+    <div class="gate-in">
+    <div class="gate-mark"><i>born</i><em>HUB</em></div>
+    <h1 class="gate-head">This is a <b>posthumous</b> website</h1>
+    <button id="notice" aria-expanded="false">Notice to Users</button>
+    <div class="gate-note" id="noticebody">
+      Every figure on this site was photographed at the University of Pennsylvania between 1884 and 1885 and has been dead for more than a hundred years. The plates are public domain.
+    </div>
+    <p class="gate-fine">This website contains <b>death</b>-restricted materials. Everyone shown agreed to be photographed. No one shown agreed to this.</p>
+    <div class="gate-q">Are you alone?</div>
+    <div class="gate-btns">
+      <button id="enter">I am older than Me - Enter</button>
+      <button id="exit">I am under Me - Exit</button>
+    </div>
+    </div>
+  </div>
+
+  <header>
+    <button id="home" class="lp80" title="back to the phone" aria-label="back to the phone"><svg viewBox="0 0 30 60" width="19" height="38" aria-hidden="true" focusable="false">
+  <rect x="0.5" y="0.5" width="29" height="59" rx="6.5" fill="#0a0a0c" stroke="rgba(226,240,255,0.55)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+  <rect x="2.2" y="2.2" width="25.6" height="55.6" rx="5.2" fill="#000"/>
+  <rect x="11" y="4.2" width="8" height="2.2" rx="1.1" fill="#1a1a1e"/>
+  <rect x="2.56" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="10.5" width="4.3" height="4.3" rx="1.3" fill="#4a8fe8"/>
+  <rect x="2.56" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#e8433c"/><rect x="9.42" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#2c3038"/><rect x="23.14" y="17.1" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/>
+  <rect x="2.56" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#c93a8d"/><rect x="9.42" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="16.28" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/><rect x="23.14" y="23.7" width="4.3" height="4.3" rx="1.3" fill="#2e2e31"/>
+  <rect x="2.56" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#15171d"/><rect x="9.42" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#101013"/><rect x="16.28" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#37312c"/><rect x="23.14" y="30.3" width="4.3" height="4.3" rx="1.3" fill="#1c1c20"/>
+  <rect x="2.8" y="50.2" width="24.4" height="7.4" rx="2.6" fill="rgba(255,255,255,0.09)"/>
+  <rect x="2.56" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3fbf5a"/><rect x="9.42" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#3b6fd8"/><rect x="16.28" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#f2f2f2"/><rect x="23.14" y="51.7" width="4.3" height="4.3" rx="1.3" fill="#7a8390"/>
+  <rect x="12.4" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.5)"/><rect x="14.5" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/><rect x="16.6" y="47.4" width="1" height="1" fill="rgba(255,255,255,0.22)"/>
+</svg></button>
+    <div class="mark"><i>born</i><em>HUB</em></div>
+    <div class="mark-sub">1887–<br>ALL PLATES</div>
+  </header>
+
+  <nav id="cats"></nav>
+
+  <div id="adslot">
+    <div class="ad">
+      <canvas id="adart"></canvas>
+      <span class="ad-chip">Ad</span>
+      <span class="ad-vert" aria-hidden="true"><span>MUYBRIDGE</span></span>
+      <span class="ad-line">ANY 100 PLATES · $100</span>
+    </div>
+    <button id="adkill">Remove Ads</button>
+  </div>
+
+  <main>
+    <div class="sect"><h2>Hot Born Plates</h2><span class="flag">🇺🇸</span>
+      <span class="n" id="rown"></span></div>
+    <div id="grid"></div>
+    <section id="player"></section>
+  </main>
+
+  <footer>
+    <details>
+      <summary>PLATES &amp; SOURCES</summary>
+      <div class="creds" id="creds"></div>
+    </details>
+    <p class="colophon">bornHUB is the eleventh app. It is not on the home screen.</p>
+  </footer>
+</div>
+<script>
+const SPRITES={
+  "walk_man":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Muybridge_human_male_walking_animated.gif","plate":"Animal Locomotion, Plate 1 (1887)","desc":"Man walking","src":"File:Muybridge human male walking animated.gif","lic":"Public domain"},
+  "wrestle":{"img":"https://kohmedia.b-cdn.net/Muybridge.gif","plate":"Animal Locomotion, Plate 348 (1887)","desc":"Two men wrestling","src":"File:Muybridge wrestling.gif","lic":"Public domain"},
+  "leap":{"img":"https://kohmedia.b-cdn.net/Muybridge2.gif","plate":"Animal Locomotion, Plate 153 (1887)","desc":"Man jumping a hurdle","src":"File:Nude man jumping a hurdle, animated from Animal locomotion, Vol. I, Plate 153 by Eadweard Muybridge.gif","lic":"Public domain"},
+  "basket":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Animal_Locomotion_I,_Plate_34_-_Nude_woman_walking_and_carrying_basket_on_head_-_Top_row_animated.gif","plate":"Animal Locomotion, Plate 34 (1887)","desc":"Woman walking, carrying a basket on her head","src":"File:Animal Locomotion I, Plate 34 - Nude woman walking and carrying basket on head - Top row animated.gif","lic":"Public domain"},
+  "stone":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Animal_Locomotion_I,_Plate_27_-_Nude_Man_Walking_and_Carrying_a_75_lb_stone_on_head,_hands_raised_01.gif","plate":"Animal Locomotion, Plate 27 (1887)","desc":"Man walking, carrying a 75 lb stone on his head","src":"File:Animal Locomotion I, Plate 27 - Nude Man Walking and Carrying a 75 lb stone on head, hands raised 01.gif","lic":"Public domain"},
+  "cockatoo":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Eadweard_Muybridge,_Cockatoo_flying,_1887,_Collotype_process,_Animal_Locomotion_collection,_plate_758.gif","plate":"Animal Locomotion, Plate 758 (1887)","desc":"Cockatoo flying","src":"File:Eadweard Muybridge, Cockatoo flying, 1887, Collotype process, Animal Locomotion collection, plate 758.gif","lic":"Public domain"},
+  "kiss":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Kiss,_animated_from_Animal_locomotion,_Vol._IV,_Plate_444_by_Eadweard_Muybridge.gif","plate":"Animal Locomotion, Plate 444 (1887)","desc":"Two women, a kiss","src":"File:Kiss, animated from Animal locomotion, Vol. IV, Plate 444 by Eadweard Muybridge.gif","lic":"Public domain"},
+  "stairs":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Muybridge_ascending_stairs_animated.gif","plate":"Animal Locomotion (1887)","desc":"Man ascending stairs","src":"File:Muybridge ascending stairs animated.gif","lic":"Public domain"},
+  "smiths":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Nude_blacksmiths_hammering,_animated_from_Animal_locomotion,_Vol._II,_Plate_377_by_Eadweard_Muybridge.gif","plate":"Animal Locomotion, Plate 377 (1887)","desc":"Two blacksmiths hammering","src":"File:Nude blacksmiths hammering, animated from Animal locomotion, Vol. II, Plate 377 by Eadweard Muybridge.gif","lic":"Public domain"},
+  "wash":{"img":"https://commons.wikimedia.org/wiki/Special:FilePath/Nude_woman_washing_face,_animated_from_Animal_locomotion,_Vol._IV,_Plate_413_by_Eadweard_Muybridge.gif","plate":"Animal Locomotion, Plate 413 (1887)","desc":"Woman pouring water, washing her face","src":"File:Nude woman washing face, animated from Animal locomotion, Vol. IV, Plate 413 by Eadweard Muybridge.gif","lic":"CC BY-SA 3.0 (animation)"}
+};
+
+const COPY = {
+  walk_man:{t:"MAN WALKING AWAY, NEVER ARRIVING",u:"muybridge_1887",v:"4,551,203,884",tags:["LOOPS","LEAVING","AMATEUR (1887)","NO ENDING"],d:"He has been walking out of the frame since 1887."},
+  wrestle:{t:"A BODY IS A CIRCLE LIKE NO ONE",u:"plate_no_348",v:"6,881,204,400",tags:["ALONE TOGETHER","WORK","NO ENDING","LOOPS"],d:"A struggle suspended in time. They push, they pull, and the tension never resolves."},
+  leap:{t:"A BODY FREED FROM THE EARTH",u:"plate_no_153",v:"8,199,410,232",tags:["LONGING","ALMOST","NO ENDING","LOOPS"],d:"Weightless, entirely unanchored, hanging in the air forever. The absolute freedom of movement."},
+  basket:{t:"SHE CARRIES IT ON HER HEAD AND WILL NOT SET IT DOWN",u:"UPENN_ARCHIVE",v:"2,088,417,006",tags:["SLOW","BARELY MOVING","VERIFIED DEAD","LOOPS"],d:"An empty basket, balanced."},
+  stone:{t:"MAN CARRYING 75 LBS, HANDS RAISED, 139 YEARS",u:"muybridge_1887",v:"981,224,530",tags:["ENDURANCE","LOOPS","NO ENDING","3AM"],d:"The catalogue records the weight but not his name. Seventy-five pounds is a fact. He is not."},
+  cockatoo:{t:"BIRD LEAVING (SHORT)",u:"muybridge_1887",v:"334,908,111",tags:["LEAVING","BRIEF","LOOPS"],d:"Nine photographs of a departure."},
+  kiss:{t:"TWO WOMEN KISS, 1887, STILL KISSING",u:"plate_no_444",v:"12,441,900,073",tags:["ALONE TOGETHER","VERIFIED DEAD","HD","LOOPS"],d:"Plate 444."},
+  stairs:{t:"MAN CLIMBING THE SAME STAIR FOREVER",u:"muybridge_1887",v:"5,876,310,447",tags:["LOOPS","NO ENDING","3AM","BARELY MOVING"],d:"Four steps."},
+  smiths:{t:"TWO MEN HAMMERING, NOTHING ON THE ANVIL",u:"plate_no_377",v:"718,559,204",tags:["WORK","LOOPS","NO ENDING","AMATEUR (1887)"],d:"They strike in alternation."},
+  wash:{t:"WOMAN WASHING HER FACE, UNAWARE",u:"plate_no_413",v:"3,997,110,865",tags:["SOMEONE ELSE'S WINDOW","PRIVATE","LOOPS","SLOW"],d:"She pours, she bends, she rises with her face wet."}
+};
+
+const ORDER=["walk_man","kiss","leap","wrestle","stairs","basket","wash","smiths","stone","cockatoo"];
+const CATS=["ALL","LOOPS","LONGING","3AM","ALONE TOGETHER","ALMOST","NO ENDING","VERIFIED DEAD","BARELY MOVING","LEAVING"];
+
+const $ = s => document.querySelector(s);
+let activeCat = "ALL";
+
+function item(k){ const m=SPRITES[k]||{}; const c=COPY[k]; return {...m,...c,key:k}; }
+
+function buildGrid(){
+  const g=$("#grid"); g.innerHTML="";
+  ORDER.forEach(k=>{
+    const it=item(k);
+    if(activeCat!=="ALL" && !it.tags.includes(activeCat)) return;
+    const b=document.createElement("button");
+    b.className="card"; b.type="button";
+    b.innerHTML=`<div class="screen${it.empty?" empty":""}">
+        ${it.empty?"":`<img src="${it.img}" alt="${it.t}" loading="lazy">`}
+      </div>
+      <div class="ttl">${it.t}</div>
+      <div class="meta">${it.u} · ${it.v} views · 139 years ago</div>`;
+    b.addEventListener("click",()=>openPlayer(k));
+    g.appendChild(b);
+  });
+  const n=$("#rown");
+  if(n) n.textContent=g.children.length+" PLATES · SCROLL ↓";
+}
+
+function openPlayer(k){
+  const cur=item(k); $("#grid").classList.add("off"); $("#player").classList.add("on");
+  document.querySelector(".sect").classList.add("off");
+  
+  const rel=ORDER.filter(x=>x!==k && !COPY[x].empty).slice(0,4);
+  
+  $("#player").innerHTML=`
+    <button class="back" id="back">← ALL PLATES</button>
+    <div class="stage">
+      ${cur.empty?"":`<img src="${cur.img}" alt="${cur.t}">`}
+    </div>
+    <h2 class="pt">${cur.t}</h2>
+    <p class="pstats">${cur.u} · ${cur.v} views · uploaded 139 years ago</p>
+    <div class="acts">
+      <button class="mourn" id="mourn" aria-pressed="false">MOURN</button>
+      <button>♡ &nbsp;KEEP</button><button>† &nbsp;LET GO</button><button>⤓ &nbsp;REMEMBER</button>
+    </div>
+    <p class="desc">${cur.d}</p>
+    <div class="tags">${cur.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+    <div class="rel">RELATED PLATES</div>
+    <div id="rel" class="relrow"></div>`;
+
+  $("#back").onclick=()=>{
+    $("#player").classList.remove("on");
+    $("#grid").classList.remove("off");
+    document.querySelector(".sect").classList.remove("off");
+    window.scrollTo(0,0);
+  };
+  
+  const mb=$("#mourn"); mb.onclick=()=>mb.setAttribute("aria-pressed",mb.getAttribute("aria-pressed")==="false");
+
+  rel.forEach(rk=>{
+    const ri=item(rk), b=document.createElement("button"); b.className="card"; b.type="button";
+    b.innerHTML=`<div class="screen"><img src="${ri.img}" alt="${ri.t}" loading="lazy"></div>
+      <div class="ttl">${ri.t}</div><div class="meta">${ri.u} · ${ri.v} views</div>`;
+    b.onclick=()=>{openPlayer(rk);window.scrollTo(0,0);};
+    $("#rel").appendChild(b);
+  });
+}
+
+function adArt(){
+  const cv=document.querySelector("#adart"); if(!cv||!cv.getContext) return;
+  const box=cv.parentElement.getBoundingClientRect();
+  const W=Math.max(1,Math.round(box.width)), H=Math.max(1,Math.round(box.height));
+  cv.width=W; cv.height=H;
+  const q=cv.getContext("2d"); if(!q) return;
+  const im=new Image();
+  im.crossOrigin="Anonymous";
+  im.onload=()=>{
+    q.globalAlpha=0.15;
+    for(let k=0;k<15;k++){ q.drawImage(im,-W*0.14+(k-7)*4,H*0.05,W*1.30,H*0.95); }
+    q.globalAlpha=1; q.globalCompositeOperation="source-in";
+    const g=q.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,"#6d635a"); g.addColorStop(0.45,"#D9CFC4");
+    g.addColorStop(0.8,"#FFA31A"); g.addColorStop(1,"#8A7E74");
+    q.fillStyle=g; q.fillRect(0,0,W,H);
+  };
+  im.src=SPRITES.walk_man.img;
+}
+
+let leaving=false;
+function goHome(){
+  if(leaving)return; leaving=true;
+  const sh=document.createElement("div");
+  sh.style.cssText="position:fixed;inset:0;background:#000;opacity:0;z-index:99;transition:opacity .42s ease;pointer-events:none";
+  document.body.appendChild(sh);
+  requestAnimationFrame(()=>{sh.style.opacity="1";});
+  setTimeout(()=>{ try{ MORTAL.go("phone.html?door=bornhub"); }catch(_){} },460);
+}
+
+$("#home").onclick=goHome;
+$("#adkill").onclick=()=>{ const a=$("#adslot"); if(a) a.remove(); };
+try{ adArt(); }catch(_){}
+
+$("#enter").onclick=()=>{
+  $("#gate").classList.add("hidden");
+  document.body.classList.remove("gated");
+};
+$("#exit").onclick=goHome;
+$("#notice").onclick=e=>{
+  const b=$("#noticebody"), on=b.classList.toggle("on");
+  e.currentTarget.setAttribute("aria-expanded",String(on));
+};
+
+const nav=$("#cats");
+CATS.forEach(c=>{ const b=document.createElement("button"); b.textContent=c;
+  b.setAttribute("aria-pressed",String(c===activeCat));
+  b.onclick=()=>{
+    activeCat=c;nav.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x.textContent===c)));
+    $("#player").classList.remove("on");$("#grid").classList.remove("off");
+    document.querySelector(".sect").classList.remove("off");
+    buildGrid();
+  };
+  nav.appendChild(b); 
+});
+
+$("#creds").innerHTML=ORDER.filter(k=>SPRITES[k] && !SPRITES[k].empty).map(k=>
+  `<div style="margin-bottom:9px"><b>${SPRITES[k].plate}</b><br>${SPRITES[k].desc}<br>${SPRITES[k].lic}</div>`
+).join("");
+buildGrid();
+</script>
+</body>
+</html>

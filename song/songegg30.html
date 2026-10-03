@@ -1,0 +1,1607 @@
+<!doctype html>
+<!--
+  26 sep 2026 (the card) · THE MORTALITY CARD (version two) · this bench film is CUT
+  to THE ONE-PAGE LAW. it had none of it; the film itself is untouched.
+  · THE LINE: mortal.js and its two-line guard are now the first scripts in the head
+    (if mortal.js is knot beside the file, the guard stands in and nothing breaks).
+  · THE READS: the two reads of ?still now ask MORTAL.search, knot location.search.
+  · THE WAY BACK: it had none. a ‹ `the egg` is drawn top left, over the film, from
+    the first breath: an <a href> to egg.html?egg=globe (the globe egg, the choice
+    skipped), carried by mortal.js's anchor law. where it lands is 👁️'s, his to
+    overrule.
+  · found clean: no other door, no history, no #, no storage, no sound (so nothing to
+    quiet on apwnp:call), no countdown, no model call or key, nothing on <html>.
+  · KNOT YET LISTED: songegg30 is knot in mortal.js's CUT list, so a door INTO this
+    page would still push and spend the tab a page. nothing in the house opens it
+    today; before one does, the keeper adds `songegg30` to CUT and the two deploy
+    together.
+  · this is the egg, a room nobody is coming to: nobody is knot built in.
+  IF YOU EDIT THIS FILE: mortal.js stays first, reads are MORTAL.*, doors are
+  MORTAL.go, no history.* and no # writes, and the ‹ stays on the glass.
+-->
+<!--
+  song egg · the globe egg — the assembly film (songegg30.html)
+  25 sep 2026 (later): rebuilt for the earbud. the speaker, the amp, the atom lite and the one
+  solder joint are gone: the phone plays the song from the music app to one earbud lying inside
+  the shell, and a 1-inch esp32-c6 board is kept only to beat the red flame to the river's hearts.
+  26 sep 2026: his ask, `a material that is more see through like a small plexiglass disc or a
+  clear/translucent silicone … so that the light would show through into the inside shell of egg`,
+  the shell to fit over the globe as he built it, `more jagged edge` (his photograph). the cork is a
+  clear silicone disc; the glass is a little smaller (⌀ 40) and open wide; the egg cracks lower and
+  jagged, and its three lowest teeth rest on the glass's shoulder, over the disc; the flame's light
+  comes up into the shell and through its lower skin.
+  26 sep 2026 (later): his globe (`here is the glass globe that fits`: a round cloche 1.57 in across,
+  its mouth 0.97 in) and, asked, his ruling: a WHITE GOOSE EGG. the goose shell's opening rests on
+  the globe's shoulder; the disc (⌀ 36) lies on the globe's narrow mouth; the led's legs come up
+  inside the mouth and run flat out to the row; the battery is a 12 mm-wide 150 mAh cell.
+  how to use it: drop this one file into your netlify folder beside the other rooms and deploy as usual.
+  it needs nothing else; three.js r128 loads from cdnjs / jsdelivr. no modules. true #000.
+  ?still opens it paused (for stills); the film's own hand is window.SONGEGG (seek, cut, fit).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mortal.js — THE ONE-PAGE LAW. the first script this page runs: it keeps the
+     page's true address and wears the card's, so the tab can still close itself at
+     the end. after this line ask MORTAL.search / MORTAL.href / MORTAL.hash, never
+     location's; every door is MORTAL.go(url). IF IT IS KNOT BESIDE THIS FILE,
+     NOTHING BREAKS: the guard stands in. -->
+<script src="mortal.js"></script>
+<script>
+window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.search, hash:location.hash,
+  path:location.pathname, go:function(u){ location.href=u; } };
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Song Egg Assembly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #000;
+  --ink: #e9eef6;
+  --dim: #8f99a7;
+  --faint: #4e5766;
+  --line: #19202a;
+  --pulse: #a9c8ff;
+  --heart: #ff3b30;
+  --wr: #c8202f;
+  --wk: #1b1b1d;
+  --wy: #f0bf12;
+  --wu: #2f67cf;
+  --ww: #e6e6e3;
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.5 var(--serif); margin: 0; -webkit-font-smoothing: antialiased; }
+#app { box-sizing: border-box; height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 400px); column-gap: 24px; padding-inline: 16px; }
+#film { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding-block: 12px; }
+#stage { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; outline: none; }
+#nogl { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; color: var(--dim); text-align: center; }
+
+#mast { position: absolute; left: 0; top: 4px; right: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; pointer-events: none; }
+#mast .lft { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; }
+#back { pointer-events: auto; display: inline-block; font: 14px/1.2 var(--serif); letter-spacing: .02em; color: rgba(255,255,255,.8); text-decoration: none; padding: 4px 12px 6px 0; -webkit-tap-highlight-color: transparent; }
+#back:hover { color: var(--ink); }
+#mast .k { font: 600 11px/1.3 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+#mast .k b { color: var(--ink); font-weight: 600; }
+#toggles { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; pointer-events: auto; }
+.chipbtn { font: 500 12px/1 var(--mono); color: var(--dim); background: rgba(0,0,0,.55); border: 1px solid var(--line); border-radius: 999px; padding: 7px 11px; cursor: pointer; }
+.chipbtn[aria-pressed="true"] { color: var(--ink); border-color: #3a4556; background: rgba(30,40,56,.55); }
+.chipbtn:hover { color: var(--ink); }
+#follow { color: var(--pulse); border-color: #2b3a52; }
+
+#tags { position: absolute; inset: 0; pointer-events: none; }
+.tag { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .25s linear; will-change: transform; }
+.tag i { position: absolute; left: -3.5px; top: -3.5px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px rgba(0,0,0,.7); }
+.tag span { position: absolute; left: 9px; bottom: 6px; white-space: nowrap; font: 500 11px/1 var(--mono); color: var(--ink); background: rgba(0,0,0,.66); border: 1px solid rgba(233,238,246,.16); border-radius: 3px; padding: 4px 6px; }
+.tag.r i { background: var(--wr); } .tag.y i { background: var(--wy); } .tag.w i { background: var(--ww); } .tag.u i { background: var(--wu); }
+.tag.b i { background: #0d0d0e; box-shadow: 0 0 0 1px var(--dim), 0 0 0 3px rgba(0,0,0,.7); }
+.tag.h i { background: var(--heart); }
+
+#film { position: relative; }
+#cap { position: absolute; left: 0; right: 0; bottom: 64px; padding: 56px 0 10px; background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.78) 42%, #000); pointer-events: none; }
+#beatno { font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 0 0 6px; }
+#beatname { font: italic 24px/1.15 var(--serif); margin: 0 0 6px; text-wrap: balance; }
+#act { margin: 0; max-width: 62ch; font-size: 16px; line-height: 1.45; color: var(--ink); }
+#pins { margin: 8px 0 0; font: 500 12.5px/1.5 var(--mono); color: var(--pulse); white-space: pre-wrap; }
+
+#transport { display: flex; align-items: center; gap: 10px; padding-top: 10px; }
+.tbtn { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: #06080b; color: var(--ink); font: 20px/1 var(--serif); cursor: pointer; display: grid; place-items: center; }
+.tbtn:hover { border-color: #334052; }
+#play { width: 46px; height: 46px; border-color: #2b3a52; }
+#play::before { content: ""; width: 0; height: 0; border-left: 13px solid var(--ink); border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 4px; }
+#play[data-state="pause"]::before { width: 12px; height: 15px; border: 0; margin: 0; background: linear-gradient(to right, var(--ink) 0 4px, transparent 4px 8px, var(--ink) 8px 12px); }
+#scrubwrap { position: relative; flex: 1 1 auto; min-width: 0; height: 40px; display: flex; align-items: center; }
+#scrub { width: 100%; margin: 0; accent-color: var(--pulse); height: 22px; background: transparent; cursor: pointer; }
+#ticks { position: absolute; left: 0; right: 0; bottom: 3px; height: 5px; pointer-events: none; }
+#ticks span { position: absolute; bottom: 0; width: 1px; height: 5px; background: var(--faint); }
+#clock { flex: none; font: 500 12px/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; min-width: 78px; text-align: right; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--pulse); outline-offset: 2px; }
+
+#panel { min-width: 0; overflow-y: auto; padding-block: 18px 40px; border-left: 1px solid var(--line); padding-left: 24px; }
+#panel h1 { font: 400 28px/1.12 var(--serif); margin: 0 0 6px; text-wrap: balance; }
+#panel .sub { font: 500 11.5px/1.5 var(--mono); color: var(--dim); margin: 0 0 22px; letter-spacing: .02em; }
+#panel h2 { font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 30px 0 12px; }
+#steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+#steps button { width: 100%; display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: baseline; text-align: left; background: none; border: 0; border-radius: 4px; padding: 5px 6px; color: var(--dim); font: 16px/1.3 var(--serif); cursor: pointer; }
+#steps button .n { font: 500 11.5px/1 var(--mono); color: var(--faint); font-variant-numeric: tabular-nums; }
+#steps button:hover { color: var(--ink); background: #0a0d12; }
+#steps button[aria-current="step"] { color: var(--ink); background: #0d1320; }
+#steps button[aria-current="step"] .n { color: var(--pulse); }
+
+.wires { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; counter-reset: w; }
+.wires li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 0 8px; counter-increment: w; }
+.wires li::before { content: counter(w); font: 500 11.5px/1.6 var(--mono); color: var(--faint); }
+.wires .what { font: 16px/1.3 var(--serif); }
+.wires .spec { font: 400 11.5px/1.5 var(--mono); color: var(--dim); margin-top: 2px; }
+.wires .go { grid-column: 2; margin-top: 6px; display: flex; flex-wrap: wrap; gap: 5px 12px; font: 500 12px/1.5 var(--mono); color: var(--ink); }
+.go span { white-space: nowrap; }
+.c { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: -0.5px; }
+.c.r { background: var(--wr); } .c.y { background: var(--wy); } .c.w { background: var(--ww); } .c.u { background: var(--wu); } .c.b { background: var(--wk); box-shadow: inset 0 0 0 1px var(--dim); }
+.note { font-size: 15px; line-height: 1.5; color: var(--dim); margin: 14px 0 0; }
+.parts { width: 100%; border-collapse: collapse; font-size: 15px; }
+.parts td { padding: 7px 0; border-top: 1px solid var(--line); vertical-align: top; }
+.parts td + td { padding-left: 12px; font: 400 11.5px/1.5 var(--mono); color: var(--dim); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+.parts tr:first-child td { border-top: 0; }
+.list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.list li { font-size: 15px; line-height: 1.5; }
+.list li b { font-weight: 400; color: var(--pulse); font-family: var(--mono); font-size: 12.5px; margin-right: 4px; }
+.mono { font: 500 12.5px/1.6 var(--mono); }
+#foot { margin-top: 30px; font: 400 11.5px/1.6 var(--mono); color: var(--faint); }
+
+@media (max-width: 980px) {
+  #app { display: block; height: auto; }
+  #film { height: auto; }
+  #stage { height: clamp(340px, 96vw, 62svh); flex: none; }
+  #cap { position: static; padding: 12px 0 2px; background: none; }
+  #panel { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; margin-top: 18px; overflow: visible; }
+}
+@media (max-width: 520px) {
+  #beatname { font-size: 20px; }
+  #act { font-size: 15px; }
+  #mast .k { font-size: 10px; letter-spacing: .1em; }
+  #toggles { flex-wrap: nowrap; gap: 5px; }
+  .chipbtn { font-size: 11px; padding: 6px 9px; }
+  .tag span { font-size: 10px; }
+  #clock { min-width: 0; font-size: 11px; }
+  .go span { white-space: normal; }
+  .parts td + td { white-space: normal; }
+  .tbtn { width: 38px; height: 38px; }
+  #play { width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { .tag { transition: none; } }
+</style>
+</head>
+<body>
+
+
+<div id="app">
+  <section id="film" aria-label="assembly film">
+    <div id="stage">
+      <canvas id="gl" tabindex="0" aria-label="the globe song egg being put together, in 3d; drag to turn it"></canvas>
+      <div id="nogl" hidden>this film needs webgl. the wire list holds everything the film shows.</div>
+      <div id="tags" aria-hidden="true"></div>
+      <div id="mast">
+        <div class="lft">
+          <a id="back" href="egg.html?egg=globe">&#8249; the egg</a>
+          <div class="k"><b>song egg</b> · the globe egg</div>
+        </div>
+        <div id="toggles">
+          <button class="chipbtn" id="follow" type="button" hidden>follow the film</button>
+          <button class="chipbtn" id="cut" type="button" aria-pressed="false">see inside</button>
+          <button class="chipbtn" id="lab" type="button" aria-pressed="true">labels</button>
+        </div>
+      </div>
+    </div>
+    <div id="cap" aria-live="polite">
+      <p id="beatno">the kit</p>
+      <p id="beatname">the kit</p>
+      <p id="act">one egg’s worth of parts, and nothing to solder.</p>
+      <p id="pins"></p>
+    </div>
+    <div id="transport">
+      <button class="tbtn" id="prev" type="button" aria-label="previous step">‹</button>
+      <button class="tbtn" id="play" type="button" aria-label="play" data-state="play"></button>
+      <button class="tbtn" id="next" type="button" aria-label="next step">›</button>
+      <div id="scrubwrap">
+        <input id="scrub" type="range" min="0" max="860" step="1" value="0" aria-label="film position">
+        <div id="ticks"></div>
+      </div>
+      <span id="clock">0:00 / 1:26</span>
+    </div>
+  </section>
+
+  <aside id="panel">
+    <h1>the song egg, put together</h1>
+    <p class="sub">the globe egg · the song comes through an earbud · every part at its real size in mm · 26 sep 2026</p>
+
+    <h2>steps</h2>
+    <ol id="steps"></ol>
+
+    <h2>wires</h2>
+    <ol class="wires">
+      <li><div><div class="what">qwiic cable</div><div class="spec">sparkfun cab-14988 · 150 mm · jst-sh 4-pin → 4 female ends</div></div>
+        <div class="go"><span>board’s qwiic port →</span><span><i class="c y"></i>yellow onto the long leg (gpio 7)</span><span><i class="c b"></i>black onto the short leg (gnd)</span><span><i class="c r"></i><i class="c u"></i>red, blue taped beside them</span></div></li>
+      <li><div><div class="what">battery leads</div><div class="spec">already on the cell · jst-ph 2-pin</div></div>
+        <div class="go"><span>board’s battery socket:</span><span><i class="c r"></i>red → +</span><span><i class="c b"></i>black → −</span></div></li>
+      <li><div><div class="what">usb-c cable</div><div class="spec">any</div></div>
+        <div class="go"><span>into the board: once for the flame’s code, then to charge</span></div></li>
+    </ol>
+    <p class="note">no solder anywhere. the led’s legs plug straight into the cable’s ends, and the spare cable folds flat under the board, which keeps it level. the song never touches the board: it comes from the music app on the phone, over bluetooth, to the earbud. to charge, lift the shell: the bud goes home to its case, and a usb-c cable goes into the board.</p>
+
+    <h2>parts</h2>
+    <table class="parts">
+      <tr><td>white goose egg, cracked about 1.5 cm up from the round end</td><td>~82 × 57<br>kept piece ≈ 72 tall</td></tr>
+      <tr><td>one earbud that plays alone, and its case</td><td>any</td></tr>
+      <tr><td>sparkfun qwiic pocket dev board, esp32-c6 (dev-22925)</td><td>25.4 × 25.4</td></tr>
+      <tr><td>lipo 401230, 150 mAh, protected, jst-ph</td><td>12 × 33 × 4</td></tr>
+      <tr><td>red led, 5 mm diffused, resistor inside (5 v)</td><td>legs 27 / 25</td></tr>
+      <tr><td>qwiic cable, female jumper ends (sparkfun cab-14988)</td><td>150 mm</td></tr>
+      <tr><td>round glass cloche (his), mouth up</td><td>⌀ 40, mouth ⌀ 25, 39 tall</td></tr>
+      <tr><td>clear silicone sheet, 2 mm</td><td>disc ⌀ 36</td></tr>
+      <tr><td>black tape, a dot of black paint, a pin, a fine marker, scissors</td><td></td></tr>
+      <tr><td>once: a usb-c cable and a computer, for the flame’s code</td><td></td></tr>
+    </table>
+
+    <h2>changed from the 25 sep handoff</h2>
+    <ul class="list">
+      <li><b>⟶</b>the earbud carries the song. the phone plays it from the music app over bluetooth, and the bud lies inside the shell, so the speaker, the amp, the dac and the one solder joint are gone. the quantum chord leaves the egg with them: the egg sings the river now.</li>
+      <li><b>⟶</b>sparkfun’s 1-inch esp32-c6 board takes the atom lite’s place. it only beats the flame now, and it charges its own battery over usb-c, so the outside charger, the grove cable and the pigtail go too. its module side is a flat metal can the bud lies on, where the atom’s whole top is its button.</li>
+      <li><b>⟶</b>a white goose egg (26 sep, his ruling). over his globe, whose mouth is only 25 mm, the top of the glass rises into the shell; a hen’s egg, even a jumbo, then leaves too little room above the mouth for the stack. the goose shell leaves 9 mm or more everywhere.</li>
+      <li><b>⟶</b>a clear silicone disc instead of the metal lid (26 sep: it was cork). the led’s two legs pass through it, a metal lid would short them, and the flame’s light comes up through it into the shell.</li>
+      <li><b>⟶</b>the flame rides the qwiic cable: yellow (gpio 7) on the long leg, black (gnd) on the short. no jumper wires.</li>
+      <li><b>⟶</b>the shell fits over the glass, as he built it: cracked low, its opening (⌀ 39.5 inside) is a little narrower than the globe, so its three lowest teeth rest on the glass’s shoulder, 3 mm above its middle, and a little wider than the stack, so it goes down over it (0.6 mm to spare at the battery plug).</li>
+      <li><b>⟶</b>the globe’s mouth is 25 mm, so the led’s legs come up through the disc 8.3 mm from the middle, bend flat along the disc and rise into the cable ends at the old place; the battery is 12 mm wide (401230, 150 mAh, ~5 hours) so the legs pass beside it.</li>
+    </ul>
+
+    <h2>firmware follows</h2>
+    <ul class="list mono">
+      <li>gpio 7 carries the heartbeat: ledc pwm, high = lit, ~2.2 gamma</li>
+      <li>the beat is the 25 sep handoff’s: the river’s hearts, one at a time, the rise for a new gift, the hearts kept in flash</li>
+      <li>gpio 23 (the blue stat light) stays dark; the red power light wears the paint</li>
+      <li>wifi sleeps between the 90 s reads: about 30 mA, so roughly 8 hours a charge</li>
+    </ul>
+
+    <h2>check first</h2>
+    <ul class="list">
+      <li>the board’s two faces here are read off sparkfun’s photos: the module and usb-c on one side, the battery socket, the qwiic port and the buttons on the other. look at your own board before the first plug-in.</li>
+      <li>jst-ph polarity differs between sellers. the battery’s red wire must meet the board’s +. sparkfun’s own cells match.</li>
+      <li>set the goose shell over the globe before anything else: its lowest teeth should rest on the glass’s shoulder, the mouth inside the shell. crack a little lower if it slides down past the middle of the glass, a little higher if it sits up on the mouth.</li>
+      <li>the opening has to clear the stack as it comes down: 39 mm across at least, round the board’s corners and the battery plug.</li>
+      <li>clear silicone takes a fine marker, knot a pencil; a plexiglass disc works too (⌀ 36, 2 mm), its two holes melted with a hot pin.</li>
+      <li>dry-fit everything in the real shell before the first evening.</li>
+    </ul>
+
+    <p id="foot">the film’s flame beats a sample heart, knot a live one. sizes from maker drawings; the shell is his own fitted egg drawn at goose size.</p>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
+<script>
+/* song egg · the globe egg — the parts, true scale.
+   units: millimetres. y is up. the clear disc's top face is y = 0 (the disc frame).
+   three.js r128, classic script (no modules). builds SE.* on the page.
+   26 sep 2026: the cork is a clear silicone disc, so the flame's light reaches the inside of the
+   shell; the shell fits OVER the glass — its lowest teeth rest on the glass's shoulder, a little
+   under the rim — and the glass is a little smaller (⌀ 40, open wide); the crack is jagged. */
+var SE = (function () {
+  'use strict';
+  var HAS_DOM = (typeof document !== 'undefined');
+  var PI = Math.PI, TAU = PI * 2;
+  var V3 = THREE.Vector3;
+
+  /* ---------------------------------------------------------------- the egg
+     his own fitted profile (egg.html, 2 sep): r = W·√(1−v²)·(1−0.28v),
+     y = A·(v + 0.114(1−v²)), v = cos s, s running from the point (0) to the
+     round end (π). 26 sep (later), his ruling: a WHITE GOOSE EGG over his own
+     globe. his profile drawn at goose size, 82 × 57 mm (length ×1.44, width
+     ×1.32), shell 0.6. cracked low and jagged, about a centimetre up from the
+     round end: its three lowest teeth rest on the globe's shoulder, 3 mm above
+     the globe's middle, and the disc sits on the globe's mouth, inside it. */
+  var EGG = { A: 41.0, W: 27.5, k: 0.28, q: 0.114, T: 0.6, y0: 0 };
+  function rOfV(v) { var q = 1 - v * v; return q > 0 ? EGG.W * Math.sqrt(q) * (1 - EGG.k * v) : 0; }
+  function yOfV(v) { return EGG.A * (v + EGG.q * (1 - v * v)); }
+  function vOfY(ye) { var c = ye / EGG.A - EGG.q, d = 1 - 4 * EGG.q * c; return Math.max(-1, Math.min(1, (1 - Math.sqrt(Math.max(0, d))) / (2 * EGG.q))); }
+  function profO(s) { var v = Math.cos(s); return { r: rOfV(v), y: yOfV(v) + EGG.y0 }; }
+  function profN(s) {           // the outward normal, (r, y)
+    var e = 1e-4, a = profO(Math.max(0, s - e)), b = profO(Math.min(PI, s + e));
+    var dr = b.r - a.r, dy = b.y - a.y, l = Math.sqrt(dr * dr + dy * dy) || 1;
+    return { r: -dy / l, y: dr / l };
+  }
+  function profI(s) { var o = profO(s), n = profN(s); return { r: Math.max(0, o.r - EGG.T * n.r), y: o.y - EGG.T * n.y }; }
+  function sOfY(y) { return Math.acos(vOfY(y - EGG.y0)); }
+
+  /* his globe (26 sep, later: `here is the glass globe that fits` — a round cloche, 1.57 in across,
+     its open mouth 0.97 in): a ball ⌀ 40, 1.2 wall, a collar at the mouth ⌀ 24.6 outside, ~3.2 tall,
+     the whole 39 high. it stands mouth up; the clear disc lies on the collar (its top at −2). */
+  var DISC = { t: 2, sq: 50, R: 18 };
+  var GLOBE = { R: 20, wall: 1.2, collarR: 12.3, collarIn: 10.8, collarH: 3.2, lipTop: -DISC.t };
+  GLOBE.yc = GLOBE.lipTop - GLOBE.collarH - Math.sqrt(GLOBE.R * GLOBE.R - GLOBE.collarR * GLOBE.collarR);   // −21.0
+  GLOBE.foot = GLOBE.yc - GLOBE.R;                                                                      // −41.0
+  GLOBE.mouthR = GLOBE.collarIn; GLOBE.lipR = GLOBE.collarR;
+  /* where the shell stands: its lowest teeth, 19.75 inside, rest on the ball (a little narrower than the
+     ball, so it sits on the shoulder; a little wider than the stack, so it goes over it). that fixes
+     how high the egg's centre stands above the disc. */
+  var TEETH_R = 19.75, JAG_LOW;
+  (function () {
+    var lo = PI / 2, hi = PI, k;
+    for (k = 0; k < 60; k++) { var m = (lo + hi) / 2; if (profI(m).r > TEETH_R) lo = m; else hi = m; }
+    var sT = (lo + hi) / 2, cy = GLOBE.yc + Math.sqrt(GLOBE.R * GLOBE.R - TEETH_R * TEETH_R);
+    EGG.y0 = cy - profI(sT).y;
+    JAG_LOW = profO(sT).y;
+    GLOBE.contact = { r: TEETH_R, y: cy };
+  })();
+  EGG.tipY = EGG.A + EGG.y0;
+  EGG.baseY = -EGG.A + EGG.y0;
+
+  // the inside of the shell by height, for the fit
+  var INNER = [];
+  (function () { for (var i = 0; i <= 2400; i++) INNER.push(profI(PI * i / 2400)); })();
+  function shellInnerR(y) {
+    if (y >= INNER[0].y) return 0;
+    for (var i = 1; i < INNER.length; i++) {
+      if (INNER[i].y <= y) {
+        var a = INNER[i - 1], b = INNER[i], u = (y - a.y) / ((b.y - a.y) || 1);
+        return a.r + (b.r - a.r) * u;
+      }
+    }
+    return INNER[INNER.length - 1].r;
+  }
+  function shellOuterR(y) { return rOfV(vOfY(y - EGG.y0)); }
+
+  /* the crack line: the height of the broken rim above the disc, by angle (26 sep, his ask and his
+     photograph: `more jagged edge`). broken, knot sawn — straight runs between sharp corners, long teeth,
+     one deep bite at the front (+z) as in his picture, a fine saw of small chips on the higher runs.
+     the table is the hen's-egg line (−4.75 … +4.0); at goose size it stands on JAG_LOW, 1.25 taller:
+     three teeth come down to JAG_LOW, a third of the way round from each other, and rest on the glass. */
+  var JAG = [[0, -3.1], [8, -4.2], [15, -4.75], [22, -3.6], [30, -1.2], [36, -2.4], [44, -0.2], [52, -1.6], [60, 1.1], [66, 0.4],
+    [72, 2.6], [80, 3.2], [88, 4.0], [95, 2.1], [101, 3.4], [108, 1.2], [115, 0.2], [121, -1.9], [128, -3.5], [135, -4.75],
+    [142, -3.9], [150, -2.2], [157, -3.0], [165, -0.8], [172, -1.9], [180, -0.4], [188, -2.3], [196, -1.1], [204, -3.2], [212, -2.6],
+    [220, -4.1], [228, -3.3], [236, -1.4], [243, -2.9], [250, -4.75], [257, -3.7], [265, -2.0], [273, -2.8], [281, -0.9], [289, -2.4],
+    [297, -1.5], [305, -3.4], [313, -2.1], [321, -3.9], [329, -2.8], [337, -1.0], [345, -2.6], [352, -3.8], [360, -3.1]];
+  function tri(x) { var f = x - Math.floor(x); return Math.abs(f * 2 - 1) * 2 - 1; }
+  function jag(t) {
+    var d = ((t / PI * 180) % 360 + 360) % 360, i = 1;
+    while (i < JAG.length - 1 && JAG[i][0] < d) i++;
+    var a = JAG[i - 1], b = JAG[i], h = a[1] + (b[1] - a[1]) * (d - a[0]) / (b[0] - a[0]);
+    var chip = 0.28 * tri(t * 37 / TAU + 0.17) + 0.16 * tri(t * 83 / TAU + 0.5);   // the small chips, none on the three low teeth
+    return JAG_LOW + 1.25 * (h + 4.75 + chip * Math.max(0, Math.min(1, (h + 4.1) / 1.2)));
+  }
+
+  /* the candling (26 sep): with a clear disc the flame lights the inside of the shell, and the light
+     comes through its lower skin, brightest at the break and along the hairline cracks that run up
+     from it (his photograph). two emissive masks in the shell's own uv (u round, v up from the round
+     end), and the hairlines once more, faint, in its colour. */
+  function crackMaps() {
+    var W = 1024, H = 512, i, k;
+    function cy(yy) { return (1 - (yy - EGG.baseY) / (2 * EGG.A)) * H; }
+    function cx(th) { return th / TAU * W; }
+    var rnd = seeded(91), lines = [];
+    [0.34, 0.66, 0.95, 1.2, 1.44, 1.7, 1.98, 2.42, 3.05, 3.7, 4.35, 4.9, 5.5, 5.95].forEach(function (a0) {
+      var th = a0 + (rnd() - 0.5) * 0.1, yy = jag(th) + 0.05, top = yy + 5 + rnd() * 11, pts = [[th, yy]];
+      while (yy < top) {
+        yy += 1.3 + rnd() * 2.2; th += (rnd() - 0.5) * 4.6 / (shellOuterR(yy) || 12); pts.push([th, yy]);
+        if (rnd() < 0.2) {
+          var bt = th, by = yy, bp = [[bt, by]], n = 1 + (rnd() * 3 | 0), sgn = rnd() < 0.5 ? -1 : 1;
+          for (k = 0; k < n; k++) { by += 0.9 + rnd() * 1.8; bt += sgn * (1.1 + rnd() * 2.4) / (shellOuterR(by) || 12); bp.push([bt, by]); }
+          lines.push(bp);
+        }
+      }
+      lines.push(pts);
+    });
+    function strokeLines(x) {
+      lines.forEach(function (pl) {
+        [-W, 0, W].forEach(function (off) {
+          x.beginPath();
+          pl.forEach(function (p, j) { var X = cx(p[0]) + off, Y = cy(p[1]); if (j) x.lineTo(X, Y); else x.moveTo(X, Y); });
+          x.stroke();
+        });
+      });
+    }
+    function glow(len, a0, withLines) {
+      var c = document.createElement('canvas'); c.width = W; c.height = H;
+      var x = c.getContext('2d'); x.fillStyle = '#000'; x.fillRect(0, 0, W, H);
+      for (i = 0; i < W; i++) {
+        var yr = jag(TAU * (i + 0.5) / W), y0 = cy(yr), y1 = cy(yr + len), gr = x.createLinearGradient(0, y0, 0, y1);
+        gr.addColorStop(0, 'rgba(255,255,255,' + a0 + ')'); gr.addColorStop(0.35, 'rgba(255,255,255,' + (a0 * 0.45).toFixed(3) + ')'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+        x.fillStyle = gr; x.fillRect(i, y1, 1, y0 - y1 + 2);
+      }
+      if (withLines) {
+        x.lineJoin = 'round'; x.lineCap = 'round';
+        x.strokeStyle = 'rgba(255,255,255,0.22)'; x.lineWidth = 7; strokeLines(x);
+        x.strokeStyle = 'rgba(255,255,255,1)'; x.lineWidth = 2.2; strokeLines(x);
+      }
+      var t = new THREE.CanvasTexture(c); t.wrapS = THREE.RepeatWrapping; return t;
+    }
+    var hc = document.createElement('canvas'); hc.width = W; hc.height = H;
+    var hx = hc.getContext('2d'); hx.fillStyle = '#fff'; hx.fillRect(0, 0, W, H);
+    hx.lineJoin = 'round'; hx.lineCap = 'round'; hx.strokeStyle = 'rgba(120,104,88,0.62)'; hx.lineWidth = 1.5; strokeLines(hx);
+    var hair = new THREE.CanvasTexture(hc); hair.wrapS = THREE.RepeatWrapping; hair.encoding = THREE.sRGBEncoding;
+    return { glowOut: glow(12, 0.72, true), glowIn: glow(18, 1.0, false), hair: hair, lines: lines };
+  }
+
+  /* ---------------------------------------------------------------- helpers */
+  function mesh(geo, mat, p, r, name) {
+    var m = new THREE.Mesh(geo, mat);
+    if (p) m.position.set(p[0], p[1], p[2]);
+    if (r) m.rotation.set(r[0], r[1], r[2]);
+    if (name) m.name = name;
+    return m;
+  }
+  function box(w, h, d) { return new THREE.BoxGeometry(w, h, d); }
+  function rbox(w, h, d, r, seg) { return new THREE.RoundedBoxGeometry(w, h, d, seg || 2, r); }
+  function cyl(rt, rb, h, seg, open) { return new THREE.CylinderGeometry(rt, rb, h, seg || 24, 1, !!open); }
+  function roundRect(w, h, r) {
+    var s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+    s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+    s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+    s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+    return s;
+  }
+  // an anchor: z axis = the way a connector travels to seat; y axis = where a housing lies
+  function anchor(root, parent, name, pos, zAxis, yAxis) {
+    var o = new THREE.Object3D(); o.name = name;
+    var z = new V3().fromArray(zAxis).normalize();
+    var y = new V3().fromArray(yAxis || [0, 1, 0]);
+    if (Math.abs(y.dot(z)) > 0.99) y.set(1, 0, 0);
+    y.sub(z.clone().multiplyScalar(y.dot(z))).normalize();
+    var x = new V3().crossVectors(y, z);
+    o.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(x, y, z));
+    o.position.fromArray(pos);
+    parent.add(o);
+    root.userData.anchors = root.userData.anchors || {};
+    root.userData.anchors[name] = o;
+    return o;
+  }
+  function tex(wmm, hmm, ppm, draw) {
+    if (!HAS_DOM) return null;
+    var c = document.createElement('canvas');
+    c.width = Math.round(wmm * ppm); c.height = Math.round(hmm * ppm);
+    var g = c.getContext('2d');
+    g.scale(ppm, ppm);
+    draw(g, wmm, hmm);
+    var t = new THREE.CanvasTexture(c);
+    t.encoding = THREE.sRGBEncoding;
+    t.anisotropy = 4;
+    t.userData = { canvas: c, ppm: ppm, draw: draw };
+    return t;
+  }
+  function rr(g, x, y, w, h, r) {
+    g.beginPath(); g.moveTo(x + r, y); g.lineTo(x + w - r, y); g.quadraticCurveTo(x + w, y, x + w, y + r);
+    g.lineTo(x + w, y + h - r); g.quadraticCurveTo(x + w, y + h, x + w - r, y + h); g.lineTo(x + r, y + h);
+    g.quadraticCurveTo(x, y + h, x, y + h - r); g.lineTo(x, y + r); g.quadraticCurveTo(x, y, x + r, y); g.closePath();
+  }
+  function seeded(seed) { return function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }; }
+  var MONO = '"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace';
+
+  /* ---------------------------------------------------------------- materials */
+  function makeMaterials() {
+    var S = THREE.MeshStandardMaterial, P = THREE.MeshPhysicalMaterial;
+    var M = {};
+    var pores = null, cm = null;
+    if (HAS_DOM) {
+      var c = document.createElement('canvas'); c.width = c.height = 256;
+      var g = c.getContext('2d'), id = g.createImageData(256, 256), rnd = seeded(7);
+      for (var i = 0; i < 256 * 256; i++) { var v = 128 + (rnd() - 0.5) * 60; if (rnd() < 0.012) v -= 70; id.data[i * 4] = id.data[i * 4 + 1] = id.data[i * 4 + 2] = v; id.data[i * 4 + 3] = 255; }
+      g.putImageData(id, 0, 0);
+      pores = new THREE.CanvasTexture(c); pores.wrapS = pores.wrapT = THREE.RepeatWrapping; pores.repeat.set(10, 6);
+      cm = crackMaps();
+    }
+    M.hair = cm ? cm.hair : null;    // the hairline cracks, drawn onto the skin once the egg breaks
+    M.shellOut = new S({ color: 0xf3efe7, roughness: 0.8, metalness: 0, bumpMap: pores, bumpScale: 0.06,
+      emissive: 0xff3a1c, emissiveMap: cm ? cm.glowOut : null, emissiveIntensity: 0 });
+    M.shellIn = new S({ color: 0xf7f3eb, roughness: 0.62, emissive: 0xff3a1c, emissiveMap: cm ? cm.glowIn : null, emissiveIntensity: 0 });
+    M.shellRim = new S({ color: 0xe6dfd2, roughness: 0.95, emissive: 0xff4a24, emissiveIntensity: 0 });
+    M.crack = new S({ color: 0x3a342c, roughness: 1 });
+    M.yolk = new P({ color: 0xe0780a, roughness: 0.32, clearcoat: 0.45, clearcoatRoughness: 0.12, envMapIntensity: 0.6 });
+    M.steel = new S({ color: 0xc6c9ce, metalness: 1, roughness: 0.3 });
+    M.steelDark = new S({ color: 0x8e9298, metalness: 1, roughness: 0.42 });
+    M.hole = new S({ color: 0x040404, roughness: 1 });
+    M.gold = new S({ color: 0xd8b25c, metalness: 1, roughness: 0.28 });
+    M.copper = new S({ color: 0xc87b4a, metalness: 1, roughness: 0.3 });
+    M.cream = new S({ color: 0xece5d4, roughness: 0.5 });
+    M.jst = new S({ color: 0x2c2c30, roughness: 0.45 });
+    M.chip = new S({ color: 0x141414, roughness: 0.45 });
+    M.capTan = new S({ color: 0xb69a6d, roughness: 0.5 });
+    M.pcbEdge = new S({ color: 0x5e1a1c, roughness: 0.7 });
+    M.modPcb = new S({ color: 0x1b2029, roughness: 0.6 });
+    M.pouch = new S({ color: 0xc5c9cf, metalness: 0.7, roughness: 0.34 });
+    M.kapton = new S({ color: 0xcf8d1d, roughness: 0.28, metalness: 0.05 });
+    M.dupont = new S({ color: 0x161616, roughness: 0.45 });
+    M.ledRed = new S({ color: 0xa3131b, roughness: 0.42, emissive: 0xff2a14, emissiveIntensity: 0 });
+    M.ledLeg = new S({ color: 0xd9dbe0, metalness: 1, roughness: 0.25 });
+    M.pwrLed = new S({ color: 0x8a1a18, roughness: 0.3, emissive: 0xff2a14, emissiveIntensity: 0 });
+    M.chgLed = new S({ color: 0x8a7a2a, roughness: 0.3 });
+    M.statLed = new S({ color: 0x27406e, roughness: 0.3 });
+    M.btn = new S({ color: 0xb9bdc3, metalness: 0.8, roughness: 0.35 });
+    M.btnCap = new S({ color: 0x1d1d20, roughness: 0.6 });
+    M.marker = new S({ color: 0x0c0d0f, roughness: 0.62 });
+    M.tape = new S({ color: 0x0b0b0c, roughness: 0.42 });
+    M.paint = new S({ color: 0x070707, roughness: 0.25 });
+    M.plug = new S({ color: 0x151517, roughness: 0.5 });
+    M.bud = new P({ color: 0xf5f5f2, roughness: 0.26, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.1, envMapIntensity: 1.0 });
+    M.grille = new S({ color: 0x2b2b2e, roughness: 0.9, metalness: 0.2 });
+    M.mic = new P({ color: 0x8a8c90, metalness: 1, roughness: 0.3 });
+    M.kase = new P({ color: 0xf1f1ec, roughness: 0.28, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.12, envMapIntensity: 1.0 });
+    M.tray = new S({ color: 0xe8e8e4, roughness: 0.8 });
+    M.pinHead = new P({ color: 0xf2efe8, roughness: 0.2, clearcoat: 1 });
+    M.glass = new P({ color: 0xe6eef6, metalness: 0, roughness: 0.04, transparent: true, opacity: 0.12,
+      depthWrite: false, side: THREE.DoubleSide, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.7 });
+    M.glassGlow = { value: 0 };
+    M.glass.onBeforeCompile = function (sh) {
+      sh.uniforms.seGlow = M.glassGlow;
+      sh.fragmentShader = 'uniform float seGlow;\n' + sh.fragmentShader.replace('#include <dithering_fragment>',
+        '#include <dithering_fragment>\n float seFr = pow(1.0 - abs(dot(normalize(vViewPosition), normal)), 2.6);\n gl_FragColor.a = clamp(gl_FragColor.a + seFr * 0.62, 0.0, 1.0);\n gl_FragColor.rgb += vec3(1.0, 0.16, 0.08) * seGlow * (0.18 + 0.9 * seFr);');
+    };
+    M.wire = {};
+    var WC = { red: 0xc41a2c, black: 0x1b1b1d, yellow: 0xf0bf12, blue: 0x2f67cf, white: 0xe6e6e3, usb: 0x111113 };
+    Object.keys(WC).forEach(function (k) { M.wire[k] = new S({ color: WC[k], roughness: (k === 'black' || k === 'usb') ? 0.35 : 0.45 }); });
+    M.all = [];
+    Object.keys(M).forEach(function (k) { if (M[k] && M[k].isMaterial) M.all.push(M[k]); });
+    Object.keys(M.wire).forEach(function (k) { M.all.push(M.wire[k]); });
+    return M;
+  }
+
+  /* ---------------------------------------------------------------- the shell pieces */
+  function buildShellPiece(which, M, J, I) {
+    J = J || 360; I = I || 60;
+    var top = which === 'top';
+    var pos = [], nor = [], uv = [], idx = [];
+    function grid(inner) {
+      var base = pos.length / 3;
+      for (var j = 0; j <= J; j++) {
+        var th = TAU * j / J, c = Math.cos(th), sn = Math.sin(th);
+        var sr = sOfY(jag(th));
+        for (var i = 0; i <= I; i++) {
+          var u = i / I, s = top ? sr * u : sr + (PI - sr) * u;   // the kept piece: point → rim; the bottom: rim → round end
+          var p = inner ? profI(s) : profO(s), n = profN(s), sg = inner ? -1 : 1;
+          pos.push(p.r * c, p.y, p.r * sn);
+          nor.push(sg * n.r * c, sg * n.y, sg * n.r * sn);
+          uv.push(j / J, (p.y - EGG.baseY) / (2 * EGG.A));
+        }
+      }
+      for (j = 0; j < J; j++) for (var k = 0; k < I; k++) {
+        var a = base + j * (I + 1) + k, b = a + 1, cc = a + (I + 1), d = cc + 1;
+        if (!inner) idx.push(a, cc, b, cc, d, b); else idx.push(a, b, cc, cc, b, d);
+      }
+    }
+    grid(false); var nOut = idx.length;
+    grid(true); var nIn = idx.length - nOut;
+    // the broken edge
+    var base = pos.length / 3;
+    for (var j = 0; j <= J; j++) {
+      var th = TAU * j / J, c = Math.cos(th), sn = Math.sin(th), sr = sOfY(jag(th));
+      var po = profO(sr), pi = profI(sr);
+      pos.push(po.r * c, po.y, po.r * sn, pi.r * c, pi.y, pi.r * sn);
+      var ny = top ? -1 : 1;
+      nor.push(0, ny, 0, 0, ny, 0);
+      uv.push(j / J, 0, j / J, 1);
+    }
+    for (j = 0; j < J; j++) {
+      var o0 = base + j * 2, n0 = o0 + 1, o1 = o0 + 2, n1 = o0 + 3;
+      if (top) idx.push(o0, o1, n0, n0, o1, n1); else idx.push(o0, n0, o1, n0, n1, o1);
+    }
+    var nRim = idx.length - nOut - nIn;
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    geo.setIndex(idx);
+    geo.addGroup(0, nOut, 0); geo.addGroup(nOut, nIn, 1); geo.addGroup(nOut + nIn, nRim, 2);
+    var m = new THREE.Mesh(geo, [M.shellOut, M.shellIn, M.shellRim]);
+    m.name = top ? 'shell' : 'shell-bottom';
+    var g = new THREE.Group(); g.name = m.name; g.add(m);
+    g.userData.shellMesh = m;
+    anchor(g, g, 'tag', [0, EGG.tipY, 0], [0, 1, 0]);
+    return g;
+  }
+  function crackLine(M) {
+    var pts = [];
+    for (var j = 0; j < 720; j++) { var th = TAU * j / 720, p = profO(sOfY(jag(th))); pts.push(new V3((p.r + 0.02) * Math.cos(th), p.y, (p.r + 0.02) * Math.sin(th))); }
+    var curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.1);
+    var m = new THREE.Mesh(new THREE.TubeGeometry(curve, 1440, 0.16, 5, true), M.crack.clone());
+    m.material.transparent = true; m.material.opacity = 0;
+    m.name = 'crack';
+    return m;
+  }
+  function buildYolk(M) {
+    var g = new THREE.Group(); g.name = 'yolk';
+    var y = mesh(new THREE.SphereGeometry(11, 40, 28), M.yolk, [0, 0, 0]); y.scale.set(1, 0.8, 1);
+    g.add(y);
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- the clear disc and the glass (26 sep)
+     his ask: `a material that is more see through like a small plexiglass disc or a clear/translucent
+     silicone … so that the light would show through into the inside shell of egg`, and the shell to
+     fit OVER the globe, as he built it. so: a clear silicone sheet, 2 mm (cut with scissors, pricked
+     with a pin); the glass is a little smaller than the egg and open wide; the shell's three lowest
+     teeth rest on the glass's shoulder, 2.75 mm under its rim; the disc sits on the rim, inside the
+     shell, carrying the stack exactly where the cork did. */
+  var PINHOLES = { a: [8.3, -1.27], c: [8.3, 1.27] };   // x, z: inside the globe's mouth. long leg (a) on −z, short leg (c) on +z
+  function silMat(base) {   // clear silicone: a satin clear, its edges bright; it takes the flame's red
+    var m = new THREE.MeshPhysicalMaterial({ color: 0xf4f8fb, metalness: 0, roughness: 0.2, transparent: true, opacity: base,
+      depthWrite: false, side: THREE.DoubleSide, clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 1.5 });
+    m.userData.base = base; m.userData.glow = { value: 0 };
+    m.onBeforeCompile = function (sh) {
+      sh.uniforms.seGlow = m.userData.glow;
+      sh.fragmentShader = 'uniform float seGlow;\n' + sh.fragmentShader.replace('#include <dithering_fragment>',
+        '#include <dithering_fragment>\n float seFr = pow(1.0 - abs(dot(normalize(vViewPosition), normal)), 3.0);\n gl_FragColor.a = clamp(gl_FragColor.a + seFr * 0.55 * opacity / 0.12 + seGlow * 0.2, 0.0, 1.0);\n gl_FragColor.rgb += vec3(1.0, 0.2, 0.1) * seGlow * (0.3 + 0.8 * seFr) + vec3(0.85, 0.9, 0.95) * seFr * 0.35;');
+    };
+    return m;
+  }
+  function buildSheet(M) {   // the sheet as it comes, 50 × 50; its top face carries the traced line
+    var g = new THREE.Group(); g.name = 'sheet';
+    var geo = new THREE.ExtrudeGeometry(roundRect(DISC.sq, DISC.sq, 2.5), { depth: DISC.t, bevelEnabled: false, curveSegments: 6 });
+    geo.rotateX(-PI / 2); geo.translate(0, -DISC.t, 0);
+    var sm = silMat(0.2);
+    g.add(mesh(geo, sm, null, null, 'slab'));
+    var face = tex(DISC.sq, DISC.sq, 10, function (c, w, h) { drawSheetFace(c, w, h, 0); });
+    var fm = new THREE.MeshBasicMaterial({ map: face, transparent: true, depthWrite: false, color: 0xffffff });
+    fm.userData.base = 1;
+    g.add(mesh(new THREE.PlaneGeometry(DISC.sq - 0.2, DISC.sq - 0.2), fm, [0, 0.03, 0], [-PI / 2, 0, 0], 'face'));
+    g.userData.mats = [sm, fm]; g.userData.traced = -1;
+    g.userData.trace = function (k) {   // 0..1: how far round the marker has gone
+      k = Math.round(Math.max(0, Math.min(1, k)) * 60) / 60;
+      if (!face || k === g.userData.traced) return;
+      g.userData.traced = k;
+      var cv = face.userData.canvas, cx = cv.getContext('2d');
+      cx.setTransform(1, 0, 0, 1, 0, 0); cx.scale(face.userData.ppm, face.userData.ppm);
+      drawSheetFace(cx, DISC.sq, DISC.sq, k);
+      face.needsUpdate = true;
+    };
+    anchor(g, g, 'tag', [0, 0, 0], [0, 1, 0]);
+    return g;
+  }
+  function drawSheetFace(c, w, h, k) {
+    c.clearRect(0, 0, w, h);
+    if (k > 0) {   // the marker draws the circle, 36 across
+      c.strokeStyle = 'rgba(22,22,26,0.9)'; c.lineWidth = 0.36; c.lineJoin = 'round'; c.lineCap = 'round';
+      c.beginPath(); c.arc(w / 2, h / 2, DISC.R, 0.2, 0.2 + TAU * k); c.stroke();
+    }
+  }
+  function buildDisc(M) {
+    var g = new THREE.Group(); g.name = 'disc';
+    var sm = silMat(0.2);
+    g.add(mesh(cyl(DISC.R, DISC.R, DISC.t, 128), sm, [0, -DISC.t / 2, 0], null, 'disc'));
+    [PINHOLES.a, PINHOLES.c].forEach(function (h) {
+      var a = mesh(new THREE.RingGeometry(0.16, 0.34, 12), M.hole, [h[0], 0.012, h[1]], [-PI / 2, 0, 0], 'pinhole');
+      var b = mesh(new THREE.RingGeometry(0.16, 0.34, 12), M.hole, [h[0], -DISC.t - 0.012, h[1]], [PI / 2, 0, 0], 'pinhole');
+      a.visible = b.visible = false; g.add(a); g.add(b);
+    });
+    g.userData.mats = [sm];
+    anchor(g, g, 'tag', [0, 0, 0], [0, 1, 0]);
+    return g;
+  }
+  function buildGlobe(M) {   // his cloche, mouth up: local, the collar's top at y = −2, the foot at GLOBE.foot
+    var g = new THREE.Group(); g.name = 'globe';
+    var R = GLOBE.R, Ri = R - GLOBE.wall, yc = GLOBE.yc, ly = GLOBE.lipTop, cR = GLOBE.collarR, cI = GLOBE.collarIn, k, pts = [];
+    var hO = Math.sqrt(R * R - cR * cR), hI = Math.sqrt(Ri * Ri - cI * cI);
+    pts.push(new THREE.Vector2(0.01, yc - R));
+    var f1 = Math.acos(hO / R);
+    for (k = 0; k <= 60; k++) { var f = PI - (PI - f1) * k / 60; pts.push(new THREE.Vector2(Math.max(0.01, R * Math.sin(f)), yc + R * Math.cos(f))); }
+    pts.push(new THREE.Vector2(cR, ly - 0.35)); pts.push(new THREE.Vector2(cR - 0.3, ly)); pts.push(new THREE.Vector2(cI + 0.3, ly)); pts.push(new THREE.Vector2(cI, ly - 0.35));
+    pts.push(new THREE.Vector2(cI, yc + hI));
+    var g1 = Math.acos(hI / Ri);
+    for (k = 0; k <= 60; k++) { var hh = g1 + (PI - g1) * k / 60; pts.push(new THREE.Vector2(Math.max(0.01, Ri * Math.sin(hh)), yc + Ri * Math.cos(hh))); }
+    g.add(mesh(new THREE.LatheGeometry(pts, 128), M.glass, null, null, 'glass'));
+    anchor(g, g, 'tag', [R * 0.72, yc - 5, R * 0.6], [0, 1, 0]);
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- red 5 mm led, diffused, resistor inside
+     local: where the legs leave the flange = origin, dome points −y, legs go +y.
+     long leg (anode) at x = −1.27, short leg (cathode) at x = +1.27 on the flat side. */
+  var LEG = { a: 27, c: 25 };
+  function buildLed(M) {
+    var g = new THREE.Group(); g.name = 'led';
+    var fl = new THREE.CylinderGeometry(2.9, 2.9, 1.0, 36);
+    var p = fl.attributes.position;
+    for (var i = 0; i < p.count; i++) if (p.getX(i) > 2.45) p.setX(i, 2.45);
+    fl.computeVertexNormals();
+    g.add(mesh(fl, M.ledRed, [0, -0.5, 0]));
+    g.add(mesh(cyl(2.5, 2.5, 4.7, 36), M.ledRed, [0, -1.0 - 2.35, 0]));
+    var dome = new THREE.SphereGeometry(2.5, 36, 18, 0, TAU, PI / 2, PI / 2);
+    g.add(mesh(dome, M.ledRed, [0, -5.7, 0]));
+    anchor(g, g, 'glow', [0, -4.2, 0], [0, -1, 0]);
+    g.userData.legLen = LEG;
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- the board: sparkfun qwiic pocket dev board, esp32-c6 (dev-22925)
+     1.00 × 1.00 in, 1.6 mm. two faces:
+       the MODULE side (+y): the esp32-c6-mini-1, its antenna at the north edge (−z); usb-c at the south edge (+z).
+       the CONNECTOR side (−y): the 2-pin jst-ph battery socket at the north edge (side entry), the qwiic
+       (jst-sh 4-pin) at the south edge, boot and rst buttons, the pwr (red), chg (yellow) and stat (blue) leds.
+     positions read off sparkfun's photos and dimension drawing (v1.0); within a millimetre or so.
+     local: the pcb's centre is the origin. */
+  var BOARD = { w: 25.4, t: 1.6, jst: { w: 7.9, h: 4.8, d: 7.3 }, sh: { w: 6.0, h: 2.95, d: 4.3 }, usb: { w: 8.94, h: 3.26, d: 7.35 }, mod: { w: 13.2, h: 2.4, d: 16.1 } };
+  var PTH_W = ['GND', '3V3', 'IO2', 'IO3', 'IO4', 'IO5'], PTH_E = ['VB', 'VU', 'IO16', 'IO17', 'IO18', 'IO19'];
+  function buildBoard(M) {
+    var g = new THREE.Group(); g.name = 'board';
+    var W = BOARD.w, H = BOARD.t, i;
+    var pg = new THREE.ExtrudeGeometry(roundRect(W, W, 0.8), { depth: H, bevelEnabled: false, curveSegments: 4 });
+    pg.rotateX(-PI / 2); pg.translate(0, -H / 2, 0);
+    g.add(mesh(pg, [M.pcbEdge, M.pcbEdge], null, null, 'pcb'));
+    function holes(c, w, h, X, Z, mirror) {
+      c.fillStyle = '#e9e2d6';
+      [[-9.9, -9.9], [9.9, -9.9], [-9.9, 9.9], [9.9, 9.9]].forEach(function (p) { c.beginPath(); c.arc(X(p[0]), Z(p[1]), 1.75, 0, TAU); c.fill(); });
+      c.fillStyle = '#1a0d0d';
+      [[-9.9, -9.9], [9.9, -9.9], [-9.9, 9.9], [9.9, 9.9]].forEach(function (p) { c.beginPath(); c.arc(X(p[0]), Z(p[1]), 1.55, 0, TAU); c.fill(); });
+      for (var k = 0; k < 6; k++) {
+        var z = -6.35 + 2.54 * k;
+        [-11.43, 11.43].forEach(function (x) {
+          c.fillStyle = '#d2ad57'; c.beginPath(); c.arc(X(x), Z(z), 0.8, 0, TAU); c.fill();
+          c.fillStyle = '#140808'; c.beginPath(); c.arc(X(x), Z(z), 0.46, 0, TAU); c.fill();
+        });
+      }
+    }
+    // the module side, seen from above, north (−z) up
+    var topT = tex(W, W, 40, function (c, w, h) {
+      function X(x) { return x + w / 2; } function Z(z) { return z + h / 2; }
+      c.fillStyle = '#b3262c'; rr(c, 0, 0, w, h, 0.8); c.fill();
+      c.strokeStyle = 'rgba(120,14,20,0.55)'; c.lineWidth = 0.18;
+      for (var k = 0; k < 9; k++) { c.beginPath(); c.moveTo(X(-8 + 2 * k), Z(4.5)); c.lineTo(X(-8 + 2 * k + 1.5), Z(11)); c.stroke(); }
+      holes(c, w, h, X, Z);
+      c.fillStyle = '#f5efe6'; c.font = '600 1.05px ' + MONO; c.textBaseline = 'middle';
+      c.textAlign = 'left'; PTH_W.forEach(function (n, k) { c.fillText(n, X(-10.3), Z(-6.35 + 2.54 * k)); });
+      c.textAlign = 'right'; PTH_E.forEach(function (n, k) { c.fillText(n, X(10.3), Z(-6.35 + 2.54 * k)); });
+      c.font = '700 1.2px ' + MONO; c.textAlign = 'center';
+      c.fillText('Qwiic Dev', X(-7.6), Z(8.2)); c.fillText('ESP32-C6', X(7.6), Z(8.2));
+    });
+    var topM = new THREE.MeshStandardMaterial({ map: topT, color: topT ? 0xffffff : 0xb3262c, roughness: 0.5 });
+    g.add(mesh(new THREE.PlaneGeometry(W - 0.05, W - 0.05), topM, [0, H / 2 + 0.01, 0], [-PI / 2, 0, 0], 'silkTop'));
+    // the connector side, seen from below: the plane faces −y; its image is the board seen from beneath
+    var botT = tex(W, W, 40, function (c, w, h) {
+      function X(x) { return w / 2 - x; } function Z(z) { return z + h / 2; }   // mirrored: seen from below
+      c.fillStyle = '#b3262c'; rr(c, 0, 0, w, h, 0.8); c.fill();
+      holes(c, w, h, X, Z);
+      c.fillStyle = '#f5efe6'; c.font = '600 1.05px ' + MONO; c.textBaseline = 'middle';
+      c.textAlign = 'right'; PTH_W.forEach(function (n, k) { c.fillText(n === '3V3' ? 'V3' : n.replace('IO', ''), X(-10.3), Z(-6.35 + 2.54 * k)); });
+      c.textAlign = 'left'; PTH_E.forEach(function (n, k) { c.fillText(n.replace('IO', ''), X(10.3), Z(-6.35 + 2.54 * k)); });
+      c.textAlign = 'center'; c.font = '700 1.0px ' + MONO;
+      c.fillText('BOOT', X(6.4), Z(1.9)); c.fillText('RST', X(-6.4), Z(1.9)); c.fillText('QWIIC', X(0), Z(7.0));
+      c.fillText('PWR', X(-6.6), Z(12.0)); c.fillText('IO23', X(6.9), Z(11.9)); c.fillText('CHG', X(7.2), Z(-3.6));
+      c.font = '700 1.5px ' + MONO; c.fillText('−', X(-1.1), Z(-3.3)); c.fillText('+', X(1.2), Z(-3.3));
+      c.strokeStyle = '#f5efe6'; c.lineWidth = 0.12;
+      [[-3.6, 9.2], [3.6, 9.2], [0, 0.6], [5.6, -6.2]].forEach(function (p) { rr(c, X(p[0]) - 1.2, Z(p[1]) - 0.7, 2.4, 1.4, 0.5); c.stroke(); });
+      for (var k = 0; k < 11; k++) { c.fillStyle = '#2a2a2a'; c.fillRect(X(-6 + 1.15 * k) - 0.35, Z(-1.3) - 0.6, 0.7, 1.2); c.fillStyle = '#c9c9c4'; c.fillRect(X(-6 + 1.15 * k) - 0.35, Z(-1.3) - 0.6, 0.7, 0.2); c.fillRect(X(-6 + 1.15 * k) - 0.35, Z(-1.3) + 0.4, 0.7, 0.2); }
+    });
+    var botM = new THREE.MeshStandardMaterial({ map: botT, color: botT ? 0xffffff : 0xb3262c, roughness: 0.5 });
+    g.add(mesh(new THREE.PlaneGeometry(W - 0.05, W - 0.05), botM, [0, -H / 2 - 0.01, 0], [PI / 2, 0, 0], 'silkBot'));
+
+    // module side (+y): the esp32-c6-mini-1 — its antenna end reaches the north edge
+    var mz0 = -12.7, mz1 = 3.4, mzc = (mz0 + mz1) / 2, mw = BOARD.mod.w;
+    g.add(mesh(box(mw, 0.8, mz1 - mz0), M.modPcb, [0.15, H / 2 + 0.4, mzc], null, 'modpcb'));
+    var shT = tex(mw - 0.4, 10.4, 30, function (c, w, h) {
+      c.fillStyle = '#c9ccd1'; c.fillRect(0, 0, w, h);
+      c.fillStyle = 'rgba(90,96,104,0.9)'; c.font = '600 0.95px ' + MONO; c.textAlign = 'left'; c.textBaseline = 'middle';
+      c.fillText('ESPRESSIF', 1.0, 1.4); c.font = '500 0.8px ' + MONO; c.fillText('ESP32-C6-MINI-1', 1.0, 2.6);
+      c.fillText('FCC ID: 2AC7Z', 1.0, 3.8); c.fillText('CMIIT ID', 1.0, 4.9);
+      c.fillStyle = 'rgba(70,74,80,0.85)'; for (var k = 0; k < 36; k++) { if ((k * 7919) % 3) c.fillRect(8.4 + (k % 6) * 0.55, 6.2 + Math.floor(k / 6) * 0.55, 0.5, 0.5); }
+    });
+    var shM = new THREE.MeshStandardMaterial({ map: shT, color: shT ? 0xffffff : 0xc9ccd1, metalness: 0.9, roughness: 0.38 });
+    var can = new THREE.Group();
+    can.add(mesh(box(mw - 0.4, 1.6, 10.4), M.steel, [0, 0, 0]));
+    can.add(mesh(new THREE.PlaneGeometry(mw - 0.42, 10.38), shM, [0, 0.81, 0], [-PI / 2, 0, 0]));
+    can.position.set(0.15, H / 2 + 0.8 + 0.8, mz1 - 0.3 - 5.2); g.add(can);
+    // the antenna's meander, drawn onto the bare module pcb
+    for (i = 0; i < 6; i++) g.add(mesh(box(0.25, 0.05, 3.0), M.gold, [0.15 - 4.5 + i * 1.8, H / 2 + 0.83, -10.6]));
+    // usb-c, top-mount, its mouth at the south edge
+    var ux = 0.25, uz = 12.9 - BOARD.usb.d / 2;
+    g.add(mesh(rbox(BOARD.usb.w, BOARD.usb.h, BOARD.usb.d, 1.25, 3), M.steel, [ux, H / 2 + BOARD.usb.h / 2, uz], null, 'usb'));
+    g.add(mesh(rbox(7.0, 1.7, 0.3, 0.6, 2), M.hole, [ux, H / 2 + BOARD.usb.h / 2, 12.95]));
+    g.add(mesh(box(5.6, 0.5, 0.1), M.chip, [ux, H / 2 + BOARD.usb.h / 2, 12.98]));
+
+    // connector side (−y)
+    var by = -H / 2;
+    // the battery socket: jst-ph, 2-pin, side entry, mouth at the north edge
+    var J = BOARD.jst, jz = -12.7 + J.d / 2;
+    g.add(mesh(box(J.w - 1.6, J.h, J.d), M.jst, [0, by - J.h / 2, jz], null, 'jst'));
+    g.add(mesh(box(0.7, J.h * 0.7, 2.2), M.steelDark, [-(J.w / 2 - 0.35), by - J.h * 0.35, -11.4]));
+    g.add(mesh(box(0.7, J.h * 0.7, 2.2), M.steelDark, [(J.w / 2 - 0.35), by - J.h * 0.35, -11.4]));
+    [-1, 1].forEach(function (x) {
+      g.add(mesh(box(1.1, 3.2, 0.2), M.hole, [x, by - J.h / 2, -12.72]));                   // the two cavities in its mouth
+      g.add(mesh(box(0.9, 0.2, 2.6), M.hole, [x, by - J.h - 0.01, jz + 0.6]));             // the windows under it
+      g.add(mesh(box(0.6, 0.25, 1.4), M.steel, [x, by - 0.12, -4.6]));                      // the solder tails
+    });
+    // the qwiic socket: jst-sh, 4-pin, side entry, mouth at the south edge
+    var Q = BOARD.sh, qz = 12.7 - Q.d / 2;
+    g.add(mesh(box(Q.w, Q.h, Q.d), M.jst, [0, by - Q.h / 2, qz], null, 'qwiicSock'));
+    g.add(mesh(box(4.4, 1.5, 0.2), M.hole, [0, by - Q.h / 2, 12.72]));
+    g.add(mesh(box(0.7, Q.h * 0.8, 1.6), M.steelDark, [-(Q.w / 2 + 0.4), by - Q.h * 0.4, 11.2]));
+    g.add(mesh(box(0.7, Q.h * 0.8, 1.6), M.steelDark, [(Q.w / 2 + 0.4), by - Q.h * 0.4, 11.2]));
+    for (i = 0; i < 4; i++) g.add(mesh(box(0.35, 0.2, 1.1), M.steel, [-1.5 + i, by - 0.1, 7.9]));
+    // boot and rst
+    [[6.4, 4.2], [-6.4, 4.2]].forEach(function (p) {
+      g.add(mesh(box(2.9, 1.5, 3.0), M.btn, [p[0], by - 0.75, p[1]]));
+      g.add(mesh(cyl(0.8, 0.8, 0.45, 16), M.btnCap, [p[0], by - 1.5 - 0.22, p[1]]));
+    });
+    // the three leds
+    var pwr = mesh(box(1.6, 0.55, 0.8), M.pwrLed, [-6.2, by - 0.28, 10.6], null, 'pwrled'); g.add(pwr);
+    g.add(mesh(box(1.6, 0.55, 0.8), M.statLed, [6.2, by - 0.28, 9.7]));
+    g.add(mesh(box(1.6, 0.55, 0.8), M.chgLed, [7.3, by - 0.28, -1.3]));
+    // a regulator, the charger, a few passives
+    g.add(mesh(box(2.9, 1.1, 1.6), M.chip, [-3.4, by - 0.55, 1.6]));
+    g.add(mesh(box(2.9, 1.1, 1.6), M.chip, [3.4, by - 0.55, 1.6]));
+    [[-5.2, -5.8], [5.4, -5.9], [-2.2, 5.6], [2.4, 5.6], [0, 3.0]].forEach(function (p, k) {
+      g.add(mesh(box(1.0, 0.5, 0.5), k % 2 ? M.capTan : M.chip, [p[0], by - 0.25, p[1]]));
+    });
+    // the dot of black paint that puts the red pwr light out (shown late)
+    var paint = mesh(new THREE.SphereGeometry(1.25, 16, 8), M.paint, [-6.2, by - 0.3, 10.6], null, 'paint');
+    paint.scale.set(1, 0.36, 1); paint.visible = false; g.add(paint); g.userData.paint = paint;
+
+    // anchors: where each plug seats (z = the way it travels in)
+    anchor(g, g, 'jst', [0, by - J.h / 2, -12.7], [0, 0, 1], [0, -1, 0]);
+    anchor(g, g, 'qwiic', [0, by - Q.h / 2, 12.7], [0, 0, -1], [0, -1, 0]);
+    anchor(g, g, 'usb', [ux, H / 2 + BOARD.usb.h / 2, 12.9], [0, 0, -1], [0, 1, 0]);
+    anchor(g, g, 'pwr', [-6.2, by - 0.3, 10.6], [0, -1, 0]);
+    anchor(g, g, 'tag', [0, H / 2 + 2.4, -4], [0, 1, 0]);
+    anchor(g, g, 'modTag', [0.15, H / 2 + 2.4, -2.0], [0, 1, 0]);
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- lipo 401230, 150 mAh, protected: 12 × 33 × 4
+     (26 sep, later: 12 wide, so the led's legs can come up through the globe's narrow mouth beside it)
+     local: underside centre at origin; long axis z; protection board (kapton) at −z end; leads leave −z. */
+  function buildBattery(M) {
+    var g = new THREE.Group(); g.name = 'battery';
+    g.add(mesh(rbox(12, 4.0, 30, 1.0, 2), M.pouch, [0, 2.0, 1.5], null, 'pouch'));
+    var lab = tex(9.6, 26, 30, function (c, w, h) {
+      c.fillStyle = '#e9ebee'; rr(c, 0, 0, w, h, 0.8); c.fill();
+      c.fillStyle = '#23272d'; c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.save(); c.translate(w / 2, h / 2); c.rotate(-PI / 2);
+      c.font = '700 2.4px ' + MONO; c.fillText('3.7V 150mAh', 0, -2.4);
+      c.font = '500 1.5px ' + MONO; c.fillText('LP401230 · protected', 0, 0.4);
+      c.fillText('PH2.0', 0, 2.8);
+      c.restore();
+    });
+    var lm = new THREE.MeshStandardMaterial({ map: lab, color: lab ? 0xffffff : 0xe9ebee, roughness: 0.55 });
+    g.add(mesh(new THREE.PlaneGeometry(9.6, 26), lm, [0, 4.01, 2.2], [-PI / 2, 0, 0], 'label'));
+    g.add(mesh(rbox(11.0, 3.0, 3.2, 0.6, 2), M.kapton, [0, 1.8, -15.0], null, 'pcm'));
+    anchor(g, g, 'leadR', [-1.5, 1.8, -16.6], [0, 0, -1], [0, 1, 0]);
+    anchor(g, g, 'leadB', [1.5, 1.8, -16.6], [0, 0, -1], [0, 1, 0]);
+    anchor(g, g, 'tag', [0, 4.2, 0], [0, 1, 0]);
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- connectors
+     every connector: mating face at local origin, +z = the way it travels to seat,
+     wires leave the back face heading −z. */
+  function housing(M, w, h, d, mat, holes, pitch, hw, hh) {
+    var g = new THREE.Group();
+    g.add(mesh(rbox(w, h, d, Math.min(0.35, h / 4), 1), mat, [0, 0, -d / 2]));
+    for (var i = 0; i < holes; i++) g.add(mesh(box(hw || 0.9, hh || 1.1, 0.1), M.hole, [(-(holes - 1) / 2 + i) * pitch, 0, 0.01]));
+    return g;
+  }
+  function buildBatPlug(M) {   // jst-ph 2-pin on the battery's leads
+    var g = housing(M, 5.9, 4.5, 6.0, M.cream, 2, 2.0); g.name = 'batplug';
+    g.userData.exits = [[1, 0, -6], [-1, 0, -6]];   // red, black (red meets the board's +)
+    return g;
+  }
+  function buildQwiicPlug(M) { // jst-sh 4-pin: gnd black · 3.3 v red · sda blue · scl yellow
+    var g = housing(M, 5.8, 2.9, 4.4, M.cream, 4, 1.0, 0.55, 0.9); g.name = 'qwiicplug';
+    g.add(mesh(box(3.2, 0.5, 2.2), M.cream, [0, 1.6, -2.6]));
+    g.userData.exits = [[-1.5, 0, -4.4], [-0.5, 0, -4.4], [0.5, 0, -4.4], [1.5, 0, -4.4]];
+    return g;
+  }
+  function buildDupontFemale(M) {
+    var g = new THREE.Group(); g.name = 'dfemale';
+    g.add(mesh(rbox(2.54, 2.54, 14, 0.25, 1), M.dupont, [0, 0, -7]));
+    g.add(mesh(box(1.0, 1.0, 0.1), M.hole, [0, 0, 0.01]));
+    anchor(g, g, 'mouth', [0, 0, -0.1], [0, 0, -1], [0, 1, 0]);
+    g.userData.exits = [[0, 0, -14]];
+    return g;
+  }
+  function buildUsbPlug(M) {   // usb-c plug: tongue at the front, overmould behind
+    var g = new THREE.Group(); g.name = 'usbplug';
+    g.add(mesh(rbox(8.25, 2.45, 6.6, 1.15, 3), M.steel, [0, 0, -3.3]));
+    g.add(mesh(rbox(11.5, 6.0, 18, 2.2, 3), M.plug, [0, 0, -6.6 - 9]));
+    g.add(mesh(cyl(2.0, 2.4, 5, 16), M.plug, [0, 0, -6.6 - 18 - 2.2], [PI / 2, 0, 0]));
+    g.userData.exits = [[0, 0, -6.6 - 18 - 4.4]];
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- the earbud and its case
+     any working bud that plays alone; this one is drawn stemmed, ~30 mm long.
+     local: the bud's head centre is the origin, standing as worn. */
+  function buildBud(M) {
+    var g = new THREE.Group(); g.name = 'bud';
+    var head = mesh(new THREE.SphereGeometry(7.2, 40, 28), M.bud); head.scale.set(1, 0.86, 0.78); g.add(head);
+    var tip = mesh(new THREE.SphereGeometry(4.6, 32, 24), M.bud, [0, -1.2, 4.4]); tip.scale.set(1, 0.9, 0.72); g.add(tip);
+    g.add(mesh(cyl(2.5, 2.5, 0.8, 24), M.grille, [0, -1.2, 7.6], [PI / 2, 0, 0]));
+    var sensor = mesh(new THREE.SphereGeometry(1.4, 16, 12), M.grille, [-4.8, 1.6, 3.2]); sensor.scale.set(1, 1.4, 0.4); g.add(sensor);
+    g.add(mesh(cyl(3.0, 3.3, 18, 28), M.bud, [2.2, -10.5, -1.2], [0, 0, -0.12]));
+    g.add(mesh(cyl(3.32, 3.32, 1.3, 28), M.mic, [3.3, -20.0, -1.2], [0, 0, -0.12]));
+    g.add(mesh(cyl(1.1, 1.1, 0.4, 16), M.grille, [3.4, -20.75, -1.2], [0, 0, -0.12]));
+    anchor(g, g, 'tag', [0, 8, 0], [0, 1, 0]);
+    return g;
+  }
+  function buildCase(M) {  // the case: base + a hinged lid; local: the base's floor at y = 0
+    var g = new THREE.Group(); g.name = 'case';
+    g.add(mesh(rbox(54, 30, 21, 6, 4), M.kase, [0, 15, 0], null, 'base'));
+    var tray = tex(40, 9, 10, function (c, w, h) {
+      c.fillStyle = '#e6e6e2'; c.fillRect(0, 0, w, h);
+      c.fillStyle = '#2e2e33'; c.beginPath(); c.ellipse(9, 4.5, 6.4, 3.6, 0, 0, TAU); c.fill(); c.beginPath(); c.ellipse(31, 4.5, 6.4, 3.6, 0, 0, TAU); c.fill();
+    });
+    g.add(mesh(new THREE.PlaneGeometry(40, 9), new THREE.MeshStandardMaterial({ map: tray, color: tray ? 0xffffff : 0xe6e6e2, roughness: 0.8 }), [0, 30.05, 0], [-PI / 2, 0, 0]));
+    var piv = new THREE.Group(); piv.position.set(0, 30, -10.5); g.add(piv);
+    piv.add(mesh(rbox(54, 13, 21, 6, 4), M.kase, [0, 6.5 - 2.5, 10.5], null, 'lid'));
+    g.add(mesh(cyl(2.2, 2.2, 40, 20), M.steelDark, [0, 30, -10.5], [0, 0, PI / 2]));
+    g.userData.lid = piv;
+    anchor(g, g, 'slot', [11, 30 + 2.4, 0], [0, 1, 0]);
+    anchor(g, g, 'tag', [0, 44, 0], [0, 1, 0]);
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- small things */
+  function buildPin(M) {   // a pin: tip at origin, the shaft up +y
+    var g = new THREE.Group(); g.name = 'pin';
+    g.add(mesh(new THREE.ConeGeometry(0.3, 1.6, 10), M.steel, [0, 0.8, 0], [PI, 0, 0]));
+    g.add(mesh(cyl(0.3, 0.3, 30, 10), M.steel, [0, 16.6, 0]));
+    g.add(mesh(new THREE.SphereGeometry(1.15, 16, 12), M.pinHead, [0, 31.6, 0]));
+    return g;
+  }
+  function buildTape(M) {  // a band of black tape round the four dupont ends, so the spare two stay put
+    var g = new THREE.Group(); g.name = 'tape';
+    g.add(mesh(rbox(3.4, 5.0, 10.9, 0.4, 1), M.tape, [0, 0, 0]));
+    return g;
+  }
+
+  /* ---------------------------------------------------------------- a wire: a tube rebuilt in place each frame */
+  function Wire(M, colour, radius, seg) {
+    this.seg = seg || 56; this.rad = 7; this.r = radius || 0.55;
+    var n = (this.seg + 1) * (this.rad + 1);
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+    geo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+    var idx = [];
+    for (var i = 0; i < this.seg; i++) for (var j = 0; j < this.rad; j++) {
+      var a = i * (this.rad + 1) + j, b = (i + 1) * (this.rad + 1) + j;
+      idx.push(a, b, a + 1, b, b + 1, a + 1);
+    }
+    geo.setIndex(idx);
+    this.mesh = new THREE.Mesh(geo, M.wire[colour] || colour);
+    this.mesh.frustumCulled = false;
+    this.mesh.name = 'wire-' + (typeof colour === 'string' ? colour : 'leg');
+    this.key = '';
+  }
+  Wire.prototype.set = function (pts) {
+    var key = pts.map(function (p) { return p.x.toFixed(2) + ',' + p.y.toFixed(2) + ',' + p.z.toFixed(2); }).join('|');
+    if (key === this.key) return; this.key = key;
+    var curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
+    var fr = curve.computeFrenetFrames(this.seg, false);
+    var P = this.mesh.geometry.attributes.position, N = this.mesh.geometry.attributes.normal;
+    var pt = new V3(), nn = new V3();
+    for (var i = 0; i <= this.seg; i++) {
+      curve.getPointAt(i / this.seg, pt);
+      for (var j = 0; j <= this.rad; j++) {
+        var v = j / this.rad * TAU, s = Math.sin(v), c = -Math.cos(v);
+        nn.set(c * fr.normals[i].x + s * fr.binormals[i].x, c * fr.normals[i].y + s * fr.binormals[i].y, c * fr.normals[i].z + s * fr.binormals[i].z).normalize();
+        var k = i * (this.rad + 1) + j;
+        N.setXYZ(k, nn.x, nn.y, nn.z);
+        P.setXYZ(k, pt.x + this.r * nn.x, pt.y + this.r * nn.y, pt.z + this.r * nn.z);
+      }
+    }
+    P.needsUpdate = true; N.needsUpdate = true;
+    this.mesh.geometry.computeBoundingSphere();
+    this.pts = pts;
+  };
+
+  /* ---------------------------------------------------------------- where everything ends up (the disc frame)
+     the stack, from the disc up: the battery flat and centred (0 → 5.2); the board MODULE SIDE UP, its
+     battery socket resting on the battery (pcb 10.0 → 11.6; the module's top 14.0); the bud lying on the
+     module. the led's legs rise through the disc 13.5 mm east of centre; four dupont ends stand in a row
+     there, mouths down — yellow on the long leg, black on the short, the spare red and blue beside them —
+     taped into one block. the flame hangs under the disc near the middle. the qwiic plug seats under the
+     board's south edge and its spare length folds flat under the board. */
+  var D = PI / 180;
+  var ROW = { x: 13.5, z: [PINHOLES.a[1], PINHOLES.c[1], 3.81, 6.35] };   // yellow, black, red, blue
+  var PACK = {
+    battery: { p: [0, 0, 1], r: [0, 0, 0] },
+    board: { p: [-1.5, 8.8 + BOARD.t / 2, 0], r: [0, 0, 0] },
+    bud: { p: [3.0, 20.1, -4.0], r: [0, 37.4 * D, -90 * D] },
+    ledFlange: [1.0, -8.5, 0],          // where the legs leave the led, hanging under the disc, in the glass
+    legSeat: { a: 6.5, c: 6.0 },        // how far each leg goes into its dupont end
+    spareY: 0.3,                        // the spare ends stand on the disc
+    tape: [ROW.x, 8.6, (ROW.z[0] + ROW.z[3]) / 2],
+    // the qwiic wires, packed: out of the plug, under the board and back, out east, down into the row (disc frame)
+    via: {
+      qBlack: [[-3.0, 5.1, 17.6], [-6.6, 4.9, 6.0], [-7.4, 5.0, -2.4], [2.4, 5.2, 2.6], [10.9, 7.4, 10.6], [12.9, 16.0, 3.8]],
+      qRed: [[-2.0, 5.3, 17.9], [-5.4, 5.1, 6.4], [-6.2, 5.2, -1.6], [3.4, 5.4, 3.4], [11.6, 7.6, 11.2], [13.2, 15.4, 6.2]],
+      qBlue: [[-1.0, 5.5, 18.1], [-4.2, 5.3, 6.8], [-5.0, 5.4, -0.8], [4.4, 5.6, 4.2], [12.3, 7.8, 11.8], [13.4, 15.0, 8.6]],
+      qYellow: [[0.0, 5.7, 18.3], [-3.0, 5.5, 7.2], [-3.8, 5.6, 0.0], [5.4, 5.8, 5.0], [11.2, 8.2, 9.8], [12.7, 17.2, 1.2]],
+      btR: [[-1.8, 2.8, -17.4], [-2.4, 5.0, -18.0]],
+      btB: [[1.4, 2.6, -17.4], [-0.3, 4.8, -18.0]]
+    },
+    stub: { qBlack: [1.6, 2.2], qRed: [1.6, 2.0], qBlue: [1.6, 2.0], qYellow: [1.6, 2.2], btR: [1.8, 0.9], btB: [1.8, 0.9] }
+  };
+  // the led's legs once bent, in the disc frame: the flange → up → across → through the pinhole → the tip.
+  // the tip's height is whatever length the leg has left above the disc.
+  function legPathDisc(which) {
+    var ex = PACK.ledFlange, sz = which === 'a' ? PINHOLES.a[1] : PINHOLES.c[1], h = PINHOLES[which];
+    var p = [
+      new V3(ex[0], ex[1], sz),
+      new V3(ex[0], ex[1] + 2.0, sz),
+      new V3(ex[0] + (h[0] - ex[0]) * 0.55, -DISC.t - 2.2, sz),
+      new V3(h[0], -DISC.t - 1.0, h[1]),
+      new V3(h[0], 0, h[1]),
+      new V3(h[0] + 0.6, 0.6, h[1]),      // bent flat along the disc, out to the row
+      new V3(ROW.x - 0.6, 0.6, h[1])
+    ];
+    var used = 0; for (var i = 1; i < p.length; i++) used += p[i].distanceTo(p[i - 1]);
+    p.push(new V3(ROW.x, Math.max(1.2, LEG[which] - used), h[1]));
+    return p;
+  }
+  // the led's legs before the bend: straight up through the holes, the led hanging below them
+  function legPathStraight(which) {
+    var h = PINHOLES[which], pd = legPathDisc(which), tip = pd[pd.length - 1].y, L = LEG[which];
+    return [0, 0.08, 0.25, 0.42, 0.55, 0.6, 0.78, 1].map(function (k) { return new V3(h[0], tip - L + L * k, h[1]); });
+  }
+  // control points for a wire: out of each end along its exit direction, through the waypoints
+  function wirePts(pA, dA, pB, dB, vias, kA, kB) {
+    kA = kA || 2.6; kB = kB || 2.6;
+    return [pA.clone(), pA.clone().addScaledVector(dA, kA)].concat(vias, [pB.clone().addScaledVector(dB, kB), pB.clone()]);
+  }
+
+  return {
+    EGG: EGG, rOfV: rOfV, yOfV: yOfV, vOfY: vOfY, profO: profO, profI: profI, profN: profN, jag: jag, sOfY: sOfY,
+    shellInnerR: shellInnerR, shellOuterR: shellOuterR, DISC: DISC, GLOBE: GLOBE, BOARD: BOARD, LEG: LEG, JAG_LOW: JAG_LOW, TEETH_R: TEETH_R,
+    PINHOLES: PINHOLES, ROW: ROW, PACK: PACK, legPathDisc: legPathDisc, legPathStraight: legPathStraight, wirePts: wirePts, silMat: silMat,
+    makeMaterials: makeMaterials, Wire: Wire, mesh: mesh,
+    build: {
+      shell: function (M) { return buildShellPiece('top', M); },
+      shellBottom: function (M) { return buildShellPiece('bottom', M); },
+      crack: crackLine, yolk: buildYolk, sheet: buildSheet, disc: buildDisc, globe: buildGlobe,
+      led: buildLed, board: buildBoard, battery: buildBattery, batPlug: buildBatPlug, qwiicPlug: buildQwiicPlug,
+      female: buildDupontFemale, usbPlug: buildUsbPlug, bud: buildBud, kase: buildCase, pin: buildPin, tape: buildTape
+    }
+  };
+})();
+
+</script>
+<script>
+/* song egg · the globe egg · the assembly film. three.js r128, classic script. needs SE (the parts). */
+(function () {
+  'use strict';
+  var PI = Math.PI, D = PI / 180, TAU = PI * 2;
+  var V3 = THREE.Vector3, Q = THREE.Quaternion, M4 = THREE.Matrix4, ONE = new V3(1, 1, 1);
+  function $(id) { return document.getElementById(id); }
+  function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function ease(u) { u = clamp01(u); return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
+  function win(t, a, b) { return ease((t - a) / (b - a)); }
+  function qd(r) { return new Q().setFromEuler(new THREE.Euler((r[0] || 0) * D, (r[1] || 0) * D, (r[2] || 0) * D)); }
+  function T(p, rDeg) { return new M4().compose(new V3(p[0], p[1], p[2]), qd(rDeg || [0, 0, 0]), ONE); }
+  function TR(p, rRad) { return new M4().compose(new V3(p[0], p[1], p[2]), new Q().setFromEuler(new THREE.Euler(rRad[0], rRad[1], rRad[2])), ONE); }
+  var RX90 = T([0, 0, 0], [90, 0, 0]), RX90N = T([0, 0, 0], [-90, 0, 0]);
+  var P = SE.PACK, TABLE = SE.GLOBE.foot;
+
+  /* ------------------------------------------------------------ renderer, light */
+  var canvas = $('gl'), stage = $('stage');
+  var renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: /[?&]still\b/.test(MORTAL.search) }); }
+  catch (e) { renderer = null; }
+  if (!renderer || !renderer.getContext()) { $('nogl').hidden = false; return; }
+  renderer.setClearColor(0x000000, 1);
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  renderer.localClippingEnabled = true;
+  var scene = new THREE.Scene();
+  var pmrem = new THREE.PMREMGenerator(renderer);
+  function studio() { // a black room with softboxes, so metals read dark with bright edges
+    var s = new THREE.Scene();
+    s.add(new THREE.Mesh(new THREE.BoxGeometry(100, 60, 100), new THREE.MeshBasicMaterial({ color: 0x07080a, side: THREE.BackSide })));
+    function panel(w, h, p, c, k) { var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(k), side: THREE.DoubleSide })); m.position.set(p[0], p[1], p[2]); m.lookAt(0, 0, 0); s.add(m); }
+    panel(56, 26, [0, 29, 4], 0xffffff, 3.0);
+    panel(9, 38, [-48, 6, 14], 0xffffff, 2.3);
+    panel(7, 34, [46, 8, -26], 0xcfe0ff, 1.8);
+    panel(44, 16, [4, 4, 49], 0xffffff, 0.7);
+    panel(60, 60, [0, -29, 0], 0x1a1c20, 1.0);
+    return s;
+  }
+  scene.environment = pmrem.fromScene(studio(), 0.02).texture;
+  var camera = new THREE.PerspectiveCamera(30, 1, 1, 5000);
+  var keyL = new THREE.DirectionalLight(0xffffff, 1.55); keyL.position.set(160, 260, 220); scene.add(keyL);
+  var fillL = new THREE.DirectionalLight(0xffffff, 0.35); fillL.position.set(-200, 40, 160); scene.add(fillL);
+  var rimL = new THREE.DirectionalLight(0xc6d9ff, 0.9); rimL.position.set(-220, 110, -260); scene.add(rimL);
+  var bounceL = new THREE.DirectionalLight(0xfff4e8, 0.4); bounceL.position.set(40, -200, 180); scene.add(bounceL);   // the table's own bounce, so an underside reads
+  var M = SE.makeMaterials();
+
+  /* ------------------------------------------------------------ actors */
+  var ACT = [];
+  function Actor(obj) {
+    this.obj = obj; obj.matrixAutoUpdate = false; scene.add(obj);
+    obj.updateMatrixWorld(true);
+    this.anc = {};
+    var an = obj.userData.anchors || {};
+    for (var k in an) this.anc[k] = an[k].matrixWorld.clone();
+    this.keys = []; this.st = []; this._t = NaN; this.m = new M4(); this.post = null;
+    ACT.push(this);
+  }
+  Actor.prototype.k = function (t, p, r) { this.keys.push({ t: t, p: new V3(p[0], p[1], p[2]), q: qd(r || [0, 0, 0]) }); this.keys.sort(function (a, b) { return a.t - b.t; }); return this; };
+  Actor.prototype.at = function (t0, t1, to, o) {
+    o = o || {};
+    this.st.push({ t0: t0, t1: t1, t2: o.t2 != null ? o.t2 : t1, to: to, back: o.back || 0, mi: new M4().copy(o.mate || new M4()).invert() });
+    this.st.sort(function (a, b) { return a.t0 - b.t0; });
+    return this;
+  };
+  Actor.prototype.free = function (t) {
+    var k = this.keys, n = k.length;
+    if (!n) return { p: new V3(), q: new Q() };
+    if (t <= k[0].t) return { p: k[0].p.clone(), q: k[0].q.clone() };
+    if (t >= k[n - 1].t) return { p: k[n - 1].p.clone(), q: k[n - 1].q.clone() };
+    var i = 0; while (i < n - 2 && t >= k[i + 1].t) i++;
+    var u = ease((t - k[i].t) / (k[i + 1].t - k[i].t));
+    return { p: k[i].p.clone().lerp(k[i + 1].p, u), q: k[i].q.clone().slerp(k[i + 1].q, u) };
+  };
+  function dec(m) { var p = new V3(), q = new Q(), s = new V3(); m.decompose(p, q, s); return { p: p, q: q }; }
+  function mix(a, b, u) { return { p: a.p.clone().lerp(b.p, u), q: a.q.clone().slerp(b.q, u) }; }
+  Actor.prototype.world = function (t) {
+    if (this._t === t) return this.m;
+    var pose = this.free(t);
+    for (var i = 0; i < this.st.length; i++) {
+      var s = this.st[i]; if (t < s.t0) continue;
+      var tm = s.to(t);
+      var seated = dec(new M4().multiplyMatrices(tm, s.mi));
+      if (t >= s.t2 && t >= s.t1) { pose = seated; continue; }
+      var backed = s.back ? dec(new M4().multiplyMatrices(tm, new M4().makeTranslation(0, 0, -s.back)).multiply(s.mi)) : seated;
+      if (t < s.t1) pose = mix(pose, backed, ease((t - s.t0) / Math.max(1e-6, s.t1 - s.t0)));
+      else pose = mix(backed, seated, ease((t - s.t1) / Math.max(1e-6, s.t2 - s.t1)));
+    }
+    this.m.compose(pose.p, pose.q, ONE);
+    if (this.post) this.m.multiply(this.post(t));
+    this._t = t; return this.m;
+  };
+  Actor.prototype.a = function (name, extra) { // an anchor as a function of time
+    var self = this, lm = this.anc[name].clone(); if (extra) lm.multiply(extra);
+    return function (t) { return new M4().multiplyMatrices(self.world(t), lm); };
+  };
+  Actor.prototype.rel = function (m) { var self = this; return function (t) { return new M4().multiplyMatrices(self.world(t), m); }; };
+  function fixed(m) { return function () { return m; }; }
+  function pt(actor, local) { var v = new V3(local[0], local[1], local[2]); return function (t) { return v.clone().applyMatrix4(actor.world(t)); }; }
+
+  /* ------------------------------------------------------------ the cast */
+  var MB = {}; for (var mk in M) MB[mk] = M[mk];
+  MB.shellOut = M.shellOut.clone(); MB.shellIn = M.shellIn.clone(); MB.shellRim = M.shellRim.clone(); MB.yolk = M.yolk.clone();
+
+  var globe = new Actor(SE.build.globe(M));
+  globe.obj.children.forEach(function (c) { c.renderOrder = 3; });
+  var sheet = new Actor(SE.build.sheet(M));
+  var disc = new Actor(SE.build.disc(M));
+  sheet.obj.traverse(function (o) { if (o.isMesh) o.renderOrder = o.name === 'face' ? 2 : 1; });
+  disc.obj.traverse(function (o) { if (o.isMesh) o.renderOrder = 1; });
+  var shell = new Actor(SE.build.shell(M));
+  var crack = SE.build.crack(M); shell.obj.add(crack);
+  var bottom = new Actor(SE.build.shellBottom(MB));
+  var yolk = SE.build.yolk(MB); yolk.position.set(0, SE.EGG.baseY + 8.0, 0); bottom.obj.add(yolk);
+  var led = new Actor(SE.build.led(M));
+  var board = new Actor(SE.build.board(M));
+  var bat = new Actor(SE.build.battery(M));
+  var bPlug = new Actor(SE.build.batPlug(M));
+  var qPlug = new Actor(SE.build.qwiicPlug(M));
+  var fY = new Actor(SE.build.female(M)), fK = new Actor(SE.build.female(M)), fR = new Actor(SE.build.female(M)), fB = new Actor(SE.build.female(M));
+  var tape = new Actor(SE.build.tape(M));
+  var usb = new Actor(SE.build.usbPlug(M));
+  var kase = new Actor(SE.build.kase(M));
+  var bud = new Actor(SE.build.bud(M));
+  var pin = new Actor(SE.build.pin(M));
+  var marker = new Actor((function () {   // a fine marker: it writes on silicone, where a pencil will knot
+    var g = new THREE.Group(); g.name = 'marker';
+    g.add(SE.mesh(new THREE.ConeGeometry(0.4, 2.2, 10), M.chip, [0, 1.1, 0], [PI, 0, 0]));
+    g.add(SE.mesh(new THREE.CylinderGeometry(3.4, 1.1, 7, 20), M.marker, [0, 5.7, 0]));
+    g.add(SE.mesh(new THREE.CylinderGeometry(4.0, 4.0, 64, 20), M.marker, [0, 41.2, 0]));
+    g.add(SE.mesh(new THREE.CylinderGeometry(4.05, 4.05, 1.2, 20), M.steelDark, [0, 9.6, 0]));
+    return g;
+  })());
+
+  /* ------------------------------------------------------------ the beats */
+  var BEATS = [
+    { t: 0, name: 'the kit', act: 'one egg’s worth of parts, and nothing to solder. the song comes from the phone, through the earbud; the board only beats the flame.', pins: 'white goose egg · glass globe · clear silicone · red led · esp32-c6 board · 150 mAh lipo · qwiic cable · one earbud' },
+    { t: 5, name: 'crack the egg', act: 'crack a white goose egg low, about 1.5 cm up from the round end. a jagged edge is good. keep the long piece; the egg goes to the pan.', pins: 'kept piece ≈ 72 mm tall, 40 mm across at its lowest teeth' },
+    { t: 12, name: 'the disc', act: 'draw a circle 3.6 cm across on the clear silicone and cut it out. prick two holes 8 mm from its middle.', pins: 'disc ⌀ 36     holes 2.5 mm apart, 8.3 mm from the middle' },
+    { t: 21, name: 'the flame', act: 'push the led’s legs up through the holes from below, bend them flat out towards the edge and up, so the flame hangs in the globe. set the disc on the globe’s mouth.', pins: 'long leg = +     the flat on the rim marks the short leg' },
+    { t: 30, name: 'the cable', act: 'click the qwiic cable into the board. slide the yellow end onto the long leg and the black end onto the short leg. tape the red and blue ends beside them.', pins: 'yellow (gpio 7) → long leg     black (gnd) → short leg' },
+    { t: 39, name: 'the code', act: 'plug the board into a computer and give it the flame’s code and your wifi. the flame lights, then beats. a dot of black paint over the red power light.', pins: 'usb-c, once     the flame is the only light' },
+    { t: 48, name: 'the battery', act: 'lay the battery on the disc beside the legs and plug it into the board. turn the board module side up onto the battery; the spare cable folds flat under it.', pins: 'red → +     the flame wakes on the hearts it kept' },
+    { t: 57, name: 'the bud', act: 'pair one earbud to your phone, play the song in the music app, tap LAMP. lay the bud on the board.', pins: 'any earbud that plays alone' },
+    { t: 65, name: 'close', act: 'lower the shell over it all, over the globe, until its teeth rest on the glass.', pins: 'three teeth touch the glass, 3 mm above its middle     the disc lies on the globe’s mouth, inside the shell' },
+    { t: 72, name: 'the song egg', act: 'the flame beats the river’s hearts, and its light comes up through the disc into the shell. the song comes through the shell.', pins: 'see inside shows the packing     the film’s flame beats a sample heart, knot a live one' }
+  ];
+  var END = 86;
+
+  /* ------------------------------------------------------------ choreography (the disc frame; the table at the globe's foot) */
+  var TY = TABLE;
+  var EGG0 = [-82, TY - SE.EGG.baseY, 6], EGGW = [-44, 2, 24];
+  var SHELLP = [-86, TY - SE.JAG_LOW, -26];            // the kept piece stands on its teeth on the table
+  var SQ = [-8, TY + SE.DISC.t, 64];
+  var DISCW = [-10, 16, 34];                          // the disc held up for the legs
+  var BOARDW = [42, 28, 8], BOARDR = [0, 90, 180];   // held up east of the disc, connector side up, its battery socket facing the disc
+
+
+  shell.k(0, EGG0).k(5.0, EGG0).k(6.3, EGGW).k(7.3, EGGW)
+    .k(8.6, [EGGW[0], EGGW[1] + 18, EGGW[2]], [0, 0, 0]).k(10.4, SHELLP)
+    .k(65.0, SHELLP).k(66.4, [SHELLP[0] + 10, 66, SHELLP[2] + 6]).k(67.6, [0, 72, 0]).k(70.6, [0, 0, 0]);
+  bottom.k(0, EGG0).k(5.0, EGG0).k(6.3, EGGW).k(7.4, EGGW)
+    .k(9.0, [EGGW[0] - 8, EGGW[1] - 18, EGGW[2] + 12], [0, 0, 26]).k(10.8, [EGGW[0] - 26, EGGW[1] - 58, EGGW[2] + 30], [0, 0, 62]);
+
+  sheet.k(0, SQ);
+  disc.k(0, SQ).k(21.0, SQ).k(22.2, DISCW, [-35, 0, 0]).k(26.6, DISCW, [-35, 0, 0]).k(27.6, [-4, 22, 12], [0, 0, 0]).k(28.8, [0, 0, 0]);
+  // the globe: at home in the kit; up, over, and upside down onto the sheet to be traced; home again
+  globe.k(0, [0, 0, 0]);
+  marker.k(0, [-36, TY, 94], [0, 0, -84]).k(13.6, [-36, TY, 94], [0, 0, -84]);
+  var PEN = [14.5, 16.3];
+  marker.post = null;
+  var PINA = [SQ[0] + SE.PINHOLES.a[0], SQ[1], SQ[2] + SE.PINHOLES.a[1]], PINC = [SQ[0] + SE.PINHOLES.c[0], SQ[1], SQ[2] + SE.PINHOLES.c[1]];
+  pin.k(0, [-34, TY + 1.2, 88], [0, 0, 90]).k(18.0, [-34, TY + 1.2, 88], [0, 0, 90]).k(18.8, [PINA[0], PINA[1] + 12, PINA[2]])
+    .k(19.2, [PINA[0], PINA[1] - 3.6, PINA[2]]).k(19.6, [PINA[0], PINA[1] + 8, PINA[2]]).k(19.9, [PINC[0], PINC[1] + 8, PINC[2]])
+    .k(20.3, [PINC[0], PINC[1] - 3.6, PINC[2]]).k(20.7, [PINC[0], PINC[1] + 10, PINC[2]]).k(21.6, [-34, TY + 1.2, 88], [0, 0, 90]);
+
+  // the led: lying in the kit, then up through the holes, then the bend; it rides the disc from then on
+  var LA = SE.legPathDisc('a'), LC = SE.legPathDisc('c'), tipA = LA[LA.length - 1].y, tipC = LC[LC.length - 1].y;
+  led.k(0, [40, TY + 2.9, 66], [0, 0, 90]).k(21.6, [40, TY + 2.9, 66], [0, 0, 90]).k(22.6, [DISCW[0] + 14, DISCW[1] - 40, DISCW[2] + 16], [0, -90, 0])
+    .at(22.4, 23.6, disc.rel(T([SE.PINHOLES.a[0], tipA - SE.LEG.a, 0], [0, -90, 0]).multiply(RX90N)), { t2: 24.2, back: 14, mate: RX90N })
+    .at(24.4, 26.2, disc.rel(T(P.ledFlange, [0, -90, 0])));
+  var BEND = [24.4, 26.2];
+
+  // the board: in the kit, then held up connector side up, then module side up onto the battery
+  board.k(0, [76, TY + SE.BOARD.jst.h + SE.BOARD.t / 2, 28], [0, -20, 0]).k(30.0, [76, TY + SE.BOARD.jst.h + SE.BOARD.t / 2, 28], [0, -20, 0])
+    .k(31.6, BOARDW, BOARDR).at(53.6, 55.0, fixed(TR([P.board.p[0], 38, P.board.p[2]], P.board.r))).at(55.0, 56.2, fixed(TR(P.board.p, P.board.r)));
+  qPlug.k(0, [74, TY + 1.45, -78], [0, 90, 0]).k(31.2, [74, TY + 1.45, -78], [0, 90, 0]).k(31.9, [BOARDW[0] + 26, BOARDW[1] - 10, BOARDW[2] + 2], [0, -90, 0])
+    .at(31.8, 32.8, board.a('qwiic'), { t2: 33.4, back: 10 });
+  function seatRow(i) { var z = SE.ROW.z[i], y = i === 0 ? tipA - P.legSeat.a : i === 1 ? tipC - P.legSeat.c : P.spareY; return T([SE.ROW.x, y, z]).multiply(RX90); }
+  var FEM = [[fY, 33.4], [fK, 34.2], [fR, 35.4], [fB, 35.9]];
+  FEM.forEach(function (e, i) {
+    var a = e[0], x0 = 40 + 3.2 * i;
+    a.k(0, [x0, TY + 1.27, -104], [0, 180, 0]).k(32.6, [x0, TY + 1.27, -104], [0, 180, 0]).k(33.2 + 0.4 * i, [20 + 2 * i, 34, 26 - 2 * i], [90, 0, 0])
+      .at(e[1], e[1] + 1.1, disc.rel(seatRow(i)), { t2: e[1] + 1.6, back: 12 });
+  });
+  tape.k(0, [-40, TY - 40, -120]).at(-1, -1, disc.rel(T(P.tape)));
+  var TAPE = [37.2, 37.9];
+
+  usb.k(0, [64, TY + 3.0, 96], [0, -30, 0]).k(39.4, [64, TY + 3.0, 96], [0, -30, 0]).k(40.2, [BOARDW[0] + 40, BOARDW[1] - 6, BOARDW[2] + 4], [0, -90, 0])
+    .at(40.0, 41.0, board.a('usb'), { t2: 41.4, back: 12 })
+    .at(46.2, 47.4, fixed(T([72, TY + 3.0, 98], [0, -20, 0])));
+
+  bat.k(0, [86, TY, -28], [0, 30, 0]).k(48.2, [86, TY, -28], [0, 30, 0]).k(49.4, [0, 26, -4], [0, 0, 0]).k(50.6, P.battery.p, [0, 0, 0]);
+  bPlug.at(-1, -1, bat.rel(T([-1.0, 2.4, -34], [0, 180, 0])))
+    .at(50.8, 51.8, board.a('jst'), { t2: 52.4, back: 8 });
+
+  kase.k(0, [-86, TY, 76], [0, 28, 0]);
+  kase.obj.userData.lid.rotation.x = 0;
+  var LID = [57.4, 58.4, 63.4, 64.4];
+  bud.at(-1, -1, kase.rel(T([11, 32.4, 0], [0, 180, 0])))
+    .at(58.6, 60.2, fixed(T([-22, 34, 22], [0, 50, 0])))
+    .at(62.0, 64.0, fixed(TR(P.bud.p, P.bud.r)));
+  var PAIR = [60.2, 61.8];
+
+  /* ------------------------------------------------------------ wires */
+  var WIRES = [];
+  function exitEnd(actor, i) { var e = actor.obj.userData.exits[i], lp = new V3(e[0], e[1], e[2]);
+    return function (t) { var m = actor.world(t); return { p: lp.clone().applyMatrix4(m), d: new V3(0, 0, -1).transformDirection(m) }; }; }
+  function ancEnd(actor, name) { var lm = actor.anc[name];
+    return function (t) { var m = new M4().multiplyMatrices(actor.world(t), lm); return { p: new V3().setFromMatrixPosition(m), d: new V3(0, 0, 1).transformDirection(m) }; }; }
+  function wire(key, colour, r, a, b, L, pack) {
+    var w = new SE.Wire(M, colour, r); scene.add(w.mesh);
+    WIRES.push({ key: key, w: w, a: a, b: b, L: L, pack: pack });
+  }
+  wire('qBlack', 'black', 0.5, exitEnd(qPlug, 0), exitEnd(fK, 0), 110, [54.6, 56.8]);
+  wire('qRed', 'red', 0.5, exitEnd(qPlug, 1), exitEnd(fR, 0), 110, [54.6, 56.8]);
+  wire('qBlue', 'blue', 0.5, exitEnd(qPlug, 2), exitEnd(fB, 0), 110, [54.6, 56.8]);
+  wire('qYellow', 'yellow', 0.5, exitEnd(qPlug, 3), exitEnd(fY, 0), 110, [54.6, 56.8]);
+  wire('btR', 'red', 0.45, ancEnd(bat, 'leadR'), exitEnd(bPlug, 0), 60, [53.8, 56.0]);
+  wire('btB', 'black', 0.45, ancEnd(bat, 'leadB'), exitEnd(bPlug, 1), 60, [53.8, 56.0]);
+  var usbFar = new V3(200, TY, 150);
+  var usbWire = new SE.Wire(M, 'usb', 1.9, 40); scene.add(usbWire.mesh);
+  var legA = new SE.Wire(M, M.ledLeg, 0.24, 40), legC = new SE.Wire(M, M.ledLeg, 0.24, 40);
+  scene.add(legA.mesh); scene.add(legC.mesh);
+  var LEGK = [0, 0.08, 0.25, 0.42, 0.55, 0.6, 0.78, 1];
+  function legPts(t, which) {
+    var sx = which === 'a' ? -1.27 : 1.27, L = SE.LEG[which], lm = led.world(t);
+    var s = LEGK.map(function (k) { return new V3(sx, L * k, 0).applyMatrix4(lm); });
+    var b = win(t, BEND[0], BEND[1]);
+    if (b <= 0) return s;
+    var cm = disc.world(t), bent = SE.legPathDisc(which);
+    return bent.map(function (p, i) { return s[i].lerp(p.clone().applyMatrix4(cm), b); });
+  }
+  function updateWires(t) {
+    for (var i = 0; i < WIRES.length; i++) {
+      var W = WIRES[i], a = W.a(t), b = W.b(t), st = P.stub[W.key] || [2.6, 2.6];
+      var A1 = a.p.clone().addScaledVector(a.d, st[0]), B1 = b.p.clone().addScaledVector(b.d, st[1]);
+      var dist = A1.distanceTo(B1), sag = Math.min(26, Math.max(0, (W.L - dist) * 0.32));
+      var f1 = A1.clone().lerp(B1, 1 / 3), f2 = A1.clone().lerp(B1, 2 / 3); f1.y -= sag; f2.y -= sag;
+      var free = [f1, f2], w = win(t, W.pack[0], W.pack[1]), vias = free;
+      if (w > 0) {
+        var v = P.via[W.key], cm = disc.world(t);
+        vias = v.map(function (q, k) {
+          var tp = new V3(q[0], q[1], q[2]).applyMatrix4(cm);
+          var fp = A1.clone().lerp(B1, (k + 1) / (v.length + 1)); fp.y -= sag;
+          return fp.lerp(tp, w);
+        });
+      }
+      W.w.set(SE.wirePts(a.p, a.d, b.p, b.d, vias, st[0], st[1]));
+    }
+    // the usb-c cable trails off to the computer
+    var um = usb.world(t), ue = new V3(0, 0, -6.6 - 18 - 4.4).applyMatrix4(um), ud = new V3(0, 0, -1).transformDirection(um);
+    var u1 = ue.clone().addScaledVector(ud, 14), u3 = usbFar.clone(), u2 = u1.clone().lerp(u3, 0.5); u2.y = Math.min(u1.y, u3.y) - 6;
+    usbWire.set([ue, u1, u2, u3]);
+    legA.set(legPts(t, 'a')); legC.set(legPts(t, 'c'));
+  }
+
+  /* ------------------------------------------------------------ the flame */
+  function glowTexture() {
+    var c = document.createElement('canvas'); c.width = c.height = 128;
+    var g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(255,90,60,1)'); gr.addColorStop(0.18, 'rgba(255,40,24,0.75)'); gr.addColorStop(0.5, 'rgba(200,10,6,0.18)'); gr.addColorStop(1, 'rgba(120,0,0,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  }
+  var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0 }));
+  glow.renderOrder = 6; scene.add(glow);
+  var flameLight = new THREE.PointLight(0xff3018, 0, 60, 2); scene.add(flameLight);
+  // a sample heart: recorded intervals, wobble kept (the river's hearts arrive the same way)
+  var IVS = [0.812, 0.836, 0.801, 0.858, 0.824, 0.790, 0.845, 0.866, 0.818, 0.803, 0.829, 0.851], CYC = IVS.reduce(function (a, b) { return a + b; }, 0);
+  function heart(tt) { // the lamp's own lub-dub (music.html, lampVisEnv), over a floor that never falls dark
+    var x = ((tt % CYC) + CYC) % CYC, i = 0; while (x >= IVS[i]) { x -= IVS[i]; i++; }
+    var d2 = x - 0.24;
+    return Math.min(1.12, 0.18 + 0.85 * Math.exp(-(x * x) / 0.005) + 0.42 * Math.exp(-(d2 * d2) / 0.004));
+  }
+  var POWER1 = 41.4, BEAT1 = 43.4, PAINT = 44.6, UNPLUG = 46.2, POWER2 = 52.4, BEAT2 = 53.2;
+  function flame(t, clock) {
+    var on = (t >= POWER1 && t < UNPLUG) || t >= POWER2; if (!on) return 0;
+    var t0 = t >= POWER2 ? POWER2 : POWER1, tb = t >= POWER2 ? BEAT2 : BEAT1;
+    var steady = 0.55 * win(t, t0, t0 + 0.5);
+    if (t < tb) return steady;
+    var u = win(t, tb, tb + 1.5), h = Math.pow(heart(clock) / 1.12, 1 / 2.2) * 1.0;
+    return steady * (1 - u) + h * u;
+  }
+  // pairing rings round the bud
+  var ringTex = (function () { var c = document.createElement('canvas'); c.width = c.height = 128; var x = c.getContext('2d'); x.strokeStyle = '#fff'; x.lineWidth = 3; x.beginPath(); x.arc(64, 64, 58, 0, TAU); x.stroke(); return new THREE.CanvasTexture(c); })();
+  var rings = []; for (var ri = 0; ri < 3; ri++) { var rs = new THREE.Sprite(new THREE.SpriteMaterial({ map: ringTex, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, color: 0xb2d0ff })); scene.add(rs); rings.push(rs); }
+
+  /* ------------------------------------------------------------ tags (labels) */
+  var TAGS = [];
+  var tagBox = $('tags');
+  function tag(t0, t1, text, fn, cls) {
+    var el = document.createElement('div'); el.className = 'tag' + (cls ? ' ' + cls : ''); el.innerHTML = '<i></i><span></span>';
+    if (cls === 'minor') el.dataset.minor = '1';
+    el.lastChild.textContent = text; tagBox.appendChild(el); TAGS.push({ t0: t0, t1: t1, el: el, fn: fn });
+  }
+  function ancPt(actor, name, off) { var lm = actor.anc[name].clone(); if (off) lm.multiply(T(off)); return function (t) { return new V3().setFromMatrixPosition(new M4().multiplyMatrices(actor.world(t), lm)); }; }
+  function discPt(local) { var v = new V3(local[0], local[1], local[2]); return function (t) { return v.clone().applyMatrix4(disc.world(t)); }; }
+  tag(0, 4.8, 'eggshell · white goose', pt(shell, [0, SE.EGG.tipY + 2, 0]));
+  tag(0, 4.8, 'glass globe · ⌀ 40, mouth ⌀ 25', pt(globe, [13.4, -26.0, 13.4]));
+  tag(0, 4.8, 'clear silicone · 2 mm', pt(sheet, [0, 0.5, 0]));
+  tag(0, 4.8, 'red led', pt(led, [0, 14, 0]));
+  tag(0, 4.8, 'esp32-c6 board', pt(board, [0, 3, 0]));
+  tag(0, 4.8, 'lipo · 150 mAh', pt(bat, [0, 6, 0]));
+  tag(0, 4.8, 'qwiic cable', pt(qPlug, [0, 3, -3]));
+  tag(0, 4.8, 'one earbud', pt(kase, [0, 34, 0]));
+  tag(0, 4.8, 'usb-c cable', pt(usb, [0, 4, -12]), 'minor');
+  tag(0, 4.8, 'pin', pt(pin, [0, 2, 16]), 'minor');
+  tag(8.8, 11.6, 'keep the long piece', pt(shell, [0, SE.EGG.tipY + 2, 0]));
+  tag(8.6, 10.2, 'to the pan', pt(bottom, [0, -18, 0]), 'minor');
+  tag(14.7, 16.7, 'a circle 36 across', pt(sheet, [SE.DISC.R + 0.4, 0.3, 0]));
+  tag(18.4, 21.0, '⌀ 36', pt(disc, [-SE.DISC.R, 0, 0]));
+  tag(19.0, 21.0, '2.5 apart · 8.3 from the middle', pt(disc, [SE.PINHOLES.a[0], 0.2, 0]));
+  tag(23.8, 28.4, 'long leg · +', function (t) { var q = legPts(t, 'a'); return q[q.length - 1]; });
+  tag(23.8, 28.4, 'short leg', function (t) { var q = legPts(t, 'c'); return q[q.length - 2]; }, 'minor');
+  tag(31.2, 34.2, 'qwiic port', ancPt(board, 'qwiic', [0, 0, -2]));
+  tag(35.0, 38.8, 'yellow · gpio 7 → long leg', pt(fY, [0, 0, -14]), 'y');
+  tag(35.6, 38.8, 'black · gnd → short leg', pt(fK, [0, 0, -7]), 'b');
+  tag(37.4, 38.8, 'red + blue, taped', pt(tape, [0, 3, 3]), 'r');
+  tag(40.6, 42.4, 'usb-c', ancPt(board, 'usb', [0, 0, -6]));
+  tag(41.8, 44.4, 'red power light', ancPt(board, 'pwr'), 'r');
+  tag(44.8, 46.6, 'black paint', ancPt(board, 'pwr'));
+  tag(51.4, 54.0, 'battery · red to +', ancPt(board, 'jst', [0, 0, -3]));
+  tag(55.4, 57.0, 'module side up', ancPt(board, 'modTag'));
+  tag(55.8, 57.0, 'spare cable folds under', discPt([-6, 6.2, 16]), 'minor');
+  tag(58.8, 64.2, 'one earbud', pt(bud, [0, 9, 0]));
+  (function () { var th = 135 * D, p = SE.profO(SE.sOfY(SE.jag(th))); tag(70.3, 72.6, 'three teeth rest on the glass', pt(shell, [p.r * Math.cos(th), p.y, p.r * Math.sin(th)])); })();
+  tag(73.5, END, 'the flame', pt(led, [0, -5, 0]), 'h');
+
+  /* ------------------------------------------------------------ camera path */
+  // the table stands DY higher than it did under the ⌀ 48 glass (26 sep); the shots of the table follow it
+  var DY = TABLE + 44.03;
+  var CAMS = [
+    [0, [0, -26 + DY, 6], [60, 150 + DY, 300]], [4.6, [0, -26 + DY, 6], [0, 140 + DY, 292]],
+    [6.2, [-44, 6, 22], [-18, 80, 250]], [11.2, [-46, -8 + DY * 0.6, 12], [-6, 84 + DY * 0.6, 174]],
+    [12.6, [-10, -30 + DY, 58], [-6, 78 + DY, 200]], [16.4, [-8, -36 + DY, 62], [28, 62 + DY, 172]], [18.4, [2, -40 + DY, 62], [26, 44 + DY, 150]], [21.0, [2, -40 + DY, 62], [22, 44 + DY, 146]],
+    [22.4, [-8, 10, 36], [-24, -30, 176]], [26.2, [-8, 10, 36], [-44, -24, 162]], [28.8, [2, -10, 4], [40, 52, 206]],
+    [30.4, [22, 12, 6], [90, 76, 176]], [33.6, [20, 10, 4], [84, 64, 156]], [37.8, [16, 6, 4], [70, 56, 140]],
+    [39.6, [30, 16, 8], [96, 56, 150]], [44.2, [22, 6, 6], [80, 40, 146]], [47.6, [16, 6, 4], [70, 60, 150]],
+    [49.0, [12, 8, 0], [70, 92, 152]], [53.6, [14, 12, 2], [70, 84, 146]], [56.6, [0, 10, 0], [44, 88, 140]],
+    [57.6, [-70, -22 + DY, 62], [-28, 62 + DY, 236]], [59.4, [-50, 0, 40], [-8, 70, 210]], [61.6, [-14, 18, 14], [28, 76, 156]], [64.4, [0, 14, 0], [40, 88, 150]],
+    [66.2, [-6, 30, 2], [70, 110, 270]], [70.2, [0, 8, 0], [10, 44, 240]], [71.2, [0, 8, 0], [0, 30, 250]], [72, [0, 8, 0], [0, 30, 250]]
+  ].map(function (c) { return { t: c[0], tg: new V3(c[1][0], c[1][1], c[1][2]), ps: new V3(c[2][0], c[2][1], c[2][2]) }; });
+  function camAt(t) {
+    var k = CAMS, n = k.length, i = 0;
+    if (t >= k[n - 1].t) { // the rest: a slow orbit
+      var a = (t - k[n - 1].t) * 0.16, base = k[n - 1];
+      var off = base.ps.clone().sub(base.tg), r = Math.hypot(off.x, off.z), a0 = Math.atan2(off.x, off.z);
+      return { tg: base.tg.clone(), ps: new V3(base.tg.x + r * Math.sin(a0 + a), base.ps.y + 10 * Math.sin(a * 0.7), base.tg.z + r * Math.cos(a0 + a)) };
+    }
+    if (t <= k[0].t) return { tg: k[0].tg.clone(), ps: k[0].ps.clone() };
+    while (i < n - 2 && t >= k[i + 1].t) i++;
+    var u = ease((t - k[i].t) / (k[i + 1].t - k[i].t));
+    var tg = k[i].tg.clone().lerp(k[i + 1].tg, u);
+    var a1 = new THREE.Spherical().setFromVector3(k[i].ps.clone().sub(k[i].tg)), b1 = new THREE.Spherical().setFromVector3(k[i + 1].ps.clone().sub(k[i + 1].tg));
+    var dth = b1.theta - a1.theta; while (dth > PI) dth -= TAU; while (dth < -PI) dth += TAU;
+    var sp = new THREE.Spherical(a1.radius + (b1.radius - a1.radius) * u, a1.phi + (b1.phi - a1.phi) * u, a1.theta + dth * u);
+    return { tg: tg, ps: tg.clone().add(new V3().setFromSpherical(sp)) };
+  }
+  var controls = new THREE.OrbitControls(camera, canvas);
+  controls.enableDamping = true; controls.dampingFactor = 0.09; controls.enablePan = true; controls.minDistance = 30; controls.maxDistance = 900;
+  var follow = true, blendFrom = null, blendT = 0;
+  controls.addEventListener('start', function () { if (follow) { follow = false; $('follow').hidden = false; } });
+
+  /* ------------------------------------------------------------ cutaway */
+  var cutPlane = new THREE.Plane(new V3(1, 0, 0), 0), cutOn = false;
+  var CUT_MATS = [M.shellOut, M.shellIn, M.shellRim, crack.material];
+  function setCut(on) { cutOn = on; CUT_MATS.forEach(function (m) { m.clippingPlanes = on ? [cutPlane] : null; m.side = on ? THREE.DoubleSide : THREE.FrontSide; m.needsUpdate = true; }); $('cut').setAttribute('aria-pressed', on ? 'true' : 'false'); }
+
+  /* ------------------------------------------------------------ one frame */
+  var t = 0, playing = false, clock = 0, fit = 1;
+  function apply(t) {
+    for (var i = 0; i < ACT.length; i++) { var a = ACT[i]; a._t = NaN; }
+    for (i = 0; i < ACT.length; i++) { var b = ACT[i]; b.obj.matrix.copy(b.world(t)); b.obj.matrixWorldNeedsUpdate = true; }
+    // visibility, fades, bends
+    var bf = 1 - win(t, 9.2, 10.6);
+    bottom.obj.visible = bf > 0.01;
+    [MB.shellOut, MB.shellIn, MB.shellRim, MB.yolk].forEach(function (m) { var tr = bf < 0.999; if (m.transparent !== tr) { m.transparent = tr; m.needsUpdate = true; } m.opacity = bf; m.depthWrite = !tr; });
+    crack.material.opacity = win(t, 6.4, 7.0) * (1 - win(t, 7.3, 7.6));
+    crack.visible = crack.material.opacity > 0.01;
+    // the silicone: the sheet until it is cut, then the disc (each keeps its own clear)
+    var cut = win(t, 17.4, 18.4);
+    sheet.obj.visible = cut < 0.99; disc.obj.visible = cut > 0.01;
+    sheet.obj.userData.mats.forEach(function (m) { m.opacity = m.userData.base * (1 - cut); });
+    disc.obj.userData.mats.forEach(function (m) { m.opacity = m.userData.base * cut; });
+    sheet.obj.userData.trace(clamp01((t - PEN[0]) / (PEN[1] - PEN[0])));
+    var pk = t > PEN[0] - 0.8 && t < PEN[1] + 0.8;
+    marker.obj.visible = pk;
+    if (pk) { var th = TAU * clamp01((t - PEN[0]) / (PEN[1] - PEN[0])) + 0.2, rr0 = SE.DISC.R + 0.2, lift = (1 - win(t, PEN[0] - 0.8, PEN[0])) + win(t, PEN[1], PEN[1] + 0.8);
+      marker.obj.matrix.copy(T([SQ[0] + rr0 * Math.cos(th), SQ[1] + 12 * lift, SQ[2] + rr0 * Math.sin(th)])).multiply(new M4().makeRotationY(-th)).multiply(new M4().makeRotationZ(-0.16)); }
+    disc.obj.children.forEach(function (c) { if (c.name === 'pinhole') c.visible = disc.obj.visible && t > 19.2; });
+    // the hairlines come with the break
+    var hairOn = t >= 6.7; if ((M.shellOut.map !== null) !== hairOn) { M.shellOut.map = hairOn ? M.hair : null; M.shellOut.needsUpdate = true; }
+    var tp = win(t, TAPE[0], TAPE[1]); tape.obj.visible = tp > 0.01; tape.obj.matrix.multiply(new M4().makeScale(1, Math.max(0.01, tp), 1));
+    var lid = kase.obj.userData.lid; lid.rotation.x = -1.95 * (win(t, LID[0], LID[1]) - win(t, LID[2], LID[3])); lid.updateMatrixWorld(true);
+    board.obj.userData.paint.visible = t > PAINT;
+    M.pwrLed.emissiveIntensity = (((t >= POWER1 && t < UNPLUG) || t >= POWER2) && t < PAINT) ? 2.2 : 0;
+    updateWires(t);
+    // the flame
+    var b2 = flame(t, clock), gp = new V3(0, -4.2, 0).applyMatrix4(led.world(t));
+    M.ledRed.emissiveIntensity = 3.2 * b2;
+    glow.position.copy(gp); glow.material.opacity = Math.min(1, 1.1 * b2); glow.scale.setScalar(9 + 18 * b2); glow.visible = b2 > 0.01;
+    flameLight.position.copy(gp); flameLight.intensity = 2.2 * b2;
+    var onGlass = disc.world(t).elements[13] < 1 ? 1 : 0;
+    M.glassGlow.value = b2 * onGlass;
+    disc.obj.userData.mats[0].userData.glow.value = 0.8 * b2 * onGlass;
+    // the candling: once the shell is over the glass the flame's light comes up through the disc, into the shell
+    var sg = b2 * win(t, 69.4, 70.6);
+    M.shellOut.emissiveIntensity = 2.4 * sg; M.shellIn.emissiveIntensity = 2.2 * sg; M.shellRim.emissiveIntensity = 1.6 * sg;
+    // pairing
+    var pr = (t > PAIR[0] && t < PAIR[1]) ? Math.sin(PI * (t - PAIR[0]) / (PAIR[1] - PAIR[0])) : 0, bp = new V3().setFromMatrixPosition(bud.world(t));
+    for (i = 0; i < 3; i++) { var wv = (clock * 0.55 + i * 0.333) % 1; rings[i].material.opacity = pr * (1 - wv) * (1 - wv) * 0.9; rings[i].position.copy(bp); rings[i].scale.setScalar(10 + 40 * wv); rings[i].visible = pr > 0.01; }
+  }
+  function frameCamera(t, dt) {
+    var c = camAt(t);
+    var off = c.ps.clone().sub(c.tg).multiplyScalar(fit);
+    var ps = c.tg.clone().add(off);
+    if (follow) {
+      if (blendFrom) { blendT = Math.min(1, blendT + dt / 0.9); var u = ease(blendT); ps = blendFrom.ps.clone().lerp(ps, u); c.tg = blendFrom.tg.clone().lerp(c.tg, u); if (blendT >= 1) blendFrom = null; }
+      camera.position.copy(ps); controls.target.copy(c.tg); camera.lookAt(c.tg);
+    } else controls.update();
+    // cut through whichever way the camera looks, through the shell's own axis
+    if (cutOn) { var sp = new V3().setFromMatrixPosition(shell.world(t)), d = camera.position.clone().sub(sp); d.y = 0; if (d.lengthSq() < 1e-6) d.set(0, 0, 1); d.normalize().negate(); cutPlane.normal.copy(d); cutPlane.constant = -d.dot(sp); }
+  }
+  var tmpV = new V3();
+  function placeTags(t) {
+    var show = !$('tags').hidden, w = stage.clientWidth, h = stage.clientHeight, narrow = w < 620;
+    for (var i = 0; i < TAGS.length; i++) {
+      var g = TAGS[i], on = show && t >= g.t0 && t <= g.t1 && !(narrow && g.el.dataset.minor);
+      if (on) {
+        tmpV.copy(g.fn(t)).project(camera);
+        if (tmpV.z > 1 || Math.abs(tmpV.x) > 1.05 || Math.abs(tmpV.y) > 1.05) on = false;
+        else g.el.style.transform = 'translate(' + ((tmpV.x * 0.5 + 0.5) * w).toFixed(1) + 'px,' + ((-tmpV.y * 0.5 + 0.5) * h).toFixed(1) + 'px)';
+      }
+      g.el.style.opacity = on ? '1' : '0';
+    }
+  }
+
+  /* ------------------------------------------------------------ ui */
+  var scrub = $('scrub'), playBtn = $('play'), clockEl = $('clock');
+  scrub.max = String(END * 10);
+  function beatAt(t) { var i = 0; while (i < BEATS.length - 1 && t >= BEATS[i + 1].t) i++; return i; }
+  var shownBeat = -1;
+  function fmt(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function showBeat(i) {
+    if (i === shownBeat) return; shownBeat = i;
+    var b = BEATS[i];
+    $('beatno').textContent = i === 0 ? 'the kit' : 'step ' + i + ' of ' + (BEATS.length - 1);
+    $('beatname').textContent = b.name; $('act').textContent = b.act; $('pins').textContent = b.pins;
+    var items = document.querySelectorAll('#steps button');
+    for (var k = 0; k < items.length; k++) { if (k === i) items[k].setAttribute('aria-current', 'step'); else items[k].removeAttribute('aria-current'); }
+  }
+  function setPlaying(p) { playing = p; playBtn.setAttribute('aria-label', p ? 'pause' : 'play'); playBtn.dataset.state = p ? 'pause' : 'play'; }
+  function jump(to) { t = Math.max(0, Math.min(END, to)); if (!follow) { follow = true; $('follow').hidden = true; blendFrom = { ps: camera.position.clone(), tg: controls.target.clone() }; blendT = 0; } }
+  playBtn.addEventListener('click', function () { if (!playing && t >= END - 0.05) t = 0; setPlaying(!playing); });
+  $('prev').addEventListener('click', function () { var i = beatAt(t); jump(t - BEATS[i].t > 1.2 ? BEATS[i].t : BEATS[Math.max(0, i - 1)].t); });
+  $('next').addEventListener('click', function () { var i = beatAt(t); jump(i < BEATS.length - 1 ? BEATS[i + 1].t : END); });
+  var wasPlaying = false;
+  scrub.addEventListener('pointerdown', function () { wasPlaying = playing; setPlaying(false); });
+  scrub.addEventListener('input', function () { t = scrub.value / 10; });
+  scrub.addEventListener('change', function () { if (wasPlaying) setPlaying(true); wasPlaying = false; });
+  $('follow').addEventListener('click', function () { jump(t); });
+  $('cut').addEventListener('click', function () { setCut(!cutOn); });
+  $('lab').addEventListener('click', function () { var h = !$('tags').hidden; $('tags').hidden = h; $('lab').setAttribute('aria-pressed', h ? 'false' : 'true'); });
+  var stepList = $('steps');
+  BEATS.forEach(function (b, i) {
+    var li = document.createElement('li'), bt = document.createElement('button');
+    bt.type = 'button'; bt.innerHTML = '<span class="n"></span><span class="s"></span>';
+    bt.firstChild.textContent = String(i); bt.lastChild.textContent = b.name;
+    bt.addEventListener('click', function () { jump(b.t + 0.001); if (!playing) setPlaying(true); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    li.appendChild(bt); stepList.appendChild(li);
+  });
+  var ticks = $('ticks');
+  BEATS.forEach(function (b, i) { if (!i) return; var s = document.createElement('span'); s.style.left = (b.t / END * 100) + '%'; ticks.appendChild(s); });
+  document.addEventListener('keydown', function (e) {
+    if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if (e.key === ' ' && !(e.target && e.target.tagName === 'BUTTON')) { e.preventDefault(); playBtn.click(); }
+    else if (e.key === 'ArrowRight') $('next').click(); else if (e.key === 'ArrowLeft') $('prev').click();
+  });
+
+  function resize() {
+    var w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    fit = camera.aspect < 1.35 ? Math.pow(1.35 / camera.aspect, 0.9) : 1;
+  }
+  if (window.ResizeObserver) new ResizeObserver(resize).observe(stage); else window.addEventListener('resize', resize);
+  resize();
+
+  var last = performance.now();
+  function loop(now) {
+    var dt = Math.min(0.1, (now - last) / 1000); last = now; clock += dt;
+    if (playing) { t += dt; if (t >= END) { t = END; setPlaying(false); } }
+    if (!document.hidden) {
+      apply(t); frameCamera(t, dt); placeTags(t);
+      renderer.render(scene, camera);
+      if (document.activeElement !== scrub) scrub.value = Math.round(t * 10);
+      clockEl.textContent = fmt(t) + ' / ' + fmt(END);
+      showBeat(beatAt(t));
+    }
+    requestAnimationFrame(loop);
+  }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // hooks for a still-frame capture, and for the bench: the packed wires against the shell
+  window.SONGEGG = {
+    seek: function (s) { t = s; apply(t); frameCamera(t, 0); placeTags(t); renderer.render(scene, camera); showBeat(beatAt(t)); scrub.value = Math.round(t * 10); clockEl.textContent = fmt(t) + ' / ' + fmt(END); },
+    beats: BEATS, end: END, cut: setCut, pause: function () { setPlaying(false); },
+    fit: function () {
+      apply(END); var out = [];
+      WIRES.concat([{ key: 'legA', w: legA }, { key: 'legC', w: legC }]).forEach(function (W) {
+        var c = new THREE.CatmullRomCurve3(W.w.pts, false, 'centripetal'), least = Infinity, at = 0;
+        for (var i = 0; i <= 200; i++) { var p = c.getPointAt(i / 200); if (p.y <= 0.05) continue; var room = SE.shellInnerR(p.y) - Math.hypot(p.x, p.z) - W.w.r; if (room < least) { least = room; at = p.y; } }
+        out.push(W.key + ' ' + (least === Infinity ? 'under the disc' : least.toFixed(2) + ' mm at y ' + at.toFixed(1)));
+      });
+      return out;
+    }
+  };
+  setPlaying(!reduce && !/[?&]still\b/.test(MORTAL.search));
+  requestAnimationFrame(loop);
+})();
+
+</script>
+
+</body>
+</html>

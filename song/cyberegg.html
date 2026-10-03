@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:,">
+<title>the build</title>
+<!--
+  cyberegg.html — the build room. reached by tapping the egg's opened organs
+  in the kitchen. here the body is assembled: a sequence of films of the real
+  parts coming together, on true black, over a bed of small random cybernetic
+  tones (synthesized fresh, no files). a back button, and a little egg at the
+  top-center, both the way back up to the kitchen.
+
+  apwnp song-book · one file · plain script · web audio · iphone-safari safe.
+
+  iOS discipline followed throughout:
+   · videos are muted + playsinline, so the first film can autoplay on black;
+   · one AudioContext, resumed on the first touch (and kept resumed on a
+     heartbeat / visibility change / any pointerdown), because iOS forgets;
+   · the films are backed by wall-clock timers, since iOS `ended`/`timeupdate`
+     fire unreliably — the sequence advances on its own clock as well.
+-->
+<style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden;
+    -webkit-user-select:none;user-select:none;touch-action:none;
+    -webkit-tap-highlight-color:transparent}
+
+  /* the films — stacked, only the current one shown, all keyed to black.
+     object-fit:contain keeps the whole body in frame on any phone; the black
+     letterbox simply becomes the room. */
+  #stage{position:fixed;inset:0;z-index:1}
+  #stage video{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:contain;background:#000;
+    opacity:0;transition:opacity .9s ease;
+    pointer-events:none;
+  }
+  #stage video.on{opacity:1}
+
+  /* a faint scanline breath over everything, so the black reads as a live
+     screen the body is being built inside — very quiet, never a curtain */
+  #scan{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;
+    background:repeating-linear-gradient(to bottom,
+      rgba(150,200,255,.0) 0px, rgba(150,200,255,.0) 2px,
+      rgba(120,170,255,.20) 3px, rgba(120,170,255,.0) 4px);
+    mix-blend-mode:screen}
+
+  /* the little egg, top-center — the way back up to the kitchen */
+  #egg{position:fixed;top:calc(14px + env(safe-area-inset-top));left:50%;
+    transform:translateX(-50%);z-index:6;width:38px;height:50px;
+    cursor:pointer;opacity:.92;transition:opacity .3s ease,transform .3s ease;
+    -webkit-tap-highlight-color:transparent}
+  #egg:active{transform:translateX(-50%) scale(.9)}
+  #egg svg{display:block;width:100%;height:100%;overflow:visible}
+
+  /* the back button, bottom-left — plain, in the song-book's mono voice */
+  #back{position:fixed;left:14px;bottom:calc(16px + env(safe-area-inset-bottom));
+    z-index:6;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    font-size:12px;letter-spacing:.14em;color:#7fa8d6;
+    background:rgba(14,20,34,.5);border:1px solid rgba(125,170,220,.32);
+    border-radius:7px;padding:8px 14px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:color .25s ease,border-color .25s ease}
+  #back:active{color:#cfe4ff;border-color:rgba(125,170,220,.7)}
+
+  /* a one-time hint on black, until the first film is up and running */
+  #veil{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;
+    background:#000;color:#5b6f8e;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    font-size:12px;letter-spacing:.18em;transition:opacity 1s ease;pointer-events:none}
+  #veil.gone{opacity:0}
+
+  #dbg{position:fixed;left:10px;top:calc(10px + env(safe-area-inset-top));
+    font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.06em;
+    color:#5a6a86;white-space:pre-line;display:none;z-index:9;max-width:80vw}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="scan"></div>
+
+<!-- the egg home button: an outline egg with a faint circuit-glow belly -->
+<div id="egg" aria-label="back to the kitchen" role="button" tabindex="0">
+  <svg viewBox="0 0 38 50" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="belly" cx="50%" cy="62%" r="55%">
+        <stop offset="0%" stop-color="#bfe0ff" stop-opacity=".55"/>
+        <stop offset="55%" stop-color="#6fa8ff" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#6fa8ff" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <path d="M19 2 C9 2 3 20 3 31 C3 42 10 48 19 48 C28 48 35 42 35 31 C35 20 29 2 19 2 Z"
+          fill="url(#belly)" stroke="#cfe4ff" stroke-width="1.4" stroke-opacity=".85"/>
+    <circle id="eggpulse" cx="19" cy="33" r="3.2" fill="#dff0ff" fill-opacity=".9"/>
+  </svg>
+</div>
+
+<button id="back">&#8592; kitchen</button>
+
+<div id="veil">assembling&#8230;</div>
+<div id="dbg"></div>
+
+<script>
+(function(){
+'use strict';
+
+var TEST=/[?&]test/.test(location.search);
+
+/* ---- the films, in the order the body comes together ---- */
+/* exactly as given: two clips, played 01 → 02 → 01, then the loop repeats */
+var CLIPS=[
+  'https://kohmedia.b-cdn.net/kitegg01.MP4',
+  'https://kohmedia.b-cdn.net/kitegg02.MP4',
+  'https://kohmedia.b-cdn.net/kitegg01.MP4'
+];
+var GUARD_MS=14000;   /* the longest we ever wait on a single film before iOS' silence is overruled and we advance ourselves */
+
+var stageEl=document.getElementById('stage');
+var veil=document.getElementById('veil');
+var dbgEl=document.getElementById('dbg');
+
+function dbg(x){
+  if(!TEST) return;
+  dbgEl.style.display='block';
+  dbgEl.textContent='audio: '+(AC?AC.state:'none')+' · clip '+cur+'/'+CLIPS.length+(x?('\n'+x):'');
+}
+window.addEventListener('error',function(e){ dbg('err: '+(e.message||'?')); });
+
+/* build one <video> per clip, all muted + inline so black-screen autoplay is
+   allowed. only one is ever 'on' (opacity 1) at a time. */
+var vids=[], cur=0, guardTimer=null, started=false;
+function makeVids(){
+  var i;
+  for(i=0;i<CLIPS.length;i++){
+    var v=document.createElement('video');
+    v.src=CLIPS[i];
+    v.muted=true; v.defaultMuted=true;
+    v.setAttribute('muted','');
+    v.setAttribute('playsinline','');
+    v.setAttribute('webkit-playsinline','');
+    v.preload='auto';
+    v.playsInline=true;
+    v.loop=false;
+    (function(idx,vv){
+      vv.addEventListener('ended', function(){ if(idx===cur) advance(); });   /* trust it when it does fire */
+    })(i,v);
+    stageEl.appendChild(v);
+    vids.push(v);
+  }
+}
+
+function showClip(i){
+  cur=i;
+  var k;
+  for(k=0;k<vids.length;k++){
+    if(k===i) vids[k].classList.add('on');
+    else vids[k].classList.remove('on');
+  }
+  var v=vids[i];
+  try{ v.currentTime=0; }catch(e){}
+  var p=v.play(); if(p&&p.then) p.catch(function(){ /* iOS may need the gesture; the tap handler retries */ });
+  /* the wall-clock safety net: whatever the film reports, we move on. use the
+     film's own duration when we can read it, capped, else the max wait. */
+  if(guardTimer){ clearTimeout(guardTimer); }
+  var wait=GUARD_MS;
+  if(isFinite(v.duration) && v.duration>0.2) wait=Math.min(GUARD_MS, (v.duration+0.4)*1000);
+  guardTimer=setTimeout(function(){ if(cur===i) advance(); }, wait);
+  dbg();
+}
+
+function advance(){
+  showClip((cur+1)%CLIPS.length);   /* 01 → 02 → 01 → 01 → 02 … an unbroken build */
+}
+
+function beginFilms(){
+  if(started) return; started=true;
+  if(veil){ veil.classList.add('gone'); }
+  showClip(0);
+}
+
+/* ---- the cybernetic tones: small random digital voices ---- */
+/* a bed of assembly sounds — clean chirps, tiny blips, an occasional low
+   servo whir and a soft data-warble. all synthesized in the moment. they fire
+   on their own irregular clock so the room never sounds looped. */
+var AC=null, toneBus=null, toneTimer=null;
+
+function buildAudio(){
+  var Ctor=window.AudioContext||window.webkitAudioContext;
+  if(!Ctor) return;
+  try{
+    AC=new Ctor();
+    toneBus=AC.createGain(); toneBus.gain.value=0.9;
+    var lim=AC.createDynamicsCompressor();
+    lim.threshold.value=-14; lim.knee.value=14; lim.ratio.value=12;
+    lim.attack.value=0.003; lim.release.value=0.2;
+    toneBus.connect(lim); lim.connect(AC.destination);
+  }catch(e){ AC=null; }
+}
+
+/* keep the context awake — iOS suspends it behind your back */
+function armAudio(){
+  if(!AC) return;
+  if(AC.state!=='running'){ AC.resume().then(dbg).catch(function(){}); }
+}
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState==='visible'){ armAudio();
+    /* the films can stall when hidden — nudge the current one back to life */
+    if(started && vids[cur]){ var p=vids[cur].play(); if(p&&p.then) p.catch(function(){}); }
+  }
+});
+setInterval(armAudio, 4000);   /* heartbeat */
+
+/* one small digital event — picked at random each time */
+function blip(){
+  if(!AC) return;
+  try{
+    var t=AC.currentTime+0.005;
+    var roll=Math.random();
+    if(roll<0.55){
+      /* a chirp: a fast pitch sweep, square or triangle, short and clean */
+      var o=AC.createOscillator();
+      o.type=(Math.random()<0.5)?'square':'triangle';
+      var f0=420+Math.random()*2600;
+      var f1=f0*(0.35+Math.random()*2.6);
+      o.frequency.setValueAtTime(f0,t);
+      o.frequency.exponentialRampToValueAtTime(Math.max(60,f1), t+0.04+Math.random()*0.05);
+      var g=AC.createGain();
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(0.05+Math.random()*0.05, t+0.006);
+      g.gain.exponentialRampToValueAtTime(0.0006, t+0.06+Math.random()*0.10);
+      o.connect(g); g.connect(toneBus);
+      o.start(t); o.stop(t+0.24);
+    } else if(roll<0.80){
+      /* a data-warble: two close sines beating, gated into little pulses */
+      var a=AC.createOscillator(), b=AC.createOscillator();
+      a.type='sine'; b.type='sine';
+      var base=300+Math.random()*1400;
+      a.frequency.value=base; b.frequency.value=base*(1.0+ (Math.random()*0.04));
+      var wg=AC.createGain(); wg.gain.value=0;
+      a.connect(wg); b.connect(wg); wg.connect(toneBus);
+      var n=2+((Math.random()*4)|0), tc=t, k;
+      for(k=0;k<n;k++){
+        wg.gain.setValueAtTime(0.0, tc);
+        wg.gain.linearRampToValueAtTime(0.03+Math.random()*0.03, tc+0.006);
+        wg.gain.linearRampToValueAtTime(0.0, tc+0.03+Math.random()*0.02);
+        tc+=0.05+Math.random()*0.05;
+      }
+      a.start(t); b.start(t); a.stop(tc+0.1); b.stop(tc+0.1);
+    } else {
+      /* a low servo whir: a sawtooth through a lowpass, rising then off */
+      var sv=AC.createOscillator(); sv.type='sawtooth';
+      sv.frequency.setValueAtTime(60+Math.random()*50, t);
+      sv.frequency.linearRampToValueAtTime(120+Math.random()*90, t+0.22);
+      var lp=AC.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=380;
+      var sg=AC.createGain();
+      sg.gain.setValueAtTime(0,t);
+      sg.gain.linearRampToValueAtTime(0.03, t+0.03);
+      sg.gain.linearRampToValueAtTime(0.0, t+0.28+Math.random()*0.1);
+      sv.connect(lp); lp.connect(sg); sg.connect(toneBus);
+      sv.start(t); sv.stop(t+0.4);
+    }
+  }catch(e){}
+}
+
+/* schedule the next tone at an irregular interval — sometimes a quick flurry,
+   sometimes a breath of quiet, so it reads as a machine thinking, not a beat */
+function scheduleTones(){
+  if(toneTimer) clearTimeout(toneTimer);
+  var gap;
+  if(Math.random()<0.30) gap=90+Math.random()*180;    /* a quick double/triple */
+  else gap=380+Math.random()*900;                      /* the usual spacing */
+  toneTimer=setTimeout(function(){
+    blip();
+    if(Math.random()<0.22) setTimeout(blip, 60+Math.random()*90);   /* the odd echo */
+    scheduleTones();
+  }, gap);
+}
+
+/* ---- the pulse in the egg's belly ---- */
+var eggPulse=document.getElementById('eggpulse'), pt=0;
+function pulse(){
+  pt+=0.05;
+  if(eggPulse){
+    var o=0.55+0.45*Math.sin(pt*1.7)+0.12*Math.sin(pt*5.3);
+    eggPulse.setAttribute('fill-opacity', Math.max(0.2, Math.min(1,o)).toFixed(3));
+    eggPulse.setAttribute('r', (3.0+0.5*Math.sin(pt*1.7)).toFixed(2));
+  }
+  requestAnimationFrame(pulse);
+}
+
+/* ---- leaving: let go of everything so the kitchen can have the screen ---- */
+function stopAll(){
+  try{ var i; for(i=0;i<vids.length;i++){ vids[i].pause(); } }catch(e){}
+  try{ if(toneTimer) clearTimeout(toneTimer); }catch(e){}
+  try{ if(AC && AC.state!=='closed') AC.close(); }catch(e){}
+}
+window.addEventListener('pagehide', stopAll);
+
+function goKitchen(){
+  stopAll();
+  /* if we were opened inside the tunnel's frame, tell the parent; otherwise
+     step back through history, else load the kitchen directly */
+  var framed=false;
+  try{ framed=!!(window.parent && window.parent!==window); }catch(e){ framed=true; }
+  if(framed){ try{ parent.postMessage({apwnp:'close-jewel'}, '*'); }catch(e2){} }
+  if(history.length>1) history.back();
+  else location.href='kitchen.html';
+}
+
+document.getElementById('egg').addEventListener('click', goKitchen);
+document.getElementById('egg').addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') goKitchen(); });
+document.getElementById('back').addEventListener('click', goKitchen);
+
+/* ---- wake on the first touch (and start audio + films there) ---- */
+/* the first film is muted, so it may autoplay on load; but the tones need a
+   gesture, and iOS often wants the films nudged in a gesture too. one tap
+   anywhere starts (or re-affirms) both. */
+var woke=false;
+function wake(){
+  armAudio();
+  if(!woke){
+    woke=true;
+    scheduleTones();
+  }
+  beginFilms();
+  /* nudge the current film in case autoplay was refused */
+  if(vids[cur]){ var p=vids[cur].play(); if(p&&p.then) p.catch(function(){}); }
+  dbg();
+}
+window.addEventListener('pointerdown', function(e){
+  /* let the egg and the back button do their own thing */
+  if(e.target && e.target.closest && e.target.closest('#egg,#back')) { armAudio(); return; }
+  wake();
+}, {passive:true});
+
+/* ---- boot ---- */
+try{ buildAudio(); }catch(e){}
+makeVids();
+/* try to start the films immediately (muted autoplay); if the browser allows
+   it the veil lifts on its own, otherwise it waits for the first touch */
+window.addEventListener('load', function(){
+  var p=vids[0] && vids[0].play();
+  if(p&&p.then) p.then(function(){ beginFilms(); }).catch(function(){ /* wait for tap */ });
+  else beginFilms();
+});
+requestAnimationFrame(pulse);
+dbg();
+})();
+</script>
+</body>
+</html>

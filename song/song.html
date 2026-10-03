@@ -1,0 +1,1481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:,">
+<title>the bone</title>
+<!--
+  the bone — the ocean · v0 step 2.6 (deeper tone · wordless · flame→dot · 8s release)
+  apwnp · one file · plain script · web audio · iphone-safari safe
+
+  THE TURN BACK FROM SOLITUDE
+    the song is UNMET CONNECTION: the tone you hum into is the accumulated
+    others, felt as pitch in your own skull, and no one is told. 174 hz (psr
+    j0437-4715) is the ORIGIN, not the home; the song is what the lineage
+    makes of it. nothing is ever printed: the connection lives in the sound.
+
+  STEP 2.6 (this build)
+    · WORDLESS EXPERIENCE. the three in-rite instructions are removed — moved
+      to a static WALL LABEL placed in the contents, just before the bone, so
+      a cold user reads them at their own pace and the module itself is pure
+      (no text to process mid-tone, no printed line that could be false, and
+      no exit confusion — the label says how it ends). after the tone settles,
+      the ear simply opens.
+    · DEEPER TONE. voiced with the low octave (root/2) as its body and the
+      upper partials softened, to invite the low whole-body hum that lands
+      most satisfyingly. the corridor stays octave-folded, so any voice may
+      still land its own octave — this changes where the tone INVITES the
+      body, never what counts. (sub/partial gains are TUNE.)
+    · UNISON FLOOR (06-15 fix). the deep sub was loud enough to bleed into the
+      mic at the skull's sweet spot and fold to a false unison BEFORE humming
+      (the rite completing itself). the detector floor is now 130 hz — above
+      the 87 hz sub — so the speaker's own sub is undetectable (a pure sine
+      has no in-range autocorrelation peak there) and can never auto-complete;
+      you reach unison by HUMMING the octave up (~174), which the fold counts.
+      the deep tone stays for the skull. (MIC.fMin is TUNE.)
+    · FLAME → DOT. a soft flame is on at rest (the contents' living symbol);
+      on entry it collapses, fast, into the dot — the flame becomes the point
+      where the rite happens. suppressible (window.BONE_NO_FLAME / ?noflame)
+      so the same-document house can run its own flame→dot morph instead.
+    · SMALLER DOT. reduced to a bare point (3px) — this is a listening, not a
+      watching. it still blooms warm via the guide as the hum nears unison.
+    · the quiet/RELEASE is 8 s (was 13). on a held unison the tone fades to
+      silence over 8 s and the dot fades to dark; then it is a black, silent
+      screen with NO exit — the participant leaves (browser back, or in the
+      house the flame returns). those who never find unison are never forced
+      out; the tone simply goes on.
+    · THE WRITE (step 3, live). at unison the bone POSTs the raw landed hz to
+      the chain's /bend, once, fire-and-forget. the server does the fold, the
+      de-bias and the drift; nothing identifying travels; a failed write is
+      silent (the rite is identical either way). never sent during a ?hz test.
+      the chain is now the OCEAN: no last-hand bias, slackened gravity, and a
+      slow estimate of the shared human lean subtracted from every landing, so
+      the served root DRIFTS — 173.68 is the origin the tone leaves, carrying
+      everyone before you. (?test writes a real hum; ?hz=174 dev's without
+      writing.) the EC-holds, accumulate-total, mask-reachable rite is whole.
+
+  DECIDED, FOR INTEGRATION (house chat's to wire): the bone renders SAME-
+  DOCUMENT inside the flame (no iframe), so the first flame tap unlocks audio
+  for the whole page and the tone is already singing when a stranger reaches
+  the bone on iphone — the flame always on. + the wall label sits before the
+  bone link. + reconcile the flame→dot morph (let the bone do it, or set
+  BONE_NO_FLAME and morph house-side).
+
+  KEPT: the bodily clock (no fixed end unless unison ends it), the silence,
+  the bareness (now one point, black, no chrome/fonts/images), the iOS audio
+  hardening. ?test → quarter-time settle + the debug line. full arc default.
+-->
+<style>
+  :root{ color-scheme: dark; }
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:#000; color:#cfcfcf;
+    overflow:hidden; overscroll-behavior:none;
+  }
+  body{
+    position:fixed; inset:0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select:none; user-select:none;
+    touch-action:none; cursor:default;
+  }
+
+  /* the dot — the barest point, dead centre, gold. its glow is the tone's
+     amplitude; it blooms warm as the hum nears unison. kept as small as a
+     symbol can be: this is a listening, not a watching. */
+  #dot{
+    position:absolute; left:50%; top:50%;
+    width:3px; height:3px; margin:-1.5px 0 0 -1.5px;
+    border-radius:50%;
+    background: radial-gradient(circle at 50% 50%,
+                 rgba(255,247,200,0.99) 0%,
+                 rgba(255,228,128,0.92) 44%,
+                 rgba(255,224,110,0.0) 80%);
+    filter: blur(0.3px);
+    opacity:0;
+    will-change: opacity, transform;
+    pointer-events:none;
+  }
+
+  /* the flame — always on at rest (the contents' living symbol, carried in).
+     on entry it collapses, fast, into the dot: the flame becomes the point
+     where the rite happens. a soft amber glow, not a cartoon fire.
+     suppressible (window.BONE_NO_FLAME / ?noflame) so the same-document
+     house can do its own flame→dot morph instead. */
+  #flame{
+    position:absolute; left:50%; top:50%;
+    width:30px; height:52px; margin:-30px 0 0 -15px;
+    border-radius:50% 50% 48% 48% / 62% 62% 38% 38%;
+    background: radial-gradient(ellipse 62% 74% at 50% 72%,
+                 rgba(255,248,214,0.96) 0%,
+                 rgba(255,216,116,0.86) 30%,
+                 rgba(255,166,66,0.42) 58%,
+                 rgba(255,138,44,0.0) 80%);
+    filter: blur(1.3px);
+    opacity:0;
+    transform-origin:50% 60%;        /* collapse toward the core ≈ the dot's spot at centre */
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes flame-flicker {
+    0%,100%{ transform: scaleY(1) scaleX(1) translateY(0); opacity:0.92; }
+    22%{ transform: scaleY(1.07) scaleX(0.96) translateY(-1px); opacity:1; }
+    48%{ transform: scaleY(0.95) scaleX(1.03) translateY(0.5px); opacity:0.84; }
+    71%{ transform: scaleY(1.05) scaleX(0.98) translateY(-0.5px); opacity:0.96; }
+  }
+  #flame.lit{ opacity:1; animation: flame-flicker 1.7s ease-in-out infinite; }
+  #flame.collapse{
+    animation:none;
+    transition: transform .42s cubic-bezier(.55,0,.7,1), opacity .42s ease;
+    transform: scale(0.05); opacity:0;
+  }
+
+  /* the line — three plain instructions, each consumed, never replaced. */
+  #line{
+    position:absolute; left:50%; top:63%;
+    transform: translate(-50%,0);
+    width:min(84vw, 30rem); text-align:center;
+    font-size: clamp(1rem, 4.6vw, 1.16rem);
+    font-weight:400; line-height:1.62;
+    letter-spacing:0.10em;
+    color:#cfcfcf; opacity:0;
+    transition: opacity 4s ease;
+    pointer-events:none;
+  }
+
+  #dbg{
+    position:fixed; left:10px; top:10px;
+    font-family: ui-monospace, Menlo, monospace;
+    font-size:11px; line-height:1.45; color:#5a5a5a;
+    white-space:pre; display:none; pointer-events:none;
+  }
+  @media (prefers-reduced-motion: reduce){ #line{ transition-duration:0.7s; } }
+
+  /* ---- the cochlea + the endolymph (merged same-document, inward from the
+     bone). its #flame/#dot/#dbg are renamed #cflame/#cdot/#cdbg to clear the
+     bone's ids; its html/body rules are dropped; its tones run on the bone's
+     context. the flame look and the koan are untouched. ---- */
+  #stage{position:absolute;inset:0}
+
+  #cdot{
+    position:absolute;left:50%;top:50%;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 50%,
+      rgba(255,247,200,0.99) 0%, rgba(255,228,128,0.92) 44%, rgba(255,224,110,0) 80%);
+    -webkit-filter:blur(.3px);filter:blur(.3px);
+    opacity:0;z-index:6;pointer-events:none;
+    transition:opacity .6s ease, transform 1.0s cubic-bezier(.5,0,.2,1);
+  }
+  #cdot.sink{transform:translateY(42vh) scale(.5);opacity:0}
+  #dothit{position:absolute;inset:0;display:none;z-index:7}
+  #dothit.on{display:block}
+
+  #cochlea{position:absolute;inset:0;display:none;align-items:center;justify-content:center}
+  #cochlea.open{display:flex}
+  #knobwrap{
+    position:relative;width:min(64vw,280px);height:min(64vw,280px);
+    transition:transform .7s cubic-bezier(.5,0,.2,1), opacity .6s ease;
+    touch-action:none;z-index:4;
+  }
+  #knobwrap.bloomin{transform:scale(.06);opacity:0}
+  #knobwrap.collapse{transform:scale(.04);opacity:0}
+  #knobwrap.blooming{transition:transform 2.2s cubic-bezier(.4,0,.2,1), opacity 1.6s ease}
+
+  #cflame{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+  #lens{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+
+  /* css fallback glass — only if webgl is unavailable. dark + thin rim. */
+  #lens2d{
+    position:absolute;inset:0;border-radius:50%;overflow:hidden;z-index:2;display:none;pointer-events:none;
+    -webkit-backdrop-filter:blur(1.2px) brightness(1.02);
+    backdrop-filter:blur(1.2px) brightness(1.02);
+    background:radial-gradient(circle at 50% 40%, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.0) 40%, rgba(0,0,0,0.35) 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.06),
+      inset 0 1px 2px rgba(255,255,255,0.30),
+      inset 0 -8px 20px rgba(0,0,0,0.65),
+      0 0 1px rgba(255,255,255,0.55);
+  }
+  #lens2d::before{
+    content:'';position:absolute;left:18%;top:8%;width:22%;height:14%;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,0.7), rgba(255,255,255,0) 70%);
+    -webkit-filter:blur(1px);filter:blur(1px);mix-blend-mode:screen;
+  }
+
+  #void{position:absolute;inset:0;background:#000;display:none;z-index:8}
+  #void.open{display:block}
+  #voidcanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:9}
+
+  #cdbg{
+    position:absolute;left:10px;bottom:calc(10px + env(safe-area-inset-bottom));
+    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.06em;
+    color:#5a554a;white-space:pre;display:none;z-index:20;pointer-events:none;
+  }
+</style>
+</head>
+<body>
+  <div id="flame"></div>
+  <div id="dot"></div>
+  <div id="line"></div>
+  <div id="dbg"></div>
+
+  <!-- the two inner rooms (cochlea · endolymph), reached inward from the bone -->
+  <div id="stage">
+  <div id="cochlea">
+    <div id="knobwrap">
+      <canvas id="cflame" aria-hidden="true"></canvas>
+      <canvas id="lens" aria-hidden="true"></canvas>
+      <div id="lens2d"></div>
+    </div>
+  </div>
+
+  <div id="void"><canvas id="voidcanvas" aria-hidden="true"></canvas></div>
+
+  <div id="cdot"></div>
+  <div id="dothit"></div>
+  <div id="cdbg"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------------- config ---------------- */
+var TEST = /[?&]test/.test(location.search);
+var T = TEST ? 0.25 : 1;            /* scales the guided intro only — never the session */
+
+var ROOT = 173.68;                  /* hz — psr j0437-4715, the dead star's exact spin (period 5.7575 ms →
+                                       173.69/s): the ORIGIN. the inherited tone overwrites it at entry. */
+/* TEST ONLY — ?hz=130 forces the root, to feel a different note in the skull before
+   committing the project. when set, the chain fetch does not overwrite it, AND no
+   write is sent (a test pitch must never pollute the live tide). */
+var ROOT_OVERRIDE = parseFloat((location.search.match(/[?&]hz=([\d.]+)/) || [])[1]);
+var ROOT_LOCKED = isFinite(ROOT_OVERRIDE) && ROOT_OVERRIDE >= 60 && ROOT_OVERRIDE <= 400;
+if (ROOT_LOCKED) ROOT = ROOT_OVERRIDE;
+var CHAIN_BASE = 'https://apwnp-chain.kohbunny.partykit.dev';
+var CHAIN_URL  = CHAIN_BASE + '/root';   /* read the inherited tone at entry */
+var BEND_URL   = CHAIN_BASE + '/bend';   /* write the landed pitch at unison (step 3) */
+var rootInfo = 'root …';            /* debug readout: hz + source (chain / fallback / cut / late) */
+var BREATH_S = 13.0;                /* one gentle swell; the bodily clock */
+
+var SHOW_FLAME = !window.BONE_NO_FLAME && !/[?&]noflame/.test(location.search);  /* house can suppress and do its own morph */
+
+/* the three instructions are GONE from the experience — moved to a static
+   wall label in the contents, read before entering, so the module is pure
+   (no text that could confuse or could be false). kept here only as record. */
+var LINES = [ 'touch phone speaker to ear', 'hum the tone', 'close your eyes' ];
+var SETTLE = 5.0 * T;               /* the tone establishes before the ear opens */
+
+/* the guide (wordless): as the hum nears any octave of the root the dot
+   responds to YOU — brightening, steadying, blooming — covering the blind
+   stretch the beats can't. landing still requires the ±24¢ corridor. */
+var OUTER_C = 450;                  /* TUNE — cents from the nearest octave where the guide begins to warm */
+
+/* the corridor BREATHES. it starts forgiving and, the longer you genuinely hum
+   in the right ballpark, opens wider — so a child reaches unison with medium
+   effort inside ~16 s, while a wrong pitch is never carried in (the breathing is
+   gated on being roughly right). dead-centre also fills the hold faster. */
+var CORR_MIN   = 34;                /* TUNE — the corridor at the first second (cents, octave-folded; was a flat 24) */
+var CORR_MAX   = 46;                /* TUNE — the widest it ever breathes to (keep < 50: beyond, the note turns ambiguous) */
+var OPEN_S     = 16;                /* TUNE — seconds of in-ballpark humming over which the corridor opens MIN → MAX */
+var BALLPARK_C = 230;              /* TUNE — within this of an octave, the corridor keeps opening (and the hold can fill) */
+var CLOSE_BOOST = 1.0;              /* TUNE — dead-centre fills the hold up to (1+this)× faster than the corridor's edge */
+var corrNow    = CORR_MIN;          /* the live corridor (cents), recomputed each mic frame from accumulated effort */
+var effortMs   = 0;                 /* accumulated ms of in-ballpark humming — opens the corridor; never punished */
+
+/* the audible reward — all within the laws (sounding, not chrome): as you near
+   unison the tone SETTLES (its throb stills, its drift calms) and a soft octave
+   warms in; at the instant of meeting a shimmer BLOOMS, then rides the release. */
+var WARM_MAX = 0.05;                /* TUNE — loudness of the homing shimmer at unison (0 to silence it) */
+var BLOOM_A  = 0.16;                /* TUNE — loudness of the bloom struck at the moment of unison */
+var HAPTIC   = true;                /* a single soft buzz at unison (android; iOS browsers cannot vibrate) */
+
+var RELEASE_S = 8.0;                /* unison releases the tone: the slow fade to silence (seconds) */
+
+/* ---------------- dom ---------------- */
+function el(id){ return document.getElementById(id); }
+var dotEl = el('dot'), lineEl = el('line'), dbgEl = el('dbg'), flameEl = el('flame');
+if (SHOW_FLAME && flameEl) flameEl.classList.add('lit');   /* the flame is on at rest, waiting for the tap */
+else if (flameEl) flameEl.style.display = 'none';
+
+/* ---------------- state ---------------- */
+var state = 'idle';                 /* idle → rite → tuning → released (the song lets go) */
+var begun = false, started = false;
+var boneDotHeld = false;            /* once the cochlea takes the light, the bone stops driving its dot */
+var startT = 0;
+var ctx = null, master = null, drone = null, comp = null, oscs = [], silentEl = null;
+var dp = {};                        /* live audio handles the breath loop modulates: throb, drift, shimmer, bloom */
+var ampAnalyser = null, ampBuf = null, ampSmooth = 0;
+var breathValue = 0;
+var proxTarget = 0, proxSmooth = 0;  /* the guide: 0 far / 1 at unison, smoothed */
+var releaseT = 0;                    /* when the tone began letting go */
+
+function now(){ return (performance && performance.now) ? performance.now() : Date.now(); }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+/* ---------------- debug ---------------- */
+function dbg(extra){
+  if (!TEST) return;
+  dbgEl.style.display = 'block';
+  var s = 'audio: ' + (ctx ? ctx.state : 'none') + ' · ' + state;
+  s += '\n' + rootInfo + ' · ' + micInfo;
+  s += '\nbreath ' + breathValue.toFixed(2) + ' · amp ' + ampSmooth.toFixed(3);
+  if (micLive) s += '\n' + micLive;
+  if (writeInfo) s += '\n' + writeInfo;
+  if (extra) s += '\n' + extra;
+  dbgEl.textContent = s;
+}
+window.addEventListener('error', function(e){ if (TEST) dbg('err: ' + (e.message||'?')); });
+
+/* ---------------- the inherited tone ----------------
+   one read of the chain at entry. applied only while the rite has not yet
+   begun — the root is locked at the first touch and never retuned mid-rite.
+   wire cut → 174, the origin, held. this is the only network the running
+   instance touches; nothing is ever sent (the write returns in step 3). */
+function fetchRoot(){
+  if (ROOT_LOCKED){ rootInfo = 'root ' + ROOT.toFixed(3) + ' · forced (?hz)'; dbg(); return; }
+  try{
+    var ctrl = ('AbortController' in window) ? new AbortController() : null;
+    if (ctrl) setTimeout(function(){ try{ ctrl.abort(); }catch(e){} }, 5000);
+    fetch(CHAIN_URL, ctrl ? { signal: ctrl.signal, cache:'no-store' } : { cache:'no-store' })
+      .then(function(r){ if (!r.ok) throw 0; return r.json(); })
+      .then(function(d){
+        var r = d && +d.root;
+        if (!(r && isFinite(r) && r > 100 && r < 300)) throw 0;
+        if (!begun){
+          ROOT = r;
+          rootInfo = 'root ' + r.toFixed(3) + ' · ' + (d.source === 'chain' ? 'chain' : 'fallback');
+        } else {
+          rootInfo = 'root ' + ROOT.toFixed(3) + ' · late, held';   /* the rite had begun — the origin stood */
+        }
+        dbg();
+      })
+      .catch(function(){ rootInfo = 'root ' + ROOT.toFixed(3) + ' · cut'; dbg(); });  /* wire cut — the origin holds */
+  }catch(e){}
+}
+
+/* ---------------- the write (step 3) ----------------
+   the one thing the rite sends: the raw hz the body landed on, posted once,
+   at unison. the server does everything else — the fold, the de-bias, the
+   drift. nothing identifying travels; the reply is an empty 204. it is
+   fire-and-forget: the experience is identical whether it lands or not, and a
+   failed write is silent (the chain simply doesn't inherit this one breath).
+   never sent during a ?hz pitch-test — a fake pitch must not enter the tide. */
+function sendBend(hz){
+  if (sentBend || ROOT_LOCKED || !(hz > 0)) return;
+  sentBend = true;
+  try{
+    fetch(BEND_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ pitch: hz }),
+      cache: 'no-store',
+      keepalive: true                          /* let it complete even as the page closes */
+    }).then(function(){ writeInfo = 'bend sent ' + hz.toFixed(2); dbg(); })
+      .catch(function(){ writeInfo = 'bend failed (silent)'; dbg(); });
+  }catch(e){ writeInfo = 'bend failed (silent)'; }
+}
+
+/* ---------------- the house signal (when embedded) ----------------
+   when the bone runs inside the house as a same-origin iframe, it tells the
+   parent two things, so the house can fade its ember into the bone's dot and,
+   later, offer the way back. no-op when standalone (no parent). format is a
+   proposal — the house chat can ask for a different shape.
+     state 'lit'      — the rite has begun, the dot is taking over from the
+                        ember; the house can crossfade the ember out.
+     state 'released' — unison was found, the tone is fading to dark; the
+                        house can reveal its way back (the ✕ / the contents). */
+function signalHouse(state){
+  try{
+    if (window.parent && window.parent !== window){
+      window.parent.postMessage({ source: 'apwnp-bone', state: state }, '*');
+    }
+  }catch(e){}
+}
+
+/* ---------------- audio: the breathing root ----------------
+   warm, loud, continuous. two roots detuned ~0.45 hz beat into a throb;
+   a gentle compressor adds density and guards the ceiling. the dot reads
+   the real output amplitude. */
+function buildAudio(){
+  var AC = window.AudioContext || window.webkitAudioContext;
+  ctx = new AC();
+  ctx.onstatechange = function(){ if (ctx && ctx.state === 'running') beginRite(); };
+
+  master = ctx.createGain(); master.gain.value = 0.0001;
+  window.__boneCtx = ctx; window.__boneMaster = master;   /* the cochlea (merged below) plays on this same context */
+
+  comp = ctx.createDynamicsCompressor();
+  comp.threshold.value = -18; comp.knee.value = 24; comp.ratio.value = 3.0;
+  comp.attack.value = 0.012; comp.release.value = 0.30;
+
+  var lp = ctx.createBiquadFilter(); lp.type = 'lowpass';
+  lp.frequency.value = 2100; lp.Q.value = 0.5;
+
+  drone = ctx.createGain(); drone.gain.value = 0.42;
+
+  drone.connect(lp); lp.connect(comp); comp.connect(master); master.connect(ctx.destination);
+
+  ampAnalyser = ctx.createAnalyser(); ampAnalyser.fftSize = 1024;
+  ampBuf = new Float32Array(ampAnalyser.fftSize);
+  master.connect(ampAnalyser);
+
+  function voice(freq, type, gain){
+    var o = ctx.createOscillator(); o.type = type; o.frequency.value = freq;
+    var g = ctx.createGain(); g.gain.value = gain;
+    o.connect(g); g.connect(drone); o.start(); oscs.push(o); return o;
+  }
+  /* voiced deep, to invite the low whole-body hum that lands most satisfyingly:
+     the sub (root/2) carries, the upper partials are softened. the corridor is
+     octave-folded, so a higher voice is still free to land the octave up — this
+     only changes where the tone INVITES the body, not what counts. TUNE: push
+     the sub up / the partials down for a deeper pull. */
+  voice(ROOT/2, 'sine', 0.62);                  /* the low octave — now the body of the tone */
+  var rootA = voice(ROOT,        'triangle', 0.52);
+  var rootB = voice(ROOT*1.0026, 'triangle', 0.52);  /* +~0.45 hz: the throb */
+  voice(ROOT*1.5, 'sine', 0.10);                /* fifth — softened */
+  voice(ROOT*2.0, 'sine', 0.05);                /* octave up — softened */
+
+  var bl = ctx.createOscillator(); bl.type='sine'; bl.frequency.value = 0.03;
+  var bg = ctx.createGain(); bg.gain.value = 0.18;
+  bl.connect(bg); bg.connect(rootB.frequency); bl.start();
+
+  var dr = ctx.createOscillator(); dr.type='sine'; dr.frequency.value = 0.085;
+  var dg = ctx.createGain(); dg.gain.value = ROOT*0.0012;
+  dr.connect(dg); dg.connect(rootA.frequency); dr.start();
+
+  /* the homing shimmer — a soft octave that brightens as the hum nears unison
+     (the tone recognising you); driven from the breath loop by proxSmooth. it is
+     silent when you are far, so it can never trip a false unison. */
+  var warmO = ctx.createOscillator(); warmO.type='sine'; warmO.frequency.value = ROOT*2;
+  var warmG = ctx.createGain(); warmG.gain.value = 0.0001;
+  warmO.connect(warmG); warmG.connect(drone); warmO.start();
+
+  /* the bloom — struck once at the instant of unison (after the ear has closed),
+     then it rides the release down to silence. */
+  var blo1 = ctx.createOscillator(); blo1.type='sine'; blo1.frequency.value = ROOT*2;
+  var blo2 = ctx.createOscillator(); blo2.type='sine'; blo2.frequency.value = ROOT*3;
+  var bloomG = ctx.createGain(); bloomG.gain.value = 0.0001;
+  blo1.connect(bloomG); blo2.connect(bloomG); bloomG.connect(drone); blo1.start(); blo2.start();
+
+  dp.rootB = rootB; dp.bg = bg; dp.dg = dg; dp.warm = warmG; dp.bloom = bloomG;
+
+  var t0 = ctx.currentTime;
+  master.gain.setValueAtTime(0.0001, t0);
+  master.gain.exponentialRampToValueAtTime(0.85, t0 + 6.0*T + 0.6);
+}
+
+function kickAudio(){
+  try{ var b=ctx.createBuffer(1,1,22050), s=ctx.createBufferSource(); s.buffer=b; s.connect(ctx.destination); s.start(0);}catch(e){}
+}
+/* iOS mute switch: a looping runtime-built silent wav claims the playback
+   session so the tone is heard with the ringer off. generated, not fetched. */
+function silentWavUrl(){
+  var sr=8000, n=Math.floor(sr*0.25), bytes=44+n*2, buf=new ArrayBuffer(bytes), v=new DataView(buf), i;
+  function str(o,s){ for(i=0;i<s.length;i++) v.setUint8(o+i, s.charCodeAt(i)); }
+  str(0,'RIFF'); v.setUint32(4,bytes-8,true); str(8,'WAVE'); str(12,'fmt ');
+  v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+  v.setUint32(24,sr,true); v.setUint32(28,sr*2,true); v.setUint16(32,2,true);
+  v.setUint16(34,16,true); str(36,'data'); v.setUint32(40,n*2,true);
+  return URL.createObjectURL(new Blob([buf],{type:'audio/wav'}));
+}
+function startSilentLoop(){
+  try{
+    silentEl = document.createElement('audio');
+    silentEl.loop=true; silentEl.setAttribute('playsinline',''); silentEl.setAttribute('webkit-playsinline','');
+    silentEl.muted=false; silentEl.volume=0.0001; silentEl.src = silentWavUrl();
+    document.body.appendChild(silentEl);
+    var p = silentEl.play(); if (p && p.catch) p.catch(function(){});
+  }catch(e){}
+}
+function unlock(){
+  if (ctx){ try{ ctx.resume(); }catch(e){} }
+  if (silentEl){ var p = silentEl.play(); if (p && p.catch) p.catch(function(){}); }
+}
+
+/* ---------------- the ear (step 2 — listens, finds unison, writes NOTHING) ----------------
+   the floor-proven detector from the old bone, brought into the bare frame.
+   the hard change: the old bone listened only in the tone's recessions; the
+   ocean's tone is continuous, so the ear listens continuously while you are
+   in the open 'tuning' part, and leans on echo-cancellation to subtract the
+   speaker's own tone. whether that is enough over a CONTINUOUS tone is the
+   exact thing this step is built to test — every reading is in ?test.
+   nothing is sent anywhere; mic.found is captured and held for step 3. */
+var MIC = {
+  fMin: 130, fMax: 500,      /* set at mic-start to round(ROOT*0.74) — ABOVE the root/2 sub on purpose:
+                                a pure sine has no in-range autocorrelation peak between its octave and
+                                its full period, so the speaker's own deep sub is undetectable and can
+                                never fold to a false unison before you hum. you reach unison by humming
+                                the root (the fold counts it). proven 06-15: sub → gated; root & octave
+                                up → clean unison. (this default 130 is for root 174; ?hz= retunes both.) */
+  frameMs: 70,
+  energyGate: 0.004,       /* floor-confirmed 06-12 (EC+AGC): a true hum reads rms 0.008–0.013 */
+  clarityGate: 0.85,       /* a real hum reads clar ~1.00; room noise sits below */
+  unisonCents: 34,         /* record only — the LIVE corridor is corrNow, breathing CORR_MIN → CORR_MAX */
+  unisonHoldS: 2.4,        /* TUNE — accumulated seconds of unison; dead-centre fills it faster (×T in ?test) */
+  raw: { echoCancellation: true, noiseSuppression: false, autoGainControl: true }
+};
+var mic = {
+  asking:false, denied:false, done:false,
+  stream:null, track:null, analyser:null, buf:null, byteBuf:null, iv:null,
+  on:false, useFloat:true, unisonMs:0, accepted:[], found:0
+};
+var micInfo = 'no mic', micLive = '';
+var sentBend = false, writeInfo = '';     /* the write happens once, at unison */
+var acS2 = null, acVals = null;
+
+function micRequest(){
+  if (mic.stream || mic.asking || mic.denied || mic.done) return;
+  if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)){
+    mic.denied = true; micInfo = 'mic unavailable'; dbg(); return;
+  }
+  mic.asking = true; micInfo = 'mic asked'; dbg();
+  navigator.mediaDevices.getUserMedia({ audio: MIC.raw, video: false })
+    .then(function(s){
+      mic.asking = false;
+      if (mic.done){ try{ s.getTracks().forEach(function(t){ t.stop(); }); }catch(e){} return; }
+      mic.stream = s;
+      mic.track = s.getAudioTracks()[0];
+      mic.track.enabled = false;                    /* silent until the tuning part begins */
+      var src = ctx.createMediaStreamSource(s);
+      mic.analyser = ctx.createAnalyser();
+      mic.analyser.fftSize = 2048;
+      src.connect(mic.analyser);                    /* into the analyser, nowhere else — no recording, no upload */
+      mic.useFloat = !!mic.analyser.getFloatTimeDomainData;
+      mic.buf = new Float32Array(2048);
+      mic.byteBuf = mic.useFloat ? null : new Uint8Array(2048);
+      acS2 = new Float64Array(2052);
+      acVals = new Float32Array(2052);
+      if (!mic.iv) mic.iv = setInterval(micTick, MIC.frameMs);
+      micInfo = (state === 'tuning') ? 'mic ready' : 'mic ready · waiting';
+      if (state === 'tuning') micStart();
+      dbg();
+    })
+    .catch(function(){
+      mic.asking = false; mic.denied = true;
+      micInfo = 'mic denied'; dbg();                /* the rite is identical; it simply hears nothing */
+    });
+}
+function micStart(){                                /* the open part has begun — open the ear */
+  if (!mic.stream || mic.done){ return; }
+  MIC.fMin = Math.max(60, Math.round(ROOT * 0.74));  /* floor tracks the root: excludes the sub (root/2), keeps the hum (root) */
+  mic.on = true;
+  try{ mic.track.enabled = true; }catch(e){}
+  micInfo = 'mic listening · floor ' + MIC.fMin; dbg();
+}
+function micPause(){                                /* backgrounded — close the ear, keep the stream */
+  mic.on = false;
+  try{ if (mic.track) mic.track.enabled = false; }catch(e){}
+  if (mic.buf) mic.buf.fill(0);
+}
+function stopMic(){
+  mic.done = true; mic.on = false;
+  if (mic.iv){ clearInterval(mic.iv); mic.iv = null; }
+  try{ if (mic.stream) mic.stream.getTracks().forEach(function(t){ t.stop(); }); }catch(e){}
+  if (mic.buf) mic.buf.fill(0);
+  mic.stream = null; mic.track = null; mic.analyser = null;
+  proxTarget = 0;
+  micInfo = mic.found ? ('unison found ' + mic.found.toFixed(2) + ' hz') : 'mic stopped';
+  micLive = ''; dbg();
+}
+window.addEventListener('pagehide', stopMic);
+
+function foldCents(f, ref){
+  var c = 1200 * Math.log(f / ref) / Math.LN2;
+  return ((c % 1200) + 1800) % 1200 - 600;          /* [−600, +600) — any voice, any register */
+}
+/* normalized autocorrelation, parabolic-refined; pitch read at the smallest
+   true peak (the fundamental); octave errors harmless — unison is folded. */
+function detectPitch(buf, sr){
+  var m = 1200, i, x;
+  var minLag = Math.max(2, Math.floor(sr / MIC.fMax));
+  var maxLag = Math.min(Math.ceil(sr / MIC.fMin), buf.length - m - 1);
+  var mean = 0, rms = 0;
+  for (i = 0; i < m; i++) mean += buf[i];
+  mean /= m;
+  for (i = 0; i < m; i++){ x = buf[i] - mean; rms += x * x; }
+  rms = Math.sqrt(rms / m);
+  var out = { rms: rms, f: 0, clarity: 0 };
+  if (rms < MIC.energyGate) return out;             /* the room, or the EC-subtracted tone — not a voice */
+  var n = m + maxLag + 1;
+  for (i = 0; i < n; i++){ x = buf[i] - mean; acS2[i + 1] = acS2[i] + x * x; }
+  var normA = acS2[m];
+  if (!normA) return out;
+  var best = 0, lag;
+  for (lag = minLag; lag <= maxLag; lag++){
+    var sum = 0;
+    for (i = 0; i < m; i++) sum += (buf[i] - mean) * (buf[i + lag] - mean);
+    var normB = acS2[m + lag] - acS2[lag];
+    var r = normB > 0 ? sum / Math.sqrt(normA * normB) : 0;
+    acVals[lag] = r;
+    if (r > best) best = r;
+  }
+  out.clarity = best;
+  if (best < MIC.clarityGate) return out;
+  var keep = 0.9 * best, pick = -1;
+  for (lag = minLag + 1; lag < maxLag; lag++){
+    if (acVals[lag] >= keep &&
+        acVals[lag] >= acVals[lag - 1] && acVals[lag] >= acVals[lag + 1]){ pick = lag; break; }
+  }
+  if (pick < 0) return out;
+  var a = acVals[pick - 1], b = acVals[pick], c = acVals[pick + 1];
+  var den = a - 2 * b + c;
+  var delta = den ? 0.5 * (a - c) / den : 0;
+  if (delta > 0.5 || delta < -0.5) delta = 0;
+  out.f = sr / (pick + delta);
+  return out;
+}
+function needHoldS(){ return MIC.unisonHoldS * T; }
+function median(arr){
+  if (!arr.length) return 0;
+  var s = arr.slice().sort(function(a, b){ return a - b; });
+  var k = s.length >> 1;
+  return (s.length % 2) ? s[k] : 0.5 * (s[k - 1] + s[k]);
+}
+function micTick(){
+  if (mic.done || !mic.on || !mic.analyser || state !== 'tuning') return;
+  if (mic.useFloat){
+    mic.analyser.getFloatTimeDomainData(mic.buf);
+  } else {
+    mic.analyser.getByteTimeDomainData(mic.byteBuf);
+    for (var i = 0; i < 2048; i++) mic.buf[i] = (mic.byteBuf[i] - 128) / 128;
+  }
+  var d = detectPitch(mic.buf, ctx.sampleRate);
+  var cents = 0;
+  if (d.f){
+    cents = foldCents(d.f, ROOT);                   /* vs the served root — the inherited tone */
+    var ac = Math.abs(cents);
+    if (ac <= BALLPARK_C){                           /* roughly the right note → the corridor keeps opening */
+      effortMs += MIC.frameMs;
+      corrNow = CORR_MIN + (CORR_MAX - CORR_MIN) * clamp(effortMs / (OPEN_S * 1000 * T), 0, 1);
+    }
+    proxTarget = proximity(ac);                      /* the guide warms toward you (any octave, via the fold) */
+    if (ac <= corrNow){                              /* inside the breathing corridor — dead-centre counts faster */
+      var closeness = 1 - ac / corrNow;              /* 0 at the edge, 1 dead-centre */
+      mic.unisonMs += MIC.frameMs * (1 + CLOSE_BOOST * closeness);   /* accumulate TOTAL time; forgives wobble entirely */
+      if (mic.accepted.length < 256) mic.accepted.push(d.f);
+    }
+  } else {
+    proxTarget = 0;                                 /* not humming → the dot returns to the tone */
+  }
+  if (TEST){
+    var uni = ' · uni ' + (mic.unisonMs / 1000).toFixed(1) + '/' + needHoldS().toFixed(1) + ' · corr ' + corrNow.toFixed(0);
+    micLive = d.f
+      ? ('hz ' + d.f.toFixed(1) + ' · ' + (cents >= 0 ? '+' : '') + cents.toFixed(0) + '¢ · rms ' +
+         d.rms.toFixed(3) + ' · clar ' + d.clarity.toFixed(2) + uni)
+      : ('rms ' + d.rms.toFixed(3) + (d.clarity ? ' · clar ' + d.clarity.toFixed(2) : '') + uni);
+    dbg();
+  }
+  if (!mic.found && mic.unisonMs >= needHoldS() * 1000){
+    mic.found = median(mic.accepted);               /* the landed pitch — a raw HZ float */
+    bloomNow();                                     /* the one sound, marked: a shimmer struck at the instant of meeting */
+    if (HAPTIC && navigator.vibrate){ try{ navigator.vibrate(80); }catch(e){} }   /* a soft buzz felt in the skull (android) */
+    sendBend(mic.found);                            /* the write: one breath added to the tide */
+    stopMic();
+    release();                                      /* unison is the only thing that ends the rite */
+    if (window.__boneHoldDot) window.__boneHoldDot(0);                    /* the bone's dot yields to the cochlea */
+    if (window.__cochleaBloom) setTimeout(window.__cochleaBloom, 1000);   /* one second, then the ear opens inward */
+  }
+}
+
+function proximity(absC){           /* 0 far → 1 inside the corridor */
+  return clamp((OUTER_C - absC) / (OUTER_C - corrNow), 0, 1);
+}
+
+/* the bloom — a soft shimmer struck at the instant of unison, then it rides the
+   release down. fired after the ear has closed, so it never trips the detector. */
+function bloomNow(){
+  if (!ctx || !dp.bloom){ return; }
+  var t = ctx.currentTime;
+  try{
+    dp.bloom.gain.cancelScheduledValues(t);
+    dp.bloom.gain.setValueAtTime(0.0001, t);
+    dp.bloom.gain.linearRampToValueAtTime(BLOOM_A, t + 0.22);      /* a quick swell */
+    dp.bloom.gain.exponentialRampToValueAtTime(0.0001, t + 2.6);   /* a long shimmering decay */
+  }catch(e){}
+}
+
+/* unison releases the tone — the song lets go once you've joined it.
+   not a clock, not a button: an event. a slow fade to silence and dark.
+   (those who never find unison are never forced out — they leave when
+   they leave; the tone simply goes on.) */
+function release(){
+  if (state === 'released') return;
+  state = 'released';
+  proxTarget = 0;
+  if (ctx && master){
+    var t = ctx.currentTime;
+    try{
+      master.gain.cancelScheduledValues(t);
+      master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), t);
+      master.gain.exponentialRampToValueAtTime(0.0001, t + RELEASE_S);
+    }catch(e){}
+  }
+  releaseT = now();                  /* the dot fades to dark with the tone (in frame) */
+  signalHouse('released');           /* tell the house: the rite is done; offer the way back */
+  dbg();
+}
+
+/* ---------------- the breath loop ---------------- */
+function frame(){
+  requestAnimationFrame(frame);
+  if (state === 'idle') return;                 /* css 'invite' handles pre-sound */
+
+  var t = (now() - startT) / 1000;
+  breathValue = (Math.sin(2*Math.PI*(t/BREATH_S) - Math.PI/2) + 1) / 2;
+  if (drone) drone.gain.value = 0.34 + 0.16 * breathValue;
+
+  if (ampAnalyser){
+    ampAnalyser.getFloatTimeDomainData(ampBuf);
+    var sum=0, i, x; for (i=0;i<ampBuf.length;i++){ x=ampBuf[i]; sum+=x*x; }
+    var rms = Math.sqrt(sum/ampBuf.length);
+    ampSmooth += (rms - ampSmooth) * 0.28;       /* snappier → a blink, not a glow */
+  }
+
+  proxSmooth += (proxTarget - proxSmooth) * 0.10;   /* the guide glides; never jumps */
+
+  /* the tone SETTLES toward purity as you near unison: the throb stills, the
+     drift calms, and a soft octave warms in — the wobble dying, made a reward */
+  if (dp.rootB){
+    var settle = clamp(proxSmooth, 0, 1);                                   /* 0 far → 1 at unison */
+    try{ dp.rootB.frequency.value = ROOT * (1 + 0.0026 * (1 - settle)); }catch(e){}   /* the +0.45 hz throb → 0 */
+    if (dp.bg)   dp.bg.gain.value = 0.18 * (1 - settle);                    /* the throb's wobble → still */
+    if (dp.dg)   dp.dg.gain.value = (ROOT * 0.0012) * (1 - 0.7 * settle);   /* the slow drift calms */
+    if (dp.warm) dp.warm.gain.value = WARM_MAX * Math.pow(settle, 1.6);     /* the homing shimmer brightens */
+  }
+
+  if (dotEl && !boneDotHeld){
+    var litTone = Math.pow(clamp(ampSmooth*3.0, 0, 1), 3.0);  /* the tone-driven blink */
+    var toneOp  = 0.05 + 0.93 * litTone;
+    var steadyOp = 0.34 + 0.64 * proxSmooth;                  /* bright + steady as you near unison */
+    var op = toneOp * (1 - proxSmooth) + steadyOp * proxSmooth;   /* far → blinks with the tone; near → still + bright */
+    if (state === 'released'){                                /* unison let the tone go: fade to dark with it */
+      op *= clamp(1 - (now() - releaseT) / (RELEASE_S * 1000), 0, 1);
+    }
+    dotEl.style.opacity = clamp(op, 0, 1).toFixed(3);
+    dotEl.style.transform = 'scale(' + (1 + 0.6 * proxSmooth).toFixed(2) + ')';   /* a gentle bloom toward unison */
+    dotEl.style.boxShadow = '0 0 ' + (3 + 16 * proxSmooth).toFixed(1) + 'px ' +
+                            (1 + 5 * proxSmooth).toFixed(1) + 'px rgba(255,236,150,' +
+                            (0.10 + 0.45 * proxSmooth).toFixed(2) + ')';            /* a warm halo, growing as you near */
+  }
+  if (TEST) dbg();
+}
+
+/* ---------------- the rite (wordless — instructions live on the wall label) ---------------- */
+async function rite(){
+  state = 'rite';                               /* the dot now takes over from the flame, driven by the tone */
+  await sleep(SETTLE*1000);                      /* the tone establishes */
+  state = 'tuning';                              /* the ear opens; you leave when you leave (or unison releases it) */
+  micStart();                                    /* no-op until permission lands */
+}
+
+/* begin only once sound is actually running — even if iOS made you toggle */
+function beginRite(){
+  if (started) return; started = true;
+  if (SHOW_FLAME && flameEl) flameEl.classList.add('collapse');  /* the flame folds, fast, into the dot */
+  signalHouse('lit');                            /* tell the house: the dot takes over from the ember */
+  startT = now();
+  rite();
+  setTimeout(micRequest, 900);                   /* ask for the ear a beat after the tone is heard */
+}
+
+/* ---------------- begin (the one gesture audio requires) ---------------- */
+function onFirstTouch(){
+  if (begun) return; begun = true;
+  startSilentLoop();                             /* claim the playback session first */
+  buildAudio(); kickAudio(); unlock();
+  var tries = 0;                                 /* keep nudging iOS for a few seconds */
+  var iv = setInterval(function(){
+    tries++;
+    if ((ctx && ctx.state === 'running') || tries > 16){ clearInterval(iv); beginRite(); }
+    else unlock();
+  }, 250);
+}
+window.addEventListener('pointerdown', onFirstTouch, true);
+/* backstop: any later touch keeps trying to wake a stuck context */
+window.addEventListener('pointerdown', function(){ if (begun && ctx && ctx.state !== 'running') unlock(); }, true);
+
+window.addEventListener('pagehide', function(){ try{ if (ctx) ctx.close(); }catch(e){} });
+document.addEventListener('visibilitychange', function(){
+  if (!ctx) return;
+  if (document.hidden){ try{ ctx.suspend(); }catch(e){} micPause(); }
+  else { unlock(); if (state === 'tuning' && !mic.done) micStart(); }
+});
+
+/* the cochlea (merged into this page) fades the bone's dot when it takes over,
+   and restores it on surface — through this hook, so the bone's own loop stops
+   fighting it. */
+window.__boneHoldDot = function(op){ boneDotHeld = true; if (dotEl) dotEl.style.opacity = (op == null ? '0' : String(op)); };
+
+/* a quiet way out: once the rite has settled into tuning, a touch on the centre
+   — the dot you are listening to — returns to the front door. it is live only
+   during tuning; after unison the cochlea has taken over, so this never sits
+   under the knob, and it asks nothing of those who stay. */
+window.addEventListener('pointerdown', function(e){
+  if (state !== 'tuning') return;
+  var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+  var dx = (e.clientX == null ? cx : e.clientX) - cx;
+  var dy = (e.clientY == null ? cy : e.clientY) - cy;
+  var R = Math.max(46, Math.min(window.innerWidth, window.innerHeight) * 0.13);
+  if (dx*dx + dy*dy <= R*R){
+    try{ (window.top || window).location.replace('/'); }
+    catch(_){ try{ location.replace('/'); }catch(__){} }
+  }
+}, false);
+
+fetchRoot();              /* read the inherited tone at load; locks at the first touch */
+requestAnimationFrame(frame);
+
+})();
+</script>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------------- config ---------------- */
+var TEST = /[?&]test/.test(location.search);
+var ROOT = 173.68;
+var MAXDF = 22;
+var UNISON_EPS = 0.045;
+var SEP_EPS = 0.045;
+var HOLD_MS = 1300;
+var SWEEP_DEG = 300;
+var REST_VAL = 0.18;
+var PULSE_GAIN = 4.5;
+var RM = false;
+try{ RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+/* flame look — tuned by eye in the tuner. glass left mostly off (just a faint
+   reflected flame, INV); the flame itself carries the room. */
+var F_HEIGHT=0.375, F_WIDTH=0.020, F_GLOW_R=0.410, F_GLOW_A=0.055,
+    F_CORE_A=1.000, F_CORE_S=0.290, F_BLUE_A=0.480, F_FLICK=1.000;
+var BRIGHT_BASE=0.10, BRIGHT_PULSE=0.18;   /* dim, like the tuned look; beat adds a little */
+var ENTRY_DELAY=1000;   /* wait after unison before the cochlea grows */
+var GROW_MS=2200;       /* slow grow */
+var CALM_MS=1500;       /* hold the grown flame calm before the beat (sine) takes over */
+
+var KOAN_A = 'this deep, there is only the ';
+var KOAN_B = '.';
+var WORDS = ['tide','dark','bone','salt','hum','drift','fold','ache','current',
+             'water','wave','distance','dreaming','mother','egg','star','breath',
+             'silence','sea','root'];
+
+/* ---------------- dom ---------------- */
+function byId(i){ return document.getElementById(i); }
+var dotEl,dotHit,cochlea,knobwrap,flameEl,lensEl,lens2d,voidEl,vcanvas,dbgEl;
+
+/* ---------------- state ---------------- */
+var state='dot', transitioning=false;
+var value=0.0, valTarget=0.0;
+var dragging=false, startAng=0, startVal=0;
+var env=0, envTarget=0;
+var lastT=0, uniHold=0, sepHold=0, live=false;
+
+/* ---------------- audio ---------------- */
+var ctx=null, master=null, limiter=null, o1=null, o2=null, g1=null, g2=null;
+var ampA=null, ampBuf=null, rmsSmooth=0;
+
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+function buildAudio(){
+  if (ctx) return;
+  ctx = window.__boneCtx || null;          /* share the bone's running context */
+  if (!ctx) return;
+  limiter = ctx.createDynamicsCompressor();
+  limiter.threshold.value=-16; limiter.knee.value=14; limiter.ratio.value=12;
+  limiter.attack.value=0.003; limiter.release.value=0.25;
+  master = ctx.createGain(); master.gain.value=0.0;
+  limiter.connect(ctx.destination); master.connect(limiter);
+  ampA = ctx.createAnalyser(); ampA.fftSize=1024; ampBuf=new Float32Array(ampA.fftSize);
+  master.connect(ampA);
+  o1=ctx.createOscillator(); o1.type='triangle';
+  o2=ctx.createOscillator(); o2.type='triangle';
+  g1=ctx.createGain(); g1.gain.value=0.16;
+  g2=ctx.createGain(); g2.gain.value=0.16;
+  o1.connect(g1); g1.connect(master);
+  o2.connect(g2); g2.connect(master);
+  setFreqs(value, true);
+  try{ o1.start(); o2.start(); }catch(e){}
+}
+/* unlockAudio removed — the bone already unlocked its context in a gesture */
+function setFreqs(v, immediate){
+  if (!ctx || !o1 || !o2) return;
+  var df=v*MAXDF, f1=ROOT-df/2, f2=ROOT+df/2, t=ctx.currentTime;
+  try{
+    if (immediate){ o1.frequency.setValueAtTime(f1,t); o2.frequency.setValueAtTime(f2,t); }
+    else { o1.frequency.setTargetAtTime(f1,t,0.04); o2.frequency.setTargetAtTime(f2,t,0.04); }
+  }catch(e){}
+}
+function resumeCtx(){ if (ctx && ctx.state!=='running'){ try{ ctx.resume(); }catch(e){} } }
+
+/* ---------------- speech ---------------- */
+var voicePick=null, speechWarmed=false;
+var MALE = ['fred','albert','daniel','aaron','arthur','gordon','reed','rishi','oliver','tom','bruce','lee'];
+function loadVoices(){
+  try{
+    var vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+    if (!vs || !vs.length) return;
+    var i, j, pick=null;
+    for (i=0;i<MALE.length && !pick;i++){
+      for (j=0;j<vs.length;j++){
+        if (/en/i.test(vs[j].lang) && vs[j].name.toLowerCase().indexOf(MALE[i])>=0){ pick=vs[j]; break; }
+      }
+    }
+    if (!pick){ for (j=0;j<vs.length;j++){ if (/en[-_]/i.test(vs[j].lang)){ pick=vs[j]; break; } } }
+    voicePick = pick || vs[0];
+  }catch(e){}
+}
+if (window.speechSynthesis){
+  loadVoices();
+  try{ speechSynthesis.onvoiceschanged = loadVoices; }catch(e){}
+}
+function warmSpeech(){
+  if (speechWarmed || !window.speechSynthesis) return;
+  try{ speechSynthesis.resume(); }catch(e){}
+  try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); speechWarmed=true; }catch(e){}
+}
+function speakKoan(){
+  if (!window.speechSynthesis) return;
+  try{ speechSynthesis.resume(); }catch(e){}
+  try{
+    var w = WORDS[(Math.random()*WORDS.length)|0];
+    var u = new SpeechSynthesisUtterance(KOAN_A + w + KOAN_B);
+    if (voicePick) u.voice = voicePick;
+    u.rate = 0.42; u.pitch = 0.4; u.volume = 1.0;   /* slower + lower */
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ---------------- the flame (small, sharp, realistic; texture source) ---------------- */
+var fctx=null;
+function sizeFlame(){
+  if (!flameEl) return;
+  var r=flameEl.getBoundingClientRect();
+  var dpr=Math.min(2,window.devicePixelRatio||1);
+  var w=Math.max(60,r.width||0), h=Math.max(60,r.height||0);
+  flameEl.width=Math.round(w*dpr); flameEl.height=Math.round(h*dpr);
+}
+function initFlame(){ try{ fctx=flameEl.getContext('2d'); }catch(e){ fctx=null; } sizeFlame(); }
+
+var FL={baseY:0.66};
+var wellF=0;
+/* outer (deep ember) -> inner (pale), [c1, c2] */
+var FDEFS=[['190,84,28','238,140,58'],
+           ['214,108,40','248,166,84'],
+           ['236,138,58','252,192,112'],
+           ['250,168,86','255,212,140'],
+           ['255,198,116','255,228,168'],
+           ['255,222,150','255,240,198'],
+           ['255,240,200','255,250,228']];
+var FA=[0.16,0.18,0.20,0.22,0.25,0.28,0.30];   /* per-layer base alpha */
+var FS=[1.00,0.88,0.76,0.64,0.54,0.46,0.40];   /* per-layer scale */
+function teardrop(cx,baseY,lw,lh,tipX){
+  var tipY=baseY-lh, bul=lw, by=baseY-lh*0.30;
+  fctx.beginPath(); fctx.moveTo(tipX,tipY);
+  fctx.bezierCurveTo(tipX+lw*0.16,tipY+lh*0.24, cx+bul,by, cx+bul*0.5,baseY-lh*0.08);
+  fctx.quadraticCurveTo(cx+bul*0.26,baseY, cx,baseY);
+  fctx.quadraticCurveTo(cx-bul*0.26,baseY, cx-bul*0.5,baseY-lh*0.08);
+  fctx.bezierCurveTo(cx-bul,by, tipX-lw*0.16,tipY+lh*0.24, tipX,tipY);
+  fctx.closePath();
+}
+function drawFlame(now, bright){
+  if (!fctx) return;
+  var W=flameEl.width, H=flameEl.height;
+  if (W<2||H<2){ sizeFlame(); return; }
+  fctx.clearRect(0,0,W,H);
+  if (bright<=0.004) return;
+  wellF += ((Math.random()-0.5)*0.10 - wellF)*0.07;
+  var flicker = (RM?0.16:0.40)*F_FLICK + wellF;
+  var flk = flicker*(Math.sin(now*0.006)*0.5 + Math.sin(now*0.013+1)*0.3 + Math.sin(now*0.021+2)*0.2);
+  var sway = RM ? 0 : (Math.sin(now*0.0012)*0.16 + Math.sin(now*0.0029+2)*0.07);   /* gentle lean */
+  var fb=Math.max(bright,0.10);
+  var cx=W*0.5, baseY=H*FL.baseY;
+  var h=H*F_HEIGHT*(0.92+0.16*clamp(bright,0,1.3))*(1+0.04*flk);
+  var w=W*F_WIDTH*(0.96+0.08*Math.sin(now*0.009));
+  var tipB=(sway*0.35 + flk*0.22 + Math.sin(now*0.003)*0.10)*w;
+
+  fctx.save(); fctx.globalCompositeOperation='lighter';
+
+  /* aura — a tight warm hug, small */
+  if (F_GLOW_R>0.001 && F_GLOW_A>0.0001){
+    var gy=baseY-h*0.45, gr=Math.max(2,h*F_GLOW_R);
+    var rg=fctx.createRadialGradient(cx,gy,1,cx,gy,gr);
+    rg.addColorStop(0,  'rgba(255,170,86,'+(F_GLOW_A*bright).toFixed(3)+')');
+    rg.addColorStop(0.5,'rgba(255,150,70,'+(F_GLOW_A*bright*0.3).toFixed(3)+')');
+    rg.addColorStop(1,  'rgba(255,150,70,0)');
+    fctx.fillStyle=rg; fctx.beginPath(); fctx.arc(cx,gy,gr,0,6.2832); fctx.fill();
+  }
+
+  /* body — seven graded layers, each shimmering independently */
+  var L;
+  for (L=0; L<FDEFS.length; L++){
+    var d=FDEFS[L], sc=FS[L], a=FA[L]*fb;
+    var lw=w*sc, lh=h*(0.82+0.18*sc);
+    lh*=(1+0.03*Math.sin(now*0.011+L*1.9));
+    var tipX=cx + tipB*(1+0.18*Math.sin(now*0.0043+L*0.9));
+    var g=fctx.createLinearGradient(cx,baseY, tipX,baseY-lh);
+    g.addColorStop(0,    'rgba('+d[0]+',0)');
+    g.addColorStop(0.18, 'rgba('+d[0]+','+(a*0.7).toFixed(3)+')');
+    g.addColorStop(0.6,  'rgba('+d[1]+','+a.toFixed(3)+')');
+    g.addColorStop(1,    'rgba('+d[1]+','+(a*0.8).toFixed(3)+')');
+    fctx.fillStyle=g; teardrop(cx,baseY,lw,lh,tipX); fctx.fill();
+  }
+
+  /* inner bright tongue — the luminous reaching core of a real flame */
+  var tsc=0.34, ta=0.22*fb;
+  var tlw=w*tsc, tlh=h*1.04*(1+0.04*Math.sin(now*0.017));
+  var ttipX=cx+tipB*1.1;
+  var tg=fctx.createLinearGradient(cx,baseY, ttipX,baseY-tlh);
+  tg.addColorStop(0,   'rgba(255,236,180,0)');
+  tg.addColorStop(0.22,'rgba(255,236,180,'+(ta*0.7).toFixed(3)+')');
+  tg.addColorStop(0.65,'rgba(255,248,224,'+ta.toFixed(3)+')');
+  tg.addColorStop(1,   'rgba(255,250,232,'+(ta*0.6).toFixed(3)+')');
+  fctx.fillStyle=tg; teardrop(cx,baseY,tlw,tlh,ttipX); fctx.fill();
+
+  /* hot core — small, intense (tuned strong + tiny) */
+  if (F_CORE_A>0.0001){
+    var coreW=Math.max(1,w*F_CORE_S), coreH=Math.max(1,h*0.13*(F_CORE_S/0.42)), ccy=baseY-h*0.44;
+    var cg=fctx.createRadialGradient(cx,ccy,0.3, cx,ccy, Math.max(coreW,coreH));
+    cg.addColorStop(0,  'rgba(255,248,224,'+(F_CORE_A*fb).toFixed(3)+')');
+    cg.addColorStop(0.6,'rgba(255,234,186,'+(F_CORE_A*fb*0.32).toFixed(3)+')');
+    cg.addColorStop(1,  'rgba(255,234,186,0)');
+    fctx.fillStyle=cg; fctx.beginPath(); fctx.ellipse(cx,ccy,coreW,coreH,0,0,6.2832); fctx.fill();
+  }
+
+  /* blue base — the candle's blue at the wick, two-part for depth */
+  if (F_BLUE_A>0.0001){
+    var bw=Math.max(2,w*0.85), bh=Math.max(2,h*0.12), byb=baseY-h*0.04;
+    var bg=fctx.createRadialGradient(cx,byb,0.3, cx,byb, bw);
+    bg.addColorStop(0,  'rgba(110,150,255,'+(F_BLUE_A*fb).toFixed(3)+')');
+    bg.addColorStop(0.6,'rgba(80,120,240,'+(F_BLUE_A*fb*0.35).toFixed(3)+')');
+    bg.addColorStop(1,  'rgba(80,120,240,0)');
+    fctx.fillStyle=bg; fctx.beginPath(); fctx.ellipse(cx,byb,bw,bh,0,0,6.2832); fctx.fill();
+    var b2w=bw*0.5, b2y=baseY-h*0.065;
+    var b2=fctx.createRadialGradient(cx,b2y,0.2, cx,b2y, b2w);
+    b2.addColorStop(0,'rgba(155,185,255,'+(F_BLUE_A*fb*0.7).toFixed(3)+')');
+    b2.addColorStop(1,'rgba(155,185,255,0)');
+    fctx.fillStyle=b2; fctx.beginPath(); fctx.ellipse(cx,b2y,b2w,bh*0.7,0,0,6.2832); fctx.fill();
+  }
+
+  fctx.restore();
+}
+
+/* ---------------- the glass (webgl) — a dark sharp sphere ---------------- */
+var gl=null, prog=null, tex=null, quadBuf=null, useGL=false;
+var aPosLoc, uFlameLoc;
+
+var VSRC = [
+  'attribute vec2 aPos;',
+  'varying vec2 vUv;',
+  'void main(){ vUv = aPos*0.5 + 0.5; gl_Position = vec4(aPos, 0.0, 1.0); }'
+].join('\n');
+
+var FSRC = [
+  'precision highp float;',
+  'uniform sampler2D uFlame;',
+  'varying vec2 vUv;',
+  'const float INV = 0.18;',   /* faint reflected flame below; all other glass is off */
+  'void main(){',
+  '  vec2 uv = vUv;',
+  '  vec2 p = uv*2.0 - 1.0;',
+  '  float r = length(p);',
+  '  if (r > 1.0){ gl_FragColor = vec4(0.0,0.0,0.0,0.0); return; }',
+  '  vec3 col = texture2D(uFlame, uv).rgb;',
+  '  vec2 iuv = vec2(uv.x, 1.0 - uv.y);',
+  '  iuv = (iuv - 0.5)*0.82 + 0.5;',
+  '  col += texture2D(uFlame, iuv).rgb * smoothstep(0.10, -0.50, p.y) * INV;',
+  '  gl_FragColor = vec4(col, smoothstep(1.0, 0.99, r));',
+  '}'
+].join('\n');
+
+function compile(type, src){
+  var s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+    if (TEST) try{ console.log('shader:', gl.getShaderInfoLog(s)); }catch(e){}
+    return null;
+  }
+  return s;
+}
+function initGL(){
+  try{ gl = lensEl.getContext('webgl', {alpha:true, premultipliedAlpha:false, antialias:true, depth:false}); }catch(e){ gl=null; }
+  if (!gl) return false;
+  var v=compile(gl.VERTEX_SHADER, VSRC), f=compile(gl.FRAGMENT_SHADER, FSRC);
+  if (!v || !f) return false;
+  prog=gl.createProgram(); gl.attachShader(prog,v); gl.attachShader(prog,f); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)){
+    if (TEST) try{ console.log('link:', gl.getProgramInfoLog(prog)); }catch(e){}
+    return false;
+  }
+  quadBuf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+  aPosLoc=gl.getAttribLocation(prog,'aPos');
+  uFlameLoc=gl.getUniformLocation(prog,'uFlame');
+  tex=gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  return true;
+}
+function sizeGL(){
+  if (!gl) return;
+  var r=lensEl.getBoundingClientRect();
+  var dpr=Math.min(2,window.devicePixelRatio||1);
+  lensEl.width=Math.round(Math.max(60,r.width)*dpr);
+  lensEl.height=Math.round(Math.max(60,r.height)*dpr);
+  gl.viewport(0,0,lensEl.width,lensEl.height);
+}
+function renderGL(now, beat){
+  if (!gl || !prog) return;
+  if (flameEl.width < 2) return;
+  try{
+    gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(prog);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, flameEl);
+    gl.uniform1i(uFlameLoc, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+    gl.enableVertexAttribArray(aPosLoc);
+    gl.vertexAttribPointer(aPosLoc, 2, gl.FLOAT, false, 0, 0);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }catch(e){}
+}
+
+/* ---------------- the void glow (concentrated core + smoky orb) ---------------- */
+var vctx=null, vw=0, vh=0, vdpr=1, glowActive=false, glowX=0, glowY=0, glowStart=0;
+function sizeVoid(){
+  if (!vcanvas) return;
+  try{ if (!vctx) vctx=vcanvas.getContext('2d'); }catch(e){ vctx=null; }
+  vdpr=Math.min(2,window.devicePixelRatio||1);
+  vw=Math.round(window.innerWidth*vdpr); vh=Math.round(window.innerHeight*vdpr);
+  vcanvas.width=vw; vcanvas.height=vh;
+}
+function startGlow(x,y){
+  glowX=x; glowY=y;
+  glowStart=(window.performance&&performance.now)?performance.now():Date.now();
+  glowActive=true;
+}
+function drawVoidGlow(now){
+  if (!vctx) return;
+  var p=(now-glowStart)/2000;
+  if (p>=1){ glowActive=false; vctx.clearRect(0,0,vw,vh); return; }
+  vctx.clearRect(0,0,vw,vh);
+  var x=glowX*vdpr, y=glowY*vdpr, t=now*0.001;
+  var envv = p<0.18 ? (p/0.18) : (1-(p-0.18)/0.82); envv=clamp(envv,0,1);
+  vctx.save(); vctx.globalCompositeOperation='lighter';
+  /* concentrated haze — white only, a few soft layers, gentle drift */
+  var i, layers=5;
+  for (i=0;i<layers;i++){
+    var f=i/(layers-1);
+    var rad=(6 + f*22 + p*12)*vdpr;                 /* small, max ~40px */
+    var ox=Math.sin(t*1.3+i*1.7)*(2+f*4)*vdpr;
+    var oy=Math.cos(t*1.05+i*2.1)*(2+f*4)*vdpr - p*10*vdpr;
+    var a=envv*(0.14 - f*0.022);
+    var g=vctx.createRadialGradient(x+ox,y+oy,0.5, x+ox,y+oy,rad);
+    g.addColorStop(0,  'rgba(255,255,255,'+a.toFixed(3)+')');
+    g.addColorStop(0.5,'rgba(255,255,255,'+(a*0.4).toFixed(3)+')');
+    g.addColorStop(1,  'rgba(255,255,255,0)');
+    vctx.fillStyle=g; vctx.beginPath(); vctx.arc(x+ox,y+oy,rad,0,6.2832); vctx.fill();
+  }
+  /* a couple faint white wisps lifting */
+  var j;
+  for (j=0;j<3;j++){
+    var pa=envv*0.05, pr=(5+j*4)*vdpr;
+    var px=x + Math.sin(t*0.9+j*2)*(4+j*5)*vdpr*p;
+    var py=y - p*(14+j*10)*vdpr + Math.cos(t*0.7+j)*3*vdpr;
+    var pg=vctx.createRadialGradient(px,py,0.5, px,py,pr);
+    pg.addColorStop(0,'rgba(255,255,255,'+pa.toFixed(3)+')');
+    pg.addColorStop(1,'rgba(255,255,255,0)');
+    vctx.fillStyle=pg; vctx.beginPath(); vctx.arc(px,py,pr,0,6.2832); vctx.fill();
+  }
+  /* smaller concentrated hot spot */
+  var cenv = p<0.10 ? (p/0.10) : (1-(p-0.10)/0.90); cenv=clamp(cenv,0,1);
+  var coreR=(3.5 + 1.5*Math.sin(t*9))*vdpr;
+  var cg=vctx.createRadialGradient(x,y,0.3, x,y,coreR*2.2);
+  cg.addColorStop(0,  'rgba(255,255,255,'+(0.98*cenv).toFixed(3)+')');
+  cg.addColorStop(0.4,'rgba(255,255,255,'+(0.5*cenv).toFixed(3)+')');
+  cg.addColorStop(1,  'rgba(255,255,255,0)');
+  vctx.fillStyle=cg; vctx.beginPath(); vctx.arc(x,y,coreR*2.2,0,6.2832); vctx.fill();
+  vctx.restore();
+}
+
+/* a very tiny spark burst at centre, the moment of unity */
+var sparkActive=false, sparkStart=0, sparkP=[];
+function startSpark(){
+  sparkP=[];
+  var n=16, i;
+  for (i=0;i<n;i++){
+    sparkP.push({a:(i/n)*6.2832 + (Math.random()-0.5)*0.4, s:0.55+Math.random()*0.7, r0:Math.random()*0.25, tw:Math.random()*6.28});
+  }
+  sparkStart=(window.performance&&performance.now)?performance.now():Date.now();
+  sparkActive=true;
+}
+function drawSpark(now){
+  if (!vctx) return;
+  var p=(now-sparkStart)/800;
+  if (p>=1){ sparkActive=false; vctx.clearRect(0,0,vw,vh); return; }
+  vctx.clearRect(0,0,vw,vh);
+  var cx=vw/2, cy=vh/2;
+  vctx.save(); vctx.globalCompositeOperation='lighter';
+  /* a brief, tiny central flash */
+  var fenv = p<0.16 ? (1-p/0.16) : 0;
+  if (fenv>0){
+    var fr=7*vdpr*(0.5+0.5*fenv);
+    var fg=vctx.createRadialGradient(cx,cy,0.3,cx,cy,fr);
+    fg.addColorStop(0,'rgba(255,242,196,'+(0.9*fenv).toFixed(3)+')');
+    fg.addColorStop(1,'rgba(255,242,196,0)');
+    vctx.fillStyle=fg; vctx.beginPath(); vctx.arc(cx,cy,fr,0,6.2832); vctx.fill();
+  }
+  /* tiny radial sparks — concentrated, travel only a few px */
+  var ease=1-Math.pow(1-p,2.0), maxD=16*vdpr, i;
+  for (i=0;i<sparkP.length;i++){
+    var s=sparkP[i];
+    var dist=(s.r0 + s.s*ease)*maxD;
+    var px=cx+Math.cos(s.a)*dist, py=cy+Math.sin(s.a)*dist;
+    var a=(1-p)*0.9*(0.7+0.3*Math.sin(now*0.02+s.tw));
+    var pr=(0.8+0.3*Math.sin(now*0.03+s.tw))*vdpr;
+    var g=vctx.createRadialGradient(px,py,0.1,px,py,pr*2.0);
+    g.addColorStop(0,'rgba(255,238,160,'+a.toFixed(3)+')');
+    g.addColorStop(1,'rgba(255,210,120,0)');
+    vctx.fillStyle=g; vctx.beginPath(); vctx.arc(px,py,pr*2.0,0,6.2832); vctx.fill();
+  }
+  vctx.restore();
+}
+
+/* ---------------- transitions ---------------- */
+function setHit(on){ if (dotHit) dotHit.classList.toggle('on', !!on); }
+
+function bloom(){
+  if (transitioning || state==='cochlea') return;
+  buildAudio();                             /* the two tones, built on the bone's running context */
+  resumeCtx(); warmSpeech();
+  transitioning=true;
+  state='cochlea';
+  live=false;                               /* gestures off until the beat takes over */
+  setHit(false);
+  value=0.0; valTarget=0.0;                 /* grow + settle at unison — calm, no beat yet */
+  setFreqs(value, true);
+  envTarget=1;
+  dotEl.style.opacity='0';
+  cochlea.classList.add('open');
+  knobwrap.classList.add('blooming');       /* slow transition for the grow */
+  knobwrap.classList.add('bloomin');
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    knobwrap.classList.remove('bloomin');   /* grow, slowly */
+  }); });
+  setTimeout(function(){
+    knobwrap.classList.remove('blooming');  /* normal speed again for the later collapse */
+    transitioning=false;
+  }, GROW_MS);
+  setTimeout(function(){
+    /* the beat (the sine-wave breathing) takes over, and the room goes live */
+    if (state==='cochlea'){
+      live=true;
+      if (!dragging && valTarget<0.02){ valTarget=REST_VAL; }
+    }
+  }, GROW_MS + CALM_MS);
+}
+
+var koanWoken=false, koanAt=0, voidPt=null;
+function descend(){
+  if (transitioning) return;
+  transitioning=true;
+  live=false;
+  koanWoken=false;
+  envTarget=0;
+  knobwrap.classList.add('collapse');          /* flame + glass shrink away */
+  setTimeout(function(){
+    cochlea.classList.remove('open');
+    knobwrap.classList.remove('collapse');
+    voidEl.classList.add('open');               /* black */
+    startSpark();                               /* a very tiny spark burst at centre */
+    state='void';
+  }, 500);
+  setTimeout(function(){ transitioning=false; }, 1350);   /* after the spark settles */
+}
+
+function surface(){
+  if (transitioning) return;
+  transitioning=true;
+  live=false;
+  envTarget=0;
+  knobwrap.classList.add('collapse');
+  setTimeout(function(){
+    cochlea.classList.remove('open');
+    knobwrap.classList.remove('collapse');
+    state='dot';
+    if (window.__boneHoldDot) window.__boneHoldDot(0.34);   /* hand the light back to the bone's dot */
+    transitioning=false;
+  }, 760);
+}
+
+/* void: glow on touch-down; koan/exit on touch-END (ios speech needs touchend) */
+function voidDown(e){
+  if (state!=='void' || transitioning) return;
+  var x,y;
+  if (e.clientX!=null){ x=e.clientX; y=e.clientY; }
+  else if (e.touches && e.touches[0]){ x=e.touches[0].clientX; y=e.touches[0].clientY; }
+  else { x=window.innerWidth/2; y=window.innerHeight/2; }
+  voidPt={x:x,y:y};
+  startGlow(x,y);
+}
+function voidUp(){
+  if (state!=='void' || transitioning) return;
+  var now = (window.performance && performance.now) ? performance.now() : Date.now();
+  if (!koanWoken){
+    koanWoken=true; koanAt=now;
+    speakKoan();                       /* spoken from touchend — ios-safe */
+    return;
+  }
+  if (now - koanAt < 700) return;
+  transitioning=true;
+  try{ speechSynthesis.cancel(); }catch(_){}
+  /* the deep is the end of the path — the next touch returns to the front door */
+  try{ (window.top || window).location.replace('/'); }
+  catch(e){ try{ location.replace('/'); }catch(_){} }
+}
+
+/* ---------------- knob ---------------- */
+function knobAngle(e){
+  var r=knobwrap.getBoundingClientRect();
+  var cx=r.left+r.width/2, cy=r.top+r.height/2, x,y;
+  if (e.clientX!=null){ x=e.clientX; y=e.clientY; }
+  else if (e.touches && e.touches[0]){ x=e.touches[0].clientX; y=e.touches[0].clientY; }
+  else { x=cx; y=cy; }
+  return Math.atan2(y-cy, x-cx)*180/Math.PI;
+}
+function knobDown(e){
+  if (state!=='cochlea' || transitioning) return;
+  if (e.preventDefault) e.preventDefault();
+  resumeCtx();
+  live=true;                                /* engaging the knob makes the room live */
+  dragging=true; startAng=knobAngle(e); startVal=value;
+  window.addEventListener('pointermove', knobMove, false);
+  window.addEventListener('pointerup', knobUp, false);
+  window.addEventListener('pointercancel', knobUp, false);
+}
+function knobMove(e){
+  if (!dragging) return;
+  if (e.preventDefault) e.preventDefault();
+  var a=knobAngle(e), da=a-startAng;
+  while (da>180) da-=360; while (da<-180) da+=360;
+  valTarget=clamp(startVal + da/SWEEP_DEG, 0, 1);
+}
+function knobUp(){
+  dragging=false;
+  window.removeEventListener('pointermove', knobMove, false);
+  window.removeEventListener('pointerup', knobUp, false);
+  window.removeEventListener('pointercancel', knobUp, false);
+}
+
+/* ---------------- entry (a tap stands in for the bone's unison) ---------------- */
+/* enterTap removed — the bone's unison fires bloom() instead (gesture-free) */
+
+/* prime speech + resume audio on the first release anywhere (ios) */
+var warmedOnce=false;
+function globalUp(){
+  if (!warmedOnce){ warmedOnce=true; warmSpeech(); }
+  resumeCtx();
+}
+
+/* ---------------- loop ---------------- */
+function pollHold(now){
+  var dt = lastT ? (now-lastT) : 16; lastT=now;
+  if (!live || transitioning || state!=='cochlea'){ uniHold=0; sepHold=0; return; }
+  if (value<=UNISON_EPS){ uniHold+=dt; sepHold=0; }
+  else if (value>=1-SEP_EPS){ sepHold+=dt; uniHold=0; }
+  else { uniHold=0; sepHold=0; }
+  if (uniHold>=HOLD_MS){ uniHold=0; descend(); }
+  else if (sepHold>=HOLD_MS){ sepHold=0; surface(); }
+}
+function loop(now){
+  requestAnimationFrame(loop);
+
+  env += (envTarget-env)*0.06;
+  if (master) master.gain.value = 0.9*env;
+
+  value += (valTarget-value)*0.18;
+  if (value<0.02) value*=0.6;
+  if (value>0.98) value=1-(1-value)*0.6;
+  setFreqs(value, false);
+
+  if (ampA){
+    ampA.getFloatTimeDomainData(ampBuf);
+    var s=0,i,x; for (i=0;i<ampBuf.length;i++){ x=ampBuf[i]; s+=x*x; }
+    rmsSmooth += (Math.sqrt(s/ampBuf.length)-rmsSmooth)*0.3;
+  }
+
+  var pulse=clamp(rmsSmooth*PULSE_GAIN,0,1.1);
+  if (state==='cochlea' || transitioning){
+    var gather = uniHold>0 ? clamp(uniHold/HOLD_MS,0,1)*0.20 : 0;
+    drawFlame(now, env*(BRIGHT_BASE + BRIGHT_PULSE*pulse) + gather*env);
+    if (useGL) renderGL(now, pulse);
+  } else if (fctx){
+    fctx.clearRect(0,0,flameEl.width,flameEl.height);
+    if (useGL && gl){ try{ gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT); }catch(e){} }
+  }
+
+  if (sparkActive) drawSpark(now);
+  else if (glowActive) drawVoidGlow(now);
+
+  pollHold(now);
+
+  if (TEST && dbgEl){
+    dbgEl.textContent = state + (useGL?' · gl':' · css') +
+      ' · ctx ' + (ctx?ctx.state:'none') +
+      ' · v ' + value.toFixed(3) +
+      ' · env ' + env.toFixed(2) +
+      ' · rms ' + rmsSmooth.toFixed(3) +
+      (uniHold? ' · uni '+(uniHold/1000).toFixed(1):'') +
+      (sepHold? ' · sep '+(sepHold/1000).toFixed(1):'');
+  }
+}
+
+/* ---------------- init ---------------- */
+function onResize(){ sizeFlame(); sizeGL(); sizeVoid(); }
+function init(){
+  dotEl=byId('cdot'); dotHit=byId('dothit');
+  cochlea=byId('cochlea'); knobwrap=byId('knobwrap');
+  flameEl=byId('cflame'); lensEl=byId('lens'); lens2d=byId('lens2d');
+  voidEl=byId('void'); vcanvas=byId('voidcanvas'); dbgEl=byId('cdbg');
+
+  initFlame();
+  useGL = initGL();
+  if (useGL) sizeGL(); else lens2d.style.display='block';
+  sizeVoid();
+  knobwrap.addEventListener('pointerdown', knobDown, false);
+  voidEl.addEventListener('pointerdown', voidDown, false);
+  voidEl.addEventListener('pointerup', voidUp, false);
+  window.addEventListener('pointerup', globalUp, false);
+  window.addEventListener('resize', onResize, false);
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden){ try{ if (ctx) ctx.suspend(); }catch(e){} try{ speechSynthesis.cancel(); }catch(e){} }
+    else { resumeCtx(); }
+  });
+
+  if (TEST) dbgEl.style.display='block';
+  requestAnimationFrame(loop);
+}
+
+window.__cochleaBloom = bloom;          /* the bone calls this at unison */
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
+})();
+</script>
+</body>
+</html>

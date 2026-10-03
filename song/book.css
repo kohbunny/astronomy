@@ -1,0 +1,227 @@
+/* ============================================================
+   the egg that dreamed of going to space to sing
+   book.css — the shared skin of the whole song book.
+   every page (cover, contents, and all eleven leaves) links this one file,
+   so the book is made of one cloth. change a token here, the whole book turns.
+
+   fonts are loaded per-page in the <head> (EB Garamond + JetBrains Mono,
+   plus Cormorant Garamond for the big display on the cover).
+   ============================================================ */
+
+:root {
+  /* --- the voices of the book --- */
+  --serif:   'EB Garamond', Georgia, 'Times New Roman', serif;   /* the song's own voice */
+  --mono:    'JetBrains Mono', ui-monospace, monospace;          /* the machine's whisper: labels, numbers, credits */
+  --display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;/* the cover's large breath (until the handwriting lands) */
+
+  /* --- the palette (the same yolk and ash as the song) --- */
+  --bg:     #000000;   /* the cave. true black, for the OLED void */
+  --ink:    #e8e8e8;   /* the body of the text */
+  --dim:    #9a9a9a;   /* a quieter line */
+  --faint:  #5a5a5a;   /* the faintest mark — mono labels, the small print */
+  --ghost:  #2a2a2a;   /* almost gone — rules, edges */
+  --bright: #ffffff;   /* the one bright word */
+  --gold:   #d9b86a;   /* the living gold — clue-words, doors, anything alive */
+  --yolk:   #f2c14e;   /* the warmer yolk — for the pour and the flame */
+
+  /* --- the measure of things --- */
+  --measure: 32em;                       /* the reading column never grows wider than this */
+  --pad:     clamp(22px, 6vw, 40px);     /* the breathing room at the edges */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+body {
+  min-height: 100svh; min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+/* a quiet selection colour, so even highlighting feels gold */
+::selection { background: rgba(217,184,106,0.25); color: var(--bright); }
+
+a { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   THE LEAF — the frame every organ page wears (intro, the tree,
+   for mathematicians, for ai, notes …). clone a leaf, change the
+   kicker / title / body, and it already belongs to the book.
+   ============================================================ */
+
+.leaf {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: clamp(54px, 11vh, 96px) var(--pad) clamp(80px, 16vh, 130px);
+}
+
+/* the way back — a quiet line, top-left of every leaf */
+.back {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--faint);
+  padding: 8px 0; margin-bottom: clamp(34px, 7vh, 60px);
+  transition: color 0.3s ease;
+  view-transition-name: bookback;
+}
+.back:hover, .back:active { color: var(--gold); }
+
+/* the way back, now at the foot of every leaf */
+.back-bottom {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--faint);
+  padding: 10px 0; margin-top: clamp(48px, 10vh, 84px);
+  transition: color 0.3s ease;
+}
+.back-bottom:hover, .back-bottom:active { color: var(--gold); }
+
+/* the kicker — the page's small machine-label (its number + the book's name) */
+.kicker {
+  font-family: var(--mono);
+  font-size: 10.5px; letter-spacing: 0.34em; text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 0.9em;
+}
+
+/* the leaf's title — white, italic, the song's own hand */
+.ptitle {
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: clamp(30px, 8vw, 46px); line-height: 1.08;
+  color: var(--bright);
+  letter-spacing: 0.005em;
+  margin-bottom: clamp(28px, 6vh, 48px);
+}
+
+/* the body of a leaf — generous, calm, never wider than the measure */
+.prose { font-size: clamp(17px, 4.4vw, 19px); line-height: 1.66; color: var(--ink); }
+.prose p { margin: 0 0 1.15em; }
+.prose p:last-child { margin-bottom: 0; }
+.prose em { color: var(--bright); font-style: italic; }
+.prose strong { color: var(--bright); font-weight: 500; }
+.prose h2 {
+  font-family: var(--mono); font-weight: 400;
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--dim);
+  margin: 2.4em 0 0.8em;
+}
+.prose a, .door {
+  color: var(--gold);
+  border-bottom: 1px solid rgba(217,184,106,0.28);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.prose a:hover, .door:hover { color: var(--yolk); border-color: rgba(242,193,78,0.6); }
+
+/* a hairline divider, almost not there */
+.rule {
+  height: 1px; border: 0; margin: 2.4em 0;
+  background: linear-gradient(90deg, transparent, var(--ghost), transparent);
+}
+
+/* ============================================================
+   THE DOOR — a clue-word that opens into a living module.
+   the same gold pulse the song uses on "ear". drop class="door"
+   on any word that leads somewhere alive.
+   ============================================================ */
+.door {
+  color: var(--gold); border-bottom: 0;
+  text-shadow: 0 0 7px rgba(217,184,106,0.4);
+  animation: doorpulse 4.6s ease-in-out infinite;
+}
+@keyframes doorpulse {
+  0%,100% { text-shadow: 0 0 5px rgba(217,184,106,0.28); }
+  50%     { text-shadow: 0 0 15px rgba(217,184,106,0.72), 0 0 28px rgba(217,184,106,0.28); }
+}
+
+/* a slow ember — for anything that is quietly alive (a live dot, the meta-song mark) */
+.ember { animation: ember 5s ease-in-out infinite; }
+@keyframes ember {
+  0%,100% { opacity: 0.55; text-shadow: 0 0 4px rgba(217,184,106,0.25); }
+  50%     { opacity: 1;    text-shadow: 0 0 16px rgba(217,184,106,0.7), 0 0 30px rgba(217,184,106,0.3); }
+}
+
+/* ============================================================
+   HANDWRITING, DRAWINGS & THE LEAD STATEMENT
+   the book is built to take your own hand. anywhere you'd set type,
+   you can later drop a scan of your handwriting or a small drawing,
+   and it sits in the same rhythm as the rest of the page.
+   ============================================================ */
+
+/* a calm, slightly larger statement — for a page's first true line
+   (the intro thesis, an essay's opening). */
+.lead { font-size: clamp(20px, 5.2vw, 26px); line-height: 1.5; color: var(--ink); }
+
+/* .hand — a scan of your handwriting standing in for typeset text.
+   in place of a heading or a line:  <img class="hand hand--block" src="img/intro-hand.webp" alt="intro">
+   it scales to the column. .hand--block centres it on its own line. */
+.hand { display: inline-block; max-width: 100%; height: auto; vertical-align: middle; }
+.hand--block { display: block; margin: 0.4em auto; max-height: 38vh; }
+/* scanned in black ink but want it to glow gold like the living words? add .hand--gold */
+.hand--gold { filter: brightness(0) saturate(100%) invert(78%) sepia(28%) saturate(560%) hue-rotate(2deg) brightness(92%); }
+
+/* .mark — a tiny drawing sitting inline in a line of text (a small glyph, a doodle). */
+.mark { display: inline-block; height: 1.1em; width: auto; vertical-align: -0.18em; margin: 0 0.12em; }
+
+/* .drawing — a small drawing dropped among the prose, with an optional whispered caption. */
+figure.drawing { margin: clamp(28px,6vh,52px) auto; max-width: 18em; text-align: center; }
+figure.drawing img { display: block; width: 100%; height: auto; margin: 0 auto; }
+figure.drawing figcaption { margin-top: 0.7em; font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; color: var(--faint); }
+
+/* a quiet honest mark for a leaf not yet written */
+.wip { margin-top: clamp(34px, 7vh, 56px); font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em; color: var(--faint); }
+
+/* ============================================================
+   THE COLOPHON — the foot of every page: a quiet way home to the
+   website, and the version stamp (your deploy-check habit, kept).
+   ============================================================ */
+.colophon {
+  max-width: var(--measure);
+  margin: clamp(54px, 12vh, 110px) auto 0;
+  padding: clamp(22px, 5vh, 40px) var(--pad) clamp(40px, 8vh, 64px);
+  border-top: 1px solid var(--ghost);
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+  color: var(--faint);
+}
+.colophon a { color: var(--faint); transition: color 0.3s ease; }
+.colophon a:hover { color: var(--gold); }
+
+#ver {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  color: #1c1c1c;   /* nearly invisible — only there if you go looking */
+}
+
+/* ============================================================
+   SEAMLESS TURNING OF PAGES (progressive enhancement)
+   cross-document view transitions: separate .html files, but they
+   morph into one another instead of flashing white. browsers without
+   it just navigate normally — nothing breaks.
+   ============================================================ */
+@view-transition { navigation: auto; }
+
+/* the title carries its name across the cover → contents turn, so it glides */
+.book-title { view-transition-name: booktitle; }
+
+/* a soft fade for the page body as leaves turn */
+::view-transition-old(root) { animation: vt-out 0.42s ease both; }
+::view-transition-new(root) { animation: vt-in  0.52s ease both; }
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in  { from { opacity: 0; } }
+
+/* ============================================================
+   the still room — for readers who asked the world to hold still
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .door, .ember { animation: none; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  * { scroll-behavior: auto; }
+}
