@@ -31,8 +31,8 @@ for (const [label, env, f] of [["a fake supabase", ENV, fake], ["no supabase at 
   r = await ask("?health=1&now=1", "GET", env, f); ok(cdn(r) == null, "?health=1&now=1 → no edge header");
   r = await ask("", "POST", env, f); ok(cdn(r) == null, "POST → no edge header (" + r.status + ")");
   r = await ask("?now=1", "OPTIONS", env, f); ok(cdn(r) == null, "OPTIONS → no edge header");
-  r = await ask("?now=1", "GET", env, f); ok(vary(r) === "query=now|day|day_too|health", "vary on ?now → " + vary(r));
-  r = await ask("?health=1", "GET", env, f); ok(vary(r) === "query=now|day|day_too|health", "vary on ?health → " + vary(r));
+  r = await ask("?now=1", "GET", env, f); ok(vary(r) === "query=now|day|day_too|health|pulse|film", "vary on ?now → " + vary(r));
+  r = await ask("?health=1", "GET", env, f); ok(vary(r) === "query=now|day|day_too|health|pulse|film", "vary on ?health → " + vary(r));
   r = await ask("?now=1", "GET", env, f); ok(r.headers.get("access-control-allow-origin") === "*", "cors kept");
 }
 console.log(bad ? `\n${bad} FAILED` : "\nall clear");
