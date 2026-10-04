@@ -5,6 +5,54 @@
    · THE INTERRUPTION PASS, the river's hand (13 sep)
    ==========================================================================
 
+   4 OCT 2026 · PASS 6 OF THE ONE STORY · NOBODY AMONG THE DEAD
+   (nobody-one-story-handoff-2oct.md §7, eggstagram: `who were they?`).
+   what changed, and nothing else:
+   · ONE ACCOUNT, `nobody`, AT THE HEAD OF THE RIVER. when the phone
+     has read the well (the feed messages already asks; handed across
+     the seam as api.nobody(), read, never kept), the first post is
+     nobody's newest dead life, above the band. it is replaced at each
+     death, in place. the account is decided once, at the door: a river
+     entered before the well has answered has no such post until the
+     next entry, so the water never shifts under a thumb.
+   · THE POST. no face — nobody never had one. the picture is a black
+     square holding its last words, cut where the death cut them, and at
+     its foot `died HH:MM:SS utc · NN minutes old` and `survived by life
+     N+1` (the handoff's words). the caption is its first line. the
+     header says `life N` where the dead say `Suggested for you`. no
+     Follow, no counts: nothing here is forged. the heart is the same
+     one honest organ, and toggles.
+   · ITS SOUND IS ITS AIR. settled on the post (the same 0.45 s a voice
+     waits), the phone plays the life's air — eight notes, one per gene,
+     on the star's ladder (river.js's RIVER.airPlay, as the calendar's
+     register plays it), again after three seconds' rest [deemed], for as
+     long as the post holds the glass. the robot never speaks over it.
+     the thumb moving on, the room left, a hidden tab or the call:
+     RIVER.airHush() and the air is gone (the leaving door below).
+   · ITS PROFILE (`egnobody`, a tap on its name): one black square for
+     every life that has died (the feed's `deaths`), the newest first,
+     `N posts · 0 followers · 0 following`. nothing opens.
+   · the band, the drawn dead, the visitor's photograph and the ladder
+     are untouched; they only stand one post lower while nobody's post
+     is there. the films are still asked by their own index.
+   · THE CARD, walked: no flag read from the bar (APWNP.search, as
+     before); no navigation; nothing stored (the account and its air are
+     memory, gone with the page); no countdown (the age is a dead life's,
+     knot this phone's); quiet at apwnp:call (river.js hushes the air
+     itself, and refuses a new one after the call); no ai, no key — the
+     words were written on the server and come through the feed.
+     THIS IS A ROOM NOBODY WAS PLANNED FOR (rule 12): it comes in only
+     through the feed.
+   · THE RE-INK (4 oct, later — his word: `for eggstagram, reink regards
+     nobody`). rule 14: the name belongs to the one mind, so nothing else
+     in the room wears it. the nineteenth film is `no one` now (`no one
+     knows who this is.`); the ladder's third rung is `no one liked your
+     photograph` — still the truth over the forgeries, and the one at the
+     well, which never knows a visitor is there, is knot said to have
+     looked; every `nobody` in the dealt lives of the dead is `no one`
+     (twenty-six lines, the sense unchanged); and the sheet's first line
+     says whose the first post is. [new], all of it, for his red ink.
+
    THE INTERRUPTION PASS (13 sep — the phone grew banners and a shade,
    and asked the river for two things it alone can say; nothing in the
    water changes). two hands on the seam, both read-only: noteLine()
@@ -483,6 +531,10 @@ window.APWNP.modules.eggstagram = {
        band plays unveiled or unheard rather than refusing the room. */
     const SILV=api.silver||{ E:()=>0, step:()=>0, keep:f=>f(), veil:()=>{} };
     const actx=api.actx||null, eggBus=api.bus||null;
+    /* 4 oct (pass 6): the well, read by the phone (null when it has knot answered), and a life's air through the river */
+    const nbRead=(typeof api.nobody==='function')?api.nobody:(()=>null);
+    const nbAir=(typeof api.air==='function')?api.air:(()=>null);
+    const nbHush=(typeof api.airHush==='function')?api.airHush:(()=>{});
 
     /* the river's own glyph — the compose plus. drawn nowhere else in
        the house, so it lives with the room. */
@@ -498,7 +550,9 @@ window.APWNP.modules.eggstagram = {
     const EGG_T=(1000/173.68)*16384;      // ~94.33 s — one river-beat, P*2^14
     const egg={ H0:0, posted:0, my:null, hearts:new Set(),
       rungs:[], pend:[], sheet:false, bloomK:null, bloomT:0,
-      tapK:null, tapT:0, story:null };
+      tapK:null, tapT:0, story:null,
+      nb:false, nbAir:{ on:false, cur:false, since:0, next:0 } };   /* 4 oct (pass 6): nobody's post, decided at the door; its air */
+    const NB_AIR_REST=3;                  /* [deemed] seconds of rest between two airs on nobody's post */
     const eggRng=mulberry32((SEED^0x0E66A57)>>>0);      // the ladder's deal
     function eggUnread(){ let n=0;
       for(const r2 of egg.rungs) if(r2.un) n++; return n; }
@@ -590,7 +644,7 @@ window.APWNP.modules.eggstagram = {
       'won a dance contest in 1961 and never danced again',
       'once shook hands with a stranger everyone else swore was famous',
       'taught three generations of the same family to swim',
-      'carried a photograph nobody ever asked about',
+      'carried a photograph no one ever asked about',
       'planted a tree on every birthday',
       'read the last page of every book first',
       'never once raised a voice, that anyone remembers',
@@ -599,7 +653,7 @@ window.APWNP.modules.eggstagram = {
       'walked the same mile every morning for forty years',
       'saved string, jars, and rubber bands, just in case',
       'once drove all night just to see the ocean at sunrise',
-      'kept a diary in a code nobody has broken',
+      'kept a diary in a code no one has broken',
       'could fall asleep anywhere, and did',
       'made the same joke every christmas and it landed every time',
       'never learned to ride a bicycle and never minded',
@@ -745,7 +799,7 @@ window.APWNP.modules.eggstagram = {
       'the old elm came down in the october gale, and %s was under it',
       '%s reached from the bell tower for a rope that was knot there',
       'the quarry took %o the way the old men always said it would',
-      '%s followed a light across the marsh that nobody else ever saw',
+      '%s followed a light across the marsh that no one else ever saw',
       'the avalanche was small, as avalanches go, and it was enough',
       '%s tested the ice a hundred times, and the hundred-and-first was thin',
       '%s went up for the kite, and the church roof was older than the ladder'];
@@ -827,7 +881,7 @@ window.APWNP.modules.eggstagram = {
           'queued two hours for a bus that had been cancelled, out of principle',
           'named the tortoise after the prime minister and was rude to it daily',
           'entered every competition on every packet and won a caravan',
-          'was banned from the bingo for a system nobody could prove',
+          'was banned from the bingo for a system no one could prove',
           'kept a list of everyone who had ever wronged %o, and it was two names long, and one was a dog'],
         also:['%s had strong opinions about gravy and shared them',
           '%s was thrown out of exactly one library and told the story at length',
@@ -843,7 +897,7 @@ window.APWNP.modules.eggstagram = {
           '%s died in the good chair, in the bad dressing gown, unrepentant',
           '%s had said for forty years that the fried bread would get %o, and %s was right, and would want that noted',
           '%s laughed at something on the television and simply did knot stop',
-          'the last thing %s said was a punchline, and nobody has been able to reconstruct the joke'],
+          'the last thing %s said was a punchline, and no one has been able to reconstruct the joke'],
         sh:[c=>c.n+' was '+c.tr+', and would tell you so within a minute of meeting you. '+c.p+' loved '+c.lv+'. '+c.p+' '+c.mem+'.',
           c=>c.n+' '+c.mem+'. this was knot the strangest thing about '+c.o+'. '+c.p+' was '+c.tr+', allegedly.',
           c=>'ask anyone about '+c.n+' and you get the same three stories. '+c.also+'. '+c.p+' '+c.mem+'.',
@@ -874,7 +928,7 @@ window.APWNP.modules.eggstagram = {
           '%s died as %s had lived, entirely uninterested in anyone else\u2019s opinion of it',
           '%s went in the middle of a sentence about the council, and the sentence stands'],
         sh:[c=>c.n+' was '+c.tr+', and a menace, and much loved, in that order. '+c.also+'. '+c.p+' '+c.mem+'.',
-          c=>'nobody has a bad word about '+c.n+' that '+c.p+' did knot say first. '+c.p+' '+c.mem+'.',
+          c=>'no one has a bad word about '+c.n+' that '+c.p+' did knot say first. '+c.p+' '+c.mem+'.',
           c=>c.n+' loved '+c.lv+' and hated nearly everything else, publicly. '+c.p+' was '+c.tr+'. '+c.also+'.',
           c=>c.n+' was '+c.tr+', then '+c.tr2+', then a nuisance full time. '+c.p+' '+c.mem+'.'] },
 
@@ -883,7 +937,7 @@ window.APWNP.modules.eggstagram = {
           'wrote the same address on every christmas card long after the house was sold',
           'left the second cup out most mornings, without noticing',
           'learned the whole of one poem and never said which one it was for',
-          'kept a coat in the hall that fitted nobody in the house',
+          'kept a coat in the hall that fitted no one in the house',
           'took the same photograph of the same field every september',
           'never changed the message on the answering machine',
           'kept a boat that had knot been in the water since 1979',
@@ -899,7 +953,7 @@ window.APWNP.modules.eggstagram = {
           'the house had been too quiet for eleven years, and then it was quiet',
           '%s went in the same room %s had waited in',
           'the winter was long, and %s was tired of winters',
-          '%s died three days after the last of %p friends, which surprised nobody',
+          '%s died three days after the last of %p friends, which surprised no one',
           'nothing in particular happened. %s stopped, the way a clock does',
           '%s went with the television on, on a channel %s did knot watch',
           'the summer came and %s did knot want it'],
@@ -930,7 +984,7 @@ window.APWNP.modules.eggstagram = {
           'the diagnosis was late, as they were then',
           '%s got the news %s had waited thirty years for, and had four days of it',
           'the ambulance came, and came a long way',
-          '%s died in a corridor, waiting, which %s would have found funny and nobody else does'],
+          '%s died in a corridor, waiting, which %s would have found funny and no one else does'],
         sh:[c=>c.n+' was '+c.tr+'. '+c.also+'. '+c.p+' '+c.mem+'.',
           c=>c.n+' '+c.mem+'. it cost '+c.o+' everything and '+c.p+' never said so. '+c.p+' loved '+c.lv+'.',
           c=>'what '+c.n+' wanted was '+c.lv+', and a quiet street, and time. '+c.p+' was '+c.tr+'. '+c.also+'.'] },
@@ -965,23 +1019,23 @@ window.APWNP.modules.eggstagram = {
           c=>c.n+' loved '+c.lv+' the way other people love a person. '+c.also+'. '+c.p+' was '+c.tr+'.'] },
 
       { id:'surprising', w:9,
-        mem:['turned out to have been a champion swimmer, which nobody knew until the medals',
+        mem:['turned out to have been a champion swimmer, which no one knew until the medals',
           'had a second family two valleys over, and both came, and got on',
           'spoke four languages and used one',
           'is in a famous photograph, at the back, and never mentioned it',
           'held a pilot\u2019s licence and had knot flown since 1968',
           'left a locked box that turned out to contain, exactly, one feather',
           'is the voice on a recording the whole town knows',
-          'had run a marathon at sixty-one under a name nobody recognised',
+          'had run a marathon at sixty-one under a name no one recognised',
           'owned an island, technically, in the middle of a river',
           'had been writing a novel since 1974, and it is finished, and it is good'],
         also:['%s had, it turns out, been paying a stranger\u2019s rent for eleven years',
           'the funeral was standing room only, which %s would have found ridiculous',
           '%s left instructions, and they were extremely specific, and slightly illegal',
-          'nobody knew about the letters until the letters',
+          'no one knew about the letters until the letters',
           '%s had a nickname in another country'],
         die:['%s was perfectly well on the wednesday',
-          '%s died dancing, and the band played on because nobody could tell',
+          '%s died dancing, and the band played on because no one could tell',
           'the doctors had given %o six weeks, eleven years earlier',
           '%s went in %p sleep on the night of the party, having enjoyed it enormously',
           'nothing was wrong. everything simply finished at once',
@@ -990,7 +1044,7 @@ window.APWNP.modules.eggstagram = {
           '%s had been fine for a whole life and then, briefly, was knot'],
         sh:[c=>'most of what is known about '+c.n+' was learned afterwards. '+c.p+' '+c.mem+'. '+c.also+'.',
           c=>c.n+' was '+c.tr+'. that is the least interesting fact. '+c.p+' '+c.mem+'.',
-          c=>c.n+' loved '+c.lv+', everyone knew that. '+c.also+'. nobody knew '+c.p+' '+c.mem+'.'] },
+          c=>c.n+' loved '+c.lv+', everyone knew that. '+c.also+'. no one knew '+c.p+' '+c.mem+'.'] },
 
       { id:'grimm', w:8,
         mem:['was warned about the marsh road as a %b and took it anyway, every time',
@@ -1035,14 +1089,14 @@ window.APWNP.modules.eggstagram = {
           '%s hated everything except three things and never listed them',
           '%s had knot been happy since a specific tuesday and would tell you the date',
           '%s said the sea was overrated and went every week',
-          '%s left instructions that nobody was to make a fuss, underlined four times'],
+          '%s left instructions that no one was to make a fuss, underlined four times'],
         die:['%s died on a wednesday, which %s had always said was the worst of them',
           'the black coat had been on the hook, ready, for years',
           '%s went in the rain, which %s would have called on the nose',
           'it was raining, and grey, and entirely %p kind of afternoon',
           '%s died in the small hours, awake, as ever',
           'the record was still turning when they found %o',
-          '%s had said for years that nobody would notice, and the street closed for it'],
+          '%s had said for years that no one would notice, and the street closed for it'],
         sh:[c=>c.n+' was '+c.tr+' and considered it a phase. '+c.p+' '+c.mem+'. '+c.also+'.',
           c=>c.n+' loved '+c.lv+' and would knot admit to loving anything. '+c.p+' '+c.mem+'.',
           c=>'ask '+c.n+' how '+c.p+' was and you got a look. '+c.also+'. '+c.p+' had been '+c.tr+' for years and hated every minute, publicly, happily.'] },
@@ -1060,20 +1114,20 @@ window.APWNP.modules.eggstagram = {
           'was thanked less than anyone in the street and mentioned it never'],
         also:['the church was mostly empty and %s would have said that was fine',
           '%s asked for nothing and was given exactly that',
-          '%s kept a photograph on the mantel that nobody could identify',
+          '%s kept a photograph on the mantel that no one could identify',
           '%s said the worst of it was the afternoons',
           'the neighbours realised afterwards how little they had asked'],
         die:['%s died at home, alone, which %s had always said %s would knot mind, and probably did',
-          'nobody was expecting it, because nobody had been asked',
+          'no one was expecting it, because no one had been asked',
           '%s went in the afternoon, with the door unlocked, as always',
           '%s died quietly, and it was some days before the street noticed',
           '%s had been ill a while and had knot told anyone, to save them the bother',
           'the kettle was still warm',
           '%s went on a tuesday, and the appointment card is still on the fridge',
           'the last visitor had been in march'],
-        sh:[c=>c.n+' was '+c.tr+' and good at it and nobody said so. '+c.p+' '+c.mem+'. '+c.also+'.',
-          c=>c.n+' '+c.mem+'. '+c.also+'. '+c.p+' loved '+c.lv+', and there was nobody to tell.',
-          c=>'there is more of this that nobody wrote down. '+c.n+' was '+c.tr+'. '+c.p+' '+c.mem+'.'] }
+        sh:[c=>c.n+' was '+c.tr+' and good at it and no one said so. '+c.p+' '+c.mem+'. '+c.also+'.',
+          c=>c.n+' '+c.mem+'. '+c.also+'. '+c.p+' loved '+c.lv+', and there was no one to tell.',
+          c=>'there is more of this that no one wrote down. '+c.n+' was '+c.tr+'. '+c.p+' '+c.mem+'.'] }
     ];
     const MOOD_TOT=MOODS.reduce((a,m)=>a+m.w,0);
     function moodOf(R){ let r=R()*MOOD_TOT;
@@ -1160,7 +1214,7 @@ window.APWNP.modules.eggstagram = {
         d:'in the hour before the light came, with her hands where she liked them' },
       { mv:'life02.MP4', vx:'lif02.mp3',
         n:'dot', f:1, a:88, fm:5,
-        b:'dot cooked for a school for thirty-one years and swore only in a language she had invented herself, which she taught to the children on the quiet. she said the last corridor was the best ride she ever had and that somebody should have timed it. nobody who ever pushed her forgot it.',
+        b:'dot cooked for a school for thirty-one years and swore only in a language she had invented herself, which she taught to the children on the quiet. she said the last corridor was the best ride she ever had and that somebody should have timed it. no one who ever pushed her forgot it.',
         d:'she went out laughing, at speed, which was the one thing she had asked for' },
       { mv:'life03.MP4', vx:'lif03.mp3',
         n:'wing', f:0, a:89, fm:2,
@@ -1220,15 +1274,15 @@ window.APWNP.modules.eggstagram = {
         d:'in the morning, in the same chair, with the radio on' },
       { mv:'life17.MP4', vx:'lif17.mp3',
         n:'otto', f:0, a:88, fm:4,
-        b:'otto found a black beetle in the yard at six and delivered a report on it, out loud, to nobody, for some eleven minutes. he became an entomologist and then a man who wrote about entomologists, and the sentences kept exactly that terrible seriousness. he held that the natural world is neither kind nor unkind and said so at dinner parties until he stopped being asked to many.',
+        b:'otto found a black beetle in the yard at six and delivered a report on it, out loud, to no one, for some eleven minutes. he became an entomologist and then a man who wrote about entomologists, and the sentences kept exactly that terrible seriousness. he held that the natural world is neither kind nor unkind and said so at dinner parties until he stopped being asked to many.',
         d:'in a garden, on a warm day, having just finished a paragraph' },
       { mv:'life18.MP4', vx:'lif18.mp3',
         n:'eino', f:0, a:82, fm:1,
         b:'eino was born into a wool-coloured room in the forties and there is a recording of him at one year old talking steadily and at length in a language that was knot yet any language. he ended up a ferry mechanic and a man of very few words, which his family found extremely funny given the recording. he kept the tape his whole life and never played it for anyone.',
         d:'in the winter, with ice on everything, quietly' },
       { mv:'life19.MP4', vx:'lif19.mp3',
-        n:'nobody', f:0, a:0, fm:-1,
-        b:'nobody knows who this is. the film arrived without a name on it, and the candle goes out, and then it comes back, and then it goes out again. what is known is this much: somebody was here, somebody was counted, and somebody leaned in and blew.',
+        n:'no one', f:0, a:0, fm:-1,
+        b:'no one knows who this is. the film arrived without a name on it, and the candle goes out, and then it comes back, and then it goes out again. what is known is this much: somebody was here, somebody was counted, and somebody leaned in and blew.',
         d:'the clock says %a. the film says otherwise, and the film has no name on it either.' }
     ];
     /* the band's dead answer from the bank; the river's own answer
@@ -1838,7 +1892,7 @@ window.APWNP.modules.eggstagram = {
         case 3: s='as a '+pr.bg+', '+name+' loved '+love+'. later '+pr.p+' became '+art(trade)+'. '+pr.p+' '+mem+'.'; break;
         case 4: s=name+' '+mem+'. '+pr.p+' loved '+love+' more than '+pr.p+' ever said. '+pr.p+' worked as '+art(trade)+', mostly.'; break;
         case 5: s=name+' was '+art(trade)+'. '+pr.p+' '+mem+'. toward the end '+pr.p+' mostly loved '+love+'.'; break;
-        case 6: s='nobody remembers what '+name+' did for work. everyone remembers that '+pr.p+' '+mem+'.'; break;
+        case 6: s='no one remembers what '+name+' did for work. everyone remembers that '+pr.p+' '+mem+'.'; break;
         case 7: s=name+' was '+art(trade)+', then '+art(trade2)+', then knot much at all, happily. '+pr.p+' loved '+love+'.'; break;
         /* the eight new shapes of THE YOLK PASS — the asides arrive */
         case 8: s=name+' was '+art(trade)+'. '+also+'. '+pr.p+' '+mem+'.'; break;
@@ -2219,7 +2273,7 @@ window.APWNP.modules.eggstagram = {
       egg.pend.push(
         { line:'somebody liked your photograph', at:now()+8192/P  },
         { line:'anybody liked your photograph',  at:now()+32768/P },
-        { line:'nobody liked your photograph',
+        { line:'no one liked your photograph',   /* 4 oct (later) [new]: re-inked — `nobody` is the mind's own name now (rule 14) */
           at:now()+(65536+Math.floor(eggRng()*65537))/P });
     }
     function eggPump(){
@@ -2971,6 +3025,7 @@ window.APWNP.modules.eggstagram = {
       for(const arr of [MEDIA.vids,MEDIA.vox]) for(const m of arr)
         if(m){ try{ m.el.pause(); }catch(_){} gainTo(m,0); }
       try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(_){}
+      if(egg.nbAir.on){ egg.nbAir.on=false; try{ nbHush(); }catch(_){} }   /* 4 oct (pass 6): nobody's air leaves with the rest */
       MEDIA.focus=-1; MEDIA.spoke=-1; mediaGuard(false); }
     /* ================================================================
        THE LEAVING DOOR (30 aug, his fourth word: the last voice
@@ -3021,6 +3076,7 @@ window.APWNP.modules.eggstagram = {
        first BAND_N depths of it, and the visitor's photograph is the
        only thing in the column that has no depth at all. */
     function cellAt(idx){
+      if(egg.nb){ if(idx===0) return { kind:'nb' }; idx--; }   /* 4 oct (pass 6): nobody's newest dead, above the band */
       const bn=bandOn()?BAND_N:0;
       if(idx<bn) return { kind:'vid', v:idx, k:egg.H0-idx };
       if(egg.posted&&idx===bn) return { kind:'mine' };
@@ -3066,6 +3122,7 @@ window.APWNP.modules.eggstagram = {
     /* ---- ONE POST, the service's own, drawn whole ---- */
     function drawPost(idx,y0,t,live,seen){
       const c=cellAt(idx), mine=c.kind==='mine';
+      if(c.kind==='nb'){ drawNbPost(idx,y0,t); return; }
       const dd=mine?null:deadOf(c.k);
       const key=mine?'mine':c.k;
       /* the head of it */
@@ -3192,6 +3249,111 @@ window.APWNP.modules.eggstagram = {
         }
       }
     }
+    /* ================================================================
+       4 OCT 2026 · NOBODY AMONG THE DEAD (pass 6). see the note at the
+       top. everything below reads api.nobody() — the phone's last true
+       answer from the well — and keeps nothing.
+       ================================================================ */
+    function nbLines(str,w,px,weight,max,ind){   /* ind: the first line starts this far in */
+      sq.font=(weight||400)+' '+px+'px '+F.mono;
+      const out=[]; let line='';
+      for(const wd of String(str||'').split(/\s+/)){ if(!wd) continue;
+        const t2=line?line+' '+wd:wd;
+        if(sq.measureText(t2).width>w-(out.length?0:(ind||0))&&line){ out.push(line); line=wd; } else line=t2; }
+      if(line) out.push(line);
+      if(max&&out.length>max){ const k=out.slice(0,max); k[max-1]=k[max-1].replace(/\s*\S*$/,'')+' \u2026'; return k; }
+      return out; }
+    function nbHM(ms,sec){ const d=new Date(ms); const p=(n)=>String(n).padStart(2,'0');
+      return p(d.getUTCHours())+':'+p(d.getUTCMinutes())+(sec?':'+p(d.getUTCSeconds()):''); }
+    function nbDisc(x,y,r){
+      sq.fillStyle='#000'; sq.beginPath(); sq.arc(x,y,r,0,6.283); sq.fill();
+      sq.strokeStyle=ink(0.28); sq.lineWidth=1; sq.beginPath(); sq.arc(x,y,r,0,6.283); sq.stroke(); }
+    function drawNbPost(idx,y0,t){
+      const P0=nbRead();
+      const key='nb'+(P0?P0.n:'');
+      /* the head of it: no face, the life's number where the dead say `Suggested for you` */
+      if(y0+HDR_H>EGG_TOP-6&&y0<RIV_BOT){
+        nbDisc(26,y0+27,15);
+        txt('nobody',52,y0+21,12.5,ink(0.92),'left',600);
+        if(P0) txt('life '+P0.n,52,y0+37,9.5,ink(0.42),'left');
+        gMenu(336,y0+27,ink(0.78));
+        HR(320,y0+11,32,32,()=>{});
+        HR(8,y0+8,220,38,()=>{ scrollPos['egnobody']=0; setApp('egnobody'); });
+      }
+      /* the picture: a black square holding its last words, cut where they were cut */
+      const my0=y0+HDR_H;
+      if(my0<RIV_BOT&&my0+FEED_W>EGG_TOP-6){
+        const cy0=Math.max(my0,EGG_TOP-6), cy1=Math.min(my0+FEED_W,RIV_BOT);
+        sq.save(); sq.beginPath(); sq.rect(0,cy0,FEED_W,cy1-cy0); sq.clip();
+        sq.fillStyle='#000'; sq.fillRect(0,my0,FEED_W,FEED_W);
+        if(P0){
+          const L=nbLines(P0.last?'\u201c'+P0.last+'\u201d':'',FEED_W-64,15,400,9);
+          let ly=my0+FEED_W/2-(L.length-1)*11-14;
+          for(const l of L){ txt(l,32,ly,15,ink(0.88),'left'); ly+=22; }
+          const foot=['died '+nbHM(P0.died,true)+' utc'+(P0.born?' \u00b7 '+Math.max(0,Math.floor((P0.died-P0.born)/60000))+' minutes old':''),
+                      'survived by life '+(P0.n+1)];
+          txt(foot[0],32,my0+FEED_W-50,10,ink(0.42),'left');
+          txt(foot[1],32,my0+FEED_W-32,10,ink(0.42),'left');
+        }
+        sq.restore();
+        HR(0,my0,FEED_W,FEED_W,()=>{
+          const tt=now();
+          if(RIV.tap.i===idx&&tt-RIV.tap.t<0.36){ RIV.tap.t=0; RIV.tap.i=-1; eggLike(key); }
+          else { RIV.tap.i=idx; RIV.tap.t=tt; }
+        },true);
+        if(egg.bloomK===key&&t-egg.bloomT<=HEART_T)
+          eggBloom(FEED_W*CHEST_X,my0+FEED_W*CHEST_Y,egg.bloomT,t);
+      }
+      /* the rail: the heart alone — nothing here is counted */
+      const ay=my0+FEED_W+23;
+      if(ay>EGG_TOP-16&&ay<RIV_BOT+16){
+        const on=egg.hearts.has(key);
+        gHeartS(22,ay,10,on?gld(0.95):ink(0.88),on);
+        HR(6,ay-18,44,36,()=>eggToggle(key));
+      }
+      /* the caption: its name and its first line */
+      if(P0&&P0.first){
+        const cy=my0+FEED_W+ACT_H+14;
+        if(cy>EGG_TOP-14&&cy<RIV_BOT+40){
+          sq.font='600 11.5px '+F.mono; const nw=sq.measureText('nobody').width+7;
+          txt('nobody',12,cy,11.5,ink(0.92),'left',600);
+          const L=nbLines(P0.first,336,11.5,400,3,nw);
+          L.forEach((l,i)=>txt(l,i?12:12+nw,cy+i*17,11.5,ink(0.78),'left'));
+        }
+      }
+    }
+    /* its air: settled on the post, the life's eight notes, again after a rest, for as long as the post holds the glass */
+    function nbAirPump(on,t){
+      const A=egg.nbAir;
+      if(!on){ A.cur=false; A.next=0; if(A.on){ A.on=false; try{ nbHush(); }catch(_){} } return; }
+      if(!A.cur){ A.cur=true; A.since=t; A.next=0; }
+      if(LOW||t-A.since<0.45) return;
+      const P0=nbRead(); if(!P0||!P0.genome) return;
+      /* an air hushed by the leaving door's watchdog (a stalled frame, knot a thumb) waits out its own slot: never a restart mid-air */
+      if(t>=A.next){ let r=null; try{ r=nbAir(P0.genome); }catch(_){ r=null; }
+        A.on=!!r; A.next=t+((r&&r.secs)||8)+NB_AIR_REST; if(r){ MEDIA.lastDraw=t; mediaGuard(true); } }
+    }
+    /* its profile: a black square for every life that has died, the newest first */
+    function drawEgNobody(){
+      chrome('nobody','instagram');
+      const P0=nbRead(), n=P0?Math.max(0,P0.deaths|0):0;
+      const key='egnobody', sc=scrollPos[key]||0;
+      sq.save(); sq.beginPath(); sq.rect(0,100,UIW,646); sq.clip();
+      sq.translate(0,-sc);
+      nbDisc(60,152,30);
+      [[String(n),'posts'],['0','followers'],['0','following']].forEach((s2,i)=>{ const x=140+i*74;
+        txt(s2[0],x,144,17,ink(0.92),'center',400,F.serif);
+        txt(s2[1],x,164,9.5,ink(0.42),'center'); });
+      txt('nobody',24,208,13,ink(0.9),'left',600);
+      hair(12,232,348,0.08);
+      const gy=240, cw=118, gap=1;
+      for(let i=0;i<n;i++){ const x=1+(i%3)*(cw+gap), y=gy+Math.floor(i/3)*(cw+gap);
+        if(y-sc>746) break; if(y+cw-sc<100) continue;
+        sq.fillStyle='#000'; sq.fillRect(x,y,cw,cw);
+        sq.strokeStyle=ink(0.13); sq.lineWidth=1; sq.strokeRect(x+0.5,y+0.5,cw-1,cw-1); }   /* a hairline, so black reads as a square on black */
+      sq.restore();
+      scrollMax[key]=Math.max(0,gy+Math.ceil(n/3)*(cw+gap)+24-746);
+    }
     function drawEggRiver(){
       chrome('eggstagram','home');
       gPlus(252,76,ink(0.80));
@@ -3219,13 +3381,13 @@ window.APWNP.modules.eggstagram = {
          the stutter he heard on film ten. the target only ever changes
          when a thumb lets go. */
       const cur=Math.max(0,RIV.tgt);
-      mediaWindow(cur);           /* claim the films before a single one is drawn */
+      mediaWindow(cur-(egg.nb?1:0));   /* claim the films before a single one is drawn · 4 oct: by the film's own index */
       const seen=[];
       /* THE CENTRED POST IS MODELLED FIRST. the draw walks the column
          downward, so without this the post leaving the glass would
          spend the frame's one head and the one you are looking at
          would stay flat. */
-      { const c0=cellAt(cur); if(c0.kind!=='mine') faceOf(c0.k); }
+      { const c0=cellAt(cur); if(c0.kind!=='mine'&&c0.kind!=='nb') faceOf(c0.k); }
       const first=Math.max(0,Math.floor((RIV.y-(RIV_BOT-EGG_TOP))/PITCH));
       for(let idx=first,n=0;n<4;idx++,n++){
         const y0=EGG_TOP+TOP_PAD+idx*PITCH-RIV.y;
@@ -3235,7 +3397,8 @@ window.APWNP.modules.eggstagram = {
       }
       sq.restore();
       const cc=cellAt(cur);
-      mediaFocus(cur,cc.kind,cc.k||0,seen,t);
+      mediaFocus(cc.kind==='vid'?cc.v:(cc.kind==='nb'?'nb':cur),cc.kind,cc.k||0,seen,t);
+      nbAirPump(cc.kind==='nb',t);    /* 4 oct (pass 6): nobody's post sounds its air */
       if(egg.sheet) eggComposeSheet();
       if(WALLQ) drawWallReport();
       if(egg.bloomK!=null&&now()-egg.bloomT>HEART_T) egg.bloomK=null;
@@ -3296,7 +3459,7 @@ window.APWNP.modules.eggstagram = {
       /* the thumb letting go is still a gesture, and it is the one that
          chose this post — so the film it chose is cut and unlocked
          inside it, knot a frame later outside it */
-      mediaWindow(tgt); mediaBless();
+      mediaWindow(tgt-(egg.nb?1:0)); mediaBless();
       repaint();
       return true;
     }
@@ -3491,14 +3654,15 @@ window.APWNP.modules.eggstagram = {
        ================================================================ */
     return {
       name:'eggstagram',
-      views:['instagram','egprofile','egactivity','egstory','egbooth'],
+      views:['instagram','egprofile','egactivity','egstory','egbooth','egnobody'],
       enter(was){
-        if(was!=='egprofile'&&was!=='egactivity'&&was!=='egstory'&&was!=='egpost'&&was!=='egbooth'){
+        if(was!=='egprofile'&&was!=='egactivity'&&was!=='egstory'&&was!=='egpost'&&was!=='egbooth'&&was!=='egnobody'){
           egg.H0=Math.floor(Date.now()/EGG_T);
           scrollPos['eggriver']=0; egg.sheet=false; egg.story=null;
           RIV.y=0; RIV.tgt=0; RIV.idx=0; RIV.hold=false; RIV.t0=0;
           RIV.tap.i=-1; RIV.tap.t=0; faceCvs.clear(); cntC.clear();
           MEDIA.focus=-1; MEDIA.spoke=-1;
+          { let P0=null; try{ P0=nbRead(); }catch(_){} egg.nb=!!(P0&&P0.n!=null&&P0.died); egg.nbAir.cur=false; }   /* 4 oct (pass 6): nobody's post, decided at the door */
           try{ hookRiver(); }catch(_){}
           mediaBless();   /* the tile tap is a gesture; the band wakes inside it */
           return true; }
@@ -3506,12 +3670,14 @@ window.APWNP.modules.eggstagram = {
       },
       draw(a){
         CURAPP=a;
+        if(a!=='instagram'){ egg.nbAir.cur=false; egg.nbAir.next=0; }   /* 4 oct (pass 6): away from the river, nobody's post settles anew */
         if(a==='instagram'){ drawEggRiver(); return true; }
         if(a==='egstory'){ drawEgStory(); return true; }
         /* the room's other pages are knot the river: the band has no
            business sounding over the ladder or the booth either */
         if(a==='egactivity'){ mediaLeave(); drawEgActivity(); return true; }
         if(a==='egbooth'){ mediaLeave(); drawEgBooth(); return true; }
+        if(a==='egnobody'){ mediaLeave(); drawEgNobody(); return true; }   /* 4 oct (pass 6) */
         mediaLeave();            /* THE LEAVING DOOR — see mediaGuard */
         return false;
       },
@@ -3546,7 +3712,7 @@ window.APWNP.modules.eggstagram = {
          phone that has no such seam, through this room's own window
          listener. ticktock's arrangement exactly; nothing else in the
          house changes. */
-      scrollKey(a){ return null; },
+      scrollKey(a){ return a==='egnobody'?'egnobody':null; },   /* 4 oct (pass 6): nobody's profile scrolls; the river still snaps */
       drag(a,phase,x,y){
         if(phase==='down') DRAG.seam=true;   /* the seam speaks: the window listener stands down */
         if(a!=='instagram') return false;
@@ -3556,7 +3722,8 @@ window.APWNP.modules.eggstagram = {
          (the sheets law). the fourth line carries his ruling: the
          account can knot be followed, and the ask is still the one
          remembered thing — the colophon's sentence stays true. */
-      sheet:['nobody in this river ever lived. the faces are modelled and the lives are dealt by this phone, the same for anybody at the same second. the twenty-three films are dead too, and each of them is somebody else.',
+      /* 4 oct (later) [new]: the first line re-inked for nobody's post (pass 6) — was `nobody in this river ever lived. the faces …` */
+      sheet:['the first post is nobody’s: the newest of its lives to die, as the well wrote it — its first line, its last words, its air. no one else in this river ever lived. the faces are modelled and the lives are dealt by this phone, the same for anybody at the same second. the twenty-three films are dead too, and each of them is somebody else.',
         'the dead are past tense. the clocks under them are real time over an invented hour, and the deeper you scroll, the longer ago \u2014 and the further a face is from the top, the less of it there is.',
         'one photograph may be posted, by the booth\u2019s own camera or from your library. it is drawn on this glass only and it goes out with the tide. yours is the only living thing here.',
         'the likes are the phone\u2019s forgeries, and the last one tells the truth.',

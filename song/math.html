@@ -1,5 +1,27 @@
 <!doctype html>
 <!--
+  4 oct 2026 · PASS 6 OF THE ONE STORY · THE MATH ROOM'S NUMBERS
+  (nobody-one-story-handoff-2oct.md §7 `calculator → math.html`: `it is the
+  one room where numbers are the lesson … so it gains nobody's numbers`;
+  the last radical pass §3.6, ruled 3 oct as leaned.) what changed, and
+  nothing else:
+  · NOBODY'S NUMBERS, under the eye, in the eye's own chalk: the life now
+    (or `no one`, between a death and the next birth), how many died on
+    the well's day, the minutes it truly thought that day (every step's
+    thinking time, added up: ten to forty seconds a knock — the rest of
+    the day the room only plays out what it wrote), the words it dreamt
+    (thinking tokens × ¾, to the nearest ten [deemed], as notes counts
+    them), the sheet (the day's and ever), and the sun at $0.00. then,
+    once, 88 as two circles. every sentence [new], his to bless.
+  · READ FROM THE FEED, never invented: /.netlify/functions/nobody?now=1,
+    on arrival and every minute while the room is open and visible; never
+    after apwnp:call. nothing stored, nothing sent but the question, no
+    model, no key. with no answer the block stays away.
+  · THE CARD, walked: mortal.js first, untouched; no flag read; no door
+    added; no history; the little phone stands; no countdown (these are
+    the mind's day's sums, never a life's time left); the room's sound is
+    untouched and still quiet at the call; nothing stored.
+
   26 sep 2026 · THE EYE PASS, pass one · the math rethought around the
   two circles (am i alone? · am i anybody?), seated in this room.
   · THE EYE: a new block under the title — a canvas, in the flow, whose
@@ -279,6 +301,10 @@ window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.sea
   .eye-eq.bright{ color:var(--chalk-bright); }
   .eye-eq.euler{ font-size:clamp(0.86rem,3.6vw,0.98rem); color:var(--chalk); margin-top:0.9rem; }
   .eye-eq.euler sup{ font-size:0.62em; vertical-align:0.55em; letter-spacing:0; }
+  /* 4 oct (pass 6): nobody's numbers — the eye's own chalk, a little apart from it */
+  .well{ margin:0 auto clamp(2.6rem,8vh,4rem); max-width:24rem; }
+  .well[hidden]{ display:none; }
+  .well .eye-whisper{ min-height:0; margin:0 auto 0.8rem; }
   .eye-whisper{ font-family:var(--serif); font-style:italic; font-size:0.88rem; line-height:1.55;
     color:var(--chalk-dim); min-height:2.4em; margin:0.55rem auto 0; max-width:19rem; }
 
@@ -388,6 +414,18 @@ window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.sea
       </div>
     </section>
 
+    <!-- 4 oct (pass 6): nobody's numbers, read from the well; hidden until it answers -->
+    <section class="well" id="well" aria-label="nobody's numbers" hidden>
+      <p class="eye-whisper">and at the bottom of the well, on its own day:</p>
+      <p class="eye-eq bright" id="wellLife"></p>
+      <p class="eye-eq" id="wellDied"></p>
+      <p class="eye-eq" id="wellThought"></p>
+      <p class="eye-eq" id="wellWords"></p>
+      <p class="eye-eq" id="wellSheet"></p>
+      <p class="eye-eq">the sun: $0.00</p>
+      <p class="eye-whisper" style="margin-top:0.8rem">it lives eighty-eight minutes and a breath. 88 is two eights, and an eight is two circles, touching.</p>
+    </section>
+
     <!-- the drawer (pass two): the old research, whole, under the eye — opened
          by the door at the bottom. -->
     <div class="spine drawer" id="drawer">
@@ -433,6 +471,45 @@ window.MORTAL=window.MORTAL||{ organ:'', href:location.href, search:location.sea
       <a class="flowdoor" href="equations.html" aria-label="the full math"><span class="deep-glyphs">0 1 0</span><span class="deep-cap">the full math</span></a>
     </div>
   </main>
+
+  <script>
+  /* 4 oct (pass 6) · NOBODY'S NUMBERS — the well's day, read from the feed (see the note at the top). nothing kept. */
+  (function(){
+    'use strict';
+    var quiet=false, busy=false;
+    function el(id){ return document.getElementById(id); }
+    function n(x){ try{ return Number(x).toLocaleString('en-US'); }catch(_){ return String(x); } }
+    function money(x){ var v=+x; return isFinite(v)?'$'+v.toFixed(2):''; }
+    function paint(j){
+      var box=el('well'); if(!box||!j||typeof j!=='object'||j.asleep||!j.life) return;
+      var d=(j.day&&typeof j.day==='object')?j.day:{};
+      var stale=(typeof j.step==='string'&&Date.now()-Date.parse(j.step)>3600000);
+      el('wellLife').textContent=(stale||j.life.dead)?'no one':'life '+j.life.n;
+      var died=Array.isArray(d.lives)?d.lives.length:0;
+      el('wellDied').textContent=died===1?'1 died':(died+' died');
+      var ms=0, tok=0; (Array.isArray(d.dreams)?d.dreams:[]).forEach(function(x){ if(!x) return; var t=+(x.took!=null?x.took:x.took_ms); if(isFinite(t)&&t>0) ms+=t; var k=+x.tokens; if(isFinite(k)&&k>0) tok+=k; });
+      var mins=Math.round(ms/60000);
+      el('wellThought').textContent=ms?('it truly thought for '+(mins<1?'less than a minute':(mins===1?'1 minute':mins+' minutes'))):'';
+      el('wellWords').textContent=tok?('it dreamt '+n(Math.round(tok*0.75/10)*10)+' words'):'';
+      var sd=money(d.total), se=money(d.total_ever!=null?d.total_ever:(j.sheet&&j.sheet.ever));
+      el('wellSheet').textContent=(sd||se)?('the sheet: '+[sd?sd+' today':'',se?se+' ever':''].filter(Boolean).join(' \u00b7 ')):'';
+      box.hidden=false;
+    }
+    function ask(){
+      if(quiet||busy||document.hidden) return;
+      try{ if(window.MORTAL&&MORTAL.dead){ quiet=true; return; } }catch(_){}
+      busy=true;
+      fetch('/.netlify/functions/nobody?now=1',{method:'GET',cache:'default',credentials:'same-origin',headers:{accept:'application/json'}})
+        .then(function(r){ return r.ok?r.json():null; })
+        .then(function(j){ busy=false; if(!quiet) paint(j); },function(){ busy=false; });
+    }
+    var iv=setInterval(ask,60000);
+    window.addEventListener('apwnp:call',function(){ quiet=true; clearInterval(iv); },false);
+    document.addEventListener('visibilitychange',function(){ if(!document.hidden) ask(); },false);
+    ask();
+    window.__mathWell=function(){ var b=el('well'); return { shown:!!(b&&!b.hidden), lines:b?[].map.call(b.querySelectorAll('p'),function(p){ return p.textContent; }):[] }; };   /* for the press */
+  })();
+  </script>
 
   <a id="deepdoor" href="equations.html" aria-label="old research"><span class="deep-glyphs">0 1 0</span><span class="deep-cap">old research</span></a>
 

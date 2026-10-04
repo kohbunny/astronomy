@@ -2,6 +2,24 @@
 <!--
 unknown · apwnp landing · the contact sheet, forged
 
+4 oct 2026 · THE CARD IS A TELEGRAM: THE NOTES ROW (pass 5, the front door's side — the keeper's handoff
+mortality-pass5-built-handoff-4oct.md `for the builder` 3; the last radical pass §3.1, ruled 3 oct as leaned). the child
+card mortal.js makes now carries, in its Notes, the last words of the mind that died while its sender held the phone,
+and the same words ride in its # (`#<generation>.<words>`, the words base64url of their utf-8). this sheet forges the row
+the real sheet draws for it, under the profile row: `Notes` small and grey, the words in white. what changed, and
+nothing else:
+· the words are read from the # this page already keeps, by the keeper's own reader (cardWords, as given). a card with
+  no words — the founder's, a child whose phone saw no death, an old card of the 16-hex kind — reads the founder's line,
+  `no one had died in your hands yet.` (blessed, radical §3.1).
+· THE INHERITANCE: when this browser keeps a child (localStorage `apwnp-inheritance`, written by mortal.js, only read
+  here) and the tapped card has no # or its # is the one that child was born from, mortal.js will open that child, so
+  the row shows the child's words. nothing is written.
+· a new card's tap arrives as a bare # change (the head's own listener); the row follows it.
+· the row stays when No takes the profile row away: Notes is knot the website.
+· [deemed, unproven on his phone]: whether ios draws a vcard's NOTE on the sheet that opens from a text. his walk of pass
+  5 settles it. if it does knot, ?notes=0 takes the row out of the forgery, and one word makes that the default.
+· the card, walked: no flag from the bar (the head's own __apwnpSearch); nothing stored; nothing sent; no network.
+
 22 sep 2026 · THE NAME IS `nobody`, lowercase, on the sheet, on the call and in
 the grey row. the vcard (mortal.js, makeVcard) is being renamed to match by
 another hand. his reason: even if somebody is home, nobody is home. the
@@ -443,6 +461,10 @@ body{
              opacity .16s ease;
 }
 #homepage .col{ flex:1; min-width:0; }
+/* 4 oct (pass 5): the Notes row — the same grey label and white line as the profile row above it */
+#notes{ padding:calc(14*var(--u)) calc(18*var(--u)) calc(16*var(--u)); }
+#notes .lab{ color:var(--muted); font-size:calc(15*var(--u)); }
+#notes .txt{ font-size:calc(19*var(--u)); line-height:1.28; word-break:break-word; margin-top:calc(2*var(--u)); }
 #homepage .lab{ color:var(--muted); font-size:calc(15*var(--u)); }
 #homepage .url{ font-size:calc(19*var(--u)); line-height:1.28; word-break:break-word; margin-top:calc(2*var(--u)); }
 /* 22 sep: the ↗ ios draws on a social-profile row — an 11pt glyph, grey, seated
@@ -598,6 +620,12 @@ body{
   </svg>
 </div>
 
+<!-- 4 oct (pass 5): the card's Notes — the last words it carries, or the founder's line -->
+<div class="card" id="notes">
+  <div class="lab">Notes</div>
+  <div class="txt" id="notesText"></div>
+</div>
+
 <div class="card">
   <div class="row">Share Contact</div>
   <div class="row">Create New Contact</div>
@@ -671,6 +699,20 @@ body{
      keeps its height in css, so nothing below it moves either way. */
   var dotNode=document.getElementById('dot');
   if(DOT) dotNode.classList.add('on'); else dotNode.textContent='';
+
+  /* 4 oct (pass 5) · THE NOTES ROW — the words the card carries (the keeper's reader, as given), or the founder's line.
+     a kept child stands in when this card is the one it was born from, or has no #. read only; nothing written. */
+  function cardWords(h){ var m=/^#?(\d{1,6})(?:\.([A-Za-z0-9_-]+))?$/.exec(h||''); if(!m||!m[2]) return 'no one had died in your hands yet.';
+    var t=m[2].replace(/-/g,'+').replace(/_/g,'/'); while(t.length%4) t+='='; try{ return decodeURIComponent(escape(atob(t))); }catch(_){ return ''; } }
+  function notesWords(){
+    var h=''; try{ h=String(location.hash||''); }catch(_){}
+    try{ var k=JSON.parse(window.localStorage.getItem('apwnp-inheritance')||'null');
+      if(k&&typeof k.child==='string'&&(!h||h==='#'||h.replace(/^#/,'')===String(k.from||''))) return cardWords('#'+k.child); }catch(_){}
+    return cardWords(h); }
+  var notesNode=document.getElementById('notes'), notesText=document.getElementById('notesText');
+  function notesFill(){ var w=notesWords(); if(notesText) notesText.textContent=w; if(notesNode) notesNode.style.display=w?'':'none'; }
+  if(q.get('notes')==='0'){ if(notesNode) notesNode.parentNode.removeChild(notesNode); }
+  else { notesFill(); window.addEventListener('hashchange',notesFill,false); }
 
   /* ---- sound. built on the first gesture (ios), never before. ---- */
   var actx=null, bus=null;

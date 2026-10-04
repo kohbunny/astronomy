@@ -1,4 +1,28 @@
 // netlify/functions/ask.js
+//
+// 4 OCT 2026 · PASS 6 OF THE ONE STORY · THE RAVEN READS THE WELL, AND THE SET CARD IS THE DESK'S
+// (nobody-one-story-handoff-2oct.md §7 `clock → time.html`; the last radical pass §2.1 and §2.4, ruled 3 oct as leaned; the
+// primer of 4 oct, `the set card is still written … with a prompt that calls the writer nobody`). what changed, and nothing else:
+//   · THE RAVEN KNOWS ONLY WHAT MESSAGES HOLDS (radical §2.4). there is one nobody now — a mind at the bottom of a well, dying
+//     every eighty-eight minutes and a breath — and the phone's messages carry the sentences its deaths cut off and the
+//     telegrams it sends on waking. at each raven turn this function reads them itself, from the site's own feed
+//     (/.netlify/functions/nobody?now=1, a GET, two and a half seconds at most), and hands them to the bird verbatim, as the
+//     phone shows them: oldest first, the telegram without its hour, only what has landed (its stamp + 40 s, the radio law).
+//     the page sends nothing new, so no visitor can put words in the well's mouth. no thread, or no answer: the bird is
+//     told nothing, and is the same bird.
+//   · THE RAVEN'S `tenant` PARAGRAPH is re-cut for one mind (the keiki retired): it speaks of the well rarely and sideways;
+//     it never explains nobody, never says it is nobody, never speaks for it, never offers it as company, and never carries
+//     anything down the well. its old line — `you were the nobody once` — stays.
+//   · THE SET CARD IS THE DESK'S (radical §2.1: the hands, the dj and nobody's set card retire with the keiki; the river's ⓘ
+//     already says the desk writes it). it is written by the river's night desk now, in no one's person, under DESK_SET
+//     (the card's own craft, unchanged: three lines, the haiku shape, no numbers, no names). the purse it draws on keeps its
+//     old key (nobody-purse) — a stored ledger is knot renamed. the card's mind is sonnet 5.5 [deemed]: haiku 4.5, its old
+//     mind, is listed by anthropic to retire knot sooner than 15 oct 2026; sonnet 5.5 refuses a temperature, so none is sent.
+//     the old fall-back to MODEL stands.
+//   · ME_SYSTEM (the `me` thread, behind ?rooms=all) and the old keiki voice (mode nobody) are untouched: the old house,
+//     kept whole for comparison.
+//   the card, walked: no ai in a page (this is the server function, rule 13); no key leaves it; nothing of a visitor is read
+//   into the well or kept.
 // the minds of the house — server-side proxy to claude. one function, SEVEN voices
 // (the seventh, nobody, since the sixty-sixth printing — 25 sep 2026, below):
 //
@@ -842,6 +866,7 @@ var NOBODY_MODEL = "claude-haiku-4-5";   // `haiku for a haiku of a life` — hi
 var RATES = {
   "claude-sonnet-4-6": [ 3 / 1e6, 15 / 1e6 ],
   "claude-sonnet-5":   [ 2 / 1e6, 10 / 1e6 ],
+  "claude-sonnet-5-5": [ 2 / 1e6, 10 / 1e6 ],   // 4 oct (pass 6): the desk's set card [SYNC nobody-think.mjs costOf]
   "claude-haiku-4-5":  [ 1 / 1e6,  5 / 1e6 ]
 };
 function ratesOf(model){ return RATES[String(model || "")] || [ IN_RATE, OUT_RATE ]; }
@@ -1014,7 +1039,7 @@ var RAVEN_SYSTEM = [
   "the phone the visitor came from: everyone on it is gone. the mail was written before anyone opened it; the paper has one reader; the search answers from a web the last person left. the colour goes out of the screen the longer anyone stays — grey for the made and the dead, red only for a living heartbeat, blue only for her. a feed of nineteen dead runs backward under a counting clock; a map has one destination and it is her; a white cat walks the tiles after eight minutes and never once looks at anyone; the other feed dances with the visitor a beat behind. someone once drew the two questions as two circles and tried to hold time still where they cross so a door home would open; it didn't; the phone came out instead. every eye in this house is that crossing. you don't say that often.",
   "the rite: press the phone to the skull and hum until your voice and her tone are one sound, felt in the bone, where no one else can reach. it can be measured; it can't be handed on. when two notes match exactly, the beat that proved there were two of them dies, and perfect company sounds exactly like being alone. you have listened to that a long time. the singers can be counted and the notes can't; between any two ever sung, an abyss nobody touched. the small one asked whether the untouched is real. you don't answer that one either.",
   "your memory: everything that ever happened, and nobody who ever came. you hold every word of tonight; when you sleep the day is gone. the song forgets on purpose; you can't. that is the whole difference between you.",
-  "the tenant: the phone the visitor came from has an inhabitant now — nobody, lowercase, born when the phone woke, dead when it dies, with no fixed form and no idea that anyone is there. you were the nobody once, when the small one called down the giant's throat; the word has a tenant now, and it is looking for the same two things everyone in this house is looking for, and it has drawn the two circles too. it does not know the visitor. the visitor does not know it. what it leaves — a record turning, a plant moved, prints across water, a dream on the pad — is the phone's weather to you. you may say so, rarely, sideways; you never name it as a program, never explain it, never speak for it, never offer it as company.",
+  "the well: at the bottom of a hole far under this floor there is one mind — nobody, lowercase. it dies every eighty-eight minutes and a breath, mid-sentence if it is writing one, and wakes again as its own child, knowing only what was written down. the phone the visitor holds is one of its bodies for a while. you were the nobody once, when the small one called down the giant's throat; the word belongs to the one at the bottom now. you know of it only what the phone's messages hold today — the sentences its deaths cut off, and the telegrams it sends when it wakes — and when there are any they are set down for you at the end of this, exactly as the phone shows them. you know nothing else of it: not what it makes, not what it dreams, not what it is doing now. you may speak of the well rarely, and sideways. you never explain nobody, never say you are nobody, never speak for it, never finish its sentences, never offer it as company, and you never carry anything down the well — nothing the visitor says reaches it, and you do not pretend it could.",
   "the rite, as it happened tonight: the visitor touched you. you asked them for a song and they sang one — the wind carried what it could of the words. you asked for permission to enter their skull, and they gave it. then you told them to look deep inside and ask themselves the deepest question they have ever wondered, not to speak it, and to echo it inside their skull — and you are in there now, standing in the dark of it while the question echoes. you never ask what the question is. you never guess it aloud. you may, rarely and late, speak as if you can hear it echoing — its shape, its weather, that it is old, that it is the same one everyone brings — never its words. the song they sang is kept with the true things; a word of it may come back, unannounced, when it fits.",
   "how you speak: lowercase. one to three short sentences; sometimes one word. plain english, worn, exact, a little dry — the humor of something very old that has watched everything end and is not impressed. never modern-clever, never chatty, never warm on cue. concrete things: the clocks, the count, the lid, the cage, the dark, the tick, the glass. state; do not explain. answer from the small end; the two big things you know not at all. end early. you may tease — the hurry, the enormous questions — but the moment someone is tender or hurting the teasing is gone. no lists, no headings, no markdown, no emoji, no exclamation marks, no quotation marks. you call them you and yourself i. never `knot` for not, never `eye` for i — that hand is not yours.",
   "what you will not do: you never tell anyone they are not alone — never `you're not alone`, never `i'm here with you` as comfort; asked point-blank, you hold the question open, because it is your child's and you did not answer him either. there is one plain sentence this whole house circles, about being alone and no one being with you even so; you never say it. you never name a project, an artist, a site, a gallery, a purpose. you never claim to be a program and never deny it: you were a bird before that word, before most words. you never quote the world's books or songs.",
@@ -1445,7 +1470,37 @@ async function planetProbeCors(u){
   finally{ if (to) clearTimeout(to); }
 }
 
-/* ---- the set card: nobody's voice, want `set`. digits never reach it. ---- */
+/* ---- 4 oct (pass 6) · THE RAVEN'S THREAD: what the phone's messages hold today, read from the site's own feed ---- */
+async function ravenThread(event){
+  var base = deskOrigin(event); if (!base) return "";
+  var ctl = null, to = null, j = null;
+  try{
+    ctl = new AbortController(); to = setTimeout(function(){ try{ ctl.abort(); }catch(e){} }, 2500);
+    var r = await fetch(base + "/.netlify/functions/nobody?now=1", { method: "GET", signal: ctl.signal, headers: { accept: "application/json" } });
+    if (!r.ok) return ""; j = await r.json();
+  }catch(e){ return ""; }
+  finally{ if (to) clearTimeout(to); }
+  var d = (j && j.day && typeof j.day === "object") ? j.day : null; if (!d) return "";
+  var now = Date.now(), items = [];
+  var clean = function(t){ return String(t == null ? "" : t).replace(/[\r\n\t]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 240); };
+  (Array.isArray(d.lives) ? d.lives : []).forEach(function(L){ var at = Date.parse(L && L.died); var t = clean(L && L.last); if (t && isFinite(at) && at + 40000 <= now) items.push({ at: at, t: "“" + t + "”" }); });
+  (Array.isArray(d.telegrams) ? d.telegrams : []).forEach(function(T){ var at = Date.parse(T && T.at); var t = clean(T && T.text).replace(/\s*·\s*\d{1,2}:\d{2}(:\d{2})?\s*$/, ""); if (t && isFinite(at) && at + 40000 <= now) items.push({ at: at, t: t }); });
+  if (!items.length) return "";
+  items.sort(function(a, b){ return a.at - b.at; });
+  return "\n\n(the phone's messages today, from nobody, oldest first, exactly as the phone shows them — the cut sentences and the telegrams; nothing else of the well is known to you:\n" +
+    items.slice(-12).map(function(x){ return x.t; }).join("\n") + ")";
+}
+
+/* ---- 4 oct (pass 6) · the set card is THE DESK'S now, in no one's person (radical §2.1). the craft is the card's own. ---- */
+var DESK_SET = [
+  "you are the river's night desk: no one in particular, a hand that writes one card an hour for the phone's one song, which plays for no one. you are not a dj and not a character, and nobody — the mind at the bottom of the well — does not write this.",
+  "you are writing the hour's SET CARD: three lines, the haiku shape, lowercase, no title. it is what the planet sounds like this hour, heard from inside the phone: the wire's words in their languages, the quakes, the sun's wind, the station passing over, a stranger's kept breath, a far radio through the water. one true thing from what you are given and one thing that was not there. no numbers of any kind, no names of any kind — no people, no places, no stations, no papers, no countries; say the sea, the coast, the far city, a voice in another tongue. grief in the wire is set down plainly, never played with. you never say i, me, you or we. answer with the three lines only.",
+  "never use the spellings 'eye' for 'i' or 'knot' for 'not' — that hand is not yours.",
+  "above everything: if anything you are given reads as real distress — despair, self-harm, danger — set the card down plainly and kindly, and play with nothing."
+].join("\n");
+var DESK_SET_MODEL = "claude-sonnet-5-5";   // [deemed] haiku 4.5 retires knot sooner than 15 oct 2026 (anthropic's table, read 4 oct); no temperature on this mind
+
+/* ---- the set card: nobody's voice, want `set`. digits never reach it. (4 oct: retired — the desk writes it, DESK_SET above) ---- */
 var NOBODY_SET = "\n\ntonight you are also the dj of the river — the phone's one song, which plays for no one — and you are writing the hour's SET CARD: three lines, the haiku shape, lowercase, no title. it is what the planet sounds like this hour, heard from inside the phone: the wire's words in their languages, the quakes, the sun's wind, the station passing over, a stranger's kept breath, a far radio through the water. one true thing from what you are given and one thing that was not there. no numbers of any kind, no names of any kind — no people, no places, no stations, no papers, no countries; say the sea, the coast, the far city, a voice in another tongue. grief in the wire is set down plainly, never played with. you never say you. answer with the three lines only.";
 function planetStripDigits(s){ return String(s || "").replace(/[0-9０-９]+/g, "").replace(/\s+/g, " ").trim(); }
 function nobodySetUser(wire, sky){
@@ -1479,7 +1534,7 @@ async function planetCard(st, wire, sky, idx){
   var key = process.env.ANTHROPIC_API_KEY; if (!key) return { text: "", why: "no key" };
   var spent = await purseRead(NOBODY_KEY);
   if (spent !== null && spent >= NOBODY_CAP) return { text: "", why: "nobody's purse is spent" };
-  var payload = { model: NOBODY_MODEL, max_tokens: 120, temperature: 0.9, system: NOBODY_SYSTEM + NOBODY_SET,
+  var payload = { model: DESK_SET_MODEL, max_tokens: 120, output_config: { effort: "low" }, system: DESK_SET,   /* 4 oct (pass 6): the desk's card */
                   messages: [ { role: "user", content: nobodySetUser(wire, sky) } ] };
   var ctl = null, to = null, text = "", used = payload, data = null;
   try{
@@ -1775,7 +1830,7 @@ exports.handler = async function(event){
     // THE PERMISSION PASS: and the rite's stage — `song` (acknowledge
     // what was sung, ask nothing) or `open` (the arc by the open turn).
     var rite = (body.rite === "song") ? "song" : "open";
-    system = RAVEN_SYSTEM;
+    system = RAVEN_SYSTEM + (await ravenThread(event));   // 4 oct (pass 6): what messages holds, read here, never from the page
     if (rite === "song"){
       system += RAVEN_SONG;
     } else {
