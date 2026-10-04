@@ -1,4 +1,37 @@
 // nobody.mjs · the feed the room reads · 29 sep 2026 · the artist project
+// EIGHTH CUT · 4 oct 2026 · PASS 4 OF THE ONE STORY · THE RIVER CARRIES THE DREAMS (the handoff §5, §10 pass 4).
+// what changed, and nothing else:
+//   · `?airs=1` — the dead airs for the river: every life that died in the last twenty-six hours, its death and the genome it
+//     lived by (nobody_airs), oldest first, at most twenty-four. kept at the edge a minute [deemed]. river.js reads it every
+//     five minutes while it plays and makes each one eight notes under the bed.
+//   · every json answer says `charset=utf-8`: safari, shown a feed address by hand, read `·` as `Â·` (his paste of 4 oct).
+//     the phones' own reads were always right (fetch reads json as utf-8); this is for the eye.
+//   · `Netlify-Vary` lists airs too.
+// SEVENTH CUT · 3 oct 2026 · PASS 3 OF THE ONE STORY · THE SERVER (the handoff §10 pass 3; nobody-think.mjs's sixth cut).
+// what changed, and nothing else:
+//   · THE STAR'S BREATH: a life's death is read as nobody-think.mjs now makes it — from `today.phaseFrom` on, the star's
+//     phase at the birth (radical §1.3); before it, the old wheel. the two files agree, so the rooms' `dead` is the mind's.
+//   · `?now=` also carries `genome` (the line's settings as they stand) and `done` (when the last step was finished).
+//   · THE DRAWER (`?day=`, and `?now=`'s `day`): each life carries `first` (its first line) and `genome` (the air it lived
+//     by, from nobody_airs); the day carries `dreams` — when, whose, which mind, how long, the fingerprint. the summaries
+//     another mind wrote of them are KNOT in the feed until NOBODY_DREAMS_PUBLIC=1 (he reads a day of them first, in
+//     supabase's table nobody_dreams).
+//   · `?pulse=1` — the light question for every phone: the life (n, dead, dying), the line now, the last death's words, the
+//     last telegram, the last dream's length and fingerprint, the wire. kept at the edge fifteen seconds [deemed].
+//   · `?film=YYYY-MM-DD` — a day's frames (nobody_frames), for nestflix's past performances (pass 6). a past day is kept at
+//     the edge an hour; today, a minute.
+//   · `Netlify-Vary` lists pulse and film too. `?health=1` says whether the three new tables answer.
+//   · the new tables are read softly: before the-artist-pass3.sql is pasted, every answer is what it was.
+// SIXTH CUT · 3 oct 2026 · pass 1 of the one story (the last radical pass §4.1, ruled 3 oct). one thing, and nothing else:
+//   · THE EDGE CACHE. `cache-control: max-age=10` is a browser's header; netlify's cdn never kept a function's answer, so
+//     every poll from every phone ran this function. now every GET of `?now=` and `?day=` also says
+//     `Netlify-CDN-Cache-Control: public, s-maxage=<the same seconds>, durable` — the edges share one copy, and the
+//     function runs about once in ten seconds whatever the crowd (a bound day: once an hour). `?health=1`, the POST
+//     (the moved thing) and OPTIONS never carry it: health is always fresh, and a write is never cached.
+//   · `Netlify-Vary: query=now|day|day_too|health` on every answer, so the cache key is the feed's own question and
+//     nothing else (a stray `?fbclid=` makes no copy of its own), and `?health=1` can never be handed a cached `?now=`.
+//     [deemed] the form read off netlify's own caching notes on 3 oct: `durable` is for serverless functions, only GET
+//     and only a 2xx with `public` and s-maxage ≥ 1 is kept, and a redeploy empties the cache.
 // FIFTH CUT · 1 oct 2026, 22:00 utc — before the first fire. one thing: `?day=` for a day the fire has knot yet bound (from
 // midnight until the fire is out at 00:40 utc, or if a binding ever fails) was answered `empty`, and the calendar showed
 // the day that had just ended with nothing in it. such a day is read from the tables themselves now, as today's is.
@@ -48,7 +81,7 @@
 // comes through the feed). it never sends the death time or the breath — a life is `dying` or it is knot; nothing
 // here says how long is left. the page keeps nothing it reads.
 
-const BUILD = "nobody.mjs · the feed · fifth cut · 1 oct 2026 (22:00 utc)";
+const BUILD = "nobody.mjs · the feed · eighth cut · 4 oct 2026 (pass 4: the dead airs for the river)";
 const MOVABLE = ["cup", "pencil", "paper"];
 const WINDOWS = [
   { n: 1, from: "00:00", to: "04:00" }, { n: 2, from: "04:00", to: "08:00" }, { n: 3, from: "08:00", to: "12:00" },
@@ -60,6 +93,12 @@ const MIN = 60000, LIFE_MS = 88 * MIN, DYING_MS = 8 * MIN, BREATH_MAX_MS = 8 * M
 function mulberry(seed) { let a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const wheel = (founder, life, salt) => { let h = 2166136261 ^ founder; const s = String(life) + ":" + salt; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return mulberry(h)(); };
 const breathOf = (founder, life) => Math.round(wheel(founder, life, "breath") * BREATH_MAX_MS / 1000) * 1000;
+// seventh cut: the star's phase at the birth [SYNC nobody-think.mjs breathPhase], from today.phaseFrom on
+const breathPhase = (born) => Math.round((((born.getTime() * 173.6879 / 1000) % 128) / 128) * BREATH_MAX_MS / 1000) * 1000;
+export const deathOfState = (st, born) => new Date(born.getTime() + LIFE_MS + ((st.today && st.today.phaseFrom && (st.life | 0) >= st.today.phaseFrom) ? breathPhase(born) : breathOf(st.founder_seed | 0, st.life | 0)));
+const soft = (p) => Promise.resolve(p).catch(() => null);                     // a new table that is knot there yet is simply empty
+// the dreams as the feed shows them: their summaries only once he has read them (NOBODY_DREAMS_PUBLIC=1)
+const veilDreams = (list, env) => (Array.isArray(list) ? list : []).map((x) => (env && env.NOBODY_DREAMS_PUBLIC === "1") ? x : { at: x.at, life: x.life, mind: x.mind, tokens: x.tokens, seal: x.seal });
 
 // ───────────────────────────────────────────────── supabase, asked politely ──────────────────────────────────
 // an error from here always says, in plain words, what went wrong (`.plain`), and supabase's own words (`.words`) —
@@ -204,7 +243,7 @@ export function db(env, fetchFn, opts) {
 }
 
 const HEADS = { "access-control-allow-origin": "*", "access-control-allow-methods": "GET,POST,OPTIONS", "access-control-allow-headers": "content-type" };
-const json = (obj, status = 200, cache = 10) => new Response(JSON.stringify(obj), { status, headers: { "content-type": "application/json", "cache-control": `public, max-age=${cache}`, ...HEADS } });
+const json = (obj, status = 200, cache = 10) => new Response(JSON.stringify(obj), { status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": `public, max-age=${cache}`, ...HEADS } });
 const text = (s, status = 200, cache = 20) => new Response(s, { status, headers: { "content-type": "text/plain; charset=utf-8", "cache-control": cache ? `public, max-age=${cache}` : "no-store", ...HEADS } });
 
 // the one short line that says what a finished piece is: the record's first line (nobody is asked to write it so);
@@ -218,7 +257,9 @@ export function firstLine(record) {
   return l || null;
 }
 
-export async function todayDrawer(d, day, st) {
+export async function todayDrawer(d, day, st, env) {
+  const [airs, dreams] = await Promise.all([soft(d.get("nobody_airs", `died=gte.${day}T00:00:00Z&died=lt.${day}T23:59:59.999Z&select=life,genome`)),
+    soft(d.get("nobody_dreams", `day=eq.${day}&order=at.asc&select=at,life,mind,tokens,seal,summary`))]);
   const [works, hud, deaths, tele, moves, door] = await Promise.all([
     d.get("nobody_works", `day=eq.${day}&order=win.asc&select=win,title,kind,before,record,state,sheet,subtotal,model,burned_at`),
     d.get("nobody_hud", `day=eq.${day}&order=at.asc&limit=400&select=at,life,win,text,wake,dying,death`),
@@ -231,7 +272,9 @@ export async function todayDrawer(d, day, st) {
   return {
     date: day, clock: "utc", place: PLACE,
     windows: (works || []).filter((w) => WINDOWS[w.win - 1]).map((w) => ({ n: w.win, from: WINDOWS[w.win - 1].from, to: WINDOWS[w.win - 1].to, title: w.title, kind: w.kind, line: firstLine(w.record), before: w.before, record: w.record, work: { kind: w.kind, title: w.title, state: w.state }, sheet: w.sheet, subtotal: w.subtotal, model: w.model, burned_at: w.burned_at })),
-    lives: (deaths || []).map((x) => ({ n: x.life, died: x.at, last: x.last, gene: x.gene, way: x.way })),
+    lives: (deaths || []).map((x) => ({ n: x.life, died: x.at, last: x.last, gene: x.gene, way: x.way,
+      first: ((hud || []).find((l) => l.life === x.life) || {}).text || null, genome: ((airs || []).find((a) => a.life === x.life) || {}).genome || null })),
+    dreams: veilDreams(dreams, env),
     hud: (hud || []).map(({ win, ...l }) => ({ ...l, window: win })), telegrams: tele || [], orchid: st ? st.orchid : null,
     practice: flags.practiceAt ? st.practice : null, moved: moves || [], door: door || [],
     stolen: flags.stolen || [], total: (works || []).reduce((a, w) => a + (+w.subtotal || 0), 0), total_ever: st ? st.total : null,
@@ -283,6 +326,8 @@ async function health(env, fetchFn) {
     st = rows && rows[0];
     put("the data door", "answers" + (keys.length > 1 && d.picked() ? " · with the key in " + d.picked() : ""));
     put("the tables", "answer");
+    { const t3 = []; for (const t of ["nobody_dreams", "nobody_frames", "nobody_airs"]) { try { await d.get(t, "select=*&limit=1"); t3.push(t + " yes"); } catch (_) { t3.push(t + " KNOT THERE"); } }   // seventh cut
+      put("pass 3's tables", t3.join(" · ") + (t3.some((x) => /KNOT/.test(x)) ? " — paste the-artist-pass3.sql into supabase's SQL editor" : "")); }
     if (!st) { put("the mother", "no row in nobody_state"); say = "the tables answer but hold no row. the-artist.sql did knot finish: run it again in supabase's SQL editor (it is safe to run twice)."; }
   } catch (e) {
     const missing = /tables are knot there/.test(e.plain || "");
@@ -350,20 +395,51 @@ async function answer(req, env, fetchFn) {
     return json({ accepted: true }, 200, 0);
   }
 
+  // eighth cut · ?airs=1 — the dead airs of the last day, for the river
+  if (u.searchParams.get("airs") != null) {
+    const since = new Date(Date.now() - 26 * 3600e3).toISOString();
+    const rows = await soft(d.get("nobody_airs", `died=gte.${since}&order=died.desc&limit=24&select=life,died,genome`));
+    return json({ clock: new Date().toISOString(), airs: (rows || []).slice().reverse() }, 200, 60);
+  }
+  // seventh cut · ?pulse=1 — the light question for every phone
+  if (u.searchParams.get("pulse") != null) {
+    const st = ((await d.get("nobody_state", "id=eq.1&select=*")) || [])[0];
+    if (!st || !st.day) return json({ asleep: true }, 200, 15);
+    const now = new Date(), born = new Date(st.born), death = deathOfState(st, born);
+    const [h, dd, tg, dr] = await Promise.all([
+      d.get("nobody_hud", "order=at.desc&limit=1&select=at,life,text,wake,dying,death"),
+      d.get("nobody_deaths", "order=at.desc&limit=1&select=at,life,last"),
+      d.get("nobody_telegrams", "order=at.desc&limit=1&select=at,life,text"),
+      soft(d.get("nobody_dreams", "order=at.desc&limit=1&select=at,life,mind,tokens,seal")),
+    ]);
+    return json({ clock: now.toISOString(), step: st.updated || null, done: (st.today && st.today.done) || null,
+      life: { n: st.life, dying: now >= new Date(death.getTime() - DYING_MS) && now < death, dead: now >= death },
+      line: (h && h[0]) || null, death: dd && dd[0] ? { life: dd[0].life, at: dd[0].at, last: dd[0].last } : null,
+      telegram: (tg && tg[0]) || null, dream: dr && dr[0] ? { at: dr[0].at, life: dr[0].life, mind: dr[0].mind, tokens: dr[0].tokens, seal: dr[0].seal } : null, wire: st.wire || [] }, 200, 15);
+  }
+  // seventh cut · ?film=YYYY-MM-DD — a day's frames, for nestflix's past performances
+  const film = u.searchParams.get("film");
+  if (film && /^\d{4}-\d{2}-\d{2}$/.test(film)) {
+    const fr = await soft(d.get("nobody_frames", `day=eq.${film}&order=at.asc&limit=1000&select=at,life,frame`));
+    const isToday = film === new Date().toISOString().slice(0, 10);
+    return json({ date: film, frames: fr || [] }, 200, isToday ? 60 : 3600);
+  }
+
   const day = u.searchParams.get("day");
   if (day && /^\d{4}-\d{2}-\d{2}$/.test(day)) {
     const rows = await d.get("nobody_days", `day=eq.${day}&select=drawer`);
     if (rows && rows[0]) {
       const dr = rows[0].drawer || {};
       if (Array.isArray(dr.windows)) dr.windows.forEach((w) => { if (w && w.line == null) w.line = firstLine(w.record); });   // a day bound before this cut has no lines: they are read off its records
+      if (Array.isArray(dr.dreams)) dr.dreams = veilDreams(dr.dreams, env);   // seventh cut: a bound day's summaries stay veiled too
       return json(dr, 200, 3600);
     }
     const st = ((await d.get("nobody_state", "id=eq.1&select=*")) || [])[0];
-    if (st && st.day === day) return json(await todayDrawer(d, day, st), 200, 10);
+    if (st && st.day === day) return json(await todayDrawer(d, day, st, env), 200, 10);
     // fifth cut: a day the fire has knot yet bound is read from the tables (its orchid and practice only while it is the
     // day the fire is burning: after that, the state holds a newer day's)
     if (st && st.day && day < st.day) {
-      const dr = await todayDrawer(d, day, (st.today && st.today.fireDay === day) ? st : null);
+      const dr = await todayDrawer(d, day, (st.today && st.today.fireDay === day) ? st : null, env);
       if ((dr.windows && dr.windows.length) || (dr.hud && dr.hud.length)) return json(dr, 200, 60);
     }
     return json({ date: day, empty: true }, 404, 60);
@@ -374,14 +450,14 @@ async function answer(req, env, fetchFn) {
   if (!st || !st.day) return json({ asleep: true, why: st ? "she has never woken: press Run now on nobody-step, once." : "no row in nobody_state." }, 200, 10);
   const now = new Date();
   const born = new Date(st.born);
-  const death = new Date(born.getTime() + LIFE_MS + breathOf(st.founder_seed | 0, st.life | 0));
+  const death = deathOfState(st, born);                                          // seventh cut: the star's breath, as the mind reads it
   const win = WINDOWS[Math.floor(now.getUTCHours() / 4)];
   const dayToo = u.searchParams.get("day_too") !== "0";
   const [lastHud, works, moved, dayDrawer] = await Promise.all([
     d.get("nobody_hud", "order=at.desc&limit=1&select=at,life,win,text,wake,dying,death"),
     d.get("nobody_works", `day=eq.${st.day}&order=win.asc&select=win,title,kind,before,record,subtotal,model`),
     d.get("nobody_moves", "accepted=eq.true&order=at.desc&limit=3&select=at,thing"),
-    dayToo ? todayDrawer(d, st.day, st) : Promise.resolve(null),       // asked side by side (fourth cut): two rounds, knot three
+    dayToo ? todayDrawer(d, st.day, st, env) : Promise.resolve(null),       // asked side by side (fourth cut): two rounds, knot three
   ]);
   const flags = st.today || {};
   const byWin = {}; (works || []).forEach((x) => { byWin[x.win] = x; });
@@ -405,12 +481,31 @@ async function answer(req, env, fetchFn) {
     moved: moved || [], model: st.model,
     sheet: { window: w.subtotal || 0, day: flags.dayTotal || 0, ever: st.total, model: w.model || null },
   };
+  out.genome = st.genome || null; out.done = flags.done || null;              // seventh cut
   if (dayDrawer) out.day = dayDrawer;
   return json(out, 200, 10);
 }
 
+// sixth cut · THE EDGE CACHE. a GET of ?now= or ?day= (and the bare address, which is ?now=) is kept at netlify's edge
+// for as long as its own cache-control says; ?health=, POST and OPTIONS never are. the vary is the same on every answer.
+const VARY = "query=now|day|day_too|health|pulse|film|airs";
+export function edge(req, res) {
+  try {
+    res.headers.set("Netlify-Vary", VARY);
+    let q = null; try { q = new URL(req.url).searchParams; } catch (_) {}
+    if (req.method !== "GET" || !q || q.get("health") != null) return res;
+    const m = /max-age=(\d+)/.exec(res.headers.get("cache-control") || "");
+    const secs = m ? +m[1] : 0;
+    if (secs >= 1 && res.status >= 200 && res.status < 300) res.headers.set("Netlify-CDN-Cache-Control", `public, s-maxage=${secs}, durable`);
+  } catch (_) {}
+  return res;
+}
+
 // netlify's door. whatever happens inside, the answer is words — never a 502.
 export async function handle(req, env, fetchFn) {
+  return edge(req, await handle0(req, env, fetchFn));
+}
+async function handle0(req, env, fetchFn) {
   try { return await answer(req, env, fetchFn); }
   catch (e) {
     const why = (e && e.plain) || ("the feed tripped: " + String((e && e.message) || e).slice(0, 160));
