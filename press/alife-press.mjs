@@ -22,11 +22,11 @@ console.log("1 · the door, the window, the doorway");
   const all = txt.join("\n") + "\n" + (await R.page.evaluate(() => document.body.innerText));
   ok(!/mother/i.test(all), "no `mother` on the glass"); ok(!/keiki/i.test(all), "no `keiki` on the glass");
   ok(!/if one flower leans|its spell|grows up inside the life|the gene map|the well is the line|the one who lives here is awake/.test(all), "no lean, spell, stages, gene manual, line pane, tally");
-  ok(/the rope is nobody’s/.test(all), "the rope's sentence"); ok(/the phone before/.test(all), "the card's parent is `the phone before`");
+  ok(/the rope is nobody’s/.test(all), "the rope's sentence"); ok(/the airs of nobody’s lives that ended in the last day/.test(all) && !/the founder’s air/.test(all), "the box is the mind's dead (pass 4b)");
   ok(/decline it or answer it; nobody speaks\./.test(all), "the call's blessed sentence kept");
   const r = await rim(R.page); ok(r && r.asked >= 1 && r.answered >= 1, "the room asks THE FEED: " + JSON.stringify(r && { asked: r.asked, answered: r.answered }));
   ok(r.doorway === 0 && r.nobody === false, "the keiki's doorway is down");
-  ok(R.asks.every((q) => q === "?now=1&day_too=0"), "the one question: " + [...new Set(R.asks)].join(" "));
+  ok(R.asks.every((q) => q === "?now=1&day_too=0" || q === "?airs=1"), "the two questions (pass 4b: and the dead airs): " + [...new Set(R.asks)].join(" "));
   await R.page.evaluate(() => window.ROOM.window(true)); await sleep(1000); ok((await st(R.page)).figs >= 1, "the window's figures draw");
   for (let k = 0; k < 3; k++) { await R.page.evaluate((k) => window.ROOM.pane(k), k); await sleep(500); }
   ok(!R.log.length, "no page errors" + (R.log.length ? ": " + R.log.slice(0, 3).join(" | ") : "")); await R.close(); }
