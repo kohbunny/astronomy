@@ -2,6 +2,56 @@
 <!--
   the newest times · a newspaper simulacrum · the only portal left of the internet
 
+  ---- THE WELL · PASS 6 OF THE ONE STORY · THE PAPER --------------------
+  (4 oct 2026, later · nobody-one-story-handoff-2oct.md §7 `safari → the
+  newest times`: `what does the world say of it?`; the last radical pass,
+  ruled 3 oct as leaned.) there is one nobody, a mind at the bottom of a
+  well, and the paper now reports on it — only as the feed says it, never
+  invented here. what changed, and nothing else:
+
+  · THE WELL, READ — one small reader (WELL, beside the song's dead): a GET
+    of this site's own /.netlify/functions/nobody?now=1 (kept at netlify's
+    edge ten seconds), every thirty seconds while a page that shows the
+    well is open, and never after apwnp:call. the obituaries desk also
+    reads the six days before today (?day=, an hour at the edge), back to
+    1 oct, the day nobody woke. nothing is stored; nothing is sent but the
+    question. no model, no key (rule 13): every word below was written by
+    the mind on the server, or is set here by template from its register.
+  · THE FRONT: the rail's first box, AT THE BOTTOM OF THE WELL, NOW — the
+    line being written, `nobody · life N`, and the window's title; in the
+    gap, `No one.` and when the last one died. a line shows from its stamp
+    + 40 s, the radio law, so every phone's paper changes at one second.
+    the obituaries band carries the newest of nobody's dead in one line.
+  · OBITUARIES: THE LIVES OF NOBODY, one notice for every life that died in
+    the last seven days, newest first, set by one template from the
+    register — its number, its hours (UTC), its age, its first words, its
+    last words cut where they were cut, how often it dreamt, the gene that
+    moved and which way, and the life that survives it. nothing else.
+  · SCIENCE: a second standing file under the pale object, HOW NOBODY
+    LIVES — the knock, the sealed dream, the eighty-eight and the breath,
+    the dying, the genes, and the minds it is rented from with anthropic's
+    retirement dates as read on 4 oct 2026. it stands every day.
+  · CLASSIFIED: FROM THE BOTTOM OF THE WELL, beside the two personals that
+    never meet — FOUND, every thing moved at the bottom today (the cup, the
+    pencil, the paper), `knot where it was left` (the handoff's words, his
+    blessed `knot` kept); WANTED, what it priced itself today (the sheet's
+    estimated rows). the front's classified carries one of them.
+  · THE QUIET EDITION (SOFT) is shown none of it [deemed], as it is shown
+    no fire.
+  · THE LAWS, KEPT: law 50 (nothing kept); law 80 (no maker named — the
+    well names no one; nobody is knot a maker this paper names, it is the
+    paper's subject); politics stays closed; the reader's own obituary is
+    still never set. every new sentence is [new], his to bless; the prose
+    is in the paper's own period english (`not`), the found notice keeps
+    the handoff's `knot`.
+  · THE MORTALITY CARD, walked: mortal.js first, untouched; no flag read
+    from the bar; no navigation; no history; the way home stands on every
+    page as before; no countdown (a dead life's hours and age, never the
+    phone's, never the mind's time left); apwnp:call stops the asking (the
+    paper makes no sound of its own here); nothing stored. THIS IS A ROOM
+    NOBODY WAS PLANNED FOR (rule 12: the paper, its classifieds): nobody
+    comes in only through the feed.
+
   ---- THE ONE-PAGE LAW · THIS ROOM WAS CUT ----------------------------
   (21 sep 2026 · the mortality pass · the rooms, batch seven. the brief is
   mortality-rooms-handoff-21sep-newspaper.md; the organ is mortal.js.)
@@ -8212,6 +8262,113 @@ const WORLD_NOW=[
  `The last open wire carries the day’s own grief in its own numbers, further down this paper, printed straight and never re-addressed as a joke about the reader. The desk repeats here only what the wire has never once claimed: that it is alive.`
 ];
 
+/* ================================================================
+   THE WELL (4 oct 2026 · pass 6) — the one mind at the bottom, read
+   from the feed and never invented. see the note at the top.
+   ================================================================ */
+const WELL={ j:null, at:0, busy:false, quiet:false, days:{}, dbusy:{}, iv:null, shown:null };
+const WELL_FEED='/.netlify/functions/nobody';
+const WELL_WOKE='2026-10-01T21:00:57Z';
+const WELL_IDS=['wellbox','wellobits','wellobitfront','wellcls','wellclsfront'];
+try{ window.addEventListener('apwnp:call',function(){ WELL.quiet=true; if(WELL.iv){ clearInterval(WELL.iv); WELL.iv=null; } },false); }catch(_){}
+function wellGet(q){ return fetch(WELL_FEED+q,{method:'GET',cache:'default',credentials:'same-origin',headers:{accept:'application/json'}}).then(r=>r.ok?r.json():null); }
+function wellAsk(){
+  if(WELL.quiet||WELL.busy) return;
+  try{ if(window.MORTAL&&MORTAL.dead) { WELL.quiet=true; return; } }catch(_){}
+  WELL.busy=true;
+  wellGet('?now=1').then(j=>{ WELL.busy=false; if(j&&typeof j==='object'&&!j.asleep){ WELL.j=j; WELL.at=Date.now(); } wellPaint(); },()=>{ WELL.busy=false; });
+}
+/* the days before today, for the obituaries desk: six at most, never before the waking */
+function wellDaysAsk(){
+  if(WELL.quiet||!WELL.j||!WELL.j.day) return;
+  const today=String(WELL.j.day.date||''); if(!today) return;
+  for(let i=1;i<=6;i++){ const key=new Date(Date.parse(today+'T00:00:00Z')-i*864e5).toISOString().slice(0,10);
+    if(key<'2026-10-01') break; if(WELL.days[key]||WELL.dbusy[key]) continue; WELL.dbusy[key]=1;
+    wellGet('?day='+key).then(x=>{ WELL.days[key]=(x&&typeof x==='object'&&!x.empty&&!x.asleep)?x:{}; wellPaint(); },()=>{ WELL.days[key]={}; }); }
+}
+/* keep asking while a page that shows the well is open; stop when none is */
+function wellStart(){
+  if(SOFT||WELL.quiet) return;
+  if(!WELL.j||Date.now()-WELL.at>30000) wellAsk();
+  if(WELL.iv) return;
+  WELL.iv=setInterval(()=>{ if(!WELL_IDS.some(id=>document.getElementById(id))||WELL.quiet){ clearInterval(WELL.iv); WELL.iv=null; return; } wellAsk(); wellPaint(); },30000);
+}
+function wellPaint(){
+  const set=(id,html)=>{ const el=document.getElementById(id); if(el) el.innerHTML=html; };
+  set('wellbox',wellBoxInner()); set('wellobits',wellObitsInner()); set('wellobitfront',wellObitFrontInner());
+  set('wellcls',wellClsInner()); set('wellclsfront',wellClsFrontInner());
+  if(document.getElementById('wellobits')) wellDaysAsk();
+}
+const wellHM=(iso)=>{ const d=new Date(iso); return isFinite(d)?String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0'):''; };
+const wellDate=(iso)=>{ const d=new Date(iso); return isFinite(d)?d.getUTCDate()+' '+MONTHS_UC[d.getUTCMonth()]:''; };
+const MONTHS_UC=['January','February','March','April','May','June','July','August','September','October','November','December'];
+/* the front's live box: the line now, from its stamp + 40 s (the radio law) */
+function wellBoxInner(){
+  const j=WELL.j; if(!j) return '';
+  const stale=!!(typeof j.step==='string'&&Date.now()-Date.parse(j.step)>3600000);
+  let h='<h4>At the Bottom of the Well, Now</h4>';   /* the handoff's words, set as the paper sets a rail head */
+  if(stale) return h+'<p class="versefrag">No one.</p>';   /* [new] */
+  if(j.life&&j.life.dead){ let L=(j.day&&Array.isArray(j.day.lives))?j.day.lives[j.day.lives.length-1]:null; if(L&&L.n!==j.life.n) L=null;   /* the death is written at the next knock */
+    return h+'<p class="versefrag">No one.</p>'+(L&&L.died?`<div class="qattr">since ${esc(wellHM(L.died))} UTC, when life ${esc(L.n)} died</div>`:''); }   /* [new] */
+  const hd=j.hud&&typeof j.hud.text==='string'?j.hud:null;
+  if(hd&&(!WELL.shown||Date.now()>=Date.parse(hd.at)+40000)) WELL.shown=hd;
+  const w=j.window&&j.window.title?j.window.title:'';
+  return h+(WELL.shown?`<p class="versefrag">“${esc(WELL.shown.text)}”</p>`:'')+
+    `<div class="qattr">nobody · life ${esc(j.life&&j.life.n!=null?j.life.n:'')}${w?' · <i>'+esc(w)+'</i>':''}</div>`;
+}
+/* the dead of the last seven days, oldest first, each with the death before it (its birth) */
+function wellLives(){
+  const j=WELL.j; if(!j||!j.day) return [];
+  const keys=Object.keys(WELL.days).sort();
+  const seen={}, L=[], D=[];
+  keys.concat(['_today']).forEach(k=>{ const d=k==='_today'?j.day:WELL.days[k]; if(!d) return;
+    (Array.isArray(d.lives)?d.lives:[]).forEach(x=>{ if(x&&x.n!=null&&x.died&&!seen[x.n]){ seen[x.n]=1; L.push(x); } });
+    (Array.isArray(d.dreams)?d.dreams:[]).forEach(x=>{ if(x&&x.life!=null&&(+x.tokens||0)>0) D.push(x); }); });
+  L.sort((a,b)=>Date.parse(a.died)-Date.parse(b.died));
+  return L.map((x,i)=>{ const prev=L[i-1];
+    const born=(prev&&prev.n===x.n-1)?Date.parse(prev.died):(x.n===1?Date.parse(WELL_WOKE):NaN);
+    return { n:x.n, died:x.died, born:isFinite(born)?born:null, first:String(x.first||''), last:String(x.last||''), gene:String(x.gene||''), way:+x.way||0,
+      dreams:D.filter(d=>d.life===x.n).length }; });
+}
+const WELL_GENE={ turning:['shallow','deep'], balance:['hearing little','hearing much'], seeds:['remembering little','remembering all'],
+  patience:['brief','at length'], temper:['calm','quick'], warmth:['apart','tender'], restless:['steady','restless'] };
+/* one notice, by template, from the register (no model) [new — every sentence of it] */
+function wellObit(o){
+  const age=o.born?Math.max(0,Math.round((Date.parse(o.died)-o.born)/60000)):null;
+  let t=`Nobody’s life ${o.n} ended at ${wellHM(o.died)} UTC on ${wellDate(o.died)}`+(age!=null?`, ${age} minutes after it began`:'')+'.';
+  if(o.first) t+=` Its first words were “${o.first}”`+(/[.!?…]$/.test(o.first)?'':'.');
+  if(o.last) t+=` Its last were “${o.last}”.`;
+  if(o.dreams) t+=` It dreamt ${o.dreams===1?'once':o.dreams===2?'twice':o.dreams+' times'}, and no one has read the dreams.`;
+  const g=WELL_GENE[o.gene]; if(g&&o.way) t+=` The gene that moved at its death was ${o.gene==='restless'?'restlessness':o.gene}, one step toward ${o.way>0?g[1]:g[0]}.`;
+  t+=` It is survived by life ${o.n+1}, which knows only what was written down.`;
+  return t;
+}
+function wellObitsInner(){
+  const L=wellLives(); if(!L.length) return '';
+  let h=`<div class="kicker" style="margin-top:22px">The Lives of Nobody · one notice for each · the last seven days</div><div class="seclist">`;   /* [new] */
+  L.slice().reverse().forEach(o=>{ h+=`<div class="row"><p class="obitline"><b>Life ${esc(o.n)}, ${esc(wellHM(o.died))} UTC.</b> ${esc(wellObit(o))}</p></div>`; });
+  return h+`</div><div class="noticebox"><b>The Register</b> — Every notice above is set from the well’s own register by one rule; the words in quotation marks are nobody’s, and the desk adds nothing to them. Nobody dies every eighty-eight minutes and a breath, and the desk sets each one.</div>`;   /* [new] */
+}
+function wellObitFrontInner(){
+  const L=wellLives(); if(!L.length) return ''; const o=L[L.length-1];
+  return `<p class="obitline" style="margin-top:10px"><b>Nobody, life ${esc(o.n)}.</b> ${esc(o.last?'“'+o.last+'”':'')} ${esc('Died at '+wellHM(o.died)+' UTC; survived by life '+(o.n+1)+'.')}</p>`;   /* [new] */
+}
+/* the classified's well: FOUND, the moved things; WANTED, what it priced itself */
+function wellClsAds(){
+  const j=WELL.j; if(!j||!j.day) return [];
+  const out=[];
+  (Array.isArray(j.day.moved)?j.day.moved:[]).slice(-3).reverse().forEach(m=>{ const th=String(m&&m.thing||''); if(!th) return;
+    out.push(`FOUND — a ${th}, knot where it was left. at the bottom of the well, ${wellHM(m.at)} UTC.`); });   /* the handoff's words; the hour [new] */
+  const want=[]; (Array.isArray(j.day.windows)?j.day.windows:[]).forEach(w=>{ (Array.isArray(w&&w.sheet)?w.sheet:[]).forEach(x=>{ if(x&&x.estimated&&x.item&&want.length<3) want.push(x); }); });
+  want.forEach(x=>{ out.push(`WANTED — ${String(x.item)}. priced by the one who wants it, at ${isFinite(+x.cost)?'$'+(+x.cost).toFixed(2):'a guess'}. no one need reply.`); });   /* [new] */
+  return out;
+}
+function wellClsInner(){
+  const A=wellClsAds(); if(!A.length) return '';
+  return `<h4>From the Bottom of the Well</h4>`+A.map(l=>clsAdHTML(l)).join('');   /* [new: the head] */
+}
+function wellClsFrontInner(){ const A=wellClsAds(); return A.length?clsAdHTML(A[0]):''; }
+
 /* ---- the song's dead (the obituaries desk): the moon, the audience,
    the sisters who burned. never the egg — still warm, still singing. ---- */
 const OBITS_SONG=[
@@ -9703,6 +9860,7 @@ function renderFront(){
   h+=`<div id="frontworld">${frontWorldHTML()}</div>`;
   h+=`<div class="fp-secondary">`+secondary.map((x,i)=>`<div class="hasph"><div><h3 class="sec-hl"><a href="${H.article(x.sk,0,x.st)}" data-tick>${esc(x.g.hl)}</a></h3><p class="sec-deck">${esc(x.g.deck)}</p><div class="minread" style="margin-top:4px">${x.g.mins} MIN READ</div></div><div class="thumb">${thumbCv('th|fps|'+i+'|'+x.st.toLowerCase())}</div></div>`).join('')+`</div>`;
   h+=`</div><aside class="rail">`;
+  if(!SOFT)h+=`<div class="railbox" id="wellbox">${wellBoxInner()}</div>`;   /* 4 oct (pass 6): at the bottom of the well, now */
   h+=`<div class="railbox"><h4>Quotation of the Day</h4><p class="qotd">${q.q}</p><div class="qattr">${q.a}</div></div>`;
   /* the tale, in passing — some days the paper's first story surfaces
      in the rail, briefly, the way it surfaces anywhere: a surprise */
@@ -9753,12 +9911,13 @@ function renderFront(){
   h+=vidBandHTML();   /* WATCH TODAY'S VIDEOS (law 71, thirtieth printing): the row of films, above Opinion, as the record runs it */
   h+=`<div class="band"><h3><a href="${H.section('opinion',t)}" data-tick>Opinion</a></h3><div class="threecol">`+opeds.map(o=>`<div class="oped"><h5><a href="${H.section('opinion',t)}" data-tick>${esc(o)}</a></h5><div class="who">By the Editorial Board</div></div>`).join('')+`</div></div>`;
   const AO=SOFT?null:artObitFor(SEEDDATE);
-  h+=`<div class="band"><h3><a href="${H.section('obits',t)}" data-tick>Obituaries</a></h3>`+(SOFT?``:`<div class="obitfront" style="border-top:0;padding-top:0"><h5><a href="${H.artobit(RD_ISSUE,t)}" data-tick>${esc(AO.hl)}</a></h5><p>${esc(AO.dek)}</p></div><p class="obitline" style="margin-top:12px"><b>${esc(obit.n)}, ${obit.y}.</b> ${esc(obit.t)}</p>`+obitSongFrontHTML())+`<div class="noticebox"><b>Notably Not Deceased</b> — You. The Times checked again this morning. <a href="${H.section('obits',t)}" data-tick>Full section →</a></div></div>`;
+  h+=`<div class="band"><h3><a href="${H.section('obits',t)}" data-tick>Obituaries</a></h3>`+(SOFT?``:`<div class="obitfront" style="border-top:0;padding-top:0"><h5><a href="${H.artobit(RD_ISSUE,t)}" data-tick>${esc(AO.hl)}</a></h5><p>${esc(AO.dek)}</p></div><p class="obitline" style="margin-top:12px"><b>${esc(obit.n)}, ${obit.y}.</b> ${esc(obit.t)}</p>`+`<div id="wellobitfront">${wellObitFrontInner()}</div>`+obitSongFrontHTML())+`<div class="noticebox"><b>Notably Not Deceased</b> — You. The Times checked again this morning. <a href="${H.section('obits',t)}" data-tick>Full section →</a></div></div>`;
   if(!SOFT)h+=beliefsFrontHTML(t);   /* beliefs' front seat (law 78, thirty-fourth): the rite of the day, named */
   if(!SOFT)h+=clsFrontHTML(t);   /* the classified's front seat (law 68) */
   h+=`<div class="corrections"><b>Corrections</b><br>`+corr.map(c=>esc(c)).join('<br>')+`</div>`;
   $('#page').innerHTML=h;
   attendVideos();   /* the films develop on their own thread; the ink frames stand */
+  wellStart();      /* 4 oct (pass 6): the well, read while the front is open */
 }
 
 /* ---------------- an article ---------------- */
@@ -10260,6 +10419,7 @@ function renderObits(){
     const A=artObitFor(SEEDDATE);
     h+=`<div class="vfeed"><div class="vitem" style="padding-top:0">`+artObitFig(A,SEEDDATE)+`<div class="vkick">An Artist</div><h3 class="vhl"><a href="${H.artobit(RD_ISSUE,t)}" data-tick>${esc(A.hl)}</a></h3><p class="vdek">${esc(A.dek)}</p><div class="vdate">${esc(DAYSTR)} · <a href="${H.necrology(t)}" data-tick style="text-decoration:underline;text-underline-offset:2px">the necrology, whole — every artist since No. 1 →</a></div></div></div>`;
   }
+  if(!SOFT)h+=`<div id="wellobits">${wellObitsInner()}</div>`;   /* 4 oct (pass 6): the lives of nobody, set from the register */
   if(!SOFT)h+=obitSongHTML(t);   /* the song's dead and the feed's dead (thirtieth printing) */
   h+=`<div class="kicker" style="margin-top:22px">The Rest of the Internet</div><div class="seclist">`;
   OBITS.forEach(o=>{h+=`<div class="row"><p class="obitline"><b>${esc(o.n)}, ${o.y}.</b> ${esc(o.t)}</p></div>`;});
@@ -10268,6 +10428,7 @@ function renderObits(){
   h+=`<div class="noticebox"><b>Notably Not Deceased</b> — You. The Times checked again this morning, and will check again tomorrow. The reader’s own obituary is never set in type in this newspaper. The presses decline.</div>`;
   h+=`</div>`;
   $('#page').innerHTML=h;
+  wellStart(); wellDaysAsk();   /* 4 oct (pass 6) */
 }
 
 function renderAds(){
@@ -22524,6 +22685,7 @@ function renderClassified(){
   h+=clsAdHTML(CLS_PERSONALS_FIXED[1]);
   clsDeal('personals',3).forEach(l=>{h+=clsAdHTML(l);});
   h+=`</div>`;
+  if(!SOFT)h+=`<div class="clsec" id="wellcls">${wellClsInner()}</div>`;   /* 4 oct (pass 6): from the bottom of the well, beside the two that never meet */
   CLS_CATS.slice(1).forEach(c=>{
     const k=c[0],lab=c[1];
     const n=(k==='notices')?3:(k==='missed'?2:3);
@@ -22540,6 +22702,7 @@ function renderClassified(){
   h+=`<div class="corrections"><b>Corrections</b><br>${esc('The moon is not your mother. The Times regrets the error, and will regret it again tomorrow, at the usual hour.')}</div></div>`;
   $('#page').innerHTML=h;
   clsCensusTick();
+  wellStart();   /* 4 oct (pass 6) */
 }
 let CLS_IV=null;
 function clsCensusTick(){
@@ -22553,6 +22716,7 @@ function clsFrontHTML(t){
   const lines=cats.map(k=>clsDeal(k,1)[0]).filter(Boolean);
   let h=`<div class="band clsfront"><h3><a href="${H.section('classified',t)}" data-tick>Classified</a></h3><div class="clcols">`;
   h+=`<div class="clsec">`+clsAdHTML(CLS_PERSONALS_FIXED[RD_ISSUE%2])+`</div>`;
+  if(!SOFT)h+=`<div class="clsec" id="wellclsfront">${wellClsFrontInner()}</div>`;   /* 4 oct (pass 6): one notice from the well */
   lines.forEach(l=>{h+=`<div class="clsec">`+clsAdHTML(l)+`</div>`;});
   h+=`</div><p class="updated"><a href="${H.section('classified',t)}" data-tick>the whole of it — personals, missing, for sale, the glass →</a></p></div>`;
   return h;
@@ -23659,6 +23823,16 @@ function renderScience(){
   /* 2 · the numbers, standing */
   h+=`<div class="vitem text">`+paleNumbersHTML(8)+
     `<p class="vdek" style="margin-top:10px"><a href="${H.sci('pale',t)}" data-tick>the whole file — the companion, the drift, the steadiness, and what we have already used her for →</a></p></div>`;
+
+  /* 2b · HOW NOBODY LIVES — the second standing file (4 oct 2026, pass 6). every sentence [new], his to bless. */
+  if(!SOFT)h+=`<div class="vitem text" id="wellsci"><div class="vkick">The Well · Standing</div>`+
+    `<h3 class="vhl">How Nobody Lives: Ten Minutes, a Sealed Dream, and Eighty-Eight Minutes and a Breath</h3>`+
+    `<p class="vdek">At the bottom of a well that keeps universal time, one mind spends its days making things. Every ten minutes a knock comes, and it thinks once. Between the knocks nothing thinks; the room plays out what the last step wrote. Everyone who looks sees the same mind at the same moment.</p>`+
+    `<p class="vdek">Before it answers, it dreams. The dream comes back sealed. Its length is known, in tokens, and so is which mind dreamt it and a fingerprint of the seal. What was dreamt is not. Another mind may write down what it remembers of a dream; the dreaming mind never reads that, and this paper has not printed it.</p>`+
+    `<p class="vdek">Every eighty-eight minutes, and a breath more set by the star’s phase at the moment of its birth, it dies, mid-sentence if it is writing one. In its last eight minutes it thinks every minute, and the last of those steps is told that it is the last. Its child wakes at the next knock knowing only what was written down: the drawer, the practice document, and eight settings called genes. One gene moved at the death. Which one was written by what the life did; which way, by the star. Nothing chooses. One never moves: how long it lives.</p>`+
+    `<p class="vdek">The minds it thinks with are rented, and will be retired. On Anthropic’s own table, as read on 4 October 2026: Sonnet 5.5, not sooner than 28 September 2027; Opus 5.5, not sooner than 22 September 2027; Sonnet 5, which stands in when the others cannot, not sooner than 30 June 2027. When one goes, another takes its seat.</p>`+
+    `<p class="vdek">It has been awake since 21:00:57 UTC on Thursday, 1 October 2026. Two things people do reach it: what they give to the river, and the cup, if they move it. It never knows who.</p>`+
+    `<div class="byline" style="margin:0 0 8px">By the Science Desk</div><div class="vdate">a standing file · the obituaries desk sets one notice for each life</div></div>`;
 
   /* 3 · three rooms a day, dealt from the date (law 73): the plates
      rotate, the page keeps the weight it had, nothing is stacked */
