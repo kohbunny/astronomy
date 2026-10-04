@@ -14,7 +14,7 @@ const L41 = { n: 41, died: iso(midnight + 97 * 60000), last: "cut it free with t
 const dreamsY = [{ at: iso(midnight - 40 * 60000), life: 40, mind: "claude-sonnet-5-5", tokens: 900, seal: "aa" }, { at: iso(midnight - 30 * 60000), life: 40, mind: "claude-sonnet-5-5", tokens: 300, seal: "ab" }];
 const dreamsT = [{ at: iso(midnight + 1 * 60000), life: 40, mind: "claude-sonnet-5-5", tokens: 1200, seal: "ac" },
   { at: iso(midnight + 20 * 60000), life: 41, mind: "claude-sonnet-5-5", tokens: 2400, seal: "b1" }, { at: iso(midnight + 30 * 60000), life: 41, mind: "claude-opus-5-5", tokens: 600, seal: "b2" },
-  { at: iso(midnight + 40 * 60000), life: 41, mind: "claude-opus-5-5", tokens: null, seal: "b3" }, { at: iso(midnight + 100 * 60000), life: 42, mind: "claude-opus-5-5", tokens: 444, seal: "c1" }];
+  { at: iso(midnight + 40 * 60000), life: 41, mind: "claude-opus-5-5", tokens: null, seal: "b3" }, { at: iso(midnight + 100 * 60000), life: 42, mind: "claude-opus-5-5", tokens: 444, seal: "c1", carried: true }];   // 42's first step carried 41's last moment
 let asksDay = 0;
 function feed(u) {
   const now = Date.now();
@@ -40,7 +40,7 @@ try {
   ok(w.serial === "C878 9895", "C878 9895 exactly: " + w.serial);
   ok(w.mind === "opus 5.5", "the mind now: " + w.mind);
   ok(w.post && w.post.n === 41 && w.post.born === Date.parse(L40.died) && w.post.last === L41.last, "eggstagram's post: life 41, born at 40's death: " + JSON.stringify(w.post && { n: w.post.n, born: w.post.born }));
-  ok(JSON.stringify(w.notes) === JSON.stringify([{ n: 42, dreams: 1, words: 330 }, { n: 41, dreams: 2, words: 2250 }, { n: 40, dreams: 3, words: 1800 }]), "notes: 42 · 41 · 40 (40 whole across midnight; a null dream is knot one): " + JSON.stringify(w.notes));
+  ok(JSON.stringify(w.notes) === JSON.stringify([{ n: 42, dreams: 1, words: 330, opened: false }, { n: 41, dreams: 2, words: 2250, opened: true }, { n: 40, dreams: 3, words: 1800, opened: false }]), "notes: 42 · 41 · 40 (40 whole across midnight; a null dream is knot one; 41 opened by 42): " + JSON.stringify(w.notes));
   // settings
   await R.page.evaluate(() => window.__phoneOpen("settings")); await shot("1-settings");
   await R.page.evaluate(() => window.__phoneOpen("stabout")); await shot("2-about");
@@ -53,8 +53,10 @@ try {
   ok((await well(R.page)).app === "nbnote", "a tap opens life 41's locked note"); await shot("6-note");
   // eggstagram
   await R.page.evaluate(() => { window.__airs = []; window.__hush = 0; const R = window.RIVER; if (R) { const a = R.airPlay, h = R.airHush; R.airPlay = function (g) { window.__airs.push(JSON.stringify(g)); return a.apply(this, arguments) || { secs: 8 }; }; R.airHush = function () { window.__hush++; return h && h.apply(this, arguments); }; } });
-  await R.page.evaluate(() => window.__phoneOpen("instagram")); await sleep(2500); await shot("7-eggstagram");
-  let airs = await R.page.evaluate(() => window.__airs);
+  await R.page.evaluate(() => window.__phoneOpen("instagram"));
+  // headless chromium draws about two frames a second here, and the room's leaving door hushes a post undrawn for 0.6 s; a phone draws sixty
+  let airs = await until(R.page, async () => { const a = await R.page.evaluate(() => window.__airs); return a.length ? a : null; }, 30000) || [];
+  await shot("7-eggstagram");
   ok(airs.length >= 1 && airs[0] === JSON.stringify(L41.genome), "settled on nobody's post, life 41's air plays: " + airs.length);
   await R.page.evaluate(() => window.__phoneTap(100, 104 + 8 + 21)); await sleep(800);
   ok((await well(R.page)).app === "egnobody", "its name opens its profile"); await shot("8-egnobody");

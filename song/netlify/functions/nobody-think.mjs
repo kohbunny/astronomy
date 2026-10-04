@@ -1,4 +1,7 @@
 // nobody-think.mjs · the loop · 29 sep 2026 · the artist project
+// SEVENTH CUT · 4 oct 2026, later · PASS 6 (notes: `opened by life N`). one thing, and nothing else: the day bound at 00:40 keeps
+//   each dream's `carried` beside it (nobody.mjs's ninth cut), so a past day says which dreams crossed. the hand-over itself is
+//   unchanged and still OFF until NOBODY_CARRY=1.
 // SIXTH CUT · 3 oct 2026 · PASS 3 OF THE ONE STORY · THE SERVER (nobody-one-story-handoff-2oct.md §10 pass 3, §4.3–4.5, §5,
 // §6, §9; the last radical pass §1.2, §1.3, §3.4, ruled 3 oct as leaned). what changed, and nothing else:
 //   · THE DREAMS ARE KEPT (§4.3). the mind already thought before every answer; its thinking came back sealed and was thrown
@@ -851,7 +854,7 @@ export async function step({ now, db, model, wire, river, env = {}, quick = fals
 export async function bindDay(db, day) {
   const soft = (p) => p.catch(() => []);                                                     // sixth cut: the new tables, if they are there
   const [airs, dreams] = await Promise.all([soft(db.get("nobody_airs", `died=gte.${day}T00:00:00Z&died=lt.${day}T23:59:59.999Z&select=life,genome`)),
-    soft(db.get("nobody_dreams", `day=eq.${day}&order=at.asc&select=at,life,mind,tokens,seal,summary`))]);
+    soft(db.get("nobody_dreams", `day=eq.${day}&order=at.asc&select=at,life,mind,tokens,seal,summary,carried`))]);   // seventh cut: carried
   const [works, hud, deaths, tele, moves, door, st] = await Promise.all([
     db.get("nobody_works", `day=eq.${day}&order=win.asc&select=*`),
     db.get("nobody_hud", `day=eq.${day}&order=at.asc&select=at,life,win,text,wake,dying,death`),

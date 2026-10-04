@@ -1,4 +1,8 @@
 // nobody.mjs · the feed the room reads · 29 sep 2026 · the artist project
+// NINTH CUT · 4 oct 2026, later · PASS 6 (notes: `opened by life N`, the handoff §7 notes and §4.4). one thing, and nothing else:
+//   · a day's `dreams` (`?day=`, and `?now=`'s `day`) carry `carried` — true on the dream of a child's first step that carried
+//     its mother's last moment (nobody_dreams.carried, kept since pass 3). it is knot the dream, only the fact that it crossed;
+//     the veil keeps it. so notes can say `opened by life N`. while NOBODY_CARRY is off in netlify, it is always false.
 // EIGHTH CUT · 4 oct 2026 · PASS 4 OF THE ONE STORY · THE RIVER CARRIES THE DREAMS (the handoff §5, §10 pass 4).
 // what changed, and nothing else:
 //   · `?airs=1` — the dead airs for the river: every life that died in the last twenty-six hours, its death and the genome it
@@ -84,7 +88,7 @@
 // comes through the feed). it never sends the death time or the breath — a life is `dying` or it is knot; nothing
 // here says how long is left. the page keeps nothing it reads.
 
-const BUILD = "nobody.mjs · the feed · eighth cut · 4 oct 2026 (pass 4: the dead airs for the river)";
+const BUILD = "nobody.mjs · the feed · ninth cut · 4 oct 2026 (pass 6: whether a dream was carried)";
 const MOVABLE = ["cup", "pencil", "paper"];
 const WINDOWS = [
   { n: 1, from: "00:00", to: "04:00" }, { n: 2, from: "04:00", to: "08:00" }, { n: 3, from: "08:00", to: "12:00" },
@@ -104,7 +108,7 @@ const soft = (p) => Promise.resolve(p).catch(() => null);
 const AIR_GENES = ["turning", "balance", "seeds", "longevity", "patience", "temper", "warmth", "restless"];
 export const rungsOf = (g) => AIR_GENES.map((k, i) => { let v = +(g && g[k]) || 0; if (i === 0) v += +(g && g.pace) || 0; v = Math.max(-1, Math.min(1, v)); return Math.max(-8, Math.min(15, i + Math.round(v * 8))); });                     // a new table that is knot there yet is simply empty
 // the dreams as the feed shows them: their summaries only once he has read them (NOBODY_DREAMS_PUBLIC=1)
-const veilDreams = (list, env) => (Array.isArray(list) ? list : []).map((x) => (env && env.NOBODY_DREAMS_PUBLIC === "1") ? x : { at: x.at, life: x.life, mind: x.mind, tokens: x.tokens, seal: x.seal });
+const veilDreams = (list, env) => (Array.isArray(list) ? list : []).map((x) => (env && env.NOBODY_DREAMS_PUBLIC === "1") ? x : { at: x.at, life: x.life, mind: x.mind, tokens: x.tokens, seal: x.seal, carried: !!x.carried });   // ninth cut: whether it crossed
 
 // ───────────────────────────────────────────────── supabase, asked politely ──────────────────────────────────
 // an error from here always says, in plain words, what went wrong (`.plain`), and supabase's own words (`.words`) —
@@ -265,7 +269,7 @@ export function firstLine(record) {
 
 export async function todayDrawer(d, day, st, env) {
   const [airs, dreams] = await Promise.all([soft(d.get("nobody_airs", `died=gte.${day}T00:00:00Z&died=lt.${day}T23:59:59.999Z&select=life,genome`)),
-    soft(d.get("nobody_dreams", `day=eq.${day}&order=at.asc&select=at,life,mind,tokens,seal,summary`))]);
+    soft(d.get("nobody_dreams", `day=eq.${day}&order=at.asc&select=at,life,mind,tokens,seal,summary,carried`))]);   // ninth cut: carried
   const [works, hud, deaths, tele, moves, door] = await Promise.all([
     d.get("nobody_works", `day=eq.${day}&order=win.asc&select=win,title,kind,before,record,state,sheet,subtotal,model,burned_at`),
     d.get("nobody_hud", `day=eq.${day}&order=at.asc&limit=400&select=at,life,win,text,wake,dying,death`),
