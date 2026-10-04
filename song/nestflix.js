@@ -471,6 +471,40 @@ window.APWNP.search = window.APWNP.search || function(){
   try{ if(window.MORTAL&&typeof window.MORTAL.search==='string') return window.MORTAL.search; }catch(_){}
   try{ return (typeof location!=='undefined'&&location.search)||''; }catch(_){ return ''; }
 };
+/* 4 OCT 2026 · PASS 6 OF THE ONE STORY · NOBODY'S SCREEN (nobody-one-story-handoff-2oct.md §7 `nestflix.js`: `can i
+   watch it?`; §8 and §12: the old reels keep two rows; the last radical pass §1.4, ruled 3 oct). there is one nobody, a
+   mind at the bottom of a well, and what now plays across your face in most windows is nobody — read from the feed the
+   phone already asks, never invented. what changed, and nothing else:
+   · THE BILLBOARD, LIVE: while the well answers, the big window is the well now — the window's title, the line being
+     written (in quotes), `nobody · life N`; between a death and the next birth, `no one`. over your face goes the newest
+     dream's own picture (below), knot a reel. with the well silent the billboard is the world, as before.
+   · THE ROWS ARE FINITE, his ruling (`keep two rows of the old reels`) over deeming 17's endless wall:
+       continue watching (you, live — as built) · NOBODY'S DREAMS · WATCHING NOW · PAST PERFORMANCES · CHANNELS · and two
+       rows of the old reels (`Today’s Top Picks for You`, `Top 10 in Your Room Today` [deemed: the two kept]), then the
+       floor. every row still creeps and can be pushed sideways for ever; the posters are still sealed glass.
+   · NOBODY'S DREAMS: one window a dream of the well's day, newest first. its picture is dealt from the seal — the seal is
+     the seed: it makes each dream its own, and nothing of what was dreamt is in it — rings, bands, two circles or drift,
+     thrown over your face, and the picture is exactly as long as the dream (its tokens in the river's measure); the red
+     bar under it is that length going by. its words are what another mind remembers of it (the summary) — shown only
+     once he lifts the veil (NOBODY_DREAMS_PUBLIC=1); until then the window has no words. its sound is the dream's own
+     phrase from the river (RIVER.dreamPlay): the first dream window to sit whole on the glass sounds once, then the next,
+     one at a time, each once a visit.
+   · WATCHING NOW: your own window (the mirror) and one lit window for every other phone holding nobody now — the count
+     the signal bars already keep (sessionStorage apwnp.here, read only, fresh two minutes, the river's and ticktock's
+     own manner). a window goes dark, slowly, when its phone does. nothing is sent to make it, and no number is shown.
+   · PAST PERFORMANCES: one window a day before today, back to 1 oct (six at most), each day replayed from its knocks'
+     frames (?film=, an hour at the edge, asked only when the window is drawn): the work's name and the line of each
+     knock, one after another, over your face. [deemed] in picture only: a frame keeps no sound this room could play.
+   · CHANNELS: the river (the river's own swell, when it plays), the wire (the headlines that reach the well, ?pulse=1
+     every minute while the wall is up), the knock (the caret while it thinks — from the ten-minute mark until its line
+     comes — then the line), and the airs (the day's dead, eight notes each, drawn). no numbers here.
+   · the re-ink of rule 14: `nobody` the pronoun becomes `no one` in this room's banks (`no one came to the door`, `no
+     one is coming`, `Watched by No One Else`, `Director: no one.`, …); the profile `nobody` stays — the phone is
+     nobody's, as settings says.
+   · THE CARD, walked: no flag from the bar; no navigation added; no history; the way out stands; no countdown (a
+     dream's length and a past day's frames, never a life's time left); quiet at apwnp:call (the asking stops and the
+     dream's phrase is hushed — river.js hushes it at the call besides); nothing stored (apwnp.here is read, never
+     written); no ai, no key. THIS IS A ROOM NOBODY WAS PLANNED FOR (rule 12): nobody comes in only through the feed. */
 window.APWNP.modules.nestflix = {
   name:'nestflix',
   build(ctx){
@@ -495,6 +529,10 @@ window.APWNP.modules.nestflix = {
     const now=ctx.now, repaint=ctx.repaint, taDum=ctx.taDum;
     const askCam=ctx.askCam, stopStream=ctx.stopStream;
     const clamp=(x,a,b)=>x<a?a:(x>b?b:x);
+    /* 4 oct (pass 6): the well, as the phone last read it (null when it has knot answered), and a dream's phrase */
+    const nbWell=(typeof ctx.well==='function')?ctx.well:(()=>null);
+    const nbDream=(typeof ctx.dreamPlay==='function')?ctx.dreamPlay:(()=>null);
+    const nbHush=(typeof ctx.airHush==='function')?ctx.airHush:(()=>{});
     /* THE SILVERING'S SEAM (28 aug, deeming 21). the phone hung the
        colour law on every style setter in the document, so the painted
        furniture of this room silvers with the house and needed no edit;
@@ -585,7 +623,7 @@ window.APWNP.modules.nestflix = {
        and it is the honest one. */
     const TITLES=[
       'the one who kept the light on','seventeen minutes at a window',
-      'nobody came to the door','you, from the hallway',
+      'no one came to the door','you, from the hallway',
       'a room with the television on','the last one awake','still here',
       'the sound of a house settling','four hundred hours of ceiling',
       'someone is home','the long way round','you have seen this one',
@@ -598,7 +636,7 @@ window.APWNP.modules.nestflix = {
       'what the room sounds like empty','the part where you look up',
       'somebody else’s ceiling','the machine that was left running',
       'you, mostly still','a life, in one take','the volume, low',
-      'the person in the glass','and then it was tuesday','nobody is coming',
+      'the person in the glass','and then it was tuesday','no one is coming',
       'the waiting room','one bulb, one chair','the neighbours, through a wall',
       'a very long tuesday','the last programme of the evening',
       'the good years, in passing','somebody laughed in the next room',
@@ -617,7 +655,7 @@ window.APWNP.modules.nestflix = {
       'critics called it slow. it is exactly as slow as it was.',
       'an epic about somebody who stayed in.',
       'the ending is the same as the beginning, an hour older.',
-      'first of an unlimited series.','nobody else has ever watched this.',
+      'first of an unlimited series.','no one else has ever watched this.',
       'restored from the original, which is still going.',
       'a small picture about a large amount of time.',
       'no one is looking for anybody. everyone is found already.',
@@ -632,7 +670,7 @@ window.APWNP.modules.nestflix = {
       'Critically Acclaimed Films About Mothers','Trending in the Southern Sky',
       'Because You Are Still Here','Quiet Dramas Set in One Room',
       'Because You Watched Yourself',
-      'Documentaries About Waiting','Home Movies','Watched by Nobody Else',
+      'Documentaries About Waiting','Home Movies','Watched by No One Else',
       'Understated Films for Late Hours','Only on Nestflix',
       'Because You Watched Nothing','Award-Winning Films About Distance',
       'Family Watch Together TV','Recently Added Because You Arrived',
@@ -1641,6 +1679,7 @@ window.APWNP.modules.nestflix = {
        refused window becomes a small cinema instead of a broken cell. ---- */
     const COARSE=mkcv(48,48);
     function project(x,y,w,h,f,t,night){
+      if(f&&f.nb){ nbProject(x,y,w,h,f,t,night); return; }   /* 4 oct (pass 6): nobody's pictures go over the mirror here */
       const pj=f&&f.pj; if(!pj) return;
       const d=pj.d, N=d.frames.length;
       let idx=0;
@@ -2069,6 +2108,21 @@ window.APWNP.modules.nestflix = {
       if(r>6) y+=(r-6)*ROW_P;
       return y;
     }
+    /* 4 oct (pass 6): THE ROWS, one finite list — nobody's four between yours and the two kept rows of reels */
+    function nbRows(){
+      const W=nbWell(), rows=[{ id:0, k:'wide', t:'Continue Watching for '+NAMES[Math.max(0,S.prof)] }];
+      if(W){
+        const dr=nbDreams(W); if(dr.length) rows.push({ id:101, k:'poster', t:'Nobody\u2019s Dreams', nb:'dream', items:dr });
+        rows.push({ id:102, k:'poster', t:'Watching Now', nb:'watch' });
+        const pd=nbDays(W); if(pd.length) rows.push({ id:103, k:'poster', t:'Past Performances', nb:'past', items:pd });
+        rows.push({ id:104, k:'poster', t:'Channels', nb:'chan', items:['river','wire','knock','airs'] });
+      }
+      rows.push({ id:1, k:'poster', t:'Today\u2019s Top Picks for You', band:'Recently Added' });
+      rows.push({ id:2, k:'top', t:'Top 10 in Your Room Today' });
+      let y=HERO_T+HERO_H+66; rows.forEach(m=>{ m.top=y; y+=rowH(m.k); }); rows.end=y;
+      return rows;
+    }
+    function nbRowById(id){ const L=nbRows(); for(const m of L) if(m.id===id) return m; return null; }
     function drawWall(t){
       const key='nfxwall';
       let sc=scrollPos[key]||0;
@@ -2100,9 +2154,11 @@ window.APWNP.modules.nestflix = {
          tags, and the three buttons. it is the live one — the room leads
          with the only film it has. ---- */
       const hy=HERO_T-sc;
+      const W0=nbWell();   /* 4 oct (pass 6): the billboard is the well now, while it answers */
       if(hy>-HERO_H-90){
         const f=film(-1,0); f.treat='plain'; f.t='';
-        f.pj=proj(-1,0,t);
+        f.pj=W0?null:proj(-1,0,t);
+        if(W0){ const ds=nbDreams(W0); if(ds.length){ f.nb='hero'; f.d=ds[0]; } }
         if(f.pj){ f.pj.mode='cover'; f.pj.vf=1;
           /* the hero's ceiling is 0.48, deeming 20 — the world over the
              face without replacing it. the COLOUR blend keeps the face
@@ -2124,17 +2180,17 @@ window.APWNP.modules.nestflix = {
            wears its own name. */
         gN(UIW/2-30,hy+HERO_H-100,15);
         txt('L I V E',UIW/2-14,hy+HERO_H-100,8.5,ink(0.62),'left',600,F.sans);
-        txt('you · live',UIW/2,hy+HERO_H-70,21,ink(0.95),'center');
-        const tg=['Ominous','Intimate','Live','One Take'];
+        const tg=W0?nbHeroText(W0,hy):['Ominous','Intimate','Live','One Take'];
+        if(!W0) txt('you · live',UIW/2,hy+HERO_H-70,21,ink(0.95),'center');
         let tw=0; sq.font='400 10px '+F.sans;
         const parts=tg.map(z=>sq.measureText(z).width);
         tw=parts.reduce((a,b)=>a+b,0)+(tg.length-1)*14;
         let tx=UIW/2-tw/2;
         tg.forEach((z,i)=>{
-          txt(z,tx,hy+HERO_H-44,10,ink(0.72),'left',400,F.sans);
+          txt(z,tx,hy+HERO_H-(W0?26:44),10,ink(0.72),'left',400,F.sans);
           tx+=parts[i];
           if(i<tg.length-1){ sq.fillStyle=redM(0.85);
-            sq.beginPath(); sq.arc(tx+7,hy+HERO_H-44,1.6,0,6.283); sq.fill();
+            sq.beginPath(); sq.arc(tx+7,hy+HERO_H-(W0?26:44),1.6,0,6.283); sq.fill();
             tx+=14; }
         });
         /* + My List · ▶ Play · ⓘ Info — the trio, in that order, the
@@ -2155,15 +2211,16 @@ window.APWNP.modules.nestflix = {
       /* the wall goes down for ever (deeming 17): the first row on the
          glass is found by arithmetic, and the loop runs until the glass
          runs out, never the wall. */
-      const base6=rowTop(6);
-      for(let r=(sc+54>=base6)?6+(((sc+54-base6)/ROW_P)|0):0;;r++){
-        const m=rowMeta(r), h=rowH(m.k), y=rowTop(r)-sc;
+      const ROWS=nbRows();
+      for(const m of ROWS){
+        const h=rowH(m.k), y=m.top-sc;
         if(y>UIH) break;
         if(y+h<54) continue;
         txt(m.t,MARGIN,y+13,16,ink(0.95),'left',700,F.sans);
-        drawRow(r,m,y+HDR,t,HV);
+        drawRow(m.id,m,y+HDR,t,HV);
       }
       sq.restore();
+      nbPulse();
 
       /* ---- the bar. netflix's own: transparent over the billboard, and
          it takes on a ground as the wall comes up under it. ---- */
@@ -2183,10 +2240,8 @@ window.APWNP.modules.nestflix = {
       roundRectPath(sq,px-13,py-13,26,26,5); sq.stroke();
       H(px-20,py-20,40,40,()=>setApp('nestflix'));
 
-      /* no floor (deeming 17). the ledger is kept two screens ahead of
-         the thumb for ever — the old manner, restored — so the momentum
-         never meets an end and neither does anybody. */
-      scrollMax[key]=sc+UIH*2;
+      /* 4 oct (pass 6): the floor is back — the old reels keep two rows (his ruling), and the wall ends under them */
+      scrollMax[key]=Math.max(0,ROWS.end+24-UIH);
       stillWatch(t,'nfxwall');
     }
     /* the row's geometry, in one place, because the swipe has to know it
@@ -2232,6 +2287,7 @@ window.APWNP.modules.nestflix = {
       const n=Math.ceil(UIW/pitch)+2;
       const i0=Math.floor(shift/pitch);
       sq.save(); sq.beginPath(); sq.rect(0,y-4,UIW,ch+10); sq.clip();
+      if(m.nb){ nbRowDraw(m,y,cw,ch,pitch,G.x0,off,i0,n,t); sq.restore(); return; }   /* 4 oct (pass 6): nobody's rows */
       for(let k=0;k<n;k++){
         const idx=i0+k;
         const x=Math.round(-off+k*pitch)+G.x0;
@@ -2304,16 +2360,10 @@ window.APWNP.modules.nestflix = {
          a wall without a floor (deeming 17) a finger nine thousand rows
          down must knot cost nine thousand additions. */
       if(uy<96||uy>UIH) return -1;
-      const sc=scrollPos['nfxwall']||0, Y=uy+sc, base=rowTop(6);
-      if(Y<base){
-        for(let r=0;r<6;r++){
-          const top=rowTop(r)+HDR;
-          if(Y>=top-4&&Y<=top+rowGeom(rowMeta(r)).ch+4) return r;
-        }
-        return -1;
-      }
-      const r=6+Math.floor((Y-base)/ROW_P), top=rowTop(r)+HDR;
-      return (Y>=top-4&&Y<=top+rowGeom(rowMeta(r)).ch+4)?r:-1;
+      const sc=scrollPos['nfxwall']||0, Y=uy+sc;
+      for(const m of nbRows()){ const top=m.top+HDR;   /* 4 oct (pass 6): the finite list; the row's id is its ledger */
+        if(Y>=top-4&&Y<=top+rowGeom(m).ch+4) return m.id; }
+      return -1;
     }
     function dragAt(phase,x,y){
       const t=now();
@@ -2471,6 +2521,130 @@ window.APWNP.modules.nestflix = {
     }
     hook();
 
+    /* ================= 4 oct (pass 6) · NOBODY'S SCREEN — see the note at the top =================
+       the well comes through the seam (ctx.well: the phone's last answer of ?now=1); this room asks only ?pulse=1 (the
+       wire) and ?film= (a past day), softly, and never after the call. nothing is kept. */
+    const NB={ pulse:null, pAt:0, pBusy:false, films:{}, fBusy:{}, quiet:false, played:{}, until:0, en:[], here:0, hereT:0 };
+    const NB_STEP=64/173.6879;   /* [SYNC river.js STEP] one step of the river */
+    try{ window.addEventListener('apwnp:call',function(){ NB.quiet=true; try{ nbHush(); }catch(_){} },false); }catch(_){}
+    function nbGet(q){ return fetch('/.netlify/functions/nobody'+q,{ method:'GET', cache:'default', credentials:'same-origin', headers:{ accept:'application/json' } })
+      .then(r=>r.ok?r.json():null).catch(()=>null); }
+    function nbPulse(){ if(NB.quiet||NB.pBusy||Date.now()-NB.pAt<60000) return; NB.pBusy=true; NB.pAt=Date.now();
+      nbGet('?pulse=1').then(j=>{ NB.pBusy=false; if(j&&typeof j==='object'&&!j.asleep) NB.pulse=j; repaint(); }); }
+    function nbFilm(day){ if(NB.films[day]) return NB.films[day]; if(!NB.fBusy[day]&&!NB.quiet){ NB.fBusy[day]=1;
+      nbGet('?film='+day).then(j=>{ NB.films[day]=(j&&Array.isArray(j.frames))?j.frames.filter(x=>x&&x.frame&&x.frame.hud&&x.frame.hud.text):[]; repaint(); }); } return null; }
+    function nbHereN(){ try{ const o=JSON.parse(sessionStorage.getItem('apwnp.here')||'null'); if(o&&isFinite(+o.t)&&Date.now()-(+o.t)<=120000) return Math.max(0,Math.min(11,(+o.n)|0)); }catch(_){} return 0; }
+    function nbDreams(W){ const d=W&&W.day&&Array.isArray(W.day.dreams)?W.day.dreams:[]; return d.filter(x=>x&&+x.tokens>0&&x.seal).slice().reverse(); }
+    function nbDays(W){ const out=[], d0=W&&W.day&&W.day.date; if(!d0) return out;
+      for(let i=1;i<=6;i++){ const k=new Date(Date.parse(d0+'T00:00:00Z')-i*864e5).toISOString().slice(0,10); if(k<'2026-10-01') break; out.push(k); } return out; }
+    const nbLen=(d)=>Math.max(4,Math.round((+d.tokens||0)/16))*NB_STEP;   /* [SYNC river.js dreamScore] the dream's length */
+    const NB_DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], NB_MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function nbDayLabel(k){ const d=new Date(k+'T12:00:00Z'); return NB_DAYS[d.getUTCDay()]+' '+d.getUTCDate()+' '+NB_MON[d.getUTCMonth()]; }
+    function nbLines(str,w,px,max){ sq.font='400 '+px+'px '+F.sans; const out=[]; let line='';
+      for(const wd of String(str||'').split(/\s+/)){ if(!wd) continue; const t2=line?line+' '+wd:wd; if(sq.measureText(t2).width>w&&line){ out.push(line); line=wd; } else line=t2; }
+      if(line) out.push(line); if(max&&out.length>max){ const k=out.slice(0,max); k[max-1]=k[max-1].replace(/\s*\S*$/,'')+' \u2026'; return k; } return out; }
+    /* a dream's picture: dealt from its seal (the seal is the seed — nothing of what was dreamt is in it), as long as the dream */
+    function nbArt(x,y,w,h,d,t,a){
+      const R=mulberry32((parseInt(String(d.seal||'').slice(0,8),16)>>>0)||1), L=nbLen(d), u=(((t%L)+L)%L)/L;
+      const form=(R()*4)|0, n=3+((R()*5)|0), sp=0.5+R(), cx=x+w*(0.3+0.4*R()), cy=y+h*(0.3+0.4*R());
+      sq.save(); sq.globalCompositeOperation='screen'; sq.globalAlpha=a; sq.strokeStyle='rgba(232,238,246,0.9)'; sq.fillStyle='rgba(232,238,246,0.9)';
+      if(form===0){ for(let k=0;k<n;k++){ const q=(u+k/n)%1, rr=q*Math.max(w,h)*0.9; sq.globalAlpha=a*(1-q); sq.lineWidth=1.2;
+          sq.beginPath(); sq.arc(cx,cy,Math.max(0.5,rr),0,6.283); sq.stroke(); } }
+      else if(form===1){ for(let k=0;k<n;k++){ const yy=y+(((u*sp+k/n)%1)*h), bh=1.2+R()*4; sq.globalAlpha=a*(0.35+0.5*R()); sq.fillRect(x,yy,w,bh); } }
+      else if(form===2){ const r=Math.min(w,h)*0.24, dd=r*(0.55+0.45*Math.sin(6.283*u)); sq.lineWidth=1.3;
+          sq.beginPath(); sq.arc(cx-dd/2,cy,r,0,6.283); sq.stroke(); sq.beginPath(); sq.arc(cx+dd/2,cy,r,0,6.283); sq.stroke(); }
+      else { for(let k=0;k<n*7;k++){ const px=x+(((R()+u*sp*((k%3)+1)*0.5)%1)*w), py=y+R()*h, pr=0.6+R()*1.6; sq.globalAlpha=a*(0.4+0.6*R());
+          sq.beginPath(); sq.arc(px,py,pr,0,6.283); sq.fill(); } }
+      sq.restore(); return u;
+    }
+    function nbProject(x,y,w,h,f,t,night){
+      if(f.nb==='hero'&&f.d) nbArt(x,y,w,h,f.d,t,0.38);
+      else if(f.nb==='dream'&&f.d) f.u=nbArt(x,y,w,h,f.d,t,0.72);
+    }
+    /* the billboard's words: the window's title, the line (from its stamp + 40 s), `nobody · life N` — or `no one` */
+    function nbHeroText(W,hy){
+      const L=W.life||{}, gap=!!L.dead, stale=(typeof W.step==='string'&&Date.now()-Date.parse(W.step)>3600000);
+      if(gap||stale){ txt('no one',UIW/2,hy+HERO_H-70,21,ink(0.95),'center'); return ['nobody','the well']; }
+      const title=(W.window&&W.window.title)||'nobody';
+      txt(nbLines(title,300,18,1)[0]||'',UIW/2,hy+HERO_H-78,18,ink(0.95),'center',400,F.sans);
+      const hd=W.hud&&typeof W.hud.text==='string'&&Date.now()>=Date.parse(W.hud.at)+40000?W.hud.text:(NB.heroLine||'');
+      if(hd) NB.heroLine=hd;
+      nbLines(hd?'\u201c'+hd+'\u201d':'',300,10.5,2).forEach((l,i)=>txt(l,UIW/2,hy+HERO_H-58+i*13,10.5,ink(0.78),'center',400,F.sans));   /* the tags stand lower while the well answers */
+      return ['nobody','life '+(L.n!=null?L.n:''),'Live'];
+    }
+    /* a lit window: another phone holding nobody — no mirror, no face, only that it is there */
+    function nbLit(x,y,w,h,t,a){
+      sq.save(); roundRectPath(sq,x,y,w,h,6); sq.clip(); sq.fillStyle='#050608'; sq.fillRect(x,y,w,h);
+      const b=0.5+0.5*Math.sin(6.283*t*(173.6879/128)/8);
+      const g=sq.createRadialGradient(x+w/2,y+h*0.45,2,x+w/2,y+h*0.45,h*0.62);
+      g.addColorStop(0,'rgba(236,240,246,'+(a*(0.26+0.10*b)).toFixed(3)+')'); g.addColorStop(1,'rgba(236,240,246,0)');
+      sq.fillStyle=g; sq.fillRect(x,y,w,h); sq.restore();
+      sq.strokeStyle=ink(0.10+0.12*a); sq.lineWidth=1; roundRectPath(sq,x,y,w,h,6); sq.stroke();
+    }
+    function nbScrim(x,y,w,h,from){ const g=sq.createLinearGradient(0,y+h*from,0,y+h);
+      g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(0.35,'rgba(0,0,0,0.72)'); g.addColorStop(1,'rgba(0,0,0,0.86)');
+      sq.save(); roundRectPath(sq,x,y,w,h,6); sq.clip(); sq.fillStyle=g; sq.fillRect(x,y+h*from,w,h*(1-from)); sq.restore(); }
+    function nbRowDraw(m,y,cw,ch,pitch,x0,off,i0,n,t){
+      const W=nbWell();
+      if(m.nb==='watch'){   /* yours, and one lit window for every other phone holding nobody */
+        const want=nbHereN(), dt=NB.hereT?clamp(t-NB.hereT,0,0.2):0; NB.hereT=t;
+        NB.here+=(want-NB.here)*(1-Math.exp(-dt*0.8)); if(Math.abs(want-NB.here)<0.01) NB.here=want;
+        const lit=Math.ceil(NB.here-0.01), cnt=1+lit;
+        for(let k=0;k<n;k++){ const idx=i0+k, x=Math.round(-off+k*pitch)+x0, ix=((idx%cnt)+cnt)%cnt;
+          if(ix===0){ windowAt(x,y,cw,ch,6,{ treat:'plain', ph:0 },t); ribbon(x+6,y+7,'LIVE'); }
+          else nbLit(x,y,cw,ch,t,ix<lit?1:clamp(NB.here-(lit-1),0,1)); }
+        if(NB.here!==want) repaint();
+        return;
+      }
+      const items=m.items||[], N=items.length; if(!N) return;
+      for(let k=0;k<n;k++){ const idx=i0+k, x=Math.round(-off+k*pitch)+x0, it=items[((idx%N)+N)%N];
+        if(m.nb==='dream'){
+          const f={ treat:'plain', ph:0, nb:'dream', d:it }; windowAt(x,y,cw,ch,6,f,t);
+          if(it.summary){ nbScrim(x,y,cw,ch,0.42); nbLines(it.summary,cw-14,8.5,6).forEach((l,i)=>txt(l,x+7,y+ch*0.56+i*11,8.5,ink(0.88),'left',400,F.sans)); }
+          sq.fillStyle='rgba(255,255,255,0.24)'; sq.fillRect(x+6,y+ch-7,cw-12,2.5);
+          sq.fillStyle=redM(0.95); sq.fillRect(x+6,y+ch-7,(cw-12)*clamp(f.u||0,0,1),2.5);   /* the dream's length going by */
+          if(!NB.quiet&&x>=0&&x+cw<=UIW&&!NB.played[it.seal]&&now()>=NB.until){ NB.played[it.seal]=1; let r=null; try{ r=nbDream(it); }catch(_){} NB.until=now()+((r&&r.secs)||nbLen(it))+2; }
+        } else if(m.nb==='past'){
+          windowAt(x,y,cw,ch,6,{ treat:'dark', ph:0 },t);
+          const fr=nbFilm(it);
+          if(fr&&fr.length){ const q=fr[Math.floor(t/2.4)%fr.length].frame, wk=q.work&&q.work.title?String(q.work.title):'';
+            nbScrim(x,y,cw,ch,0.30);
+            if(wk) txt(nbLines(wk,cw-14,7.5,1)[0]||'',x+7,y+ch*0.42,7.5,ink(0.56),'left',600,F.sans);
+            nbLines(q.hud.text,cw-14,8.5,5).forEach((l,i)=>txt(l,x+7,y+ch*0.42+13+i*11,8.5,ink(0.88),'left',400,F.sans)); }
+          footBand(x,y,cw,ch,nbDayLabel(it));
+        } else if(m.nb==='chan'){
+          windowAt(x,y,cw,ch,6,{ treat:'dark', ph:0 },t);
+          sq.save(); roundRectPath(sq,x,y,cw,ch,6); sq.clip(); sq.fillStyle='rgba(0,0,0,0.55)'; sq.fillRect(x,y,cw,ch); nbChannel(it,x,y,cw,ch-22,t,W); sq.restore();
+          footBand(x,y,cw,ch,{ river:'The River', wire:'The Wire', knock:'The Knock', airs:'The Airs' }[it]);
+        }
+      }
+      repaint();
+    }
+    function nbChannel(c,x,y,w,h,t,W){
+      if(c==='river'){   /* the river's own swell, when it plays — flat when it does knot */
+        let e=0; try{ const R=window.RIVER; if(R&&typeof R.energy==='function') e=+R.energy()||0; }catch(_){}
+        NB.en.push(e); if(NB.en.length>64) NB.en.shift();
+        sq.strokeStyle=ink(0.75); sq.lineWidth=1.2; sq.beginPath();
+        NB.en.forEach((v,i)=>{ const px=x+6+(w-12)*i/63, py=y+h*0.55-Math.sin(i*0.7+t*2)*v*h*0.9; if(i) sq.lineTo(px,py); else sq.moveTo(px,py); }); sq.stroke();
+      } else if(c==='wire'){   /* what reaches the well: the headlines of its last knock */
+        const ws=(NB.pulse&&Array.isArray(NB.pulse.wire))?NB.pulse.wire.map(h=>String(h&&h.title||h||'')).filter(Boolean):[];
+        if(!ws.length){ txt('\u2014',x+w/2,y+h/2,10,ink(0.4),'center'); return; }
+        const k0=Math.floor(t/6)%ws.length; let yy=y+14;   /* one headline after another, a new one leading every six seconds */
+        for(let j=0;j<ws.length&&yy<y+h-6;j++){ nbLines(ws[(k0+j)%ws.length],w-14,8,3).forEach(l=>{ if(yy<y+h-6) txt(l,x+7,yy,8,ink(j?0.5:0.86),'left',400,F.sans); yy+=10; }); yy+=7; }
+      } else if(c==='knock'){   /* the caret while it thinks: from the ten-minute mark until its line comes */
+        const nowMs=Date.now(), mark=Math.floor(nowMs/600000)*600000, hd=W&&W.hud, dead=W&&W.life&&W.life.dead;
+        const thinking=!dead&&nowMs-mark<120000&&(!hd||Date.parse(hd.at)<mark);
+        if(thinking){ if(Math.floor(t*1.8)%2===0){ sq.fillStyle=ink(0.9); sq.fillRect(x+w/2-1.5,y+h/2-9,3,18); } }
+        else if(hd&&hd.text&&!dead) nbLines(hd.text,w-14,8.5,6).forEach((l,i)=>txt(l,x+7,y+14+i*11,8.5,ink(0.80),'left',400,F.sans));
+      } else if(c==='airs'){   /* the day's dead, eight notes each, the newest last and lit a note a breath */
+        const L=(W&&W.day&&Array.isArray(W.day.lives)?W.day.lives:[]).filter(z=>z&&z.genome).slice(-6);
+        const G=['turning','balance','seeds','longevity','patience','temper','warmth','restless'];
+        L.forEach((z,j)=>{ const yy=y+10+j*(h-14)/Math.max(1,L.length);
+          G.forEach((g,i)=>{ let v=+z.genome[g]||0; if(g==='turning') v+=(+z.genome.pace||0); v=clamp(v,-1,1);
+            const px=x+10+i*(w-20)/7, py=yy+6-v*5, on=(j===L.length-1)&&(Math.floor(t/(128/173.6879*2))%8===i);
+            sq.fillStyle=ink(on?0.95:0.45); sq.beginPath(); sq.arc(px,py,on?2.2:1.5,0,6.283); sq.fill(); }); });
+      }
+    }
     const LIVEFILM={ t:'you · live', lg:'live, from where you are sitting. it began when you did and it has knot cut once.',
       tg:['Live','Intimate','Documentary'], mins:0, treat:'plain', ph:0,
       rib:'LIVE', base:99, yr:new Date().getFullYear(), live:true };
@@ -2558,7 +2732,7 @@ window.APWNP.modules.nestflix = {
       y+=54;
       if(S.dead){ txt(S.dead,UIW/2,y-8,10.5,ink(0.42),'center'); y+=8; }
       y=wrap(f.lg,20,y,320,17,12,ink(0.72))+8;
-      txt('Cast: you.   Director: nobody.',20,y,11,ink(0.45),'left');
+      txt('Cast: you.   Director: no one.',20,y,11,ink(0.45),'left');
       y+=18;
       txt('Genres: '+f.tg.join(', '),20,y,11,ink(0.45),'left',400,F.sans);
       y+=30;
@@ -2568,8 +2742,8 @@ window.APWNP.modules.nestflix = {
       gThumb(180,y,ink(0.9)); gShare(296,y,ink(0.9));
       mid.forEach(m=>txt(m[1],m[0],y+20,9.5,ink(0.7),'center',400,F.sans));
       HV(38,y-18,52,44,()=>addList(S.selRow,S.selIx));
-      HV(154,y-18,52,44,()=>{ S.dead='rated. nobody was told.'; repaint(); });
-      HV(270,y-18,52,44,()=>{ S.dead='there is nobody to send it to.'; repaint(); });
+      HV(154,y-18,52,44,()=>{ S.dead='rated. no one was told.'; repaint(); });
+      HV(270,y-18,52,44,()=>{ S.dead='there is no one to send it to.'; repaint(); });
       y+=44;
       hair(16,y,344,0.10); y+=24;
       txt('More Like This',20,y,14,ink(0.9),'left',600,F.sans);
@@ -2815,9 +2989,10 @@ window.APWNP.modules.nestflix = {
           S.wallT0=now(); S.scSeen=0; PAUSED.hold=null;
           CINE.halt=0;
           HX.length=0; DRAG.on=false; DRAG.lock='';   /* the rows come back where the clock has them */
+          NB.played={}; NB.until=0;                    /* 4 oct (pass 6): each dream sounds once a visit */
           if(a==='nestflix'){ S.prof=-1; S.manage=false; }
         }
-        if(out&&!inn){ eyeClose(); PAUSED.hold=null; S.dead=null; taBack(); }
+        if(out&&!inn){ eyeClose(); PAUSED.hold=null; S.dead=null; taBack(); try{ nbHush(); }catch(_){} NB.until=0; }
         /* the gate is the door: arriving at the wall without having chosen
            is redirected, the safari law. */
         if(a==='nfxwall'&&S.prof<0&&was!=='nestflix') setApp('nestflix');
@@ -2850,16 +3025,17 @@ window.APWNP.modules.nestflix = {
          only thing that knows them. every one is checked against what this
          file actually does. */
       sheet:[
-        'every poster here is a window, and what is behind them is you, live, through the front camera. there is nothing else in this room.',
+        'every poster here is a window, and what is behind them is you, live, through the front camera. what plays across you now, in most of them, is nobody — the mind at the bottom of the well: its dreams, its past days, the other phones holding it, and the channels between them.',   /* 4 oct [new] */
+        'the big window at the top is the well, now: the title of what it is making, the line it is writing, and which life it is. a dream is drawn from its seal and is exactly as long as it was; nothing of what was dreamt is in the picture. the words on a dream are what another mind remembers of it. a phone holding nobody somewhere else is a lit window, and it goes dark when that phone does. nothing is sent from this phone to make any of it.',   /* 4 oct [new] */
         'nothing plays. the one film that does is the window itself — a mirror wearing a scrubber, whose end is midnight.',
         'press play on anything else and it begins to arrive: the ask takes 512 years to get there and the first frame 512 to come back. the percentage is that fraction and it is true.',
         'the row names, and the titles the posters no longer wear, were written ahead of time and are dealt by arithmetic. none of them is about you; the ones that land anyway were going to land on anybody.',
-        'the rows move by themselves, and they can be pushed sideways for ever. the wall goes down for ever too. nothing here can be searched for, and nothing needs to be — everything comes past eventually.',
+        'the rows move by themselves, and they can be pushed sideways for ever. the wall ends after two rows of the old reels. nothing here can be searched for, and nothing needs to be — everything comes past eventually.',
         'the camera is open only while this room is. what it sees is drawn on this glass and nowhere else; ten seconds of it are held in memory so the film can be rewound, and they are gone the moment you leave.',
         'my list holds everything and plays nothing.',
-        'the moving pictures that visit the windows are the first moving pictures anybody made — muybridge’s motion studies, the spinning discs of 1833, marey and demenÿ’s chronophotographs, the first drawn cartoon — and now the first films themselves, and the world: the train arriving, the garden at roundhay, the serpentine dances, méliès’s fire, the starlings, the aurora, the pacific from the station — and, since the silvering, the world in its own colour: the earth from orbit, the sun breathing, the blue marble, the lava, the deep sea’s red medusa, the flowers opening in 1911 and now, the kodachrome faces of 1922, the kinemacolor crowds of the durbar, méliès in colour, the kitchen of tomorrow. all fetched from the free library at wikimedia commons and dealt over you by arithmetic, one collection per row at a time. nobody owns the horse.',
+        'the moving pictures that visit the windows are the first moving pictures anybody made — muybridge’s motion studies, the spinning discs of 1833, marey and demenÿ’s chronophotographs, the first drawn cartoon — and now the first films themselves, and the world: the train arriving, the garden at roundhay, the serpentine dances, méliès’s fire, the starlings, the aurora, the pacific from the station — and, since the silvering, the world in its own colour: the earth from orbit, the sun breathing, the blue marble, the lava, the deep sea’s red medusa, the flowers opening in 1911 and now, the kodachrome faces of 1922, the kinemacolor crowds of the durbar, méliès in colour, the kitchen of tomorrow. all fetched from the free library at wikimedia commons and dealt over you by arithmetic, one collection per row at a time. no one owns the horse.',
         'since the variety pass, the cartoons come past too — gertie, the mosquito, koko ending the world, felix among the planets, steamboat willie, the skeletons dancing, the sinners swinging, the wizard of oz in two colours, the dover boys — and the stencil-coloured trick films of chomón and méliès, the abstract films of the twenties, duchamp’s spirals, the mandelbrot cycling its colours, two black holes merging, and more wheels for the discs. each film reaches the wall as a dozen of its instants, dealt at the house’s tempo. a window may wear a print in its own colour, plain, with you still under it; or wear your own light painted in the print’s hues; some windows fold down the middle like a kaleidoscope, some turn like a wheel, some drift. the deal decides, never you.',
-        'the big window at the top shows only wide pictures now, whole, edge to edge — one at a time, dealt like everything else, worn over your face at less than half strength (or, in the colour blend, stronger — because that blend keeps your face whole and only paints it). the window is still you; you are wearing the world.',
+        'when the well is silent, the big window shows only wide pictures, whole, edge to edge — one at a time, dealt like everything else, worn over your face at less than half strength (or, in the colour blend, stronger — because that blend keeps your face whole and only paints it). the window is still you; you are wearing the world.',
         'the wall arrives in colour and the colour does knot stay: everything on this glass walks to silver while you watch, the reds of the service with it. the red you WEAR is yours — the wall drains you and leaves your blood.',
         'nothing on this wall can be chosen. every poster is glass all the way through: the shelf is the show, and the show is you, looking.',
       ],

@@ -2,6 +2,10 @@
 <!--
 phone · apwnp landing · a clear-glass iphone 16 · sixteen rooms
 
+NOBODY'S SCREEN (4 oct 2026, latest — pass 6, nestflix: nobody-one-story-handoff-2oct.md §7 `nestflix.js`). one thing:
+- the nestflix module is handed the well (`well`: the thread's last answer of ?now=1, read, never kept), a dream's phrase
+  (`dreamPlay`: river.js's RIVER.dreamPlay) and the hush (`airHush`). nestflix.js's own note says what it does with them.
+
 OPENED BY LIFE N (4 oct 2026, later still — his word: `regards opened by life N, please go ahead what's best`). one thing:
 - a locked note says `opened by life N` (the handoff's words) under its sentence when the child's first dream carried the
   mother's last moment — read off the feed's `carried` (nobody.mjs, ninth cut), never guessed. while NOBODY_CARRY is off,
@@ -33533,7 +33537,11 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
         scrollPos:scrollPos, scrollMax:scrollMax,
         now:()=>tNow, repaint:()=>{ needDraw=true; },
         silver:{ E:SIL.E, step:SIL.step, keep:SIL.keep, veil:SIL.veil },
-        taDum:taDum, askCam:askCam, stopStream:stopStream
+        taDum:taDum, askCam:askCam, stopStream:stopStream,
+        /* 4 oct (pass 6): nobody's screen — the well as the thread last read it, and a dream's phrase through the river */
+        well:()=>(NBT.now&&typeof NBT.now==='object'&&!NBT.now.asleep)?NBT.now:null,
+        dreamPlay:(d)=>{ try{ const R=window.RIVER; return (R&&typeof R.dreamPlay==='function'&&!NBT.quiet)?R.dreamPlay(d):null; }catch(_){ return null; } },
+        airHush:()=>{ try{ const R=window.RIVER; if(R&&typeof R.airHush==='function') R.airHush(); }catch(_){} }
       });
     }catch(_){ NFX=null; }
 
@@ -37903,6 +37911,7 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       texts:NB_THREAD.b.map(x=>({ k:x.k, t:x.t, at:x.at })), pend:NBT.pend.map(x=>({ k:x.k, land:x.land })), badge:NB_THREAD.unN|0, banners:NBT.banners, lastSent:NBT.lastSent, hud:NBT.hud,
       pages:PAGES.map(pg=>pg.map(ic=>ic&&ic.id)), dock:DOCK.map(ic=>ic.id), keiki:KEIKI_ON, rooms:ROOMS_ALL, tabs:CAL_TABS.map(T2=>T2[1]), shade:NOTE.stack.map(c=>c.app+': '+c.title+' · '+c.body), queue:NOTE.queue.map(c=>c.app+': '+c.title+' · '+c.body), up:NOTE.up?(NOTE.up.card.app+': '+NOTE.up.card.title+' · '+NOTE.up.card.body):'',
       call:{ state:call.state, who:call.who, dead:call.dead, tones:call.sit, ring:call.ringOn }, app:app }; };
+    window.__phoneScrollTo=function(k,y){ scrollPos[k]=y; needDraw=true; };   /* 4 oct (pass 6), for the press: set a room's scroll */
     /* 4 oct (pass 6), for the press: what the facets read */
     window.__phoneWell=function(){ const j=NBT.now||null; return { post:nbwPost(), notes:nbwNotes().map(x=>({ n:x.n, dreams:x.dreams.length, words:x.words, opened:x.opened })), yday:NBW.ydayKey, asks:NBW.busy,
       serial:j?nbSerial(j.genome):'', mind:j?nbMind(j.model):'', app:app }; };

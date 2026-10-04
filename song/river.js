@@ -49,6 +49,15 @@
    comes back at the true place. new rig: ?sky=0|mock · ?bed=0 ·
    ?bedgain= · ?raw= · ?colour= · ?program=0.
 
+   4 OCT 2026, LATER STILL · PASS 6, NESTFLIX (nobody's screen). one
+   thing: RIVER.dreamPlay(dream) — a dream's own phrase, once, when a
+   room asks (nestflix's dreams row): the same score the river plays at
+   the dream's landing (dreamScore: its length from its tokens, its
+   register from its mind, its notes from its seal), through water (the
+   lowpass at 620 hz), two voices a breath apart, on the tap bus the
+   airs use — so RIVER.airHush() hushes it too, a new ask takes the
+   place of the one before, and the call silences it with the rest.
+
    4 OCT 2026, LATER · PASS 6, SETTINGS · NOTES · EGGSTAGRAM (the one
    story's facets). one thing, and nothing else: RIVER.airHush() — the
    air asked last (RIVER.airPlay) goes quiet within a twentieth of a
@@ -2668,6 +2677,24 @@ function airPlay(genome){
       o.connect(e); e.connect(pg); o.start(t); o.stop(t+p[2]+0.05); }); });
   return { notes:A, secs:8*gap+2.2 };
 }
+/* 4 oct (pass 6, nestflix): a dream's own phrase, once, when asked — the river's score, through water, on the tap bus */
+function dreamPlay(d){
+  if(!d||!(+d.tokens>0)||SET.dead) return null;
+  try{ audio(); if(actx.state==='suspended') actx.resume(); }catch(_){ return null; }
+  if(!DN.tap){ DN.tap=actx.createGain(); DN.tap.gain.value=1; const lp0=actx.createBiquadFilter(); lp0.type='lowpass'; lp0.frequency.value=3200; DN.tap.connect(lp0); lp0.connect(outNode()); }
+  if(DN.tapG){ try{ DN.tapG.gain.setTargetAtTime(0.0001,actx.currentTime,0.04); }catch(_){} }
+  DN.tap.gain.setTargetAtTime(1,actx.currentTime,0.02);
+  const pg=actx.createGain(); pg.gain.value=1; const lp=actx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=620; lp.Q.value=0.6;
+  pg.connect(lp); lp.connect(DN.tap); DN.tapG=pg; DN.taps++;
+  const sc=dreamScore(d), t0=actx.currentTime+0.08;
+  sc.notes.forEach(nn=>{ const t=t0+nn.s*STEP, dur=nn.d*STEP, f=fWater(nn.di,nn.oct+1,0), g=0.09*(sc.opus?0.9:1);
+    const o=actx.createOscillator(), o2=actx.createOscillator(), e=actx.createGain();
+    o.type=sc.opus?'triangle':'sine'; o.frequency.value=f; o2.type='sine'; o2.frequency.value=f+PULSE/128;
+    e.gain.value=0.0001; e.gain.setValueAtTime(0.0001,t); e.gain.exponentialRampToValueAtTime(g,t+Math.min(0.14,dur*0.3));
+    e.gain.setTargetAtTime(0.0001,Math.max(t+0.15,t+dur-Math.min(0.5,dur*0.4)),0.18);
+    o.connect(e); o2.connect(e); e.connect(pg); o.start(t); o2.start(t); o.stop(t+dur+1.2); o2.stop(t+dur+1.2); });
+  return { secs:sc.secs, notes:sc.notes.length };
+}
 /* 4 oct (pass 6): the air asked last, hushed — the room that asked owns the silence too */
 function airHush(){ try{ if(DN.tapG&&actx){ DN.tapG.gain.setTargetAtTime(0.0001,actx.currentTime,0.015); DN.tapG=null; return true; } }catch(_){} return false; }
 function dnRead(){ const D=DN.dream||DN.next;
@@ -2732,7 +2759,7 @@ const api={
   hold:riverHold, everything:evState, hud:function(){ return EV.hud.slice(); }, hands:handsRead, program:function(){ return PROG.now; }, sky:SKYD, skyNow:skyNow,
   bedPlace:bedPlace, mmss:mmss, BAR:BAR, ledgerRpc:ledgerRpc,
   /* 1 oct — the river, whole */
-  air:airOf, airPlay:airPlay, airHush:airHush, dreams:dnRead,   /* 4 oct (pass 4): the dreams and the dead */
+  air:airOf, airPlay:airPlay, airHush:airHush, dreamPlay:dreamPlay, dreams:dnRead,   /* 4 oct (pass 4): the dreams and the dead */
   score:scoreRead, held:function(){ return HOLD; }, words:function(){ return { off:WORDS.off, p:WORDS.p, said:WORDS.said, shown:WORDS.shown, cards:WORDS.cards, places:WORDS.places, echoes:WORDS.echoes, rests:WORDS.rests, last:WORDS.last }; },
   /* the room's own handles (music.html's studio, lamp, window) */
   hearMine:hearMine, holdBreath:function(on){ BREATH_HELD=!!on; if(on) throatCancel(); holdBreath(on); },   /* 1 oct: while the studio's mic is open the throat stands down — a take must hear only the singer */
