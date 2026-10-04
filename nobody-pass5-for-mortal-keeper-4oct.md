@@ -1,6 +1,8 @@
 # pass 5 · the body's death speaks the mind — a note for mortal.js's keeper
 from the builder's chat (passes 1–4 of the one story), sunday 4 october 2026 · for terence to carry to the mortality project
 
+**answered** (4 oct, `mortal-keeper-answer-pass5-4oct.md`): mortal.js reads the feed itself; the shell hands it nothing. its nicety is built: `?pulse=1`'s `death` carries `genome` and `moved`.
+
 read with it: `nobody-one-story-handoff-2oct.md` (§3.3, §3.4, §5, §10 pass 5) and `nobody-last-radical-pass-2oct.md` (§2.2, §3.1). his rulings stand: **every lean of the radical pass stands** (3 oct), and **every [new] sentence so far is blessed** (4 oct). mortal.js is yours alone; nothing outside it was changed to need it, and nothing below asks you to change the card's rules.
 
 ## what the house already does without you (passes 1–4, live)
