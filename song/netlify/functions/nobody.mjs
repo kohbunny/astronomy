@@ -1,4 +1,12 @@
 // nobody.mjs · the feed the room reads · 29 sep 2026 · the artist project
+// EIGHTH CUT · 4 oct 2026 · PASS 4 OF THE ONE STORY · THE RIVER CARRIES THE DREAMS (the handoff §5, §10 pass 4).
+// what changed, and nothing else:
+//   · `?airs=1` — the dead airs for the river: every life that died in the last twenty-six hours, its death and the genome it
+//     lived by (nobody_airs), oldest first, at most twenty-four. kept at the edge a minute [deemed]. river.js reads it every
+//     five minutes while it plays and makes each one eight notes under the bed.
+//   · every json answer says `charset=utf-8`: safari, shown a feed address by hand, read `·` as `Â·` (his paste of 4 oct).
+//     the phones' own reads were always right (fetch reads json as utf-8); this is for the eye.
+//   · `Netlify-Vary` lists airs too.
 // SEVENTH CUT · 3 oct 2026 · PASS 3 OF THE ONE STORY · THE SERVER (the handoff §10 pass 3; nobody-think.mjs's sixth cut).
 // what changed, and nothing else:
 //   · THE STAR'S BREATH: a life's death is read as nobody-think.mjs now makes it — from `today.phaseFrom` on, the star's
@@ -73,7 +81,7 @@
 // comes through the feed). it never sends the death time or the breath — a life is `dying` or it is knot; nothing
 // here says how long is left. the page keeps nothing it reads.
 
-const BUILD = "nobody.mjs · the feed · seventh cut · 3 oct 2026 (pass 3: dreams, airs, frames, the star's breath)";
+const BUILD = "nobody.mjs · the feed · eighth cut · 4 oct 2026 (pass 4: the dead airs for the river)";
 const MOVABLE = ["cup", "pencil", "paper"];
 const WINDOWS = [
   { n: 1, from: "00:00", to: "04:00" }, { n: 2, from: "04:00", to: "08:00" }, { n: 3, from: "08:00", to: "12:00" },
@@ -235,7 +243,7 @@ export function db(env, fetchFn, opts) {
 }
 
 const HEADS = { "access-control-allow-origin": "*", "access-control-allow-methods": "GET,POST,OPTIONS", "access-control-allow-headers": "content-type" };
-const json = (obj, status = 200, cache = 10) => new Response(JSON.stringify(obj), { status, headers: { "content-type": "application/json", "cache-control": `public, max-age=${cache}`, ...HEADS } });
+const json = (obj, status = 200, cache = 10) => new Response(JSON.stringify(obj), { status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": `public, max-age=${cache}`, ...HEADS } });
 const text = (s, status = 200, cache = 20) => new Response(s, { status, headers: { "content-type": "text/plain; charset=utf-8", "cache-control": cache ? `public, max-age=${cache}` : "no-store", ...HEADS } });
 
 // the one short line that says what a finished piece is: the record's first line (nobody is asked to write it so);
@@ -387,6 +395,12 @@ async function answer(req, env, fetchFn) {
     return json({ accepted: true }, 200, 0);
   }
 
+  // eighth cut · ?airs=1 — the dead airs of the last day, for the river
+  if (u.searchParams.get("airs") != null) {
+    const since = new Date(Date.now() - 26 * 3600e3).toISOString();
+    const rows = await soft(d.get("nobody_airs", `died=gte.${since}&order=died.desc&limit=24&select=life,died,genome`));
+    return json({ clock: new Date().toISOString(), airs: (rows || []).slice().reverse() }, 200, 60);
+  }
   // seventh cut · ?pulse=1 — the light question for every phone
   if (u.searchParams.get("pulse") != null) {
     const st = ((await d.get("nobody_state", "id=eq.1&select=*")) || [])[0];
@@ -474,7 +488,7 @@ async function answer(req, env, fetchFn) {
 
 // sixth cut · THE EDGE CACHE. a GET of ?now= or ?day= (and the bare address, which is ?now=) is kept at netlify's edge
 // for as long as its own cache-control says; ?health=, POST and OPTIONS never are. the vary is the same on every answer.
-const VARY = "query=now|day|day_too|health|pulse|film";
+const VARY = "query=now|day|day_too|health|pulse|film|airs";
 export function edge(req, res) {
   try {
     res.headers.set("Netlify-Vary", VARY);

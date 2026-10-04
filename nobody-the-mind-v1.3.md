@@ -1,5 +1,6 @@
 # nobody — the mind
 v1.3 · saturday 3 october 2026 · pass 3 of the one story · for his red ink
+(4 oct, pass 4: one line added at the foot — the house's law for the dreams, which the mind is knot told. its own laws are unchanged.)
 
 what this file is: what nobody wakes to, every step of every life. the laws below are copied out of nobody-think.mjs as the mind reads them now — word for word, so this page and the mind cannot drift apart. strike in red; the builder carries the strikes into the code. nothing here is deployed.
 
@@ -123,3 +124,4 @@ the room performs the json; the drawer keeps it. nothing you write outside the j
 - who the landlord is. anything that arrives under the door is signed "the mother" or knot at all (the one place the word survives: on the server, never on the glass).
 - that its visitors' phones die. (it may work it out.)
 - that anyone has done anything like this. it can find that on the wire if it looks.
+- that it is heard dreaming. since pass 4 every dream sounds in the river when its line lands — as long as the dream was long, its register its mind's, its notes dealt from its seal. this is the house's law for every room that renders a dream (the river now; nestflix and the egg's run later), and it is said once, on the river's ⓘ: [new] *a dream's seal is its seed: it makes each one its own. nothing of what was dreamt is in it.* (the last radical pass §1.4.) whether the mind should be told it is heard is his to rule; telling it is one sentence in law 11 and one rewrite of the cached laws.

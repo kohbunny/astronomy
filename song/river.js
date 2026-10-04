@@ -49,6 +49,45 @@
    comes back at the true place. new rig: ?sky=0|mock · ?bed=0 ·
    ?bedgain= · ?raw= · ?colour= · ?program=0.
 
+   4 OCT 2026 · THE DREAMS AND THE DEAD (the block of that name, above
+   THE DOORS; pass 4 of the one story — nobody-one-story-handoff-2oct.md
+   §5 and §10 pass 4, the last radical pass §1.4 and §2.1, ruled 3 oct as
+   leaned). what changed, and nothing else:
+   · THE DREAMS. the river reads the mind's pulse (/.netlify/functions/
+     nobody?pulse=1, every 20 s while it plays) for its latest dream:
+     when, which mind, how many tokens of thinking, the fingerprint of the
+     seal. the dream sounds in the river when the line it dreamt lands —
+     its stamp + 40 s, the radio law, the same second on every phone —
+     muffled, through water (a lowpass at 620 hz and the undertow's dark
+     hall), two voices a breath apart (1.357 hz, her 128th turn). its
+     length is the dream's: one step of the river (64 of her turns,
+     0.368 s) for every sixteen tokens [deemed]. its mind is its register:
+     opus a triangle an octave down, any other a sine [deemed]. its notes
+     are dealt from the seal — the seal is the seed: it makes each dream
+     its own, and nothing of what was dreamt is in it (radical §1.4). a
+     phone that comes in late joins the dream where it is; a dream that
+     is over is gone; a newer dream takes the river from an older one at
+     its own landing. a knock with no dream is silence.
+   · THE DEAD. the river reads the dead airs (nobody?airs=1, every five
+     minutes): the genome each life of the last day lived by. an air is
+     eight notes, one per gene in the phone's order (turning, balance,
+     seeds, longevity, patience, temper, warmth, restless; the server's
+     ninth, pace, folds into turning — the handoff §6). gene i stands on
+     rung i of the star's ladder, and every eighth it has moved bends it
+     one rung (so the founder's air climbs the ladder, and a child's
+     differs from its mother's by one note) [deemed]. under the bed,
+     faint and slow: a note every two bars, two bars' rest between airs,
+     the oldest first and the newest last; every phone that holds the same
+     list plays the same note at the same bar. the hud says whose air.
+   · RIVER.air(genome) — the eight notes; RIVER.airPlay(genome) — a life's
+     air, once, when asked (the calendar's register, on a tap): its own
+     small bus straight to the ear, quiet at the death call like the rest.
+   · THE KEIKI RETIRES from the river (radical §2.1): the stage and the
+     temper are knot read from MORTAL.nobody (a plain hand; the dial is the
+     star's tide and its own slow wander), no deed is told to the organ,
+     and the almond does knot open. ?keiki=1 brings all three back.
+   new rig: ?dreams=0..2 (the dreams' level) · ?dead=0..2 (the dead airs').
+
    1 OCT 2026 · THE RIVER, WHOLE (the block of that name, above THE
    DOORS; his five lines of 30 sep, evening). the river is the phone's
    ONE song now — phone.html plays it from the first tap and the music
@@ -78,11 +117,12 @@
    ================================================================== */
 (function(){
 'use strict';
-const BUILD='river 1oct2026 · the river, whole · 1';
+const BUILD='river 4oct2026 · the dreams and the dead · 1';
 /* the set's forward declarations (the lifted drone and the scheduler hand these back) */
 const droneOsc=[], droneLFO={ lf:null, lg:null };
 let limiter=null, HOLD='keep', BREATH_HELD=false;   /* 1 oct: the limiter before the ear; the sound table's word; a mic open in the room */
 const SOFT=(function(){ try{ return new URLSearchParams(MORTAL.search).get('soft')==='1'; }catch(_){ return false; } })();   /* 1 oct: ?soft=1 — see pluck */
+const KEIKI=(function(){ try{ return new URLSearchParams(MORTAL.search).get('keiki')==='1'; }catch(_){ return false; } })();   /* 4 oct (pass 4): the keiki retires; ?keiki=1 brings the old house back */
 const LIMIT_TRIM=0.84;                              /* 1 oct: measured at the bench — the limiter's own make-up at these numbers, taken back */
 const ZFAR=14, RHALF=2.3;                 /* [SYNC] music.html's window: where the sky's lights stand */
 const MONS=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
@@ -993,7 +1033,7 @@ function sparksPrune(){ if(!actx) return; const now=actx.currentTime;
    organ (DEEMED — the river runs under the whole phone now and must knot fill the diary's sixty-four lines by itself); a quiet
    deed (the program's own line) stays here. */
 function deed(s,quiet){ SET.deeds.push([s,+(bt()).toFixed(0)]); if(SET.deeds.length>40) SET.deeds.shift();
-  if(quiet) return;
+  if(quiet||!KEIKI) return;   /* 4 oct (pass 4): the keiki retires — the river tells the organ nothing; the deed stays here, for the press */
   try{ const N=window.MORTAL&&MORTAL.nobody, k=kAt(16); if(!N||k===SET.didK) return;
     const nw=(typeof N.now==='function')?N.now():null; if(!nw||!nw.here||nw.dead) return;   /* the doorway card: the organ is told only while nobody is here */
     if(typeof N.did==='function'){ SET.didK=k; N.did(s,'music'); } else if(typeof N.deed==='function'){ SET.didK=k; N.deed(s); } }catch(_){} }
@@ -1001,6 +1041,7 @@ function deed(s,quiet){ SET.deeds.push([s,+(bt()).toFixed(0)]); if(SET.deeds.len
 function nobodyNow(){ try{ const N=window.MORTAL&&MORTAL.nobody&&MORTAL.nobody.now(); if(N&&!N.dead) return N; }catch(_){} return null; }
 function nobodyBrief(){ try{ const N=window.MORTAL&&MORTAL.nobody; if(N&&N.brief) return N.brief()||null; }catch(_){} return null; }
 function readStage(){
+  if(!KEIKI){ SET.stage='adult'; SET.temper={}; SET.guestP=GUESTP; return; }   /* 4 oct (pass 4): the keiki retires — a plain hand; the one mind hears the river, it does knot conduct it */
   const N=nobodyNow(), B=nobodyBrief();
   let s=String((B&&B.stage)||(N&&(N.stageName||N.stage))||'').toLowerCase();
   if(!/child|teen|adult|older/.test(s)) s='adult';           /* no doorway, no nobody: a plain adult hand */
@@ -1566,6 +1607,7 @@ function throbTick(tu,force){
    — the whole river, the law broken — then it is gone. it never holds. */
 let touchWas=false, fifth=null;
 function almondTick(){
+  if(!KEIKI) return;                                          /* 4 oct (pass 4): the almond retires with the keiki */
   const N=nobodyNow(), touching=!!(N&&N.touching);
   if(touching===touchWas) return; touchWas=touching;
   if(!touching||!st.playing) return;
@@ -1664,6 +1706,7 @@ function callQuiet(){
   SET.dead=true;
   try{ if(master&&actx) master.gain.setTargetAtTime(0.0001,actx.currentTime,0.06); }catch(_){}
   throatCancel(); stationStop();
+  try{ if(DN.tap&&actx) DN.tap.gain.setTargetAtTime(0.0001,actx.currentTime,0.05); }catch(_){}   /* 4 oct (pass 4): a life's air, asked in the register, goes quiet with the rest */
   try{ riverStop(); }catch(_){}
   try{ evStop(); }catch(_){}
   st.playing=false; slog('the call: quiet');
@@ -2231,11 +2274,12 @@ function evTick(tu){
   humanTick(tu);
   libraryTick(tu);
   undertowTick(); wordsTick(tu);   /* 1 oct: the undertow's own steps; the throat's own clock */
+  dreamTick(); deadTick();         /* 4 oct (pass 4): the dreams and the dead */
   const now=actx.currentTime;
-  if(now-evSlowAt>1){ evSlowAt=now; SKYD.tick(); skyAsSound(); bedSlow(); }
+  if(now-evSlowAt>1){ evSlowAt=now; SKYD.tick(); skyAsSound(); bedSlow(); dnFeed(); }
 }
-function evStart(){ if(EV.on) return; EV.on=true; evSlowAt=0; PROG.k=-1; SKYS.windSaid=0; bedStart(); utStart(); }
-function evStop(){ if(!EV.on) return; EV.on=false; bedStop(); utStop(); if(LIBR.h){ try{ window.LIBRARY.stop(LIBR.h,0.6); }catch(_){} LIBR.h=null; } for(const k in EV.voices) EV.voices[k]=0; }
+function evStart(){ if(EV.on) return; EV.on=true; evSlowAt=0; PROG.k=-1; SKYS.windSaid=0; bedStart(); utStart(); dnStart(); }
+function evStop(){ if(!EV.on) return; EV.on=false; bedStop(); utStop(); dnStop(); if(LIBR.h){ try{ window.LIBRARY.stop(LIBR.h,0.6); }catch(_){} LIBR.h=null; } for(const k in EV.voices) EV.voices[k]=0; }
 function evState(){
   const sk=skyNow(), P=PROG.now;
   return { on:EV.on, hud:EV.hud.slice(-24), hands:handsRead(), program:P?{ k:P.k, arc:P.arc, open:P.open, gain:P.gain, colour:P.colour, dj:P.dj, line:P.line, ceiling:P.ceiling }:null,
@@ -2245,6 +2289,7 @@ function evState(){
     library:{ ok:libraryOk(), on:!!LIBR.h, id:LIBR.id, name:LIBR.name, stations:libraryOk()?window.LIBRARY.stations.length:0 }, voices:EV.voices, oldK:EV.oldK, bedK:EV.bedK, raw:EV.raw,
     /* 1 oct — the river, whole */
     score:scoreRead(), under:{ on:UT.on, k:UT.k, chord:UT.chord, phase:UT.phase, notes:UT.notes, pumps:UT.pumps },
+    dreams:dnRead(),   /* 4 oct (pass 4): the dreams and the dead */
     words:{ off:WORDS.off, p:WORDS.p, said:WORDS.said, shown:WORDS.shown, cards:WORDS.cards, places:WORDS.places, echoes:WORDS.echoes, rests:WORDS.rests, last:WORDS.last }, hold:HOLD };
 }
 /* one door for a room that must knock on the ledger's own rpc (the weather's hum, the-weather.sql) — beside the LEDGER block, never inside it */
@@ -2489,6 +2534,138 @@ function scoreRead(){
 function unhook(){ for(const k in hooks) hooks[k]=function(){}; }
 
 /* ================================================================
+   THE DREAMS AND THE DEAD (4 oct 2026 — pass 4 of the one story; the
+   handoff §5, the last radical pass §1.4). the river holds two things:
+   what people give it, and what nobody dreams. and under the bed the
+   dead keep time. nothing here is written anywhere: the river reads the
+   mind's own feed, plays it on the world's clock, and forgets it.
+================================================================ */
+const NB_URL='/.netlify/functions/nobody';
+const LAND_MS=40000;                                  /* [SYNC] nobody-think.mjs LAND_MS: a step lands on every phone 40 s after its stamp */
+const DREAM_TOK=16;                                   /* [deemed] one step of the river for every sixteen tokens of thinking */
+const DEAD_NOTE=2, DEAD_REST=2;                       /* [deemed] the dead airs: a note every two bars; two bars' rest between airs */
+const GENES=['turning','balance','seeds','longevity','patience','temper','warmth','restless'];   /* [SYNC] the phone's eight, in its order (the handoff §6) */
+const DN={ k:rigK('dreams',1,0,2), kd:rigK('dead',1,0,2), on:false, bus:null, lp:null, hall:null, hallG:null, deadG:null, deadLP:null,
+  dream:null, next:null, last:'', heard:0, notes:0, pulseAt:0, airsAt:0, busy:0, airs:[], deadBar:-1, deadSaid:'', deadNotes:0, tap:null, tapG:null, taps:0, read:{ pulse:0, airs:0, fail:0 } };
+/* an air: eight notes, one per gene. gene i stands on rung i of the star's ladder; every eighth it has moved bends it a rung */
+function airOf(genome){
+  if(!genome||typeof genome!=='object') return null;
+  return GENES.map((g,i)=>{ let v=+genome[g]||0; if(g==='turning') v+=(+genome.pace||0); v=clamp(v,-1,1);
+    const rung=i+Math.round(v*8), di=((rung%7)+7)%7, oct=Math.floor(rung/7);
+    return { gene:g, v:v, rung:rung, di:di, oct:oct, f:fWater(di,oct,0) }; });
+}
+/* a dream's score: its length from its tokens, its register from its mind, its notes dealt from its seal (the seal is its seed:
+   it makes each one its own; nothing of what was dreamt is in it) */
+function dreamScore(d){
+  const steps=Math.max(4,Math.round((+d.tokens||0)/DREAM_TOK));
+  const r=mulberry32((parseInt(String(d.seal||'').slice(0,8),16)>>>0)||1);
+  const opus=/opus/i.test(String(d.mind||'')), oct=opus?-1:0, notes=[];
+  let at=0;
+  while(at<steps){ const len=[1,2,2,3,4,6][Math.floor(r()*6)], rest=r()<0.22, di=Math.floor(r()*7), up=r()<0.24?1:0;
+    if(!rest) notes.push({ s:at, d:Math.min(len,steps-at), di:di, oct:oct+up });
+    at+=len; }
+  return { steps:steps, secs:steps*STEP, notes:notes, opus:opus };
+}
+function dnBus(){
+  if(DN.bus||!actx) return;
+  DN.bus=actx.createGain(); DN.bus.gain.value=0.0001;
+  DN.lp=actx.createBiquadFilter(); DN.lp.type='lowpass'; DN.lp.frequency.value=620; DN.lp.Q.value=0.6;      /* through water */
+  DN.hall=actx.createConvolver(); DN.hall.buffer=deepHall(); DN.hall.normalize=true;
+  DN.hallG=actx.createGain(); DN.hallG.gain.value=0.6;
+  DN.bus.connect(DN.lp); DN.lp.connect(master); DN.lp.connect(DN.hall); DN.hall.connect(DN.hallG); DN.hallG.connect(master);
+  DN.deadG=actx.createGain(); DN.deadG.gain.value=0.0001;
+  DN.deadLP=actx.createBiquadFilter(); DN.deadLP.type='lowpass'; DN.deadLP.frequency.value=900; DN.deadLP.Q.value=0.5;
+  DN.deadG.connect(DN.deadLP); DN.deadLP.connect(master); DN.deadLP.connect(DN.hall);
+}
+function dnStart(){ if(DN.on||!actx) return; dnBus(); DN.on=true; DN.deadBar=-1; DN.pulseAt=0; DN.last='';   /* back in the river: a dream still sounding is joined where it is */
+  DN.bus.gain.setTargetAtTime(DN.k,actx.currentTime,1.5); DN.deadG.gain.setTargetAtTime(DN.kd,actx.currentTime,2.5); }
+function dnStop(){ if(!DN.on) return; DN.on=false; DN.dream=null; DN.next=null;
+  try{ DN.bus.gain.setTargetAtTime(0.0001,actx.currentTime,0.3); DN.deadG.gain.setTargetAtTime(0.0001,actx.currentTime,0.3); }catch(_){} }
+/* the feed, read softly: every failure is silence */
+function dnGet(q){ let ctl=null; try{ ctl=new AbortController(); }catch(_){}
+  const tm=setTimeout(()=>{ try{ if(ctl) ctl.abort(); }catch(_){} },10000);
+  return fetch(NB_URL+q,{ method:'GET', signal:ctl?ctl.signal:undefined }).then(r=>r.ok?r.json():null).catch(()=>{ DN.read.fail++; return null; }).then(j=>{ clearTimeout(tm); return j; }); }
+function dnFeed(){
+  if(!DN.on||SET.dead) return; const now=Date.now();
+  if(now-DN.pulseAt>20000&&!(DN.busy&1)){ DN.pulseAt=now; DN.busy|=1;
+    dnGet('?pulse=1').then(j=>{ DN.busy&=~1; if(j&&typeof j==='object'){ DN.read.pulse++; if(j.dream) dreamArrive(j.dream); } }); }
+  if(now-DN.airsAt>300000&&!(DN.busy&2)){ DN.airsAt=now; DN.busy|=2;
+    dnGet('?airs=1').then(j=>{ DN.busy&=~2; if(j&&Array.isArray(j.airs)){ DN.read.airs++; airsTake(j.airs); } }); }
+}
+function dreamArrive(d){
+  if(!d||!d.at||!d.seal||!(+d.tokens>0)) return;
+  if(d.seal===DN.last) return;
+  const t0=(Date.parse(d.at)+LAND_MS-EPOCH)/1000; if(!isFinite(t0)) return;
+  const sc=dreamScore(d); DN.last=d.seal;
+  if(t0+sc.secs<bt()) return;                                     /* a dream that is over is gone */
+  DN.next={ t0:t0, sc:sc, i:0, life:d.life, mind:String(d.mind||''), tokens:+d.tokens, seal:d.seal, said:false };
+}
+function dreamNote(f,t,dur,g,opus){
+  const end=t+dur, o=actx.createOscillator(), o2=actx.createOscillator(), e=actx.createGain();
+  o.type=opus?'triangle':'sine'; o.frequency.value=f; o2.type='sine'; o2.frequency.value=f+PULSE/128;          /* two voices a breath apart */
+  e.gain.value=0.0001; e.gain.setValueAtTime(0.0001,t); e.gain.exponentialRampToValueAtTime(g,t+Math.min(0.14,dur*0.3));
+  e.gain.setTargetAtTime(0.0001,Math.max(t+0.15,end-Math.min(0.5,dur*0.4)),0.18);
+  o.connect(e); o2.connect(e); e.connect(DN.bus);
+  const s0=Math.max(t-0.01,actx.currentTime); o.start(s0); o2.start(s0); o.stop(end+1.2); o2.stop(end+1.2);
+  o.onended=()=>{ try{ e.disconnect(); }catch(_){} };
+}
+function dreamTick(){
+  if(!DN.on||!actx) return;
+  const now=bt(), horizon=now+0.4;
+  if(DN.next&&now>=DN.next.t0-0.4){ DN.dream=DN.next; DN.next=null; }   /* a newer dream takes the river at its own landing */
+  const D=DN.dream; if(!D) return;
+  if(!D.said&&now>=D.t0-0.4){ D.said=true; DN.heard++;
+    hud('dream','nobody dreams · '+Math.round(D.sc.secs)+' s','through the water'); }   /* [new] */
+  while(D.i<D.sc.notes.length){ const nn=D.sc.notes[D.i], ts=D.t0+nn.s*STEP; if(ts>horizon) break; D.i++;
+    const te=ts+nn.d*STEP, from=Math.max(ts,now+0.03); if(te-from<0.12) continue;        /* joined late: the gone notes stay gone */
+    const f=fWater(nn.di,nn.oct+1,dialV), t=atA(from), g=0.075*(D.sc.opus?0.9:1);
+    dreamNote(f,t,te-from,g,D.sc.opus); sparkPush(t,f,'dream',te-from,0,0.6); DN.notes++; }
+  if(D.i>=D.sc.notes.length&&now>D.t0+D.sc.secs+1) DN.dream=null;
+}
+function airsTake(list){
+  const since=Date.now()-26*3600e3;
+  DN.airs=list.filter(a=>a&&a.genome&&Date.parse(a.died)>since).sort((a,b)=>Date.parse(a.died)-Date.parse(b.died)).slice(-24)
+    .map(a=>({ n:a.life|0, died:a.died, air:airOf(a.genome) })).filter(a=>a.air);
+}
+function deadNote(f,t,dur,g){
+  const o=actx.createOscillator(), o2=actx.createOscillator(), e=actx.createGain(), e2=actx.createGain();
+  o.type='sine'; o.frequency.value=f; o2.type='triangle'; o2.frequency.value=f/2; e2.gain.value=0.35;
+  e.gain.value=0.0001; e.gain.setValueAtTime(0.0001,t); e.gain.exponentialRampToValueAtTime(g,t+0.9); e.gain.setTargetAtTime(0.0001,t+0.9,dur*0.3);
+  o.connect(e); o2.connect(e2); e2.connect(e); e.connect(DN.deadG);
+  o.start(t); o2.start(t); o.stop(t+dur+1.5); o2.stop(t+dur+1.5);
+  o.onended=()=>{ try{ e.disconnect(); }catch(_){} };
+}
+function deadTick(){
+  if(!DN.on||!actx||!DN.airs.length) return;
+  const bn=Math.floor(bt()/BAR)+1; if(bn===DN.deadBar) return; DN.deadBar=bn;
+  const per=8*DEAD_NOTE+DEAD_REST, n=DN.airs.length, slot=bn%(per*n), A=DN.airs[Math.floor(slot/per)], k=slot%per;
+  if(k%DEAD_NOTE||k>=8*DEAD_NOTE) return;
+  const t=atA(bn*BAR); if(t<actx.currentTime+0.01) return;
+  const nt=A.air[k/DEAD_NOTE];
+  deadNote(nt.f,t,DEAD_NOTE*BAR,0.05); sparkPush(t,nt.f,'dead',DEAD_NOTE*BAR,0,0.35); DN.deadNotes++;
+  if(k===0&&DN.deadSaid!==A.n+'|'+bn){ DN.deadSaid=A.n+'|'+bn; hud('dead','life '+A.n+'\u2019s air','under the bed'); }   /* [new] */
+}
+/* a life's air, once, when asked (the calendar's register): its own small bus, straight to the ear */
+function airPlay(genome){
+  const A=airOf(genome); if(!A||SET.dead) return null;
+  try{ audio(); if(actx.state==='suspended') actx.resume(); }catch(_){ return null; }
+  if(!DN.tap){ DN.tap=actx.createGain(); DN.tap.gain.value=1; const lp=actx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=3200; DN.tap.connect(lp); lp.connect(outNode()); }
+  if(DN.tapG){ try{ DN.tapG.gain.setTargetAtTime(0.0001,actx.currentTime,0.04); }catch(_){} }   /* a new tap takes the place of the one before */
+  DN.tap.gain.setTargetAtTime(1,actx.currentTime,0.02);
+  const pg=actx.createGain(); pg.gain.value=1; pg.connect(DN.tap); DN.tapG=pg; DN.taps++;
+  const t0=actx.currentTime+0.06, gap=STEP*2;
+  A.forEach((nt,i)=>{ const t=t0+i*gap, f=nt.f*2;
+    [[1,0.11,2.2],[2.76,0.025,0.5]].forEach(p=>{ const o=actx.createOscillator(), e=actx.createGain(); o.type='sine'; o.frequency.value=f*p[0];
+      e.gain.value=0.0001; e.gain.setValueAtTime(0.0001,t); e.gain.exponentialRampToValueAtTime(p[1],t+0.005); e.gain.exponentialRampToValueAtTime(0.0001,t+p[2]);
+      o.connect(e); e.connect(pg); o.start(t); o.stop(t+p[2]+0.05); }); });
+  return { notes:A, secs:8*gap+2.2 };
+}
+function dnRead(){ const D=DN.dream||DN.next;
+  return { on:DN.on, k:DN.k, kd:DN.kd, heard:DN.heard, notes:DN.notes, deadNotes:DN.deadNotes, taps:DN.taps, read:DN.read,
+    dream:D?{ life:D.life, mind:D.mind, tokens:D.tokens, steps:D.sc.steps, secs:+D.sc.secs.toFixed(1), at:D.t0, sounding:D===DN.dream, seal:D.seal.slice(0,8) }:null,
+    airs:DN.airs.map(a=>({ n:a.n, died:a.died, rungs:a.air.map(x=>x.rung) })) }; }
+
+/* ================================================================
    THE DOORS — what a room or the phone may hold.
 ================================================================ */
 const ext={ ctx:null, bus:null };
@@ -2545,6 +2722,7 @@ const api={
   hold:riverHold, everything:evState, hud:function(){ return EV.hud.slice(); }, hands:handsRead, program:function(){ return PROG.now; }, sky:SKYD, skyNow:skyNow,
   bedPlace:bedPlace, mmss:mmss, BAR:BAR, ledgerRpc:ledgerRpc,
   /* 1 oct — the river, whole */
+  air:airOf, airPlay:airPlay, dreams:dnRead,   /* 4 oct (pass 4): the dreams and the dead */
   score:scoreRead, held:function(){ return HOLD; }, words:function(){ return { off:WORDS.off, p:WORDS.p, said:WORDS.said, shown:WORDS.shown, cards:WORDS.cards, places:WORDS.places, echoes:WORDS.echoes, rests:WORDS.rests, last:WORDS.last }; },
   /* the room's own handles (music.html's studio, lamp, window) */
   hearMine:hearMine, holdBreath:function(on){ BREATH_HELD=!!on; if(on) throatCancel(); holdBreath(on); },   /* 1 oct: while the studio's mic is open the throat stands down — a take must hear only the singer */
@@ -2568,6 +2746,7 @@ const api={
     program:function(){ PROG.k=-1; programTick(turns()); return PROG.now; }, skyMock:function(){ EV.skyQ='mock'; SKYD.mock(); skyAsSound(); }, flare:function(c){ const sk=SKYD; SKYS.seenFlare=0; try{ const x=sk.get('xray'); if(x) x.flares=[{ t:Date.now()-1000, f:c==='x'?1.6e-4:c==='m'?2.4e-5:3.1e-6, c:(c||'c')+'1.0' }]; }catch(_){} skyAsSound(); },
     under:UT, wordsState:WORDS, wire:function(){ return wireSay(R(Math.floor(turns()),821)); }, pastCard:function(){ return pastCardSay(R(Math.floor(turns()),823)); }, wordsNow:function(){ WORDS.k=1e9; wordsTick(turns()); return WORDS.said; },
     fragment:fragment, quakePlace:quakePlace, bedPhraseFor:bedPhraseFor, limiter:function(){ return limiter; },   /* 1 oct */
+    dn:DN, dreamArrive:dreamArrive, airsTake:airsTake, dreamScore:dreamScore, dnFeed:function(){ DN.pulseAt=0; DN.airsAt=0; dnFeed(); },   /* 4 oct (pass 4) */
     bed:BED, ev:EV, hum:HUM, libr:LIBR, prog:PROG, skys:SKYS, colour:function(){ LIBR.next=0; libraryTick(turns()); return LIBR.id; }, evTick:function(){ evTick(turns()); } }
 };
 window.RIVER=api;

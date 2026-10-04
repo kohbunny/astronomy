@@ -134,7 +134,7 @@ console.log("6 · the feed: ?pulse, ?film, the veiled dreams, the star's breath"
   const ask = async (q, e = env) => { const r = await handle(new Request("https://song.example/.netlify/functions/nobody" + q), e, fetchFn); return { r, j: await r.json() }; };
   let { r, j } = await ask("?pulse=1");
   ok(j.life && j.life.n === 9 && j.line && j.line.text === "a line" && j.death.last === "cut it fr" && j.dream.tokens === 1800 && !("summary" in j.dream), "?pulse: the life, the line, the last words, the dream's length (no summary)");
-  ok(r.headers.get("netlify-cdn-cache-control") === "public, s-maxage=15, durable" && r.headers.get("netlify-vary") === "query=now|day|day_too|health|pulse|film", "?pulse kept at the edge fifteen seconds; vary lists pulse and film");
+  ok(r.headers.get("netlify-cdn-cache-control") === "public, s-maxage=15, durable" && r.headers.get("netlify-vary") === "query=now|day|day_too|health|pulse|film|airs", "?pulse kept at the edge fifteen seconds; vary lists pulse and film");
   ({ r, j } = await ask("?film=2026-10-02")); ok(j.frames && j.frames.length === 1 && /s-maxage=3600/.test(r.headers.get("netlify-cdn-cache-control") || ""), "?film: a past day's frames, kept an hour");
   ({ r, j } = await ask("?now=1"));
   ok(j.genome && j.genome.turning === 0.25 && j.done, "?now carries genome and done");

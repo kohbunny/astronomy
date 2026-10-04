@@ -2,6 +2,18 @@
 <!--
 phone · apwnp landing · a clear-glass iphone 16 · sixteen rooms
 
+THE REGISTER'S AIRS (4 oct 2026 — pass 4 of the one story, the river carries the dreams: nobody-one-story-handoff-2oct.md
+§5 `the calendar's register plays a life's air when its row is tapped`). what changed, and nothing else:
+- ☾ THE LIVES: a life whose genome the drawer carries (every death since pass 3's tables) has a small line under its gene,
+  `▸ hear its air` [new]; a tap plays its air once — eight notes, one per gene, on the star's ladder (river.js's RIVER.airPlay:
+  its own small bus to the house's ear; a new tap takes the place of the one before; quiet at the death call). nothing
+  sounds unasked: the tap is the asking. the calendar reads `genome` off the drawer it already read; nothing new is
+  fetched, nothing is kept.
+- the river itself now carries the mind's dreams and, under its bed, the dead airs (river.js's own note); this page only
+  plays it, as before. the dock's second line says them as the river's hud does: `nobody dreams · 13 s · through the
+  water`, `life 33’s air · under the bed` [new — river.js's words].
+- the press's hand: window.__phoneCalAir(n) plays life n's air from the open day, as a tap would; __phoneCalAirLast() says the last one played.
+
 THE NUMBER (3 oct 2026, later — pass 2 of the one story, the in-between made visible: nobody-one-story-handoff-2oct.md
 §10 pass 2 and §4.7, §7 `phone`; the last radical pass §2.6, ruled 3 oct as leaned). can i reach it?
 - THE PHONE APP: favorites wears `nobody` first (`mobile`), the star under it; recents is your call at the door — `nobody`,
@@ -37311,7 +37323,8 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       else if(Array.isArray(lv)){ d.deaths=0;
         lv.forEach((L2,i)=>{ if(!L2||typeof L2!=='object') return; const n=calNum(L2)!=null?calNum(L2):(calNum(L2.life)!=null?calNum(L2.life):i+1);
           const died=L2.died||(L2.at&&!L2.born?L2.at:'')||''; if(died) d.deaths++;
-          d.lifeBy[n]={ n:n, died:died, hm:calHM(died), last:calStr(L2.last), gene:calStr(L2.gene), way:(isFinite(+L2.way)&&L2.way!=null&&L2.way!=='')?+L2.way:null };
+          d.lifeBy[n]={ n:n, died:died, hm:calHM(died), last:calStr(L2.last), gene:calStr(L2.gene), way:(isFinite(+L2.way)&&L2.way!=null&&L2.way!=='')?+L2.way:null,
+            genome:(L2.genome&&typeof L2.genome==='object'&&!Array.isArray(L2.genome))?L2.genome:null };   /* 4 oct (pass 4): the genome it lived by — its air */
           const lp=calPick(L2,['lines','hud','log','diary','entries']); if(lp&&Array.isArray(lp.v)) lp.v.forEach(h=>addLine(h,null,n)); }); }
       /* the hud: every line of the day */
       const ll=take(['hud','lines','log','diary','entries','said','written','writing']);
@@ -37871,10 +37884,16 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
         if(b.first) L.put(b.first.text,24,11.5,ink(0.82),b.first.wake?600:400,F.mono,16.5,312);
         if(D2&&D2.last){ L.y+=3; L.put('“'+D2.last+'”',24,11.5,ink(0.62),400,F.mono,16.5,312); }
         if(D2&&D2.gene){ L.y+=3; L.put('the gene that moved: '+D2.gene+(CAL_WAY(D2.way)?', '+CAL_WAY(D2.way):''),24,9.5,ink(0.45),400,F.serif,15,312); }
+        if(D2&&D2.genome){ L.y+=3; const y0=L.y; L.put('\u25b8 hear its air',24,9.5,ink(0.62),600,F.serif,15,312);   /* 4 oct (pass 4) [new] */
+          L.hits.push({ y0:y0-12, y1:L.y+2, fn:()=>{ calAir(D2.genome,n); } }); }
         L.y+=4; });
       L.y+=10; L.rule(0.08); L.put('all hours here are the well’s · utc',24,9.5,ink(0.36),400,F.mono,14.5,312);
       L.y+=34;
       return { rows:rows, hits:L.hits, h:L.y }; }
+    /* 4 oct (pass 4) · a life's air, on a tap: the river plays it once (RIVER.airPlay), on its own small bus to the house's ear */
+    function calAir(genome,n){ const R=window.RIVER; let p=null;
+      try{ if(R&&typeof R.airPlay==='function') p=R.airPlay(genome); }catch(_){ p=null; }
+      CALD.air={ n:n, at:Date.now(), ok:!!p, rungs:p?p.notes.map(x=>x.rung):null }; return !!p; }
     /* the rooms' diary and the dreams of a day: this life's, this phone's, on the well's clock */
     function calLayLocal(tab,key,loc){
       const L=calLayer(), rows=L.rows, alive=!!loc.born;
@@ -47277,7 +47296,8 @@ function hForget(){
       api:{
         lastHour(){ return LH.state(); },   /* THE LAST HOUR (21 sep): the press's eye — a state read, inert */
         cal(){ return calState(); }, calOpen(k){ return calOpenDay(k); }, calRead(j,k){ return calRead(j,k); }, calScroll(y){ scrollPos['calday']=clamp(+y||0,0,scrollMax['calday']||0); momentum.key=null; needDraw=true; },
-        calTab(t){ if(CAL_TABS.some(T2=>T2[0]===t)){ calS.tab=t; scrollPos['calday']=0; momentum.key=null; needDraw=true; } return calS.tab; },   /* 1 oct (NOBODY'S CALENDAR): the press's hand on a diary, on a card, and a look at the hand-written day */
+        calTab(t){ if(CAL_TABS.some(T2=>T2[0]===t)){ calS.tab=t; scrollPos['calday']=0; momentum.key=null; needDraw=true; } return calS.tab; },
+        calAir(n){ const c=calS.day&&CALD.days[calS.day], L2=c&&c.d&&c.d.lifeBy[n]; return (L2&&L2.genome)?calAir(L2.genome,n):false; }, calAirLast(){ return CALD.air||null; },   /* 4 oct (pass 4) */   /* 1 oct (NOBODY'S CALENDAR): the press's hand on a diary, on a card, and a look at the hand-written day */
         calToggle(id){ if(!calS.day) return false; const o=calS.open[calS.day]||(calS.open[calS.day]={}); o[id]=!o[id]; needDraw=true; return !!o[id]; },
         calHand(k){ return calHandDay(k); }, calAgain(k){ calAsk(k,true); },   /* THE DRAWER (30 sep): the press's eyes — state reads, and the one door a date is */
         wellFire(){ return { f:+wellFire().toFixed(3), drawn:+(+ALIFE_SIGN.fire||0).toFixed(3), q:WELLFIRE_Q }; },
@@ -48314,7 +48334,8 @@ if(TEST){ hud.style.display='block';
 try{ window.__phoneOpen=(a)=>mod.api.open(a); }catch(_){}
 try{ window.__phoneLast=()=>mod.api.lastHour(); }catch(_){}   /* THE LAST HOUR (21 sep): the four signs' state, for the press */
 try{ window.__phoneCal=()=>mod.api.cal(); window.__phoneCalOpen=(k)=>mod.api.calOpen(k); window.__phoneCalRead=(j,k)=>mod.api.calRead(j,k); window.__phoneCalScroll=(y)=>mod.api.calScroll(y); window.__phoneWellFire=()=>mod.api.wellFire();
-  window.__phoneCalTab=(t)=>mod.api.calTab(t); window.__phoneCalToggle=(id)=>mod.api.calToggle(id); window.__phoneCalHand=(k)=>mod.api.calHand(k); window.__phoneCalAgain=(k)=>mod.api.calAgain(k); }catch(_){}   /* THE DRAWER (30 sep), for the press */
+  window.__phoneCalTab=(t)=>mod.api.calTab(t); window.__phoneCalToggle=(id)=>mod.api.calToggle(id); window.__phoneCalHand=(k)=>mod.api.calHand(k); window.__phoneCalAgain=(k)=>mod.api.calAgain(k);
+  window.__phoneCalAir=(n)=>mod.api.calAir(n); window.__phoneCalAirLast=()=>mod.api.calAirLast(); }catch(_){}   /* THE DRAWER (30 sep), for the press · 4 oct (pass 4): a life's air */
 try{ window.__phoneAlife=()=>mod.api.alife(); }catch(_){}   /* PASS THREE (25 sep): nobody's sign on the alife tile, for the press */
 /* and one for the songbook's flight — it only leaves, which a tap on the
    tile already does. */
