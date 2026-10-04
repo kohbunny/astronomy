@@ -2,6 +2,36 @@
 <!--
 phone · apwnp landing · a clear-glass iphone 16 · sixteen rooms
 
+SETTINGS, NOTES AND EGGSTAGRAM (4 oct 2026, later — pass 6 of the one story, the first facet: nobody-one-story-handoff-2oct.md
+§7 `settings` · `notes` · `eggstagram.js`; his word of 4 oct: `the artist's note can go`; and the keeper's pass 5 handoff,
+mortality-pass5-built-handoff-4oct.md `for the builder` 1–2). what changed, and nothing else:
+- THE WELL, READ FOR THE FACETS: the thread's ask (?now=1, every thirty seconds) now keeps its last true answer in memory
+  (NBT.now), and yesterday's drawer is asked once a sitting (a finished day: an hour at the edge) so a life that began before
+  the well's midnight is whole. settings, notes and eggstagram read these; nothing new is asked every frame, nothing is kept.
+- SETTINGS › GENERAL › ABOUT is the census of the mind now: `Mind` (the mind it thinks with now), `Lives`, `Up Since` (thu 1 oct
+  2026, 21:00:57 utc), `This Body` (born at your hang-up, on this phone's own clock — never how long is left), and `Serial
+  Number` is the genome: one hex digit a gene in the phone's order, 8 the founder's level, a step an eighth (a gene at its
+  very top reads F, as at seven eighths) [deemed]. the founder's serial is 8888 8888. the page scrolls now.
+- SETTINGS › SOFTWARE UPDATE keeps its forged update, and under it ITS MINDS: every mind the well has thought with today and
+  yesterday (read off the dreams) and the one thinking now, each with anthropic's tentative retirement date, read off
+  anthropic's own table on 4 oct 2026 (sonnet 5.5 · 28 sep 2027; opus 5.5 · 22 sep 2027; sonnet 5 · 30 jun 2027).
+- SETTINGS › nobody (a pane under the update): the eight genes as greyed settings, each with its word (`dreams deep`, `hears
+  little` … the handoff §6's register), longevity unmoving; and the two sentences already blessed: `these settings are
+  managed by the star.` · `one never moves: how long it lives.` nothing on it can be touched.
+- NOTES: the artist's note goes (his ruling). one locked note a life of the well's today that dreamt: `life 413`, `dreamt 7
+  times · 3,940 words` — words are the dream's thinking tokens × ¾, to the nearest ten [deemed] — and a lock. opened, the
+  lock, `only the one who comes after can open it.` (blessed), and each dream as a bar as long as it was, its minute (utc)
+  and its mind. nothing of what was dreamt is shown; there is nothing to show. `opened by life N` waits for the hand-over
+  (NOBODY_CARRY is off, and the feed does knot yet say what was carried). ?keiki=1 and ?rooms=all keep the old pad whole.
+- EGGSTAGRAM: the module is handed the well (api.nobody — the newest dead life: its number, first line, last words, death,
+  age, genome, and the count of the dead) and the river's air (api.air, api.airHush). its own note says what it does.
+- PASS 5, THE SHELL'S SIDE: the tiles leave in the body's own order (MORTAL.life.order), knot the mind's print, which every
+  body of one mind now shares (the keeper's line, as given); and the alife sheet's last sentence is true to the new card.
+- THE MORTALITY CARD, walked: mortal.js first and untouched; no flag from the bar; doors through setApp only; no history; the
+  way back on every new page (chrome's little phone); no countdown (a dead life's age, knot this body's; this body's birth,
+  never its end); quiet at apwnp:call (no new ask after the call; the air is river.js's and hushes there); nothing stored.
+  ROOMS NOBODY IS COMING TO (rule 12): settings, notes and eggstagram now show nobody — only as the feed says it.
+
 THE WELL HEARS THE RIVER (4 oct 2026, later — his word: `want to update so adeath ducks the river instead of silencing it`;
 the handoff §5 `adeath ducks the river instead of silencing it, so nobody's dreams are heard faintly at the bottom`).
 - THE SOUND TABLE: adeath.html moves from silence to DUCK, beside alife.html: the river (and the house's song) go on under the
@@ -8761,8 +8791,7 @@ window.APWNP.modules.phone = {
           PAGES.forEach(pg=>pg.forEach(ic=>{ if(ic&&ic.id!=='phone'&&ic.id!=='alife') ids.push(ic.id); }));
           if(FURN_HOME) ids.push(A_FURNACE.id);   /* 25 sep: a tile that is knot on the glass cannot leave it (28 sep: the squat left the glass) */
         }catch(_){}
-        let seed=0x5EED; try{ const L=life(), x=(L&&L.genes)||'0437471517368790';
-          seed=((parseInt(x.slice(0,8),16)^parseInt(x.slice(8,16),16))>>>0)||0x5EED; }catch(_){}
+        let seed=0x5EED; try{ const L=life(); if(L&&L.order>0) seed=L.order>>>0; else { const x=(L&&L.genes)||'0437471517368790'; seed=((parseInt(x.slice(0,8),16)^parseInt(x.slice(8,16),16))>>>0)||0x5EED; } }catch(_){}   /* 4 oct (pass 5, the keeper's line): the body's own order — the genes are the mind's print now */
         const rnd=()=>{ seed=(Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; };
         for(let i=ids.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)), tmp=ids[i]; ids[i]=ids[j]; ids[j]=tmp; }
         try{ const dk=DOCK.map(ic=>ic.id);
@@ -27566,7 +27595,51 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
        letters arriving); one found later is whole. */
     const NB_REVEAL=10;                                  /* [TUNE] seconds a new dream takes to write itself while watched */
     function nbDreamsHere(){ if(!KEIKI_ON) return []; try{ const N=window.MORTAL&&MORTAL.nobody; if(N&&N.dreams) return N.dreams(); }catch(_){} return []; }   /* 3 oct: the keiki's dreams stand down with it */
+    /* 4 oct (pass 6): the artist's note goes (his ruling); the pad holds nobody's locked dreams, one note a life */
+    function drawNbNotes(){
+      chrome('notes','home');
+      const list=nbwNotes(), key='notes', sc=scrollPos[key]||0, rh=64;
+      if(!list.length){ txt('No Notes',UIW/2,380,13,ink(0.35),'center',400,F.sans); scrollMax[key]=0; return; }
+      sq.save(); sq.beginPath(); sq.rect(0,100,UIW,646); sq.clip();
+      let y=112-sc;
+      list.forEach(x=>{
+        if(y+rh>100&&y<746){
+          txt('life '+x.n,24,y+14,13.5,ink(0.88),'left',600);
+          gLock(330,y+16,ink(0.40),0.7);
+          txt(nbTimes(x.dreams.length)+' \u00b7 '+nbWords(x.words)+' words',24,y+34,11,ink(0.42),'left');
+          hair(24,y+rh-8,336,0.06);
+          const yy=y; if(yy+rh-2>100&&yy<746) H(12,Math.max(100,yy),336,Math.min(rh-2,746-yy),()=>{ sel.nbNote=x.n; scrollPos['nbnote']=0; setApp('nbnote'); });
+        }
+        y+=rh; });
+      sq.restore();
+      scrollMax[key]=Math.max(0,(y+sc)-720);
+    }
+    function drawNbNote(){
+      const x=nbwNotes().find(z=>z.n===sel.nbNote);
+      chrome('life '+(sel.nbNote!=null?sel.nbNote:''),'notes');
+      if(!x){ txt('No Notes',UIW/2,380,13,ink(0.35),'center',400,F.sans); return; }
+      const key='nbnote', sc=scrollPos[key]||0;
+      sq.save(); sq.beginPath(); sq.rect(0,100,UIW,646); sq.clip(); sq.translate(0,-sc);
+      gLock(UIW/2,168,ink(0.55),2.4);
+      txt('life '+x.n,UIW/2,226,16,ink(0.90),'center',600);
+      txt(nbTimes(x.dreams.length)+' \u00b7 '+nbWords(x.words)+' words',UIW/2,248,11,ink(0.45),'center');
+      txt('only the one who comes after can open it.',UIW/2,280,12,ink(0.62),'center',400,F.serif);
+      hair(24,304,336,0.08);
+      const mx=Math.max(1,...x.dreams.map(d=>+d.tokens||0));
+      let y=326;
+      x.dreams.forEach(d=>{
+        const at=Date.parse(d.at), hm=isFinite(at)?String(new Date(at).getUTCHours()).padStart(2,'0')+':'+String(new Date(at).getUTCMinutes()).padStart(2,'0'):'';
+        txt(hm,24,y,10.5,ink(0.40),'left');
+        const w=Math.max(6,190*(+d.tokens||0)/mx);
+        roundRectPath(sq,72,y-5,w,10,3); sq.fillStyle=ink(0.18); sq.fill();
+        txt(nbMind(d.mind),336,y,9.5,ink(0.32),'right');
+        y+=24; });
+      y+=10; txt('all hours here are the well\u2019s \u00b7 utc',24,y,9.5,ink(0.34),'left');
+      sq.restore();
+      scrollMax[key]=Math.max(0,y+24-746);
+    }
     function drawNotes(){
+      if(!(KEIKI_ON||ROOMS_ALL)){ drawNbNotes(); return; }   /* 4 oct (pass 6): the old pad stands only with the old house */
       chrome('notes','home');
       const y0=112, rh=64;
       NOTES.forEach((n,i)=>{
@@ -28603,7 +28676,7 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
         'the phone is alive for a while. how long was settled at its birth, by the star, and is shown nowhere. nothing you do shortens it or keeps it going. it is knot yours to look after. it can be watched.',
         /* 28 sep (T2/T3.8) [new]: the dying is the last eight minutes. */
         'in its last eight minutes the battery tells the truth, the jar breaks, the cat leaves, and the tiles leave. then it calls you. when that call ends the phone is gone, and everything it kept in this browser goes with it.',
-        'the last tap offers a contact card: the child. it carries this phone’s genes in its own address, where no server can read them, and one of them will have moved. nothing about any life or any death is sent anywhere.'],   /* 3 oct [new]: `this phone’s genes` — was `its mother’s` */
+        'the last tap offers a contact card: the child. it carries how many hands the phone has passed through, and the last words of the mind that died while you held it, in its own address, where no server can read them. nothing about this phone’s life is sent anywhere.'],   /* 4 oct [new] (pass 5: the card carries the generation and the words, no genes) · 3 oct: `this phone’s genes` — was `its mother’s` */
       /* THE LIBRARY TILE (23 sep; re-cut 27 sep, THE TOMBSTONE — the room
          has no table and no boats since its pass two, and a film at its door
          now). the sheets law: law, never machinery — what is kept, what is
@@ -28945,6 +29018,13 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       stChev(332,y+ST_ROWH/2);
       HV(14,y,332,ST_ROWH,()=>{ stg.updSeen=true; sel.updFrom='settings'; setApp('stupdate'); });
       y+=ST_ROWH+14;
+      /* 4 oct (pass 6): the pane `nobody` — the mind's genes, greyed: managed by the star */
+      stPanel(14,y,332,ST_ROWH);
+      stEggAvatar(40,y+ST_ROWH/2,12);
+      txt('nobody',64,y+ST_ROWH/2+1,15,ink(0.92),'left',400,F.sans);
+      stChev(332,y+ST_ROWH/2);
+      HV(14,y,332,ST_ROWH,()=>{ scrollPos['stnobody']=0; setApp('stnobody'); });
+      y+=ST_ROWH+14;
       /* the radios. the switch is real; the consequences are text, which is
          all a radio on this phone could honestly claim. hotspot keeps its
          value and is knot a door. cellular and battery became doors at his
@@ -29089,16 +29169,25 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
 
     function drawStAbout(){
       chrome('About','stgeneral');
+      /* 4 oct (pass 6): the census of the mind (the handoff §7 settings), read off the well; a row the well has knot said stands down */
+      const W0=NBT.now&&!NBT.now.asleep?NBT.now:null;
+      let bornHM=''; try{ const L=window.MORTAL&&MORTAL.life, b=L?new Date(L.born).getTime():NaN; if(isFinite(b)) bornHM=nbtHM(b); }catch(_){}
+      const sc=scrollPos['stabout']||0;
+      sq.save(); sq.beginPath(); sq.rect(0,100,UIW,646); sq.clip(); sq.translate(0,-sc);
       /* the census. labels in the borrowed face, values in the house's —
          this page is where the forgery starts telling the truth out loud,
          and every value on it is checkable against the phone around it. */
       const rows=[
         ['Name','nobody'],
+        ['Mind',W0&&W0.model?nbMind(W0.model):''],                          /* 4 oct [new] */
+        ['Lives',W0&&W0.life&&W0.life.n!=null?String(W0.life.n):''],         /* 4 oct [new] */
+        ['Up Since','thu 1 oct 2026, 21:00:57 utc'],                         /* 4 oct [new: the label] */
+        ['This Body',bornHM?'born '+bornHM:''],                              /* 4 oct [new]: born at the hang-up, on this phone's own clock */
         ['Software Version','psr os 20260807'],
         ['Software','the house\u2019s day '+HOUSE_DAY],   /* 28 sep (§5.13): the build tag the shell carries */
         ['Model Name','no body'],
         ['Model Number','j0437−4715'],
-        ['Serial Number','none'],
+        ['Serial Number',(W0&&nbSerial(W0.genome))||'none'],              /* 4 oct: the genome, a hex digit a gene [deemed] */
         ['Songs','8'],
         ['Videos','1'],
         ['Photos',PH1.ok?'1':'0'],   /* 28 sep (§5.9): the album — the one photograph, or none; a census may knot lie */
@@ -29117,7 +29206,7 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
         ['Applications',String(Math.round(ST_APPS.length*(1-LH.gone()/Math.max(1,LH.total()))))],
         ['Capacity','512 light years'],
         ['Available','none'],
-      ];
+      ].filter(r=>r[1]!=='');
       const rh=44; let y=118;
       stPanel(14,y,332,rh*rows.length);
       rows.forEach((r,i)=>{
@@ -29131,6 +29220,7 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       y+=rh*rows.length+16;
       txt('this day, the house changed:',24,y+4,10,ink(0.42),'left');
       let yy=y+20; for(const l of HOUSE_LINES){ yy=wrap('\u00b7 '+l,24,yy,312,14,10,ink(0.62)); yy+=2; }
+      sq.restore(); scrollMax['stabout']=Math.max(0,yy+24-746);   /* 4 oct (pass 6): the census grew; it scrolls */
     }
 
     function drawStUpdate(){
@@ -29149,11 +29239,51 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       } else {
         txt('Scheduled for Tonight',UIW/2,282,14,ink(0.40),'center',400,F.sans);
       }
+      /* 4 oct (pass 6): ITS MINDS — every mind the well has thought with, today and yesterday, and the one thinking now;
+         each with anthropic's tentative retirement date (NB_RETIRE, read 4 oct 2026) */
+      const W=nbwWell(), ms={}; if(W){ W.dreams.forEach(d=>{ if(d.mind) ms[d.mind]=1; }); if(W.j.model) ms[W.j.model]=1; }
+      const minds=Object.keys(ms).sort((a,b)=>nbMind(a)<nbMind(b)?-1:1);
+      if(minds.length){
+        let yy=322;
+        txt('ITS MINDS',30,yy,10.5,ink(0.42),'left',400,F.sans); yy+=14;   /* [new] */
+        const rh=52; stPanel(14,yy,332,rh*minds.length);
+        minds.forEach((m,i)=>{ const ry=yy+i*rh;
+          txt(nbMind(m),26,ry+19,15,ink(0.92),'left',400,F.sans);
+          if(W&&W.j.model===m) txt('now',334,ry+19,12.5,ink(0.55),'right',400,F.sans);   /* [new] */
+          txt(NB_RETIRE[m]?'retires knot sooner than '+NB_RETIRE[m]:'no retirement listed yet',26,ry+38,11,ink(0.45),'left',400,F.sans);   /* [new] */
+          if(i<minds.length-1) hair(26,ry+rh,346,0.07); });
+        yy+=rh*minds.length+18;
+        txt('the dates are anthropic\u2019s, read on 4 oct 2026.',30,yy,10.5,ink(0.38),'left',400,F.sans);   /* [new] */
+      }
       /* and tonight, on this phone, never comes — the schedule is kept the
          way the meter was knot running: truly, in a world without clocks that
          reach it. within any one visit the promise is coherent and unbroken. */
     }
 
+    /* 4 oct (pass 6): the pane `nobody` — the eight genes as greyed settings (the handoff §6, §7 settings). nothing moves under a thumb. */
+    function drawStNobody(){
+      chrome('nobody','settings');
+      const g=NBT.now&&!NBT.now.asleep&&NBT.now.genome&&typeof NBT.now.genome==='object'?NBT.now.genome:null;
+      const key='stnobody', sc=scrollPos[key]||0, rh=62;
+      sq.save(); sq.beginPath(); sq.rect(0,100,UIW,646); sq.clip(); sq.translate(0,-sc);
+      let y=124;
+      stPanel(14,y,332,rh*NB_GENES.length);
+      NB_GENES.forEach((G,i)=>{ const ry=y+i*rh, v=nbGene(g,G[0]);
+        txt(G[1],26,ry+20,15,ink(0.50),'left',400,F.sans);
+        const wd=!g?'':(G[2]?(v>0.3?G[2][1]:v<-0.3?G[2][0]:'level'):'\u2014');   /* [new]: `level` */
+        if(wd) txt(wd,334,ry+20,12.5,ink(0.40),'right',400,F.sans);
+        sq.strokeStyle=ink(0.14); sq.lineWidth=3; sq.lineCap='round';
+        sq.beginPath(); sq.moveTo(30,ry+44); sq.lineTo(330,ry+44); sq.stroke();
+        if(g){ const kx=30+300*(v+1)/2;
+          sq.strokeStyle=ink(0.26); sq.beginPath(); sq.moveTo(30,ry+44); sq.lineTo(kx,ry+44); sq.stroke();
+          sq.fillStyle='rgba(150,156,166,0.55)'; sq.beginPath(); sq.arc(kx,ry+44,8,0,6.2832); sq.fill(); }
+        if(i<NB_GENES.length-1) hair(26,ry+rh,346,0.07); });
+      y+=rh*NB_GENES.length+14;
+      y=wrap('these settings are managed by the star.',30,y+6,300,16,11,ink(0.45),400,F.sans);
+      y=wrap('one never moves: how long it lives.',30,y+2,300,16,11,ink(0.45),400,F.sans);
+      sq.restore();
+      scrollMax[key]=Math.max(0,y+24-746);
+    }
     function drawStApp(){
       const a=ST_APPS.find(z=>z.id===sel.stApp)||ST_APPS[0];
       chrome(a.lbl,'settings');
@@ -33353,7 +33483,11 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
         now:()=>tNow, repaint:()=>{ needDraw=true; },
         silver:{ E:SIL.E, step:SIL.step, keep:SIL.keep, veil:SIL.veil },
         actx:actx, bus:eggG,
-        requested:()=>egRequested, request:()=>egRequest()
+        requested:()=>egRequested, request:()=>egRequest(),
+        /* 4 oct (pass 6): the well's newest dead (read, never kept) and a life's air through the river */
+        nobody:()=>nbwPost(),
+        air:(g)=>{ try{ const R=window.RIVER; return (R&&typeof R.airPlay==='function'&&!NBT.quiet)?R.airPlay(g):null; }catch(_){ return null; } },
+        airHush:()=>{ try{ const R=window.RIVER; if(R&&typeof R.airHush==='function') R.airHush(); }catch(_){} }
       });
     }catch(_){ EGG=null; }
 
@@ -37640,6 +37774,7 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       if(!j||typeof j!=='object'||j.asleep===true){ NBT.fails++; return; }
       const now=Date.now(), stale=!!(typeof j.step==='string'&&isFinite(Date.parse(j.step))&&(now-Date.parse(j.step))>3600000);
       NBT.answered++; NBT.silent=stale; NBT.dead=stale||!!(j.life&&j.life.dead);
+      NBT.now=j; try{ nbwYday(); }catch(_){}   /* 4 oct (pass 6): the last true answer, in memory, for settings, notes and eggstagram */
       NBT.hud=(j.hud&&typeof j.hud.text==='string'&&!stale)?j.hud.text:'';
       const day=(j.day&&typeof j.day==='object')?j.day:null; if(!day){ NBT.first=false; return; }
       const date=String(day.date||'');
@@ -37667,6 +37802,62 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       fetch(CAL_FEED+'?now=1',{ method:'GET', cache:'default', credentials:'same-origin', headers:{ accept:'application/json' } })
         .then(r=>{ if(!r.ok) throw new Error('feed '+r.status); return r.json(); })
         .then(j=>{ NBT.busy=false; nbtRead(j); needDraw=true; },()=>{ NBT.busy=false; NBT.fails++; }); }
+    /* ================================================================
+       4 oct 2026 · PASS 6 · THE WELL, READ FOR THE FACETS — settings, notes and eggstagram read what the thread asked
+       (NBT.now), and yesterday's drawer, asked once a sitting, so a life begun before the well's midnight is whole. memory only.
+       ================================================================ */
+    const NBW={ yday:null, ydayKey:'', busy:false };
+    const NB_WOKE='2026-10-01T21:00:57Z';                 /* life 1 woke: the mind's up since, and the first life's birth */
+    function nbwYday(){
+      const j=NBT.now, d=j&&j.day&&typeof j.day.date==='string'?j.day.date:''; if(!d) return null;
+      const key=new Date(Date.parse(d+'T00:00:00Z')-864e5).toISOString().slice(0,10);
+      if(NBW.ydayKey===key) return NBW.yday;
+      if(key<'2026-10-01'){ NBW.ydayKey=key; NBW.yday={}; return NBW.yday; }
+      if(!NBW.busy&&!NBT.quiet&&!disposed){ NBW.busy=true;
+        fetch(CAL_FEED+'?day='+key,{ method:'GET', cache:'default', credentials:'same-origin', headers:{ accept:'application/json' } })
+          .then(r=>r.ok?r.json():null).then(x=>{ NBW.busy=false; NBW.ydayKey=key; NBW.yday=(x&&typeof x==='object'&&!x.empty&&!x.asleep)?x:{}; needDraw=true; },
+                                            ()=>{ NBW.busy=false; NBW.ydayKey=key; NBW.yday={}; }); }
+      return null; }
+    /* the lives that died (oldest first) and the dreams, over yesterday and today */
+    function nbwWell(){
+      const j=NBT.now; if(!j||typeof j!=='object'||j.asleep) return null;
+      const td=(j.day&&typeof j.day==='object')?j.day:{}, yd=(NBW.ydayKey&&NBW.yday)||{};
+      const seen={}, lives=[].concat(Array.isArray(yd.lives)?yd.lives:[],Array.isArray(td.lives)?td.lives:[])
+        .filter(x=>x&&x.n!=null&&x.died&&isFinite(Date.parse(x.died))&&!seen[x.n]&&(seen[x.n]=1))
+        .sort((a,b)=>Date.parse(a.died)-Date.parse(b.died));
+      const dreams=[].concat(Array.isArray(yd.dreams)?yd.dreams:[],Array.isArray(td.dreams)?td.dreams:[]).filter(x=>x&&x.life!=null);
+      return { j:j, today:String(td.date||''), lives:lives, dreams:dreams }; }
+    /* eggstagram's account: the newest dead life */
+    function nbwPost(){
+      const W=nbwWell(); if(!W||!W.lives.length) return null;
+      const L=W.lives[W.lives.length-1], prev=W.lives[W.lives.length-2];
+      const died=Date.parse(L.died);
+      const born=(prev&&prev.n===L.n-1)?Date.parse(prev.died):(L.n===1?Date.parse(NB_WOKE):null);
+      return { n:L.n, first:String(L.first||''), last:String(L.last||''), died:died, born:(born&&isFinite(born))?born:null,
+        genome:(L.genome&&typeof L.genome==='object')?L.genome:null, deaths:(W.j.deaths|0)||W.lives.length }; }
+    /* the genes, the mind's settings: the phone's eight in its order, pace folded into turning (river.js airOf's rule) */
+    const NB_GENES=[['turning','Turning',['dreams shallow','dreams deep']],['balance','Balance',['hears little','hears much']],
+      ['seeds','Seeds',['remembers little','remembers all']],['longevity','Longevity',null],['patience','Patience',['speaks briefly','speaks at length']],
+      ['temper','Temper',['calm','quick']],['warmth','Warmth',['apart','tender']],['restless','Restlessness',['steady','restless']]];
+    function nbGene(g,k){ if(!g||typeof g!=='object') return 0; let v=+g[k]||0; if(k==='turning') v+=(+g.pace||0); return Math.max(-1,Math.min(1,v)); }
+    function nbSerial(g){ if(!g||typeof g!=='object') return '';
+      const h=NB_GENES.map(G=>Math.max(0,Math.min(15,8+Math.round(nbGene(g,G[0])*8))).toString(16).toUpperCase()).join('');
+      return h.slice(0,4)+' '+h.slice(4); }
+    function nbMind(m){ const k=String(m||'').replace(/^claude-/,''); const x=/^([a-z]+)-(\d+)(?:-(\d{1,2}))?(?:-|$)/.exec(k);
+      return x?(x[1]+' '+x[2]+(x[3]?'.'+x[3]:'')):k; }
+    /* anthropic's tentative retirement dates, read off its model table on 4 oct 2026 — `not sooner than` [check again before a new mind] */
+    const NB_RETIRE={ 'claude-sonnet-5-5':'28 sep 2027', 'claude-opus-5-5':'22 sep 2027', 'claude-sonnet-5':'30 jun 2027', 'claude-opus-5':'24 jul 2027', 'claude-haiku-4-5-20251001':'15 oct 2026' };
+    /* notes: one locked note a life of the well's today that dreamt (and the one dreaming now), the newest first */
+    function nbwNotes(){
+      const W=nbwWell(); if(!W) return [];
+      const ns={}; W.lives.forEach(L=>{ if(String(L.died).slice(0,10)===W.today) ns[L.n]=1; });
+      if(W.j.life&&W.j.life.n!=null) ns[W.j.life.n]=1;
+      return Object.keys(ns).map(Number).sort((a,b)=>b-a).map(n=>{
+        const ds=W.dreams.filter(d=>d.life===n&&(+d.tokens||0)>0).sort((a,b)=>Date.parse(a.at)-Date.parse(b.at));
+        const tok=ds.reduce((a,d)=>a+(+d.tokens||0),0);
+        return { n:n, dreams:ds, words:Math.round(tok*0.75/10)*10 }; }).filter(x=>x.dreams.length); }
+    const nbTimes=(k)=>k===1?'dreamt once':'dreamt '+k+' times';
+    const nbWords=(w)=>{ try{ return w.toLocaleString('en-US'); }catch(_){ return String(w); } };
     function nbtOpen(i){ const m2=MSGS[i]; if(!m2) return; sel.msg=i; m2.un=false; m2.unN=0; scrollPos['thread'+i]=0; NBT.snap=true; setApp('thread'); }
     /* the list's row: the photograph of nothing, `nobody`, the last text's hour and its words */
     function nbtRow(m2,i,y,rh){
@@ -37705,6 +37896,9 @@ Mt mat(float id,vec3 p,vec3 n,vec3 rd){
       texts:NB_THREAD.b.map(x=>({ k:x.k, t:x.t, at:x.at })), pend:NBT.pend.map(x=>({ k:x.k, land:x.land })), badge:NB_THREAD.unN|0, banners:NBT.banners, lastSent:NBT.lastSent, hud:NBT.hud,
       pages:PAGES.map(pg=>pg.map(ic=>ic&&ic.id)), dock:DOCK.map(ic=>ic.id), keiki:KEIKI_ON, rooms:ROOMS_ALL, tabs:CAL_TABS.map(T2=>T2[1]), shade:NOTE.stack.map(c=>c.app+': '+c.title+' · '+c.body), queue:NOTE.queue.map(c=>c.app+': '+c.title+' · '+c.body), up:NOTE.up?(NOTE.up.card.app+': '+NOTE.up.card.title+' · '+NOTE.up.card.body):'',
       call:{ state:call.state, who:call.who, dead:call.dead, tones:call.sit, ring:call.ringOn }, app:app }; };
+    /* 4 oct (pass 6), for the press: what the facets read */
+    window.__phoneWell=function(){ const j=NBT.now||null; return { post:nbwPost(), notes:nbwNotes().map(x=>({ n:x.n, dreams:x.dreams.length, words:x.words })), yday:NBW.ydayKey, asks:NBW.busy,
+      serial:j?nbSerial(j.genome):'', mind:j?nbMind(j.model):'', app:app }; };
     function calOpenDay(key){ if(!calHas(key)) return false; calS.day=key; if(!calS.tab) calS.tab='well';
       if(!calS.open[key]){ calS.open[key]={}; if(key===calWellToday()) calS.open[key]['w'+calWinNow()]=true; }   /* today opens on the window being made; a finished day opens on its six cards */
       scrollPos['calday']=0; momentum.key=null; calAsk(key); needDraw=true; return true; }
@@ -42623,9 +42817,11 @@ function hForget(){
         case 'fridge':    drawFridge(); break;     // THE DRONE PASS (14 sep)
         case 'notes':     drawNotes(); break;
         case 'note':      drawNote(); break;
+        case 'nbnote':    drawNbNote(); break;       /* 4 oct (pass 6): a life's locked dreams */
         case 'settings':  drawSettings(); break;
         case 'stgeneral': drawStGeneral(); break;
         case 'stabout':   drawStAbout(); break;
+        case 'stnobody':  drawStNobody(); break;     /* 4 oct (pass 6): the genes, greyed */
         case 'stupdate':  drawStUpdate(); break;
         case 'stapp':     drawStApp(); break;
         case 'stsheet':   drawStSheet(); break;
@@ -42652,7 +42848,8 @@ function hForget(){
         case 'instagram':
         case 'egactivity':
         case 'egstory':
-        case 'egbooth':    if(EGG&&EGG.draw(app)) break;
+        case 'egbooth':
+        case 'egnobody':   if(EGG&&EGG.draw(app)) break;   /* 4 oct (pass 6): nobody's profile is the river's */
                            drawInstagram(); break;
         case 'egprofile':  drawInstagram(); break;
         /* nestflix answers for its own four views and returns true;
@@ -43110,6 +43307,7 @@ function hForget(){
       app==='safsearch'?'safsearch':
       app==='shop'?(azFlying()?null:'shop'):   /* THE DRONE PASS: the cart scrolls; the flight owns the glass */
       app==='settings'?'settings':
+      app==='stabout'?'stabout':app==='stnobody'?'stnobody':app==='notes'?'notes':app==='nbnote'?'nbnote':   /* 4 oct (pass 6) */
       app==='photos'?'photos':
       app==='photodel'?'photodel':
       app==='voicemail'?((touch.y0>=TAPE_LIST_Y&&MK.state==='idle'&&!MK.care)?'tape':null):null); }   /* THE TAPE PASS: the slot scrolls; the machine does knot */

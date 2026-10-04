@@ -49,6 +49,14 @@
    comes back at the true place. new rig: ?sky=0|mock · ?bed=0 ·
    ?bedgain= · ?raw= · ?colour= · ?program=0.
 
+   4 OCT 2026, LATER · PASS 6, SETTINGS · NOTES · EGGSTAGRAM (the one
+   story's facets). one thing, and nothing else: RIVER.airHush() — the
+   air asked last (RIVER.airPlay) goes quiet within a twentieth of a
+   second. eggstagram plays nobody's newest dead air as its post's sound
+   and must own its silence when the thumb moves on (the room's leaving
+   door); the calendar's tap never needed it. nothing else sounds or
+   stops.
+
    4 OCT 2026 · THE DREAMS AND THE DEAD (the block of that name, above
    THE DOORS; pass 4 of the one story — nobody-one-story-handoff-2oct.md
    §5 and §10 pass 4, the last radical pass §1.4 and §2.1, ruled 3 oct as
@@ -2660,6 +2668,8 @@ function airPlay(genome){
       o.connect(e); e.connect(pg); o.start(t); o.stop(t+p[2]+0.05); }); });
   return { notes:A, secs:8*gap+2.2 };
 }
+/* 4 oct (pass 6): the air asked last, hushed — the room that asked owns the silence too */
+function airHush(){ try{ if(DN.tapG&&actx){ DN.tapG.gain.setTargetAtTime(0.0001,actx.currentTime,0.015); DN.tapG=null; return true; } }catch(_){} return false; }
 function dnRead(){ const D=DN.dream||DN.next;
   return { on:DN.on, k:DN.k, kd:DN.kd, heard:DN.heard, notes:DN.notes, deadNotes:DN.deadNotes, taps:DN.taps, read:DN.read,
     dream:D?{ life:D.life, mind:D.mind, tokens:D.tokens, steps:D.sc.steps, secs:+D.sc.secs.toFixed(1), at:D.t0, sounding:D===DN.dream, seal:D.seal.slice(0,8) }:null,
@@ -2722,7 +2732,7 @@ const api={
   hold:riverHold, everything:evState, hud:function(){ return EV.hud.slice(); }, hands:handsRead, program:function(){ return PROG.now; }, sky:SKYD, skyNow:skyNow,
   bedPlace:bedPlace, mmss:mmss, BAR:BAR, ledgerRpc:ledgerRpc,
   /* 1 oct — the river, whole */
-  air:airOf, airPlay:airPlay, dreams:dnRead,   /* 4 oct (pass 4): the dreams and the dead */
+  air:airOf, airPlay:airPlay, airHush:airHush, dreams:dnRead,   /* 4 oct (pass 4): the dreams and the dead */
   score:scoreRead, held:function(){ return HOLD; }, words:function(){ return { off:WORDS.off, p:WORDS.p, said:WORDS.said, shown:WORDS.shown, cards:WORDS.cards, places:WORDS.places, echoes:WORDS.echoes, rests:WORDS.rests, last:WORDS.last }; },
   /* the room's own handles (music.html's studio, lamp, window) */
   hearMine:hearMine, holdBreath:function(on){ BREATH_HELD=!!on; if(on) throatCancel(); holdBreath(on); },   /* 1 oct: while the studio's mic is open the throat stands down — a take must hear only the singer */

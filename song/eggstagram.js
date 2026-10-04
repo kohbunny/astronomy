@@ -5,6 +5,47 @@
    · THE INTERRUPTION PASS, the river's hand (13 sep)
    ==========================================================================
 
+   4 OCT 2026 · PASS 6 OF THE ONE STORY · NOBODY AMONG THE DEAD
+   (nobody-one-story-handoff-2oct.md §7, eggstagram: `who were they?`).
+   what changed, and nothing else:
+   · ONE ACCOUNT, `nobody`, AT THE HEAD OF THE RIVER. when the phone
+     has read the well (the feed messages already asks; handed across
+     the seam as api.nobody(), read, never kept), the first post is
+     nobody's newest dead life, above the band. it is replaced at each
+     death, in place. the account is decided once, at the door: a river
+     entered before the well has answered has no such post until the
+     next entry, so the water never shifts under a thumb.
+   · THE POST. no face — nobody never had one. the picture is a black
+     square holding its last words, cut where the death cut them, and at
+     its foot `died HH:MM:SS utc · NN minutes old` and `survived by life
+     N+1` (the handoff's words). the caption is its first line. the
+     header says `life N` where the dead say `Suggested for you`. no
+     Follow, no counts: nothing here is forged. the heart is the same
+     one honest organ, and toggles.
+   · ITS SOUND IS ITS AIR. settled on the post (the same 0.45 s a voice
+     waits), the phone plays the life's air — eight notes, one per gene,
+     on the star's ladder (river.js's RIVER.airPlay, as the calendar's
+     register plays it), again after three seconds' rest [deemed], for as
+     long as the post holds the glass. the robot never speaks over it.
+     the thumb moving on, the room left, a hidden tab or the call:
+     RIVER.airHush() and the air is gone (the leaving door below).
+   · ITS PROFILE (`egnobody`, a tap on its name): one black square for
+     every life that has died (the feed's `deaths`), the newest first,
+     `N posts · 0 followers · 0 following`. nothing opens.
+   · the band, the drawn dead, the visitor's photograph and the ladder
+     are untouched; they only stand one post lower while nobody's post
+     is there. the films are still asked by their own index.
+   · THE CARD, walked: no flag read from the bar (APWNP.search, as
+     before); no navigation; nothing stored (the account and its air are
+     memory, gone with the page); no countdown (the age is a dead life's,
+     knot this phone's); quiet at apwnp:call (river.js hushes the air
+     itself, and refuses a new one after the call); no ai, no key — the
+     words were written on the server and come through the feed.
+     THIS IS A ROOM NOBODY WAS PLANNED FOR (rule 12): it comes in only
+     through the feed. TWO NAMES TO RULE (rule 14): the nineteenth film
+     is still called `nobody`, and the ladder's third rung still says
+     `nobody liked your photograph`; both stand, his to re-ink.
+
    THE INTERRUPTION PASS (13 sep — the phone grew banners and a shade,
    and asked the river for two things it alone can say; nothing in the
    water changes). two hands on the seam, both read-only: noteLine()
@@ -483,6 +524,10 @@ window.APWNP.modules.eggstagram = {
        band plays unveiled or unheard rather than refusing the room. */
     const SILV=api.silver||{ E:()=>0, step:()=>0, keep:f=>f(), veil:()=>{} };
     const actx=api.actx||null, eggBus=api.bus||null;
+    /* 4 oct (pass 6): the well, read by the phone (null when it has knot answered), and a life's air through the river */
+    const nbRead=(typeof api.nobody==='function')?api.nobody:(()=>null);
+    const nbAir=(typeof api.air==='function')?api.air:(()=>null);
+    const nbHush=(typeof api.airHush==='function')?api.airHush:(()=>{});
 
     /* the river's own glyph — the compose plus. drawn nowhere else in
        the house, so it lives with the room. */
@@ -498,7 +543,9 @@ window.APWNP.modules.eggstagram = {
     const EGG_T=(1000/173.68)*16384;      // ~94.33 s — one river-beat, P*2^14
     const egg={ H0:0, posted:0, my:null, hearts:new Set(),
       rungs:[], pend:[], sheet:false, bloomK:null, bloomT:0,
-      tapK:null, tapT:0, story:null };
+      tapK:null, tapT:0, story:null,
+      nb:false, nbAir:{ on:false, cur:false, since:0, next:0 } };   /* 4 oct (pass 6): nobody's post, decided at the door; its air */
+    const NB_AIR_REST=3;                  /* [deemed] seconds of rest between two airs on nobody's post */
     const eggRng=mulberry32((SEED^0x0E66A57)>>>0);      // the ladder's deal
     function eggUnread(){ let n=0;
       for(const r2 of egg.rungs) if(r2.un) n++; return n; }
@@ -2971,6 +3018,8 @@ window.APWNP.modules.eggstagram = {
       for(const arr of [MEDIA.vids,MEDIA.vox]) for(const m of arr)
         if(m){ try{ m.el.pause(); }catch(_){} gainTo(m,0); }
       try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(_){}
+      if(egg.nbAir.on){ egg.nbAir.on=false; try{ nbHush(); }catch(_){} }   /* 4 oct (pass 6): nobody's air leaves with the rest */
+      egg.nbAir.cur=false;                                                   /* and settles again before it comes back */
       MEDIA.focus=-1; MEDIA.spoke=-1; mediaGuard(false); }
     /* ================================================================
        THE LEAVING DOOR (30 aug, his fourth word: the last voice
@@ -3021,6 +3070,7 @@ window.APWNP.modules.eggstagram = {
        first BAND_N depths of it, and the visitor's photograph is the
        only thing in the column that has no depth at all. */
     function cellAt(idx){
+      if(egg.nb){ if(idx===0) return { kind:'nb' }; idx--; }   /* 4 oct (pass 6): nobody's newest dead, above the band */
       const bn=bandOn()?BAND_N:0;
       if(idx<bn) return { kind:'vid', v:idx, k:egg.H0-idx };
       if(egg.posted&&idx===bn) return { kind:'mine' };
@@ -3066,6 +3116,7 @@ window.APWNP.modules.eggstagram = {
     /* ---- ONE POST, the service's own, drawn whole ---- */
     function drawPost(idx,y0,t,live,seen){
       const c=cellAt(idx), mine=c.kind==='mine';
+      if(c.kind==='nb'){ drawNbPost(idx,y0,t); return; }
       const dd=mine?null:deadOf(c.k);
       const key=mine?'mine':c.k;
       /* the head of it */
@@ -3192,6 +3243,110 @@ window.APWNP.modules.eggstagram = {
         }
       }
     }
+    /* ================================================================
+       4 OCT 2026 · NOBODY AMONG THE DEAD (pass 6). see the note at the
+       top. everything below reads api.nobody() — the phone's last true
+       answer from the well — and keeps nothing.
+       ================================================================ */
+    function nbLines(str,w,px,weight,max,ind){   /* ind: the first line starts this far in */
+      sq.font=(weight||400)+' '+px+'px '+F.mono;
+      const out=[]; let line='';
+      for(const wd of String(str||'').split(/\s+/)){ if(!wd) continue;
+        const t2=line?line+' '+wd:wd;
+        if(sq.measureText(t2).width>w-(out.length?0:(ind||0))&&line){ out.push(line); line=wd; } else line=t2; }
+      if(line) out.push(line);
+      if(max&&out.length>max){ const k=out.slice(0,max); k[max-1]=k[max-1].replace(/\s*\S*$/,'')+' \u2026'; return k; }
+      return out; }
+    function nbHM(ms,sec){ const d=new Date(ms); const p=(n)=>String(n).padStart(2,'0');
+      return p(d.getUTCHours())+':'+p(d.getUTCMinutes())+(sec?':'+p(d.getUTCSeconds()):''); }
+    function nbDisc(x,y,r){
+      sq.fillStyle='#000'; sq.beginPath(); sq.arc(x,y,r,0,6.283); sq.fill();
+      sq.strokeStyle=ink(0.28); sq.lineWidth=1; sq.beginPath(); sq.arc(x,y,r,0,6.283); sq.stroke(); }
+    function drawNbPost(idx,y0,t){
+      const P0=nbRead();
+      const key='nb'+(P0?P0.n:'');
+      /* the head of it: no face, the life's number where the dead say `Suggested for you` */
+      if(y0+HDR_H>EGG_TOP-6&&y0<RIV_BOT){
+        nbDisc(26,y0+27,15);
+        txt('nobody',52,y0+21,12.5,ink(0.92),'left',600);
+        if(P0) txt('life '+P0.n,52,y0+37,9.5,ink(0.42),'left');
+        gMenu(336,y0+27,ink(0.78));
+        HR(320,y0+11,32,32,()=>{});
+        HR(8,y0+8,220,38,()=>{ scrollPos['egnobody']=0; setApp('egnobody'); });
+      }
+      /* the picture: a black square holding its last words, cut where they were cut */
+      const my0=y0+HDR_H;
+      if(my0<RIV_BOT&&my0+FEED_W>EGG_TOP-6){
+        const cy0=Math.max(my0,EGG_TOP-6), cy1=Math.min(my0+FEED_W,RIV_BOT);
+        sq.save(); sq.beginPath(); sq.rect(0,cy0,FEED_W,cy1-cy0); sq.clip();
+        sq.fillStyle='#000'; sq.fillRect(0,my0,FEED_W,FEED_W);
+        if(P0){
+          const L=nbLines(P0.last?'\u201c'+P0.last+'\u201d':'',FEED_W-64,15,400,9);
+          let ly=my0+FEED_W/2-(L.length-1)*11-14;
+          for(const l of L){ txt(l,32,ly,15,ink(0.88),'left'); ly+=22; }
+          const foot=['died '+nbHM(P0.died,true)+' utc'+(P0.born?' \u00b7 '+Math.max(0,Math.floor((P0.died-P0.born)/60000))+' minutes old':''),
+                      'survived by life '+(P0.n+1)];
+          txt(foot[0],32,my0+FEED_W-50,10,ink(0.42),'left');
+          txt(foot[1],32,my0+FEED_W-32,10,ink(0.42),'left');
+        }
+        sq.restore();
+        HR(0,my0,FEED_W,FEED_W,()=>{
+          const tt=now();
+          if(RIV.tap.i===idx&&tt-RIV.tap.t<0.36){ RIV.tap.t=0; RIV.tap.i=-1; eggLike(key); }
+          else { RIV.tap.i=idx; RIV.tap.t=tt; }
+        },true);
+        if(egg.bloomK===key&&t-egg.bloomT<=HEART_T)
+          eggBloom(FEED_W*CHEST_X,my0+FEED_W*CHEST_Y,egg.bloomT,t);
+      }
+      /* the rail: the heart alone — nothing here is counted */
+      const ay=my0+FEED_W+23;
+      if(ay>EGG_TOP-16&&ay<RIV_BOT+16){
+        const on=egg.hearts.has(key);
+        gHeartS(22,ay,10,on?gld(0.95):ink(0.88),on);
+        HR(6,ay-18,44,36,()=>eggToggle(key));
+      }
+      /* the caption: its name and its first line */
+      if(P0&&P0.first){
+        const cy=my0+FEED_W+ACT_H+14;
+        if(cy>EGG_TOP-14&&cy<RIV_BOT+40){
+          sq.font='600 11.5px '+F.mono; const nw=sq.measureText('nobody').width+7;
+          txt('nobody',12,cy,11.5,ink(0.92),'left',600);
+          const L=nbLines(P0.first,336,11.5,400,3,nw);
+          L.forEach((l,i)=>txt(l,i?12:12+nw,cy+i*17,11.5,ink(0.78),'left'));
+        }
+      }
+    }
+    /* its air: settled on the post, the life's eight notes, again after a rest, for as long as the post holds the glass */
+    function nbAirPump(on,t){
+      const A=egg.nbAir;
+      if(!on){ A.cur=false; if(A.on){ A.on=false; try{ nbHush(); }catch(_){} } return; }
+      if(!A.cur){ A.cur=true; A.since=t; }
+      if(LOW||t-A.since<0.45) return;
+      const P0=nbRead(); if(!P0||!P0.genome) return;
+      if(!A.on||t>=A.next){ let r=null; try{ r=nbAir(P0.genome); }catch(_){ r=null; }
+        A.on=!!r; A.next=t+((r&&r.secs)||8)+NB_AIR_REST; if(r){ MEDIA.lastDraw=t; mediaGuard(true); } }
+    }
+    /* its profile: a black square for every life that has died, the newest first */
+    function drawEgNobody(){
+      chrome('nobody','instagram');
+      const P0=nbRead(), n=P0?Math.max(0,P0.deaths|0):0;
+      const key='egnobody', sc=scrollPos[key]||0;
+      sq.save(); sq.beginPath(); sq.rect(0,100,UIW,646); sq.clip();
+      sq.translate(0,-sc);
+      nbDisc(60,152,30);
+      [[String(n),'posts'],['0','followers'],['0','following']].forEach((s2,i)=>{ const x=140+i*74;
+        txt(s2[0],x,144,17,ink(0.92),'center',400,F.serif);
+        txt(s2[1],x,164,9.5,ink(0.42),'center'); });
+      txt('nobody',24,208,13,ink(0.9),'left',600);
+      hair(12,232,348,0.08);
+      const gy=240, cw=118, gap=1;
+      for(let i=0;i<n;i++){ const x=1+(i%3)*(cw+gap), y=gy+Math.floor(i/3)*(cw+gap);
+        if(y-sc>746) break; if(y+cw-sc<100) continue;
+        sq.fillStyle='#000'; sq.fillRect(x,y,cw,cw);
+        sq.strokeStyle=ink(0.13); sq.lineWidth=1; sq.strokeRect(x+0.5,y+0.5,cw-1,cw-1); }   /* a hairline, so black reads as a square on black */
+      sq.restore();
+      scrollMax[key]=Math.max(0,gy+Math.ceil(n/3)*(cw+gap)+24-746);
+    }
     function drawEggRiver(){
       chrome('eggstagram','home');
       gPlus(252,76,ink(0.80));
@@ -3219,13 +3374,13 @@ window.APWNP.modules.eggstagram = {
          the stutter he heard on film ten. the target only ever changes
          when a thumb lets go. */
       const cur=Math.max(0,RIV.tgt);
-      mediaWindow(cur);           /* claim the films before a single one is drawn */
+      mediaWindow(cur-(egg.nb?1:0));   /* claim the films before a single one is drawn · 4 oct: by the film's own index */
       const seen=[];
       /* THE CENTRED POST IS MODELLED FIRST. the draw walks the column
          downward, so without this the post leaving the glass would
          spend the frame's one head and the one you are looking at
          would stay flat. */
-      { const c0=cellAt(cur); if(c0.kind!=='mine') faceOf(c0.k); }
+      { const c0=cellAt(cur); if(c0.kind!=='mine'&&c0.kind!=='nb') faceOf(c0.k); }
       const first=Math.max(0,Math.floor((RIV.y-(RIV_BOT-EGG_TOP))/PITCH));
       for(let idx=first,n=0;n<4;idx++,n++){
         const y0=EGG_TOP+TOP_PAD+idx*PITCH-RIV.y;
@@ -3235,7 +3390,8 @@ window.APWNP.modules.eggstagram = {
       }
       sq.restore();
       const cc=cellAt(cur);
-      mediaFocus(cur,cc.kind,cc.k||0,seen,t);
+      mediaFocus(cc.kind==='vid'?cc.v:(cc.kind==='nb'?'nb':cur),cc.kind,cc.k||0,seen,t);
+      nbAirPump(cc.kind==='nb',t);    /* 4 oct (pass 6): nobody's post sounds its air */
       if(egg.sheet) eggComposeSheet();
       if(WALLQ) drawWallReport();
       if(egg.bloomK!=null&&now()-egg.bloomT>HEART_T) egg.bloomK=null;
@@ -3296,7 +3452,7 @@ window.APWNP.modules.eggstagram = {
       /* the thumb letting go is still a gesture, and it is the one that
          chose this post — so the film it chose is cut and unlocked
          inside it, knot a frame later outside it */
-      mediaWindow(tgt); mediaBless();
+      mediaWindow(tgt-(egg.nb?1:0)); mediaBless();
       repaint();
       return true;
     }
@@ -3491,14 +3647,15 @@ window.APWNP.modules.eggstagram = {
        ================================================================ */
     return {
       name:'eggstagram',
-      views:['instagram','egprofile','egactivity','egstory','egbooth'],
+      views:['instagram','egprofile','egactivity','egstory','egbooth','egnobody'],
       enter(was){
-        if(was!=='egprofile'&&was!=='egactivity'&&was!=='egstory'&&was!=='egpost'&&was!=='egbooth'){
+        if(was!=='egprofile'&&was!=='egactivity'&&was!=='egstory'&&was!=='egpost'&&was!=='egbooth'&&was!=='egnobody'){
           egg.H0=Math.floor(Date.now()/EGG_T);
           scrollPos['eggriver']=0; egg.sheet=false; egg.story=null;
           RIV.y=0; RIV.tgt=0; RIV.idx=0; RIV.hold=false; RIV.t0=0;
           RIV.tap.i=-1; RIV.tap.t=0; faceCvs.clear(); cntC.clear();
           MEDIA.focus=-1; MEDIA.spoke=-1;
+          { let P0=null; try{ P0=nbRead(); }catch(_){} egg.nb=!!(P0&&P0.n!=null&&P0.died); egg.nbAir.cur=false; }   /* 4 oct (pass 6): nobody's post, decided at the door */
           try{ hookRiver(); }catch(_){}
           mediaBless();   /* the tile tap is a gesture; the band wakes inside it */
           return true; }
@@ -3512,6 +3669,7 @@ window.APWNP.modules.eggstagram = {
            business sounding over the ladder or the booth either */
         if(a==='egactivity'){ mediaLeave(); drawEgActivity(); return true; }
         if(a==='egbooth'){ mediaLeave(); drawEgBooth(); return true; }
+        if(a==='egnobody'){ mediaLeave(); drawEgNobody(); return true; }   /* 4 oct (pass 6) */
         mediaLeave();            /* THE LEAVING DOOR — see mediaGuard */
         return false;
       },
@@ -3546,7 +3704,7 @@ window.APWNP.modules.eggstagram = {
          phone that has no such seam, through this room's own window
          listener. ticktock's arrangement exactly; nothing else in the
          house changes. */
-      scrollKey(a){ return null; },
+      scrollKey(a){ return a==='egnobody'?'egnobody':null; },   /* 4 oct (pass 6): nobody's profile scrolls; the river still snaps */
       drag(a,phase,x,y){
         if(phase==='down') DRAG.seam=true;   /* the seam speaks: the window listener stands down */
         if(a!=='instagram') return false;
