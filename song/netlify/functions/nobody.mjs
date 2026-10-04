@@ -7,6 +7,9 @@
 //   · every json answer says `charset=utf-8`: safari, shown a feed address by hand, read `·` as `Â·` (his paste of 4 oct).
 //     the phones' own reads were always right (fetch reads json as utf-8); this is for the eye.
 //   · `Netlify-Vary` lists airs too.
+//   · (later, 4 oct · the keeper's answer for pass 5: `if ?pulse=1's death ever carries its own genome, the organ will take it and
+//     skip the second ask`) `?pulse=1`'s `death` carries `genome` (the air it lived by, from nobody_airs) and `moved` (the gene
+//     whose note differs from the life before it, by the air's own rule [SYNC river.js airOf]; -1 when there is none before it).
 // SEVENTH CUT · 3 oct 2026 · PASS 3 OF THE ONE STORY · THE SERVER (the handoff §10 pass 3; nobody-think.mjs's sixth cut).
 // what changed, and nothing else:
 //   · THE STAR'S BREATH: a life's death is read as nobody-think.mjs now makes it — from `today.phaseFrom` on, the star's
@@ -96,7 +99,10 @@ const breathOf = (founder, life) => Math.round(wheel(founder, life, "breath") * 
 // seventh cut: the star's phase at the birth [SYNC nobody-think.mjs breathPhase], from today.phaseFrom on
 const breathPhase = (born) => Math.round((((born.getTime() * 173.6879 / 1000) % 128) / 128) * BREATH_MAX_MS / 1000) * 1000;
 export const deathOfState = (st, born) => new Date(born.getTime() + LIFE_MS + ((st.today && st.today.phaseFrom && (st.life | 0) >= st.today.phaseFrom) ? breathPhase(born) : breathOf(st.founder_seed | 0, st.life | 0)));
-const soft = (p) => Promise.resolve(p).catch(() => null);                     // a new table that is knot there yet is simply empty
+const soft = (p) => Promise.resolve(p).catch(() => null);
+// an air's rungs: gene i on rung i of the star's ladder, one rung an eighth it has moved; pace folds into turning [SYNC river.js airOf]
+const AIR_GENES = ["turning", "balance", "seeds", "longevity", "patience", "temper", "warmth", "restless"];
+export const rungsOf = (g) => AIR_GENES.map((k, i) => { let v = +(g && g[k]) || 0; if (i === 0) v += +(g && g.pace) || 0; v = Math.max(-1, Math.min(1, v)); return Math.max(-8, Math.min(15, i + Math.round(v * 8))); });                     // a new table that is knot there yet is simply empty
 // the dreams as the feed shows them: their summaries only once he has read them (NOBODY_DREAMS_PUBLIC=1)
 const veilDreams = (list, env) => (Array.isArray(list) ? list : []).map((x) => (env && env.NOBODY_DREAMS_PUBLIC === "1") ? x : { at: x.at, life: x.life, mind: x.mind, tokens: x.tokens, seal: x.seal });
 
@@ -406,15 +412,21 @@ async function answer(req, env, fetchFn) {
     const st = ((await d.get("nobody_state", "id=eq.1&select=*")) || [])[0];
     if (!st || !st.day) return json({ asleep: true }, 200, 15);
     const now = new Date(), born = new Date(st.born), death = deathOfState(st, born);
-    const [h, dd, tg, dr] = await Promise.all([
+    const [h, dd, tg, dr, ar] = await Promise.all([
       d.get("nobody_hud", "order=at.desc&limit=1&select=at,life,text,wake,dying,death"),
       d.get("nobody_deaths", "order=at.desc&limit=1&select=at,life,last"),
       d.get("nobody_telegrams", "order=at.desc&limit=1&select=at,life,text"),
       soft(d.get("nobody_dreams", "order=at.desc&limit=1&select=at,life,mind,tokens,seal")),
+      soft(d.get("nobody_airs", "order=died.desc&limit=2&select=life,genome")),                 // eighth cut, later: the death's own air
     ]);
+    const deathOut = dd && dd[0] ? { life: dd[0].life, at: dd[0].at, last: dd[0].last } : null;
+    if (deathOut && ar && ar[0] && ar[0].life === deathOut.life && ar[0].genome) {
+      deathOut.genome = ar[0].genome; deathOut.moved = -1;
+      if (ar[1] && ar[1].life === deathOut.life - 1 && ar[1].genome) { const a = rungsOf(ar[0].genome), b = rungsOf(ar[1].genome); deathOut.moved = a.findIndex((r, i) => r !== b[i]); }
+    }
     return json({ clock: now.toISOString(), step: st.updated || null, done: (st.today && st.today.done) || null,
       life: { n: st.life, dying: now >= new Date(death.getTime() - DYING_MS) && now < death, dead: now >= death },
-      line: (h && h[0]) || null, death: dd && dd[0] ? { life: dd[0].life, at: dd[0].at, last: dd[0].last } : null,
+      line: (h && h[0]) || null, death: deathOut,
       telegram: (tg && tg[0]) || null, dream: dr && dr[0] ? { at: dr[0].at, life: dr[0].life, mind: dr[0].mind, tokens: dr[0].tokens, seal: dr[0].seal } : null, wire: st.wire || [] }, 200, 15);
   }
   // seventh cut · ?film=YYYY-MM-DD — a day's frames, for nestflix's past performances

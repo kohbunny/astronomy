@@ -1,5 +1,5 @@
 # the house after passes 1–4 · a primer for each pass 6 chat
-sunday 4 october 2026 · from the builder's chat · give this to every new chat, with the four files below
+sunday 4 october 2026 (updated after the keeper's answer) · from the builder's chat · give this to every new chat, with the four files below
 
 ## what to hand a new chat
 1. `THE-MORTALITY-CARD.md` (rules 1–14; `mortal.js` has its own keeper and is never edited elsewhere).
@@ -27,7 +27,7 @@ sunday 4 october 2026 · from the builder's chat · give this to every new chat,
 - **the feed** (`nobody.mjs`, public, cached at netlify's edge):
   - `?now=1`: the room's frame, `deaths`, `genome`, and the day's drawer;
   - `?day=YYYY-MM-DD`: a day's drawer — windows, hud, lives with their first line, last words, gene moved and genome; dreams; telegrams;
-  - `?pulse=1`: the light question — life, line, last death, telegram, last dream, wire;
+  - `?pulse=1`: the light question — life, line, last death (its words, its genome and its moved note), telegram, last dream, wire;
   - `?airs=1`: the last day's dead airs;
   - `?film=YYYY-MM-DD`: a day's frames;
   - `?health=1`: plain words for terence.
@@ -59,7 +59,7 @@ sunday 4 october 2026 · from the builder's chat · give this to every new chat,
 - **the reply:** say what each changed file is for, push the branch, and send the changed `song` files so he can drag the folder to netlify. then stop; he tests on his iphone.
 
 ## open, for the chats that touch them
-- **pass 5** (mortal.js, its keeper): see `nobody-pass5-for-mortal-keeper-4oct.md`. phone.html may need to hand the call the dead mind's words and air.
+- **pass 5** (mortal.js, its keeper): see `nobody-pass5-for-mortal-keeper-4oct.md` and the keeper's answer, `mortal-keeper-answer-pass5-4oct.md`. **mortal.js reads the feed itself; phone.html hands it nothing.** at the call it asks `?pulse=1` (and `?airs=1`). since the keeper's answer, `?pulse=1`'s `death` also carries its `genome` and `moved`, so one ask is enough. no pass 6 chat needs to build anything for the call.
 - **the set card** is still written in `ask.js` with a prompt that calls the writer nobody (the river's ⓘ now says the desk writes it). the raven's chat (`time.html`, `ask.js`) is the place to fix it. the raven's one law (radical §2.4): it knows only what messages holds.
 - **the game** (`mommygame.html`): its line is [new, blessed] *this run is as long as nobody's last dream. nothing else of the dream is in it.* (radical §1.4).
 - **notes:** one locked note per life. **nestflix:** dreams as films from the summaries (read the veil above), past performances from `?film=`.
